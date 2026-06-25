@@ -205,23 +205,40 @@ export default function Navbar() {
                   {NAV_LINKS.map((link) => (
                     <div key={link.label}>
                       {link.hasDropdown ? (
-                        <button
+                        <div
                           className={cn(
-                            "w-full flex items-center justify-between py-3 px-4 rounded-xl font-display text-xl md:text-2xl transition-colors",
+                            "w-full flex items-center justify-between rounded-xl transition-colors",
                             mobileExpanded === link.label || isActive(link.href)
-                              ? "text-primary bg-primary/5 border border-primary/20"
-                              : "text-on-surface hover:text-primary hover:bg-surface-container-low border border-transparent"
+                              ? "bg-primary/5 border border-primary/20"
+                              : "hover:bg-surface-container-low border border-transparent"
                           )}
-                          onClick={() => setMobileExpanded(prev => prev === link.label ? null : link.label)}
                         >
-                          {link.label}
-                          <span className={cn(
-                            "material-symbols-outlined transition-transform duration-300",
-                            mobileExpanded === link.label && "rotate-180"
-                          )}>
-                            expand_more
-                          </span>
-                        </button>
+                          <Link
+                            href={link.href}
+                            className={cn(
+                              "flex-1 py-3 pl-4 font-display text-xl md:text-2xl transition-colors",
+                              isActive(link.href) ? "text-primary" : "text-on-surface hover:text-primary"
+                            )}
+                            onClick={() => setMobileOpen(false)}
+                          >
+                            {link.label}
+                          </Link>
+                          <button
+                            onClick={() => setMobileExpanded(prev => prev === link.label ? null : link.label)}
+                            className={cn(
+                              "p-3 pr-4 flex items-center justify-center transition-colors",
+                              mobileExpanded === link.label ? "text-primary" : "text-on-surface hover:text-primary"
+                            )}
+                            aria-label={`Toggle ${link.label} dropdown`}
+                          >
+                            <span className={cn(
+                              "material-symbols-outlined transition-transform duration-300",
+                              mobileExpanded === link.label && "rotate-180"
+                            )}>
+                              expand_more
+                            </span>
+                          </button>
+                        </div>
                       ) : (
                         <Link
                           href={link.href}

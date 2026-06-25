@@ -113,27 +113,27 @@ export default function ContactPage() {
               {/* Compact Contact Detail Cards */}
               <FadeInUp delay={0.1}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  <a href="mailto:hello@logixloops.com" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                  <a href="mailto:logixloops@gmail.com" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
                     <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">mail</span>
                     </div>
                     <div>
                       <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Email</h3>
-                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">hello@logixloops.com</p>
+                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">logixloops@gmail.com</p>
                     </div>
                   </a>
 
-                  <a href="tel:+180056449" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                  <a href="tel:+919216185861" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
                     <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">call</span>
                     </div>
                     <div>
                       <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Support</h3>
-                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">+1 800 LOGIX</p>
+                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">+91 92161 85861</p>
                     </div>
                   </a>
                   
-                  <a href="#" className="sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
+                  <a href="https://wa.me/919216185861" target="_blank" rel="noopener noreferrer" className="sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
                     <div className="flex items-center gap-4">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                         <span className="material-symbols-outlined text-[16px]">forum</span>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                   <span className="material-symbols-outlined text-[16px]">work</span>
                   <span className="font-body text-xs font-medium">LinkedIn</span>
                 </a>
-                <a href="#" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
+                <a href="https://www.instagram.com/logixloops.in?igsh=MXIxOGY1bjc0OW1vMw==" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
                   <span className="material-symbols-outlined text-[16px]">photo_camera</span>
                   <span className="font-body text-xs font-medium">Instagram</span>
                 </a>
@@ -265,17 +265,17 @@ export default function ContactPage() {
                       <h3 className="font-display text-lg text-on-surface mb-6">Scope Calibration</h3>
                       
                       <div className="mb-6">
-                        <label className="font-label text-sm text-on-surface mb-3 block">Estimated Budget</label>
+                        <label className="font-label text-sm text-on-surface mb-3 block">Project Scale</label>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {["$25k-50k", "$50k-100k", "$100k-250k", "$250k+"].map(budget => (
+                          {["MVP / Prototype", "Phase 1 Launch", "Scaling Platform", "Enterprise Overhaul"].map(budget => (
                             <button
                               key={budget}
                               type="button"
                               onClick={() => setFormData({...formData, budget})}
                               className={`py-2 px-1 rounded-lg border text-center font-mono text-[11px] transition-all ${
                                 formData.budget === budget 
-                                  ? "border-secondary bg-secondary/10 text-secondary" 
-                                  : "border-outline-variant/50 text-on-surface-variant hover:border-secondary/50"
+                                  ? "border-secondary bg-secondary/10 text-secondary shadow-[inset_0_0_0_1px_rgba(0,184,217,0.5)]" 
+                                  : "border-outline-variant/50 text-on-surface-variant hover:border-secondary/50 hover:bg-surface-container"
                               }`}
                             >
                               {budget}

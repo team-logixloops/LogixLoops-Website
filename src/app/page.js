@@ -1,12 +1,8 @@
 import HeroSection from "@/components/sections/home/HeroSection";
-import TrustedBySection from "@/components/sections/home/TrustedBySection";
 import ServicesBento from "@/components/sections/home/ServicesBento";
 import FeaturedSolutionsSection from "@/components/sections/home/FeaturedSolutionsSection";
 import StatsSection from "@/components/sections/home/StatsSection";
 import ProcessSection from "@/components/sections/home/ProcessSection";
-import FeaturedCaseStudySection from "@/components/sections/home/FeaturedCaseStudySection";
-import TestimonialsSection from "@/components/sections/home/TestimonialsSection";
-import PricingSnapshotSection from "@/components/sections/home/PricingSnapshotSection";
 import FaqPreviewSection from "@/components/sections/home/FaqPreviewSection";
 import CtaBanner from "@/components/sections/shared/CtaBanner";
 
@@ -19,14 +15,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <TrustedBySection />
       <ServicesBento />
       <FeaturedSolutionsSection />
       <StatsSection />
       <ProcessSection />
-      <FeaturedCaseStudySection />
-      <TestimonialsSection />
-      <PricingSnapshotSection />
       <FaqPreviewSection />
       <CtaBanner />
     </>

@@ -5,10 +5,10 @@ import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { cn } from "@/lib/utils";
 
 const STATS = [
-  { value: 450, unit: "+", label: "Enterprise Systems Delivered", accent: "primary", prefix: "" },
-  { value: 99.99, unit: "%", label: "Guaranteed SLA Uptime", accent: "secondary", prefix: "", isFloat: true },
-  { value: 400, unit: "%", label: "Automation Efficiency Gain", accent: "tertiary", prefix: "+" },
-  { value: 2.4, unit: "B", label: "Client Revenue Enabled", accent: "primary", prefix: "$", isFloat: true },
+  { value: 100, unit: "%", label: "Client Delivery Success", accent: "primary", prefix: "" },
+  { value: 0, unit: "", label: "Technical Debt Tolerated", accent: "secondary", prefix: "" },
+  { value: 60, unit: "fps", label: "Guaranteed UI Performance", accent: "tertiary", prefix: "" },
+  { value: 99.9, unit: "%", label: "SLA Uptime Standards", accent: "primary", prefix: "", isFloat: true },
 ];
 
 export default function StatsSection() {

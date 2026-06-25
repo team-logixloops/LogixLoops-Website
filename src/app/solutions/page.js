@@ -28,20 +28,20 @@ export default function SolutionsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter border border-outline-variant/30 rounded-xl p-8 bg-surface-container-lowest/50 backdrop-blur-xl shadow-glass-elevated relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
             <div>
-              <div className="font-display text-display-lg text-primary mb-2">40+</div>
-              <div className="font-label text-label-caps text-on-surface-variant uppercase">Enterprise Systems</div>
+              <div className="font-display text-display-lg text-primary mb-2">100%</div>
+              <div className="font-label text-label-caps text-on-surface-variant uppercase">Client Delivery Success</div>
             </div>
             <div>
-              <div className="font-display text-display-lg text-primary mb-2">99%</div>
-              <div className="font-label text-label-caps text-on-surface-variant uppercase">Uptime Delivered</div>
+              <div className="font-display text-display-lg text-primary mb-2">0</div>
+              <div className="font-label text-label-caps text-on-surface-variant uppercase">Tech Debt Tolerated</div>
             </div>
             <div>
-              <div className="font-display text-display-lg text-primary mb-2">3x</div>
-              <div className="font-label text-label-caps text-on-surface-variant uppercase">Velocity Increase</div>
+              <div className="font-display text-display-lg text-primary mb-2">60fps</div>
+              <div className="font-label text-label-caps text-on-surface-variant uppercase">Guaranteed UI Performance</div>
             </div>
             <div>
-              <div className="font-display text-display-lg text-primary mb-2">$2B</div>
-              <div className="font-label text-label-caps text-on-surface-variant uppercase">Client Revenue Enabled</div>
+              <div className="font-display text-display-lg text-primary mb-2">99.9%</div>
+              <div className="font-label text-label-caps text-on-surface-variant uppercase">SLA Uptime Standards</div>
             </div>
           </div>
         </FadeInUp>
