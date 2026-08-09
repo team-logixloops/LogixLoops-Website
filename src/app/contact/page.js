@@ -100,14 +100,27 @@ export default function ContactPage() {
                     </div>
                   </a>
 
-                  <a href={BRAND.whatsapp} target="_blank" rel="noopener noreferrer" className="dispatch sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
+                  {/* The number, not a description of the number.
+                      This card used to read "Direct line to solutions team",
+                      so the one piece of information on it, which number you
+                      are about to message, was only discoverable by leaving
+                      the site for WhatsApp and looking at the thread header.
+                      The other two cards in this row show their address and
+                      their number outright; there is no reason this one is
+                      the exception, and "somewhere behind this click" is not
+                      a contact detail.
+
+                      No `backdrop-blur` either, per the same rule the rest of
+                      these surfaces now follow: an opaque tint costs nothing
+                      per frame. */}
+                  <a href={BRAND.whatsapp} target="_blank" rel="noopener noreferrer" className="dispatch sm:col-span-2 bg-primary/10 border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/15 transition-all duration-300">
                     <div className="flex items-center gap-4">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                         <span className="material-symbols-outlined text-[16px]">forum</span>
                       </div>
                       <div>
-                        <h3 className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">Priority WhatsApp</h3>
-                        <p className="font-body text-xs text-on-surface-variant">Direct line to solutions team</p>
+                        <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Priority WhatsApp</h3>
+                        <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">{BRAND.phoneDisplay}</p>
                       </div>
                     </div>
                     <span data-dispatch className="material-symbols-outlined text-primary text-[18px]">arrow_forward</span>

@@ -106,7 +106,14 @@ export default function ContactForm() {
           <h2 className="font-display text-headline-md text-on-surface mb-6">Consultation Request</h2>
 
           {/* Step Indicator */}
-          <div className="flex justify-between items-center mb-8 relative">
+          {/* Capped and centred rather than spread across the whole card.
+              `justify-between` on the full width pushed the first and last
+              dots onto the card's edges, so the rail read as three unrelated
+              markers with a lot of nothing between them, and the outer labels
+              (centred under their dot with `w-max`) hung off both sides. At
+              28rem the three steps read as one sequence and every label has
+              room to sit under its own dot. */}
+          <div className="flex justify-between items-center mb-8 relative w-full max-w-md mx-auto">
             <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[1px] bg-outline-variant/30 z-0"></div>
             {FORM_STEPS.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center gap-2">

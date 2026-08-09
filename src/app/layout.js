@@ -74,6 +74,17 @@ export const metadata = {
   alternates: {
     canonical: "/",
   },
+  /* Site ownership proofs. Through the metadata API rather than a hand-written
+     tag in `<head>`, so it lands on the home page exactly once and cannot be
+     duplicated by a route that also renders head content.
+     Bing's is load-bearing beyond Bing: ChatGPT's web results lean on that
+     index, so Webmaster Tools is the route to being answerable there at all.
+     It must not be removed after verification succeeds. */
+  verification: {
+    other: {
+      "msvalidate.01": "ED8833869108D338918286D08113F2D1",
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
