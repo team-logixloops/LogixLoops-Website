@@ -110,11 +110,28 @@ export default function ContactForm() {
               `justify-between` on the full width pushed the first and last
               dots onto the card's edges, so the rail read as three unrelated
               markers with a lot of nothing between them, and the outer labels
-              (centred under their dot with `w-max`) hung off both sides. At
-              28rem the three steps read as one sequence and every label has
-              room to sit under its own dot. */}
-          <div className="flex justify-between items-center mb-8 relative w-full max-w-md mx-auto">
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[1px] bg-outline-variant/30 z-0"></div>
+              (centred under their dot with `w-max`) hung off both sides.
+
+              24rem is the floor, not a preference: the dots land 176px apart,
+              and the widest two neighbouring labels ("Project Type" and
+              "Budget & Timeline") need about 98px of that between their
+              centres. Tightening further starts overlapping them. */}
+          <div className="flex justify-between items-center mb-8 relative w-full max-w-sm mx-auto">
+            {/* The rail spans dot centre to dot centre — inset by half a dot
+                on each side — so the fill's length is exactly the fraction of
+                the journey completed, with no dead track hanging off the ends.
+
+                `scaleX` rather than an animated `width`: it is a compositor
+                transform, so advancing a step costs no layout. The gradient is
+                laid out across the full rail and squashed by the transform,
+                which is what keeps the leading edge the same teal at every
+                step instead of re-running the ramp inside a shorter bar. */}
+            <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-[2px] rounded-full bg-outline-variant/30 z-0 overflow-hidden">
+              <div
+                className="h-full w-full origin-left rounded-full bg-gradient-to-r from-primary to-tertiary transition-transform duration-500 ease-out"
+                style={{ transform: `scaleX(${currentStep / (FORM_STEPS.length - 1)})` }}
+              />
+            </div>
             {FORM_STEPS.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-label text-sm transition-colors duration-500 relative z-20 ${
