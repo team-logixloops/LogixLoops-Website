@@ -44,14 +44,14 @@ import {
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
-// `title.absolute`, the home page is the one route that should not carry the
-// "| LogixLoops" template suffix, since the brand already leads the title.
+// `title.absolute`, the home page is the one route that must bypass the
+// template: run through `LogixLoops | %s` it would say the brand twice.
 const HOME_DESCRIPTION =
   "Senior software engineering studio in Jaipur. Custom web platforms, mobile apps, SaaS products and AI systems for teams in India, the US, the UK and the UAE.";
 
 export const metadata = buildMetadata({
   title: {
-    absolute: "Custom Software Development Studio in Jaipur | LogixLoops",
+    absolute: "LogixLoops | Custom Software Development Studio in Jaipur",
   },
   description: HOME_DESCRIPTION,
   path: "/",

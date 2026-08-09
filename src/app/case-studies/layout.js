@@ -24,7 +24,9 @@ export const metadata = {
   }),
   title: {
     default: "Reference Builds",
-    template: "%s | LogixLoops",
+    // Matches the root template. These two are the only places the pattern
+    // is written, so they have to be changed together.
+    template: "LogixLoops | %s",
   },
 };
 

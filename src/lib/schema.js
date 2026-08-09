@@ -69,14 +69,28 @@ export const generateOrganizationSchema = () => {
     email: BRAND.email,
     telephone: BRAND.phone,
     priceRange: "$$",
-    // Locality level only. A street address that cannot be verified is worse
-    // than none: Google Business Profile reconciles against it, and a mismatch
-    // suppresses the listing. Fill in `streetAddress` and `postalCode` once
-    // the GBP listing is verified against them.
+    /*
+     * Locality level unless the real street and postcode are filled in.
+     *
+     * Both extra fields are optional in Google's LocalBusiness spec, so the
+     * Rich Results Test reports them as warnings, not errors, and the result
+     * is still valid and eligible without them. They are omitted on purpose:
+     * Google Business Profile reconciles the marked-up address against the
+     * verified listing, and an address that does not match, or that cannot be
+     * verified at all, suppresses the listing outright. That is a worse
+     * outcome than two yellow rows in a test tool.
+     *
+     * To clear the warnings, put the real values on `BRAND.address` as
+     * `street` and `postalCode`, byte-identical to what Google Business
+     * Profile and /contact carry. They are picked up here automatically, and
+     * only when they exist, so a half-filled address can never ship.
+     */
     address: {
       "@type": "PostalAddress",
+      ...(BRAND.address.street ? { streetAddress: BRAND.address.street } : {}),
       addressLocality: BRAND.address.locality,
       addressRegion: BRAND.address.region,
+      ...(BRAND.address.postalCode ? { postalCode: BRAND.address.postalCode } : {}),
       addressCountry: BRAND.address.country,
     },
     // Based in Jaipur, working with clients elsewhere. Both facts have to be
@@ -193,6 +207,34 @@ export const generateCollectionPageSchema = ({ name, description, path, items = 
   };
 };
 
+/**
+ * The byline as one entity, shared by `Article` and `BlogPosting`.
+ *
+ * Both node types were spelling the author out separately and had already
+ * drifted, one carried `jobTitle` and the other did not. Worse, neither
+ * carried `url`, which Google's Article guidance asks for so that a name in
+ * the markup resolves to a person rather than being a string, and which the
+ * Rich Results Test reports as missing on every post that lacks it.
+ *
+ * `@id` is what actually does the disambiguating: every article points at the
+ * same node, so a crawler sees one author with N articles instead of N
+ * authors who happen to share a name.
+ */
+const authorNode = (author) => ({
+  "@type": "Person",
+  "@id": `${BASE_URL}/#author-${slugifyAuthor(author.name)}`,
+  name: author.name,
+  ...(author.role ? { jobTitle: author.role } : {}),
+  ...(author.profilePath ? { url: `${BASE_URL}${author.profilePath}` } : {}),
+  worksFor: { "@id": `${BASE_URL}/#organization` },
+});
+
+const slugifyAuthor = (name) =>
+  String(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
 export const generateArticleSchema = (post) => {
   return {
     "@context": "https://schema.org",
@@ -200,11 +242,7 @@ export const generateArticleSchema = (post) => {
     headline: post.title,
     description: post.excerpt,
     datePublished: new Date(post.publishedAt).toISOString(),
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-      worksFor: { "@id": `${BASE_URL}/#organization` },
-    },
+    author: authorNode(post.author),
     publisher: PUBLISHER,
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -278,12 +316,7 @@ export const generateBlogPostingSchema = (post) => {
       post.updatedAt ?? post.isoDate ?? post.publishedAt
     ).toISOString(),
     keywords: post.keywords?.join(", "),
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-      jobTitle: post.author.role,
-      worksFor: { "@id": `${BASE_URL}/#organization` },
-    },
+    author: authorNode(post.author),
     publisher: PUBLISHER,
     mainEntityOfPage: {
       "@type": "WebPage",

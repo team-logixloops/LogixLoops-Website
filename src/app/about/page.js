@@ -84,7 +84,9 @@ const ABOUT_DESCRIPTION =
   "LogixLoops is a small senior software studio in Jaipur working with clients in India, the US, the UK and the UAE. How we are structured, and what every build is held to.";
 
 export const metadata = buildMetadata({
-  title: "About LogixLoops",
+  // Not "About LogixLoops": the root template already prefixes the brand, so
+  // that rendered as "LogixLoops | About LogixLoops".
+  title: "About",
   description: ABOUT_DESCRIPTION,
   path: "/about",
   keywords: [

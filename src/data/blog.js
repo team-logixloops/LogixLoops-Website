@@ -43,6 +43,14 @@ export const BLOG_CATEGORIES = [
 const AUTHOR = {
   name: "Aaradhy Raghav Duvey",
   role: "Chief Technology Officer and Outreach Head",
+  /* Where the byline resolves to. Google asks the `author` node for a `url`
+     that identifies the person rather than the article, so that a name on a
+     page can be tied to an entity; without one the Rich Results Test reports
+     the field as missing on every post. A path, not an absolute URL, because
+     `BASE_URL` lives in the schema layer and this file must not have two
+     opinions about the origin. Point this at a dedicated bio page the moment
+     there is one, /about is the closest thing the site currently has. */
+  profilePath: "/about",
   avatar:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAMsZ3Qc6aH_O_88TqYpL45p6eLpL8KzW_k_dGqX1tM2J-wN_T3J1O_X4fK1Tz2M5vH_cR-Y_WfJ4c5sO-l6rQ5nL9aO_U6X-sP_A",
 };

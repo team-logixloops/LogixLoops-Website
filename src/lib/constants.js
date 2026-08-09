@@ -41,11 +41,23 @@ export const BRAND = {
   phoneDisplay: "+91 92161 85861",
   whatsapp: "https://wa.me/919216185861",
   address: {
+    // `street` and `postalCode` are the two fields the Rich Results Test
+    // reports as missing-but-optional on the LocalBusiness node. Add them here
+    // and the schema picks them up; leave them out and it emits a
+    // locality-level address, which is valid. Whatever goes here has to match
+    // the Google Business Profile listing and /contact exactly, a mismatch
+    // suppresses the local listing, which is worse than omitting them.
+    street: "Malviya Nagar",
+    postalCode: "302017",
     locality: "Jaipur",
     region: "Rajasthan",
     country: "IN",
     countryName: "India",
   },
+  // The one rendered form of the address. Every place on the site that prints
+  // it reads this, so the visible string and the `PostalAddress` node cannot
+  // drift apart, which is the failure Google reads as two businesses.
+  addressDisplay: "Malviya Nagar, Jaipur, Rajasthan 302017, India",
   location: "Jaipur, Rajasthan",
   // Where clients actually are. Named explicitly, because "worldwide" is not a
   // place, and a local-intent query needs somewhere to match against.

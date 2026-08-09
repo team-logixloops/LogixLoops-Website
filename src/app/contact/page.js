@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BRAND } from "@/lib/constants";
 import { ScrollTimeline } from "@/components/ui";
 import { FadeInUp } from "@/components/motion";
 import ContactForm from "./ContactForm";
@@ -131,7 +132,11 @@ export default function ContactPage() {
               <div className="flex flex-col items-start sm:items-end gap-1">
                 <div className="flex items-center gap-1.5 bg-surface-variant/30 px-3 py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
                   <span className="material-symbols-outlined text-primary text-[14px] filled">location_on</span>
-                  <span className="font-body text-xs font-semibold text-on-surface">Jaipur, Rajasthan, India</span>
+                  {/* From `BRAND`, not typed out. This string and the
+                      `PostalAddress` node in the schema have to be the same
+                      address, Google reconciles one against the other and
+                      reads a mismatch as two different businesses. */}
+                  <span className="font-body text-xs font-semibold text-on-surface">{BRAND.addressDisplay}</span>
                 </div>
                 <span className="font-body text-[11px] text-on-surface-variant">
                   Working with teams in India, the US, the UK and the UAE

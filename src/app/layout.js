@@ -36,15 +36,19 @@ const oswald = Oswald({
 /* One title and one description, written once and reused across the three
  * blocks below. They used to be typed out three times, which is how og:title
  * and twitter:title drift away from the real one. */
-const SITE_TITLE = "Custom Software Development Studio in Jaipur | LogixLoops";
+const SITE_TITLE = "LogixLoops | Custom Software Development Studio in Jaipur";
 const SITE_DESCRIPTION =
   "Senior software engineering studio in Jaipur. Custom web platforms, mobile apps, SaaS products and AI systems, built fast and yours outright at handover.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
+  /* Brand first, then the page. A tab is only ever a few characters wide
+     before it truncates, and what a reader scanning a strip of tabs needs
+     from ours is which site it is, not which page of it. The page title is
+     still the whole of the `<h1>` and of the search result. */
   title: {
     default: SITE_TITLE,
-    template: "%s | LogixLoops",
+    template: "LogixLoops | %s",
   },
   description: SITE_DESCRIPTION,
   /* Head terms only. `keywords` carries no ranking weight at Google and has
