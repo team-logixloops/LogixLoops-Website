@@ -154,11 +154,14 @@ snippet.
 
 ### Non-negotiable technical rules
 
-- **NAP consistency.** Jaipur, Rajasthan, India, plus `+91 92161 85861` and
-  `logixloops@gmail.com`, identical in schema, footer, contact page and every
-  external directory. One mismatch and the local entity fragments. (Move to
-  `hello@logixloops.in` when the mailbox exists. Change both places together,
-  never one.)
+- **NAP consistency.** Malviya Nagar, Jaipur, Rajasthan 302017, India, plus
+  `+91 87643 73589` and `logixloops@gmail.com`, identical in schema, footer,
+  contact page and every external directory. One mismatch and the local entity
+  fragments. In the site itself these live only on `BRAND` in
+  `src/lib/constants.js` — nothing renders a typed-out copy — so a change is
+  that object plus `public/llms.txt` plus the external directories, and this
+  line. (Move to `hello@logixloops.in` when the mailbox exists. Change every
+  place together, never one.)
 - **One `ProfessionalService` entity** in the root layout with `address`,
   `areaServed`, `knowsAbout`, `hasOfferCatalog` and `sameAs`. This is what an
   AI assistant reads to decide LogixLoops is a real company.

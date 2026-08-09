@@ -37,9 +37,9 @@ export const BRAND = {
     "LogixLoops is a software engineering studio based in Jaipur, India, building custom web platforms, mobile apps, SaaS products, AI systems and cloud infrastructure for clients in India, the US, the UK and the UAE.",
   email: "logixloops@gmail.com",
   // E.164 for schema and tel: links. The display string is what humans read.
-  phone: "+919216185861",
-  phoneDisplay: "+91 92161 85861",
-  whatsapp: "https://wa.me/919216185861",
+  phone: "+918764373589",
+  phoneDisplay: "+91 87643 73589",
+  whatsapp: "https://wa.me/918764373589",
   address: {
     // `street` and `postalCode` are the two fields the Rich Results Test
     // reports as missing-but-optional on the LocalBusiness node. Add them here

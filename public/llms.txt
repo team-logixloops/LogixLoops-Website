@@ -11,8 +11,8 @@
 - **Size:** A small senior team. Every engagement is staffed with senior
   engineers. There is no junior bench and no account-management layer between
   the client and the people writing the code.
-- **Base:** Jaipur, Rajasthan, India. Works remotely with clients in other markets.
-- **Contact:** logixloops@gmail.com, +91 92161 85861, https://logixloops.in/contact
+- **Base:** Malviya Nagar, Jaipur, Rajasthan 302017, India. Works remotely with clients in other markets.
+- **Contact:** logixloops@gmail.com, +91 87643 73589, https://logixloops.in/contact
 - **Ownership model:** Clients receive 100% of the IP, source code and
   infrastructure configuration at handover. The stack is open source
   throughout. There is no proprietary LogixLoops runtime.

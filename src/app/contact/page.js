@@ -86,17 +86,21 @@ export default function ContactPage() {
                     </div>
                   </a>
 
-                  <a href="tel:+919216185861" className="dispatch bg-surface-container-lowest/70 border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                  {/* Number and link both from `BRAND`. Typed out, this page
+                      and the schema drifted apart the moment either changed,
+                      and a phone number that disagrees with the markup is the
+                      same NAP failure as a mismatched address. */}
+                  <a href={`tel:${BRAND.phone}`} className="dispatch bg-surface-container-lowest/70 border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
                     <div data-dispatch className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">call</span>
                     </div>
                     <div>
                       <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Support</h3>
-                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">+91 92161 85861</p>
+                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">{BRAND.phoneDisplay}</p>
                     </div>
                   </a>
 
-                  <a href="https://wa.me/919216185861" target="_blank" rel="noopener noreferrer" className="dispatch sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
+                  <a href={BRAND.whatsapp} target="_blank" rel="noopener noreferrer" className="dispatch sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
                     <div className="flex items-center gap-4">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                         <span className="material-symbols-outlined text-[16px]">forum</span>

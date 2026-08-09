@@ -313,8 +313,8 @@ export default function ConstellationGrid({ className = "" }) {
     // dash travel, signed, the two run opposite ways, which is what stops
     // them reading as one thick line.
     const LOOP_BANDS = [
-      { at: 0.66, lineWidth: 1.6, alpha: 0.62, dash: [9, 9], speed: -100 },
-      { at: 1.02, lineWidth: 1, alpha: 0.26, dash: [3, 13], speed: 62 },
+      { at: 0.56, lineWidth: 1.6, alpha: 0.62, dash: [9, 9], speed: -100 },
+      { at: 0.87, lineWidth: 1, alpha: 0.26, dash: [3, 13], speed: 62 },
     ];
     let loopStrength = 0;
     let loopPhase = 0;
