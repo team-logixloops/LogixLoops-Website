@@ -5,7 +5,7 @@ import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 import { PRELOADER_GATE_SCRIPT } from "@/components/layout/preloader-gate";
 import { generateOrganizationSchema } from "@/lib/schema";
-import { SITE_URL, OG_IMAGE } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 /* ─── Font Loading ─── */
@@ -81,13 +81,17 @@ export const metadata = {
     url: "/",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE],
+    // No `images` here, and none in buildMetadata either. Every route segment
+    // ships its own `opengraph-image.js`, and Next attaches the file-convention
+    // card to the segment that declares it. A hardcoded `images` entry would
+    // shadow that and put the home card on every page.
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE.url],
+    // Next falls `twitter:image` back to the resolved Open Graph image, so
+    // there is no parallel set of `twitter-image.js` files to keep in sync.
   },
   robots: {
     index: true,

@@ -41,7 +41,10 @@ export async function generateMetadata({ params }) {
           ? new Date(post.updatedAt).toISOString()
           : undefined,
         authors: [post.author.name],
-        images: post.featuredImage ? [post.featuredImage] : undefined,
+        // No `images` here. It lands inside `openGraph` and would shadow the
+        // route's own `opengraph-image.js`, so a shared post showed a bare
+        // Unsplash photograph with no headline and no mark on it. The featured
+        // image still reaches search through `image` on the BlogPosting node.
       },
     }),
     authors: [{ name: post.author.name }],

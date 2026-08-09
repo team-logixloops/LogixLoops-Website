@@ -63,6 +63,18 @@ export const BRAND = {
   // place, and a local-intent query needs somewhere to match against.
   servesFrom: "Jaipur, India",
   servesMarkets: ["India", "United States", "United Kingdom", "United Arab Emirates"],
+  /* The registered entity, as distinct from the brand.
+   *
+   * This exists because assistants were resolving logixloops.in to
+   * "Logicloops IT Private Limited", a different company with a near-identical
+   * name, by reading company-registry records instead of this site. A trading
+   * name alone cannot win that argument; a legal name that matches the
+   * registration is the field the registries themselves key on.
+   *
+   * It must match the registration character for character. A near-miss is
+   * worse than omitting it: it gives the reconciler a second slightly-wrong
+   * string to match against the wrong company. */
+  legalName: "LogixLoops IT Solutions",
   copyright: `© ${new Date().getFullYear()} LogixLoops IT Solutions. All rights reserved.`,
 };
 

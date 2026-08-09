@@ -60,6 +60,11 @@ export const generateOrganizationSchema = () => {
     "@type": "ProfessionalService",
     "@id": `${BASE_URL}/#organization`,
     name: BRAND.name,
+    // The registered entity. Without it the only string on offer is the
+    // trading name, and "LogixLoops" is one character from "Logicloops" and
+    // one from "LogiXloop", both of which are real companies with real
+    // registry records that outrank an unindexed site.
+    legalName: BRAND.legalName,
     alternateName: `${BRAND.name}: ${BRAND.tagline}`,
     slogan: BRAND.tagline,
     description: BRAND.definition,

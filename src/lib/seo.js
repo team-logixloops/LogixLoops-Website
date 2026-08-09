@@ -12,19 +12,21 @@
 
 export const SITE_URL = "https://logixloops.in";
 
-/**
- * The build-time card from `app/opengraph-image.js`. Next only attaches the
- * file-convention image to the segment that declares it, and a child's
- * `openGraph` object REPLACES the parent's rather than merging into it, so
- * every page that sets og:title would otherwise drop og:image entirely.
- * Referencing the route path directly keeps one card on all routes.
+/*
+ * There is deliberately no shared OG_IMAGE constant here, and `buildMetadata`
+ * sets no `images`.
+ *
+ * Next only attaches a file-convention `opengraph-image` to the segment that
+ * declares it, and a child's `openGraph` object REPLACES the parent's rather
+ * than merging into it, so a page that sets og:title and nothing else drops
+ * og:image entirely. The previous fix was to hardcode the home card on every
+ * route, which meant a link to /pricing shared as the home page.
+ *
+ * The fix now is coverage: every route segment ships its own
+ * `opengraph-image.js` built on the shared template in `lib/og.js`. Nothing
+ * here needs to name an image, and a new route without a card is a visible
+ * gap rather than a silently wrong one.
  */
-export const OG_IMAGE = {
-  url: "/opengraph-image",
-  width: 1200,
-  height: 630,
-  alt: "LogixLoops: Your Unfair Advantage. Custom software engineering across web, mobile, SaaS, AI and cloud.",
-};
 
 /**
  * Meta descriptions want 70–160 characters. Shorter gets padded by search
@@ -83,14 +85,12 @@ export function buildMetadata({
       description: clamped,
       siteName: "LogixLoops",
       locale: "en_US",
-      images: [OG_IMAGE],
       ...(article ?? {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: clamped,
-      images: [OG_IMAGE.url],
     },
   };
 }
