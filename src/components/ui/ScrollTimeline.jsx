@@ -293,10 +293,12 @@ export default function ScrollTimeline({
           if (!span) return;
           const trigger = travel.scrollTrigger;
           const fraction = Math.min(1, card.offsetLeft / span);
-          window.scrollTo({
-            top: trigger.start + fraction * (trigger.end - trigger.start),
-            behavior: "smooth",
-          });
+          const top = trigger.start + fraction * (trigger.end - trigger.start);
+          // Same reason as everywhere else: Lenis writes the scroll position
+          // every frame, so a native smooth scroll is overwritten before it
+          // gets anywhere. Route the request through whatever owns scrolling.
+          if (window.lenis) window.lenis.scrollTo(top);
+          else window.scrollTo({ top, behavior: "smooth" });
         };
         row.addEventListener("focusin", onFocusIn);
 

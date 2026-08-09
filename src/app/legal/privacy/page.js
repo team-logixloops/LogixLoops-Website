@@ -59,13 +59,13 @@ export default function PrivacyPolicyPage() {
           Information Collection & Usage
         </h2>
         <div className="space-y-4">
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">1.1 Data Collected</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops may collect personal, technical, operational, transactional, analytical, and communication-related information including names, contact details, company information, billing information, IP addresses, browser details, device data, cookies, uploaded files, usage activity, and communication records for operational and service-related purposes.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">1.2 Purpose of Use</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               Information collected may be used for project execution, customer communication, support services, analytics, security monitoring, fraud prevention, billing, authentication, service improvements, operational management, legal compliance, business administration, and authorized marketing activities.
@@ -81,19 +81,19 @@ export default function PrivacyPolicyPage() {
           Data Protection & Security Risks
         </h2>
         <div className="space-y-4">
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">2.1 Technical Safeguards</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops implements reasonable technical and organizational safeguards to protect collected information; however, no internet-based system, digital infrastructure, cloud platform, software environment, or communication method can guarantee absolute security.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">2.2 Acknowledgment of Risks</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               Users acknowledge and accept inherent cybersecurity, internet, cloud infrastructure, third-party platform, hosting, API, and digital communication risks associated with online services.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm border-l-4 border-l-secondary bg-secondary/5 hover:border-r-outline-variant/50 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 border-l-4 border-l-secondary bg-secondary/5 hover:border-r-outline-variant/50 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2 flex items-center gap-2">
               <span className="material-symbols-outlined text-[16px] text-secondary">shield_locked</span>
               2.3 Liability Disclaimer
@@ -112,7 +112,7 @@ export default function PrivacyPolicyPage() {
           Cookies & Tracking Technologies
         </h2>
         <div className="space-y-4">
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm relative overflow-hidden hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 relative overflow-hidden hover:border-primary/30 transition-colors">
              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
             <h3 className="font-label text-sm text-on-surface mb-2">3.1 Analytics & Performance Tracking</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed relative z-10">
@@ -129,19 +129,19 @@ export default function PrivacyPolicyPage() {
           Third-Party Services & Integrations
         </h2>
         <div className="space-y-4">
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">4.1 Service Providers</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops may engage third-party providers including hosting services, analytics platforms, AI providers, payment gateways, communication tools, CRM systems, automation services, and cloud infrastructure providers that may process limited information necessary for operational functionality.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">4.2 External Links</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops websites or services may contain links, integrations, or references to third-party platforms and external websites, and LogixLoops shall not be responsible for their content, privacy practices, security standards, availability, or operational behavior.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm flex items-start gap-4 hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 flex items-start gap-4 hover:border-primary/30 transition-colors">
             <span className="material-symbols-outlined text-primary text-[24px] mt-1">public</span>
             <div>
               <h3 className="font-label text-sm text-on-surface mb-2">4.3 Cross-Border Data Transfers</h3>
@@ -160,13 +160,13 @@ export default function PrivacyPolicyPage() {
           Data Sharing & Disclosure
         </h2>
         <div className="space-y-4">
-           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">5.1 No Sale of Personal Information</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops does not sell personal information to third parties; however, information may be shared where required for operational purposes, payment processing, legal compliance, fraud prevention, security enforcement, contractual obligations, regulatory requirements, or protection of company rights and infrastructure.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm border-l-4 border-l-primary hover:border-r-outline-variant/50 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 border-l-4 border-l-primary hover:border-r-outline-variant/50 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2 flex items-center gap-2">
               <span className="material-symbols-outlined text-[16px] text-primary">gavel</span>
               5.2 Legal & Regulatory Disclosures
@@ -185,19 +185,19 @@ export default function PrivacyPolicyPage() {
           Data Retention & User Responsibilities
         </h2>
         <div className="space-y-4">
-           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">6.1 Data Retention Periods</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               User data may be retained for operational, analytical, security, backup, archival, accounting, contractual, legal, compliance, dispute-resolution, and business continuity purposes even after service completion or account inactivity.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">6.2 User Account Responsibilities</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               Users remain solely responsible for protecting account credentials, maintaining device security, preventing unauthorized access, ensuring accuracy of submitted information, and managing internal access permissions.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm border-l-4 border-l-error/60 bg-error/5 hover:border-r-outline-variant/50 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 border-l-4 border-l-error/60 bg-error/5 hover:border-r-outline-variant/50 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2 flex items-center gap-2">
               <span className="material-symbols-outlined text-[16px] text-error">warning</span>
               6.3 Sensitive Information Advisory
@@ -216,13 +216,13 @@ export default function PrivacyPolicyPage() {
           Governing Law & Updates
         </h2>
         <div className="space-y-4">
-           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm hover:border-primary/30 transition-colors">
+           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
             <h3 className="font-label text-sm text-on-surface mb-2">7.1 Future Modifications</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               LogixLoops may update, revise, modify, or replace this Privacy Policy at any time without prior notice, and continued use of services or platforms after updates constitutes acceptance of revised policies.
             </p>
           </div>
-          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-sm flex items-start gap-4 hover:border-primary/30 transition-colors">
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 flex items-start gap-4 hover:border-primary/30 transition-colors">
             <span className="material-symbols-outlined text-primary text-[24px] mt-1">account_balance</span>
             <div>
               <h3 className="font-label text-sm text-on-surface mb-2">7.2 Jurisdiction</h3>

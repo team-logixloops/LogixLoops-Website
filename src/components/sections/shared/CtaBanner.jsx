@@ -49,6 +49,29 @@ export default function CtaBanner() {
        * corners relax as it opens; animating `border-radius` separately would
        * fight the clip and leave a hairline of square corner outside it.
        */
+      /*
+       * Both of these retire the moment they have finished.
+       *
+       * `clip-path` is not a compositor property. While one is set, the panel
+       * and everything in it, two large blurred washes, the watermark, the
+       * type, is painted through it, and while it is *animating* that repaint
+       * happens on every frame. Leaving the final `inset(0%)` on the element
+       * afterwards keeps the panel on the expensive paint path for the rest
+       * of the page's life for no visual gain: an inset of zero clips
+       * nothing, and the rounded corners come from `rounded-[2.5rem]` and
+       * `overflow-hidden` on the same element, not from the clip.
+       *
+       * So the reveal runs, and then the clip is removed entirely and the
+       * trigger is killed. Same for the item stagger and its transforms.
+       * `onScrubComplete` rather than `onUpdate` so the teardown waits for
+       * the half-second of scrub catch-up instead of cutting it short.
+       */
+      const retire = (targets, props) => (self) => {
+        if (self.progress < 1) return;
+        self.kill(false);
+        gsap.set(targets, { clearProps: props });
+      };
+
       gsap.fromTo(
         panel,
         { clipPath: "inset(6% 10% 6% 10% round 4rem)" },
@@ -60,6 +83,8 @@ export default function CtaBanner() {
             start: "top 85%",
             end: "top 35%",
             scrub: 0.5,
+            fastScrollEnd: true,
+            onScrubComplete: retire(panel, "clipPath"),
           },
         }
       );
@@ -74,6 +99,8 @@ export default function CtaBanner() {
           start: "top 75%",
           end: "top 30%",
           scrub: 0.6,
+          fastScrollEnd: true,
+          onScrubComplete: retire(items, "transform,opacity,willChange"),
         },
       });
 
@@ -93,7 +120,11 @@ export default function CtaBanner() {
             trigger: root.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            // A number, not `true`. Hard-linking a parallax layer to the
+            // scrollbar hands it every jitter in the wheel input, and these
+            // three layers are the slowest-moving thing in the section, which
+            // is exactly where that jitter is most visible.
+            scrub: 0.5,
           },
         });
       });

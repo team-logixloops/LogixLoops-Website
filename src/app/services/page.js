@@ -121,7 +121,14 @@ export default function ServicesOverviewPage() {
                   state on mobile stays clean. */}
               <Link
                 href={`/services/${service.slug}`}
-                className="glow-sweep group flex flex-col h-full rounded-2xl border border-outline-variant/30 bg-white/60 backdrop-blur-[24px] p-6 shadow-glass transition-[transform,background-color,border-color] duration-300 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-primary/30 motion-reduce:transform-none"
+                /* No `backdrop-blur` here, deliberately, and this is why the
+                   grid used to drag while you scrolled it. Eight cards each
+                   carrying a 24px backdrop filter means eight sample-and-blur
+                   passes, and because `AmbientGlows` is a *fixed* layer, what
+                   sits behind each card changes on every single scroll frame,
+                   so none of those passes can ever be cached. The cards sit on
+                   a near-white surface, so an opaque tint reads the same. */
+                className="glow-sweep group flex flex-col h-full rounded-2xl border border-outline-variant/30 bg-white/75 p-6 shadow-glass transition-[transform,background-color,border-color] duration-300 ease-out hover:-translate-y-1 hover:bg-white/95 hover:border-primary/30 motion-reduce:transform-none"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
                   <span className="material-symbols-outlined text-[22px]">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,6 +20,45 @@ gsap.registerPlugin(ScrollTrigger);
  * way. Desktop mouse/trackpad users get the eased Lenis scroll.
  */
 export default function SmoothScrollProvider({ children }) {
+  const pathname = usePathname();
+
+  /*
+   * ─── Landing at the top, on every arrival ───
+   *
+   * Two separate things were putting the reader in the middle of a page.
+   *
+   * A reload restores the previous scroll offset by default, and this site
+   * cannot honour that: the document's height is not known until fonts have
+   * swapped, images have decoded and every pinned ScrollTrigger has claimed
+   * its spacer, so the browser restores an offset measured against a page
+   * that no longer exists. `scrollRestoration = "manual"` opts out. It also
+   * opts out for the back button, which is the deliberate trade: landing at
+   * the top of a page that has re-laid-out is better than landing at an
+   * arbitrary point in it.
+   *
+   * A client-side navigation is the other one, and it is specific to running
+   * a smooth scroller. Next does scroll the window to the top, but Lenis
+   * holds its own `animatedScroll` and writes it back on the very next frame,
+   * so the new route immediately snapped to wherever the old one had been
+   * left. It has to be told directly, and told to jump rather than animate,
+   * hence `immediate`.
+   */
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    const lenis = window.lenis;
+    if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
+    else window.scrollTo(0, 0);
+
+    // Triggers were measured against the previous route's document. Nothing
+    // on the new one is in the place they think it is.
+    ScrollTrigger.refresh();
+  }, [pathname]);
+
   useEffect(() => {
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
     const prefersReducedMotion = window.matchMedia(
@@ -35,13 +75,24 @@ export default function SmoothScrollProvider({ children }) {
     }
 
     const lenis = new Lenis({
-      // `lerp`, not `duration`. Duration mode re-derives an eased tween from
-      // every wheel event, so a burst of them stacks up as a long tail of
-      // catch-up movement, which is the "heavy, still moving after I stopped"
-      // feel. A per-frame lerp settles in ~250ms and tracks the wheel.
-      lerp: 0.12,
+      /*
+       * `lerp`, not `duration`. Duration mode re-derives an eased tween from
+       * every wheel event, so a burst of them stacks into a long tail of
+       * catch-up movement, the "heavy, still moving after I stopped" feel.
+       * A per-frame lerp always chases one target and cannot stack.
+       *
+       * 0.09 is the glide. Higher reads as stiff, the scroller arrives almost
+       * with the wheel and there is no ease to feel; much lower and it floats
+       * away from the input. This is also the only knob that changes how
+       * scrolling *feels* as opposed to how fast it runs, so if it ever needs
+       * retuning, tune this and not the animations.
+       */
+      lerp: 0.09,
       smoothWheel: true,
       wheelMultiplier: 1,
+      // Native momentum on touch is already smooth and better than anything
+      // a rAF loop can fake; syncing it just fights the platform.
+      syncTouch: false,
     });
 
     lenis.on("scroll", ScrollTrigger.update);

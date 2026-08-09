@@ -83,7 +83,7 @@ export default function PricingPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {STARTING_PRICES.map((item, idx) => (
               <StaggerItem key={idx} className="relative z-10">
-                <div className="level-gauge h-full p-8 flex flex-col rounded-2xl transition-all duration-300 bg-surface-container-lowest/60 backdrop-blur-xl border border-outline-variant/30 hover:shadow-[0_30px_60px_-12px_rgba(0,23,75,0.1)] hover:border-primary/20 hover:-translate-y-2 group">
+                <div className="level-gauge h-full p-8 flex flex-col rounded-2xl transition-all duration-300 bg-surface-container-lowest/85 border border-outline-variant/30 hover:shadow-[0_30px_60px_-12px_rgba(0,23,75,0.1)] hover:border-primary/20 hover:-translate-y-2 group">
                 
                   <div className="w-12 h-12 rounded-xl bg-surface-variant flex items-center justify-center text-on-surface mb-6 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
                     <span className="material-symbols-outlined">{item.icon}</span>
@@ -128,7 +128,7 @@ export default function PricingPage() {
 
         {/* 3. Cost Drivers */}
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto mb-stack-xl relative z-10 w-full pt-12">
-          <div className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/20 rounded-3xl p-10 md:p-16 relative overflow-hidden">
+          <div className="bg-surface-container-lowest/70 border border-outline-variant/20 rounded-3xl p-10 md:p-16 relative overflow-hidden">
              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[80px] pointer-events-none -z-10"></div>
            
              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -173,7 +173,7 @@ export default function PricingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-xl p-8">
+            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 p-8">
               <h3 className="font-display text-[22px] text-on-surface font-semibold mb-3">
                 Dedicated Squad
               </h3>
@@ -197,7 +197,7 @@ export default function PricingPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-xl p-8">
+            <div className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 p-8">
               <h3 className="font-display text-[22px] text-on-surface font-semibold mb-3">
                 Scoped Programme
               </h3>
@@ -222,7 +222,7 @@ export default function PricingPage() {
             </div>
           </div>
 
-          <div className="mt-6 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/40 backdrop-blur-md p-8">
+          <div className="mt-6 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/70 p-8">
             <h3 className="font-display text-[22px] text-on-surface font-semibold mb-4">
               Included in every engagement
             </h3>
@@ -259,7 +259,7 @@ export default function PricingPage() {
             tabIndex={0}
             role="region"
             aria-label="Engagement model comparison, scrolls horizontally"
-            className="overflow-x-auto no-scrollbar rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-xl"
+            className="overflow-x-auto no-scrollbar rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85"
           >
             <table className="w-full border-collapse min-w-[640px]">
               <caption className="sr-only">
@@ -311,7 +311,7 @@ export default function PricingPage() {
             {PRICING_FAQS.map((faq) => (
               <div
                 key={faq.id}
-                className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-xl p-8"
+                className="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 p-8"
               >
                 <h3 className="font-display text-xl text-on-surface font-semibold mb-3">
                   {faq.question}

@@ -142,7 +142,7 @@ export default function ProcessPage() {
                 where a signed support agreement actually says it.
                 What is here now is how the work runs, which is true on day one
                 of every engagement and is what the page is about anyway. */}
-            <div className="level-gauge grid grid-cols-2 md:grid-cols-4 gap-gutter border border-white/40 shadow-glass-elevated bg-surface-container-lowest/60 backdrop-blur-2xl rounded-2xl p-8">
+            <div className="level-gauge grid grid-cols-2 md:grid-cols-4 gap-gutter border border-white/40 shadow-glass-elevated bg-surface-container-lowest/85 rounded-2xl p-8">
               <div className="text-center">
                 <div className="font-display text-display-lg text-primary mb-2">8</div>
                 <div className="font-label text-label-caps text-on-surface-variant uppercase">Phases, each with a gate</div>
@@ -165,7 +165,7 @@ export default function ProcessPage() {
 
         {/* 8. Final CTA */}
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center">
-          <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated relative overflow-hidden">
+          <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/85 shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
             <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Run your next build this way.</h2>
             <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Bring us the system and the deadline. We will tell you which of these models fits it, and where the risk actually is.</p>

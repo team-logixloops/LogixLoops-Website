@@ -378,6 +378,16 @@ export default function ViewportDemo({ color }) {
                 ref={frameRef}
                 title="LogixLoops, measured live"
                 src={withEmbedFlag("/")}
+                /*
+                 * This iframe boots a second, complete copy of the
+                 * application, React, GSAP, framer-motion, the hero canvas,
+                 * on the same main thread as the page you are reading. Eager,
+                 * it did that during the initial load of every visit to
+                 * /services/web-development, while the outer page was still
+                 * hydrating, and the demo sits most of a screen down. Lazy,
+                 * the browser holds it until you are near it.
+                 */
+                loading="lazy"
                 onLoad={() => {
                   measure();
                   nudgeFrame();

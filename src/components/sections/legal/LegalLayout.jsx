@@ -8,36 +8,76 @@ import Link from "next/link";
 export default function LegalLayout({ title, effectiveDate, description, sections, summary, children }) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || "");
 
+  /*
+   * Two things were wrong with this and both of them stuttered the scroll.
+   *
+   * The listener was not `passive`, so the browser had to wait to find out
+   * whether it would call `preventDefault` before it could scroll at all,
+   * on every event. And it read `offsetTop`/`offsetHeight` for every section
+   * inside the handler, which forces a synchronous layout each time, again on
+   * every event, on a page with a dozen-odd sections.
+   *
+   * Now: passive, coalesced to one pass per frame, and the geometry is
+   * measured once and re-measured only when the document can have changed.
+   */
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Offset for fixed header
-      
-      for (const section of sections) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section.id);
-            // We intentionally don't break here to ensure the last visible section becomes active
-          }
-        }
-      }
+    let frame = 0;
+    let bounds = [];
+
+    const measure = () => {
+      bounds = sections
+        .map(({ id }) => {
+          const element = document.getElementById(id);
+          if (!element) return null;
+          return { id, top: element.offsetTop, bottom: element.offsetTop + element.offsetHeight };
+        })
+        .filter(Boolean);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const update = () => {
+      frame = 0;
+      const position = window.scrollY + 150; // Offset for fixed header
+      // Last match wins, so a position inside overlapping boxes resolves to
+      // the section furthest down the page.
+      let current = null;
+      for (const section of bounds) {
+        if (position >= section.top && position < section.bottom) current = section.id;
+      }
+      if (current) setActiveSection(current);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    const onResize = () => {
+      measure();
+      onScroll();
+    };
+
+    measure();
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, [sections]);
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
     const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 100, // Offset for navbar
-        behavior: "smooth"
-      });
-      setActiveSection(id);
-    }
+    if (!element) return;
+
+    const top = element.offsetTop - 100; // Offset for navbar
+    // Lenis owns the scroll position from its own rAF loop, so a native
+    // `behavior: "smooth"` animation gets overwritten on the very next frame
+    // and the jump reads as broken. Ask the scroller that is actually driving.
+    if (window.lenis) window.lenis.scrollTo(top);
+    else window.scrollTo({ top, behavior: "smooth" });
+    setActiveSection(id);
   };
 
   return (

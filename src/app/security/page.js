@@ -44,7 +44,7 @@ export default function SecurityPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
             {SECURITY_PROTOCOLS.map((protocol, idx) => (
               <StaggerItem key={idx}>
-                <div className="cipher-lens p-8 border border-outline-variant/30 rounded-xl bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated hover:shadow-[0_20px_40px_rgba(55,140,231,0.06)] transition-all h-full flex flex-col justify-center relative overflow-hidden group">
+                <div className="cipher-lens p-8 border border-outline-variant/30 rounded-xl bg-surface-container-lowest/85 shadow-glass-elevated hover:shadow-[0_20px_40px_rgba(55,140,231,0.06)] transition-all h-full flex flex-col justify-center relative overflow-hidden group">
                   <div className="absolute inset-0 border-t border-l border-white/40 pointer-events-none rounded-xl"></div>
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
                     <span className="material-symbols-outlined text-[24px]">{protocol.icon}</span>
@@ -151,7 +151,7 @@ export default function SecurityPage() {
             <FadeInUp delay={0.2} className="mt-stack-lg">
               <div
                 aria-labelledby="security-commitments"
-                className="max-w-4xl mx-auto rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated p-8 sm:p-10"
+                className="max-w-4xl mx-auto rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 shadow-glass-elevated p-8 sm:p-10"
               >
                 <h3
                   id="security-commitments"
@@ -222,7 +222,7 @@ export default function SecurityPage() {
 
         {/* 4. Final CTA */}
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center">
-          <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated relative overflow-hidden">
+          <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/85 shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
             <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Got an audit coming?</h2>
             <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Tell us the framework and the deadline. We will tell you what in your architecture will fail it, and in what order to fix it.</p>

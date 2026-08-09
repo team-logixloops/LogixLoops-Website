@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { FOX_OUTLINE } from "@/lib/foxOutline";
+import { isEmbedded } from "@/lib/embed";
 
 /**
  * Responsive, cursor-reactive node mesh. Sized to its parent element
@@ -41,9 +42,18 @@ export default function ConstellationGrid({ className = "" }) {
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    /*
+     * `isEmbedded` counts as reduced motion here.
+     *
+     * The signature demo on /services/web-development runs the whole site
+     * inside an iframe, and that copy was running this physics loop at full
+     * rate, on the same main thread as the page containing it, to animate a
+     * mesh being displayed at about a third of its size behind a device
+     * bezel. One static frame is indistinguishable at that scale.
+     */
+    const prefersReducedMotion =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      isEmbedded();
 
     let animationFrameId;
     let width = 0;
