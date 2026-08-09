@@ -607,6 +607,20 @@
 
 .dispatch {
     position: relative;
+    /* The rail below is a straight 2px bar pinned to `top: 0` / `bottom: 0`,
+       but every element carrying this class is rounded, so at the corners the
+       bar was drawing where the card is not: it ran past the curve as two
+       square nibs standing off the top-left and bottom-left edges.
+
+       Clipping here is what keeps it inside the silhouette, and it has to be
+       on this element because `position: relative` makes it the containing
+       block for the absolutely positioned pseudo-element. `clip` rather than
+       `hidden`: the effect is identical for a box that never scrolls, and it
+       does not turn every one of these into a scroll container.
+
+       Four of the seven call sites are CTA panels that already carried
+       `overflow-hidden`, so this changes nothing for them. */
+    overflow: clip;
   }
 
 .dispatch:before {
