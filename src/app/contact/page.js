@@ -81,7 +81,7 @@ export default function ContactPage() {
                       <span className="material-symbols-outlined text-[16px] filled">mail</span>
                     </div>
                     <div>
-                      <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Email</h3>
+                      <h3 className="font-label text-[10px] text-on-surface-variant tracking-widest uppercase mb-0.5">Email</h3>
                       <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">logixloops@gmail.com</p>
                     </div>
                   </a>
@@ -95,7 +95,7 @@ export default function ContactPage() {
                       <span className="material-symbols-outlined text-[16px] filled">call</span>
                     </div>
                     <div>
-                      <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Support</h3>
+                      <h3 className="font-label text-[10px] text-on-surface-variant tracking-widest uppercase mb-0.5">Support</h3>
                       <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">{BRAND.phoneDisplay}</p>
                     </div>
                   </a>
@@ -119,7 +119,7 @@ export default function ContactPage() {
                         <span className="material-symbols-outlined text-[16px]">forum</span>
                       </div>
                       <div>
-                        <h3 className="font-label text-[10px] text-outline-variant tracking-widest uppercase mb-0.5">Priority WhatsApp</h3>
+                        <h3 className="font-label text-[10px] text-on-surface-variant tracking-widest uppercase mb-0.5">Priority WhatsApp</h3>
                         <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">{BRAND.phoneDisplay}</p>
                       </div>
                     </div>
@@ -129,36 +129,20 @@ export default function ContactPage() {
               </FadeInUp>
             </div>
 
-            {/* Bottom Row: Socials & Location inline */}
-            <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-outline-variant/30 pt-6">
-              {/* The LinkedIn button next to this one pointed at `#`. A social
-                  link that goes nowhere on the contact page is worse than one
-                  fewer icon, so it is gone until the profile exists. Add it
-                  back here, in `SOCIAL_LINKS`, and in the schema `sameAs` on
-                  the same day. */}
-              <div className="flex items-center gap-3">
-                <a href="https://www.instagram.com/logixloops.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
-                  <span className="material-symbols-outlined text-[16px]">photo_camera</span>
-                  <span className="font-body text-xs font-medium">Instagram</span>
-                </a>
-              </div>
+            {/* The Instagram button and the location pill both used to live
+                here. Removed on request. The markets line stays: it is the one
+                thing in this block a prospect outside Rajasthan needs, and it
+                is not an address.
 
-              {/* Both facts, together. The city is what a local search matches
-                  against; the markets are what stops a prospect in London
-                  assuming we only work in Rajasthan. */}
-              <div className="flex flex-col items-start sm:items-end gap-1">
-                <div className="flex items-center gap-1.5 bg-surface-variant/30 px-3 py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
-                  <span className="material-symbols-outlined text-primary text-[14px] filled">location_on</span>
-                  {/* From `BRAND`, not typed out. This string and the
-                      `PostalAddress` node in the schema have to be the same
-                      address, Google reconciles one against the other and
-                      reads a mismatch as two different businesses. */}
-                  <span className="font-body text-xs font-semibold text-on-surface">{BRAND.addressDisplay}</span>
-                </div>
-                <span className="font-body text-[11px] text-on-surface-variant">
-                  Working with teams in India, the US, the UK and the UAE
-                </span>
-              </div>
+                Note for whoever revisits this: the visible address was what
+                Google reconciled the `PostalAddress` node in the schema
+                against. With it gone from the page, nothing on the site states
+                the address in text. If the local listing matters, it belongs
+                in the footer. */}
+            <div className="mt-4 border-t border-outline-variant/30 pt-6">
+              <span className="font-body text-[11px] text-on-surface-variant">
+                Working with teams in India, the US, the UK and the UAE
+              </span>
             </div>
           </div>
 
