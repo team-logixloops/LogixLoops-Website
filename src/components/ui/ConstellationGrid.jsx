@@ -313,8 +313,8 @@ export default function ConstellationGrid({ className = "" }) {
     // dash travel, signed, the two run opposite ways, which is what stops
     // them reading as one thick line.
     const LOOP_BANDS = [
-      { at: 0.56, lineWidth: 1.6, alpha: 0.62, dash: [9, 9], speed: -100 },
-      { at: 0.87, lineWidth: 1, alpha: 0.26, dash: [3, 13], speed: 62 },
+      { at: 0.39, lineWidth: 1.6, alpha: 0.62, dash: [9, 9], speed: -100 },
+      { at: 0.61, lineWidth: 1, alpha: 0.26, dash: [3, 13], speed: 62 },
     ];
     let loopStrength = 0;
     let loopPhase = 0;
@@ -331,10 +331,6 @@ export default function ConstellationGrid({ className = "" }) {
 
       const R = pointer.radius;
       const spacing = getTuning(width).spacing;
-      // How far a mesh node may sit from an outline vertex and still capture
-      // it. Half the lattice spacing: wide enough that most vertices find a
-      // node, tight enough that the silhouette survives the detour.
-      const tolerance = spacing * 0.5;
 
       /*
        * Only nodes in the pointer's neighbourhood can be captured, so gather
@@ -352,6 +348,20 @@ export default function ConstellationGrid({ className = "" }) {
 
       for (const band of LOOP_BANDS) {
         const scale = R * band.at;
+
+        /*
+         * How far a mesh node may sit from an outline vertex and still capture
+         * it: wide enough that most vertices find a node, tight enough that
+         * the silhouette survives the detour.
+         *
+         * It has to scale with the band, not just with the lattice. Half the
+         * spacing is 27px against a fox that is now only ~170px across, so a
+         * fixed tolerance would let a single node drag a vertex a sixth of the
+         * way across the whole mark and the shape would stop reading as a fox.
+         * Capping it at a fraction of the band's own radius keeps the pull
+         * proportional to what is being drawn.
+         */
+        const tolerance = Math.min(spacing * 0.5, scale * 0.2);
 
         /*
          * Walk the fox outline, and pull each vertex toward the nearest mesh
