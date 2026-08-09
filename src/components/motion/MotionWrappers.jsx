@@ -33,6 +33,36 @@ const EASE = "power3.out";
 const clamp = (position) => `clamp(${position})`;
 
 /**
+ * Retire a reveal once it has finished revealing.
+ *
+ * This site has a scrubbed trigger on more or less every block on every page,
+ * and a scrubbed trigger is live for the entire life of the document: it is
+ * recalculated on every scroll frame, and while its tween holds a fractional
+ * opacity the element is stuck on its own compositing layer. Twenty sections
+ * down a page, the reader is paying for every reveal they have already
+ * scrolled past, on every frame, forever. That is most of what "the whole
+ * site feels heavy" was.
+ *
+ * A reveal has exactly one job and it is done when the element is on screen
+ * and in place, so at that point the trigger is killed and the inline
+ * `transform`/`opacity` GSAP wrote are cleared, which drops the layer too.
+ *
+ * `onScrubComplete`, not `onUpdate`: with `scrub` the tween trails the
+ * scrollbar by half a second, so tearing it down the instant scroll progress
+ * hits 1 would snap the last of the movement. This fires when the tween has
+ * actually caught up.
+ *
+ * The trade is that scrolling back up no longer un-reveals. That was never
+ * something a reader asked for, and content re-hiding as you scroll back to
+ * re-read it is the more common complaint of the two.
+ */
+const retireWhenRevealed = (targets) => (self) => {
+  if (self.progress < 1) return;
+  self.kill(false);
+  gsap.set(targets, { clearProps: "transform,opacity,willChange" });
+};
+
+/**
  * Core scroll-reveal hook backing every wrapper below. Every reveal on the
  * site runs through here, so this is the one place that decides what
  * "scrolling down the page" feels like.
@@ -126,6 +156,10 @@ function useScrollReveal(
             start: clamp(`top ${startPct}%`),
             end: clamp("top 38%"),
             scrub: 0.55,
+            // Fold the catch-up in at the end of a fast flick instead of
+            // letting it trail behind a scroll that has already stopped.
+            fastScrollEnd: true,
+            onScrubComplete: retireWhenRevealed(el),
           },
         });
 
@@ -258,6 +292,8 @@ export function StaggerContainer({ children, className, slow = false, ...props }
             // without the last row arriving after the first row is read.
             end: clamp("top 25%"),
             scrub: 0.55,
+            fastScrollEnd: true,
+            onScrubComplete: retireWhenRevealed(items),
           },
         }
       );

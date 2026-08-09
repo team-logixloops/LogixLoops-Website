@@ -184,7 +184,16 @@ export default function Navbar() {
               ? "rounded-full border-outline-variant/50 bg-surface/85 shadow-glass-elevated"
               : "rounded-none border-transparent border-b-outline-variant/20 bg-surface/60 shadow-glass"
           )}
-          style={{ backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}
+          /*
+           * 16px, not 40px. A backdrop filter is re-sampled and re-blurred
+           * every time anything behind *or inside* the bar paints, and its
+           * cost scales with the radius: at 40px a full-width bar was
+           * re-blurring a 2000px-wide strip on every scroll frame and on
+           * every nav hover, which is why the letter rolls stuttered. The
+           * bar sits on a translucent tint anyway, so past ~16px the extra
+           * radius is buying almost nothing visually.
+           */
+          style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
         >
           <div
             className={cn(
@@ -326,7 +335,7 @@ export default function Navbar() {
                 // radius in the other.
                 condensed ? "mt-2 rounded-3xl border" : "border-t"
               )}
-              style={{ backdropFilter: "blur(40px)", WebkitBackdropFilter: "blur(40px)" }}
+              style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
             >
               {(() => {
                 const activeLink = NAV_LINKS.find((l) => l.label === dropdownOpen);

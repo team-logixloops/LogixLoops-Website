@@ -61,6 +61,7 @@ export default function useWaveBend({
       let cancelled = false;
       let resizeTimer;
       let idleTimer;
+      let onTick;
 
       function measure() {
         const offsets = [];
@@ -84,6 +85,22 @@ export default function useWaveBend({
 
         layoutRef.current = { offsets, widths, totalTrackLength: cumulative };
       }
+
+      /*
+       * Both the bend tween and ScrollTrigger want to re-place the track, and
+       * during a scroll both fire in the same frame, so a direct call from
+       * each ran the whole placement pass twice for one paint. Each pass walks
+       * the track calling `getTotalLength` and two `getPointAtLength`s per
+       * image, and those force the browser to re-flatten a path that the morph
+       * has just rewritten.
+       *
+       * So callers mark the track dirty and the actual work happens once, on
+       * the GSAP ticker, after the morph for that frame has been applied.
+       */
+      let dirty = false;
+      const requestRender = () => {
+        dirty = true;
+      };
 
       // Frame order matters: caller must have already updated the path's
       // `d` (morph) before this runs, or images render one frame behind
@@ -152,9 +169,18 @@ export default function useWaveBend({
           ease: "power3.out",
           onUpdate: () => {
             morph.progress(bendState.bend);
-            render();
+            requestRender();
           },
         });
+
+        // Runs after GSAP's own tick, so any morph applied this frame is
+        // already on the path by the time the track is placed against it.
+        onTick = () => {
+          if (!dirty) return;
+          dirty = false;
+          render();
+        };
+        gsap.ticker.add(onTick);
 
         ScrollTrigger.create({
           trigger: pinRef.current,
@@ -175,7 +201,7 @@ export default function useWaveBend({
                 ? 0
                 : gsap.utils.clamp(0, 1, Math.abs(velocity) / maxVelocity);
             setBend(bend);
-            render(); // keeps travel live even while bend is holding steady
+            requestRender(); // keeps travel live even while bend is holding steady
 
             clearTimeout(idleTimer);
             idleTimer = setTimeout(() => setBend(0), IDLE_TIMEOUT);
@@ -214,6 +240,7 @@ export default function useWaveBend({
         cancelled = true;
         clearTimeout(resizeTimer);
         clearTimeout(idleTimer);
+        if (onTick) gsap.ticker.remove(onTick);
         window.removeEventListener("resize", onResize);
       };
     },

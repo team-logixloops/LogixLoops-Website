@@ -147,31 +147,77 @@ export default function WaveBend({
           ref={containerRef}
           className="h-screen w-full overflow-hidden flex items-center justify-center"
         >
+          {/*
+            Sized off the container's width, not off a fixed height.
+
+            It used to be `w-auto max-w-none` with a clamped height, which
+            rendered the 2577-unit-wide viewBox at up to 2577 CSS px and
+            centred it. On any viewport narrower than that, and every viewport
+            this branch runs on is narrower than that, roughly 650px of path
+            hung off each edge. The track still travelled that hidden stretch,
+            so segments spent a third of the pin off-canvas: you got a screen
+            with a cut-off word on it and nothing else, which is exactly what
+            it looked like.
+
+            `w-full h-auto` fits the whole path between the screen edges. The
+            type scales with it (135 viewBox units reads as ~67px at a 1280
+            viewport, ~100px at 1920), the wave keeps its proportions because
+            the viewBox aspect is preserved, and a word is only ever clipped
+            by the real edge of the screen, which is what a travelling band is
+            supposed to do.
+          */}
           <svg
             width="2577"
             height="391"
             viewBox="0 0 2577 391"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-auto max-w-none flex-shrink-0"
-            style={{ height: "clamp(220px, 32vw, 391px)" }}
+            className="w-full h-auto"
+            /*
+             * `overflow: visible` is what lets the lead-in and lead-out
+             * stretches of the path (see below) live outside the viewBox and
+             * still render. The pinned container is `overflow-hidden`, so the
+             * clip that matters still happens at the edge of the screen.
+             */
+            style={{ overflow: "visible" }}
           >
             <defs>
               <clipPath id={clipId} clipPathUnits="objectBoundingBox">
                 <rect width="1" height="1" rx=".08" ry=".08" />
               </clipPath>
             </defs>
+            {/*
+              Both paths run 700 units past each end of the viewBox.
+
+              `textPath` draws only the part of a string that actually fits on
+              its path: a word whose `startOffset` is negative loses the
+              characters before the path starts, and one running past the end
+              loses the characters after it. With the path ending exactly at
+              the edge of the screen, every word entering or leaving was being
+              sliced through the middle of a glyph, which is what a fast
+              scroll made obvious, it cut words in half at both edges.
+
+              The lead stretches move that slicing 700 units off-screen. Words
+              are complete for the whole time they are visible and are clipped
+              by the container's edge, like anything else scrolling past.
+
+              The leads are straight, and, importantly, they add one anchor at
+              each end of *both* paths, so the 1:1 anchor correspondence the
+              morph relies on is preserved: -700, 0, 644, 1288, 1932, 2576,
+              3276 on each. Break that pairing and the bend stops tracking the
+              wave's shape.
+            */}
             <path
               ref={lineRef}
               id={lineId}
-              d="M0 195H644H1288H1932H2576"
+              d="M-700 195H0H644H1288H1932H2576H3276"
               stroke="none"
               fill="none"
             />
             <path
               ref={waveRef}
               id={waveId}
-              d="M0.21875 190.5C0.21875 190.5 382.004 0.5 644.219 0.5C906.434 0.5 1051.3 78.1239 1288.22 190.5C1531.72 306 1668.87 390.5 1932.22 390.5C2195.57 390.5 2576.22 190.5 2576.22 190.5"
+              d="M-700 190.5H0.21875C0.21875 190.5 382.004 0.5 644.219 0.5C906.434 0.5 1051.3 78.1239 1288.22 190.5C1531.72 306 1668.87 390.5 1932.22 390.5C2195.57 390.5 2576.22 190.5 2576.22 190.5H3276"
               stroke="#FFF"
               fill="none"
               opacity="0"

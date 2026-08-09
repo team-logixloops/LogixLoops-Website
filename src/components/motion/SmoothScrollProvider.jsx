@@ -35,8 +35,11 @@ export default function SmoothScrollProvider({ children }) {
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+      // `lerp`, not `duration`. Duration mode re-derives an eased tween from
+      // every wheel event, so a burst of them stacks up as a long tail of
+      // catch-up movement, which is the "heavy, still moving after I stopped"
+      // feel. A per-frame lerp settles in ~250ms and tracks the wheel.
+      lerp: 0.12,
       smoothWheel: true,
       wheelMultiplier: 1,
     });
@@ -47,7 +50,25 @@ export default function SmoothScrollProvider({ children }) {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    const resizeObserver = new ResizeObserver(() => ScrollTrigger.refresh());
+    /*
+     * `ScrollTrigger.refresh()` re-measures every trigger on the page and
+     * re-runs every pin, so it is one of the most expensive things this site
+     * can do. Firing it straight from a ResizeObserver on <body> meant any
+     * width change fired it, and, worse, any refresh that itself nudged the
+     * body's box fired it again.
+     *
+     * So: height changes only (a hover that reflows a footer link must not
+     * cost a full refresh), coalesced to one call on an idle frame.
+     */
+    let refreshTimer;
+    let lastHeight = document.body.offsetHeight;
+    const resizeObserver = new ResizeObserver(() => {
+      const height = document.body.offsetHeight;
+      if (Math.abs(height - lastHeight) < 2) return;
+      lastHeight = height;
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    });
     resizeObserver.observe(document.body);
 
     // Exposed so things like the navbar's mega-menu / mobile menu can pause
@@ -56,6 +77,7 @@ export default function SmoothScrollProvider({ children }) {
     window.lenis = lenis;
 
     return () => {
+      clearTimeout(refreshTimer);
       resizeObserver.disconnect();
       gsap.ticker.remove(tick);
       lenis.destroy();

@@ -110,14 +110,26 @@ export default function CtaBanner() {
         {/* Immersive Background */}
         <div className="absolute inset-0 bg-surface-container-highest/30 z-0" />
 
-        {/* Colour washes */}
+        {/* Colour washes.
+            `will-change: transform` is not decoration here, it is what makes
+            the section scrollable at all. These are large blurred layers
+            being moved on scroll inside a panel whose clip-path is animating
+            at the same time; without the hint the browser re-runs both 100px
+            Gaussians on every frame of the scrub. Promoted, each blur is
+            rasterised once and the parallax is a compositor transform.
+
+            The radii came down with it (100→64, 120→80): the visual
+            difference at this scale is close to nil, and blur cost grows
+            with the radius. */}
         <div
           data-cta-wash="a"
-          className="absolute top-[-50%] left-[-20%] w-[70%] h-[200%] bg-gradient-to-r from-primary/30 to-secondary/30 blur-[100px] z-0 pointer-events-none"
+          className="absolute top-[-50%] left-[-20%] w-[70%] h-[200%] bg-gradient-to-r from-primary/30 to-secondary/30 blur-[64px] z-0 pointer-events-none"
+          style={{ willChange: "transform" }}
         />
         <div
           data-cta-wash="b"
-          className="absolute bottom-[-50%] right-[-20%] w-[60%] h-[200%] bg-gradient-to-l from-secondary/20 to-tertiary/20 blur-[120px] z-0 pointer-events-none"
+          className="absolute bottom-[-50%] right-[-20%] w-[60%] h-[200%] bg-gradient-to-l from-secondary/20 to-tertiary/20 blur-[80px] z-0 pointer-events-none"
+          style={{ willChange: "transform" }}
         />
 
         {/* Watermark, knockout so the washes read through the fur.
@@ -132,13 +144,19 @@ export default function CtaBanner() {
           loading="lazy"
           decoding="async"
           className="pointer-events-none select-none absolute -right-20 -bottom-24 w-[520px] max-w-none opacity-[0.06] z-0"
+          style={{ willChange: "transform" }}
         />
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           {/* Trust Indicator */}
           <div
             data-cta-item
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest/50 backdrop-blur-md border border-outline-variant/40 mb-8 shadow-sm"
+            /* Opaque tint rather than a backdrop blur. A backdrop filter has
+               to re-sample everything behind it whenever that changes, and
+               what is behind this is two blurred washes being parallaxed
+               inside a panel whose clip-path is animating. It was three
+               stacked per-frame costs to frost a pill 40px tall. */
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest/85 border border-outline-variant/40 mb-8 shadow-sm"
           >
             <span className="material-symbols-outlined text-primary text-[18px]">verified_user</span>
             {/* Two facts, not a grade. "Enterprise Grade Security & Scale" is
@@ -177,7 +195,7 @@ export default function CtaBanner() {
             <Button href="/contact" size="lg" className="w-full sm:w-auto px-10 shadow-btn-primary-lg text-[16px] h-14">
               Book a discovery call
             </Button>
-            <Button href="/services" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/40 backdrop-blur-md hover:bg-surface-container-lowest/80 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
+            <Button href="/services" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/70 hover:bg-surface-container-lowest/95 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
               See what we do
             </Button>
           </div>

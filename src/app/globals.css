@@ -69,13 +69,21 @@
   }
 }
 
-/* ─── Glassmorphism Utilities ─── */
+/* ─── Glassmorphism Utilities ───
+ *
+ * Every radius in here was halved (24→14, 32→18, 16→10, 24→10 on the ghost
+ * button, 12→8 on the outline one). A backdrop filter is the most expensive
+ * thing on this site by a wide margin: the browser has to copy what is behind
+ * the element, blur it, and composite it back, and it redoes that whenever
+ * anything behind it moves, which on a scrolling page is every frame. The
+ * cost grows with the radius, and above roughly 14px on a surface that is
+ * already 45% white the extra radius is not visible, it is only slower. */
 @layer utilities {
   /* Standard glass panel, cards, navbars, form containers */
   .glass-panel {
     background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-top: 1px solid rgba(255, 255, 255, 0.8);
     border-left: 1px solid rgba(255, 255, 255, 0.6);
     border-right: 1px solid rgba(195, 198, 215, 0.3);
@@ -85,8 +93,8 @@
   /* Elevated glass, modals, featured cards */
   .glass-elevated {
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(32px);
-    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-top: 1px solid rgba(255, 255, 255, 0.85);
     border-left: 1px solid rgba(255, 255, 255, 0.7);
     border-right: 1px solid rgba(195, 198, 215, 0.25);
@@ -97,8 +105,8 @@
   /* Subtle glass, background sections */
   .glass-subtle {
     background: rgba(243, 243, 254, 0.4);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
   }
 
@@ -125,8 +133,8 @@
   /* Ghost/glass button */
   .btn-ghost {
     background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.8);
     border-left: 1px solid rgba(255, 255, 255, 0.6);
     border-right: 1px solid rgba(195, 198, 215, 0.3);
@@ -148,8 +156,8 @@
   /* Outline button */
   .btn-outline {
     background: rgba(250, 248, 255, 0.5);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(195, 198, 215, 0.5);
     color: #004ac6;
     transition: all 0.3s ease;
@@ -1553,13 +1561,20 @@
  * lighting it. `data-distance` is capped at 3 by the component, which is the
  * last step that is still visible.
  *
- * `font-weight` rather than a class swap: Inter is a variable font, so the
- * axis interpolates and the transition is continuous. On a static font this
- * would snap between cuts, which is the effect this is trying not to be.
+ * The weight comes from `-webkit-text-stroke-width`, NOT from `font-weight`.
  *
- * A bolder glyph is a wider glyph, so the word does breathe by a pixel or two
- * as the ramp crosses it. That is the effect, not a layout fault; it is
- * bounded because the links are single short words.
+ * That is a performance decision, and it is the whole reason this reads as
+ * smooth. Animating `font-weight` re-shapes the text on every frame: each
+ * glyph gets a new advance width, so the character reflows, so the word
+ * reflows, so the link, the list, the column and the footer are all laid out
+ * again, sixty times a second, for every one of the forty-odd links in these
+ * four columns. Hovering the footer was measurably re-laying-out the page.
+ *
+ * A stroke thickens the glyph outline without touching its advance width. No
+ * reflow, no reshaping, paint only, and the ramp still interpolates
+ * continuously because a stroke width is a length. It also means the word no
+ * longer breathes sideways as the ramp crosses it, which the font-weight
+ * version did and which was never actually wanted.
  * ─────────────────────────────────────────────────────────────────────────── */
 
 .bubble-text {
@@ -1570,26 +1585,30 @@
   display: inline-block;
   white-space: pre;
   font-weight: 400;
-  transition: font-weight 0.3s ease, color 0.3s ease;
+  -webkit-text-stroke-width: 0;
+  transition: -webkit-text-stroke-width 0.28s ease, color 0.28s ease,
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .bubble-text__ch[data-distance="0"] {
-  font-weight: 800;
+  -webkit-text-stroke-width: 0.45px;
   color: #081d4a;
+  transform: translateY(-1px);
 }
 
 .bubble-text__ch[data-distance="1"] {
-  font-weight: 650;
+  -webkit-text-stroke-width: 0.3px;
   color: #2868c6;
+  transform: translateY(-0.5px);
 }
 
 .bubble-text__ch[data-distance="2"] {
-  font-weight: 550;
+  -webkit-text-stroke-width: 0.18px;
   color: #378ce7;
 }
 
 .bubble-text__ch[data-distance="3"] {
-  font-weight: 480;
+  -webkit-text-stroke-width: 0.08px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1602,8 +1621,9 @@
    bold. The links keep their own colour transition on those devices. */
 @media not all and (hover: hover) {
   .bubble-text__ch[data-distance] {
-    font-weight: 400;
+    -webkit-text-stroke-width: 0;
     color: inherit;
+    transform: none;
   }
 }
 

@@ -3,7 +3,22 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const STAGGER = 0.035;
+const STAGGER = 0.022;
+
+/*
+ * One shared transition object for every letter in every label on the page.
+ *
+ * The duration is explicit rather than left to the default: without it the
+ * roll ran 0.3s *plus* the stagger, so an eight-letter item was still
+ * arriving 0.58s after the pointer landed, which reads as lag rather than as
+ * a stagger. `delay` is the only thing that varies per letter, so it is
+ * spread over this base instead of building a new object per letter.
+ *
+ * `ease` is stated for the same reason it matters everywhere else here: with
+ * a named ease Motion treats this as a tween, and a tween on a transform is
+ * something the compositor can run without the main thread.
+ */
+const ROLL = { duration: 0.32, ease: [0.33, 1, 0.68, 1] };
 
 /**
  * LOGIXLOOPS: Text Roll
@@ -56,6 +71,11 @@ export default function TextRoll({ children, className, center = false }) {
       whileHover="hovered"
       whileFocus="hovered"
       className={cn("relative inline-block overflow-hidden leading-none", className)}
+      // Fences the rolling letters off from the rest of the bar. Without it
+      // every frame of the roll dirties the navbar's whole layer, and the
+      // navbar carries a backdrop filter, so the browser re-blurs the strip
+      // behind it for each one.
+      style={{ contain: "layout paint" }}
     >
       <span className="sr-only">{text}</span>
 
@@ -63,9 +83,9 @@ export default function TextRoll({ children, className, center = false }) {
         {letters.map((character, index) => (
           <motion.span
             key={index}
-            className="inline-block"
+            className="inline-block will-change-transform"
             variants={{ initial: { y: 0 }, hovered: { y: "-100%" } }}
-            transition={{ ease: "easeInOut", delay: delayFor(index) }}
+            transition={{ ...ROLL, delay: delayFor(index) }}
           >
             {glyph(character)}
           </motion.span>
@@ -76,9 +96,9 @@ export default function TextRoll({ children, className, center = false }) {
         {letters.map((character, index) => (
           <motion.span
             key={index}
-            className="inline-block"
+            className="inline-block will-change-transform"
             variants={{ initial: { y: "100%" }, hovered: { y: 0 } }}
-            transition={{ ease: "easeInOut", delay: delayFor(index) }}
+            transition={{ ...ROLL, delay: delayFor(index) }}
           >
             {glyph(character)}
           </motion.span>

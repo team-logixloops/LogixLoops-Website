@@ -14,6 +14,21 @@ import { FOX_OUTLINE } from "@/lib/foxOutline";
  * (not just mouse) events so the shockwave effect works on mobile too.
  * `prefers-reduced-motion` disables the physics loop entirely and
  * renders a single static frame.
+ *
+ * Three things in here exist purely to keep the frame cheap, because this
+ * canvas shares the main thread with Lenis and every ScrollTrigger on the
+ * page, and anything it overspends shows up as scroll jank:
+ *
+ *   - Connections are drawn from a precomputed neighbour list, not from an
+ *     all-pairs scan. The lattice is a grid, so which nodes can ever be
+ *     within `maxConn` of each other is known at build time; the full scan
+ *     was ~230k distance tests a frame on a desktop hero.
+ *   - Lines and resting nodes are batched into a handful of paths by
+ *     quantised alpha. One `beginPath`/`stroke` per bucket instead of one
+ *     per segment turns a few thousand draw calls into about a dozen.
+ *   - The canvas rect is cached and only re-read when something can have
+ *     moved it. Reading it inside `mousemove` forced a synchronous layout
+ *     on every pointer event while Lenis was mid-scroll.
  */
 export default function ConstellationGrid({ className = "" }) {
   const canvasRef = useRef(null);
@@ -34,6 +49,10 @@ export default function ConstellationGrid({ className = "" }) {
     let width = 0;
     let height = 0;
     let nodes = [];
+    // Flat pairs list, [aIndex, bIndex, aIndex, bIndex, ...]. A typed array
+    // rather than an array of tuples: it is walked every frame and this keeps
+    // it in one contiguous block with no per-pair object to chase.
+    let pairs = new Int32Array(0);
 
     const pointer = {
       x: -1000,
@@ -46,6 +65,14 @@ export default function ConstellationGrid({ className = "" }) {
       active: false,
     };
 
+    // Last known viewport coordinates of the pointer, converted to canvas
+    // space in the render loop against a cached rect.
+    let clientX = -1000;
+    let clientY = -1000;
+    let rectLeft = 0;
+    let rectTop = 0;
+    let rectDirty = true;
+
     // Responsive tuning, coarser grid + smaller interaction radius on
     // narrow viewports, both for perf and so the effect doesn't feel
     // cramped on small screens.
@@ -54,6 +81,29 @@ export default function ConstellationGrid({ className = "" }) {
       if (w < 1024) return { spacing: 64, pointerRadius: 170, maxConn: 68 };
       return { spacing: 55, pointerRadius: 220, maxConn: 75 };
     };
+
+    /*
+     * Which lattice offsets can ever produce a connection.
+     *
+     * At rest a node's neighbour at (di, dj) sits `spacing * hypot(di, dj)`
+     * away, and only pairs under `maxConn` are ever drawn. Nodes do move,
+     * they are sprung, so the candidate set is deliberately wider than the
+     * resting geometry needs: any offset within roughly 2.3 lattice steps can
+     * close the gap under a hard cursor sweep. Everything further apart than
+     * that physically cannot reach `maxConn`, so it is not worth a test.
+     */
+    const NEIGHBOUR_OFFSETS = [
+      [0, 1],
+      [1, 0],
+      [1, 1],
+      [1, -1],
+      [0, 2],
+      [2, 0],
+      [1, 2],
+      [2, 1],
+      [1, -2],
+      [2, -1],
+    ];
 
     const initNodes = () => {
       const { spacing } = getTuning(width);
@@ -77,6 +127,21 @@ export default function ConstellationGrid({ className = "" }) {
           });
         }
       }
+
+      // Index of node (i, j) is i * rows + j, matching the fill order above.
+      const list = [];
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const a = i * rows + j;
+          for (const [di, dj] of NEIGHBOUR_OFFSETS) {
+            const ni = i + di;
+            const nj = j + dj;
+            if (ni < 0 || ni >= cols || nj < 0 || nj >= rows) continue;
+            list.push(a, ni * rows + nj);
+          }
+        }
+      }
+      pairs = Int32Array.from(list);
     };
 
     const resize = () => {
@@ -91,17 +156,23 @@ export default function ConstellationGrid({ className = "" }) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
       pointer.radius = getTuning(width).pointerRadius;
+      rectDirty = true;
       initNodes();
     };
 
-    const setPointer = (clientX, clientY) => {
-      const rect = canvas.getBoundingClientRect();
-      pointer.x = clientX - rect.left;
-      pointer.y = clientY - rect.top;
+    const markRectDirty = () => {
+      rectDirty = true;
+    };
+
+    const setPointer = (x, y) => {
+      clientX = x;
+      clientY = y;
       pointer.active = true;
     };
 
     const clearPointer = () => {
+      clientX = -1e5;
+      clientY = -1e5;
       pointer.x = -1000;
       pointer.y = -1000;
       pointer.active = false;
@@ -119,8 +190,12 @@ export default function ConstellationGrid({ className = "" }) {
     resizeObserver.observe(container);
     resize();
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mouseleave", handleMouseLeave);
+    // The canvas moves under the pointer while the page scrolls, so the
+    // cached rect has to be invalidated, but the read itself is deferred to
+    // the next frame rather than done here.
+    window.addEventListener("scroll", markRectDirty, { passive: true });
     canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
     canvas.addEventListener("touchend", handleTouchEnd);
     canvas.addEventListener("touchcancel", handleTouchEnd);
@@ -137,12 +212,13 @@ export default function ConstellationGrid({ className = "" }) {
     const drawStaticFrame = () => {
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = `rgba(${nodeColor}, 0.3)`;
+      ctx.beginPath();
       for (const n of nodes) {
-        ctx.fillStyle = `rgba(${nodeColor}, 0.3)`;
-        ctx.beginPath();
+        ctx.moveTo(n.x + n.radius, n.y);
         ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-        ctx.fill();
       }
+      ctx.fill();
     };
 
     // Paint immediately so the canvas is never a blank frame while the
@@ -150,16 +226,17 @@ export default function ConstellationGrid({ className = "" }) {
     // (async) callback.
     drawStaticFrame();
 
-    if (prefersReducedMotion) {
-      return () => {
-        resizeObserver.disconnect();
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("mouseleave", handleMouseLeave);
-        canvas.removeEventListener("touchmove", handleTouchMove);
-        canvas.removeEventListener("touchend", handleTouchEnd);
-        canvas.removeEventListener("touchcancel", handleTouchEnd);
-      };
-    }
+    const teardownStatic = () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("scroll", markRectDirty);
+      canvas.removeEventListener("touchmove", handleTouchMove);
+      canvas.removeEventListener("touchend", handleTouchEnd);
+      canvas.removeEventListener("touchcancel", handleTouchEnd);
+    };
+
+    if (prefersReducedMotion) return teardownStatic;
 
     let lastTime = performance.now();
     let isRunning = false;
@@ -287,18 +364,21 @@ export default function ConstellationGrid({ className = "" }) {
 
           let bestX = idealX;
           let bestY = idealY;
-          let bestErr = Infinity;
+          // Compared squared, square-rooted once at the end. This is the
+          // innermost loop in the whole effect.
+          let bestErrSq = Infinity;
           for (const n of near) {
             const dx = n.x - idealX;
             const dy = n.y - idealY;
-            const err = Math.sqrt(dx * dx + dy * dy);
-            if (err < bestErr) {
-              bestErr = err;
+            const errSq = dx * dx + dy * dy;
+            if (errSq < bestErrSq) {
+              bestErrSq = errSq;
               bestX = n.x;
               bestY = n.y;
             }
           }
 
+          const bestErr = Math.sqrt(bestErrSq);
           if (bestErr >= tolerance) {
             ring.push({ x: idealX, y: idealY });
             continue;
@@ -341,9 +421,35 @@ export default function ConstellationGrid({ className = "" }) {
       ctx.lineDashOffset = 0;
     };
 
+    /*
+     * Connection lines and resting nodes are bucketed by alpha instead of
+     * being drawn one draw-call at a time. Every `strokeStyle`/`fillStyle`
+     * write is a CSS colour parse and a state flush, so a few thousand of
+     * them a frame cost far more than the geometry does. Six steps is below
+     * what the eye resolves on a 0.18-alpha hairline.
+     */
+    const LINE_BUCKETS = 6;
+    const NODE_BUCKETS = 8;
+    const lineBuckets = Array.from({ length: LINE_BUCKETS }, () => []);
+    const nodeBuckets = Array.from({ length: NODE_BUCKETS }, () => []);
+    const litNodes = [];
+
     const render = (now) => {
       const dt = Math.min((now - lastTime) / 1000, 0.05);
       lastTime = now;
+
+      // One rect read per frame at most, and only when something has
+      // actually moved the canvas.
+      if (rectDirty) {
+        const rect = canvas.getBoundingClientRect();
+        rectLeft = rect.left;
+        rectTop = rect.top;
+        rectDirty = false;
+      }
+      if (pointer.active) {
+        pointer.x = clientX - rectLeft;
+        pointer.y = clientY - rectTop;
+      }
 
       pointer.vx = (pointer.x - pointer.prevX) / (dt * 1000 || 1);
       pointer.vy = (pointer.y - pointer.prevY) / (dt * 1000 || 1);
@@ -357,20 +463,23 @@ export default function ConstellationGrid({ className = "" }) {
 
       const SPRING_K = 18;
       const DAMPING = 0.82;
+      const pointerRadiusSq = pointer.radius * pointer.radius;
 
       for (const n of nodes) {
         n.pulse += dt * 3;
 
         const dx = pointer.x - n.x;
         const dy = pointer.y - n.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const distSq = dx * dx + dy * dy;
 
-        if (dist < pointer.radius && dist > 0) {
+        if (distSq < pointerRadiusSq && distSq > 0) {
+          const dist = Math.sqrt(distSq);
           const power = 1 - dist / pointer.radius;
           const force = power * (1500 + speed * 150);
-          const angle = Math.atan2(dy, dx);
-          n.vx -= Math.cos(angle) * force * dt;
-          n.vy -= Math.sin(angle) * force * dt;
+          // The unit vector straight off the delta, no atan2 + cos/sin round
+          // trip to recover what we already have.
+          n.vx -= (dx / dist) * force * dt;
+          n.vy -= (dy / dist) * force * dt;
         }
 
         const homeDx = n.baseX - n.x;
@@ -386,24 +495,35 @@ export default function ConstellationGrid({ className = "" }) {
       const { maxConn } = getTuning(width);
       const maxConnSq = maxConn * maxConn;
 
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        for (let j = i + 1; j < nodes.length; j++) {
-          const n2 = nodes[j];
-          const ndx = n.x - n2.x;
-          const ndy = n.y - n2.y;
-          const distSq = ndx * ndx + ndy * ndy;
-          if (distSq < maxConnSq) {
-            const nDist = Math.sqrt(distSq);
-            const alpha = (1 - nDist / maxConn) * 0.18;
-            ctx.strokeStyle = `rgba(${nodeColor}, ${alpha})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(n.x, n.y);
-            ctx.lineTo(n2.x, n2.y);
-            ctx.stroke();
-          }
+      for (const bucket of lineBuckets) bucket.length = 0;
+
+      for (let p = 0; p < pairs.length; p += 2) {
+        const n = nodes[pairs[p]];
+        const n2 = nodes[pairs[p + 1]];
+        const ndx = n.x - n2.x;
+        const ndy = n.y - n2.y;
+        const distSq = ndx * ndx + ndy * ndy;
+        if (distSq >= maxConnSq) continue;
+        const nDist = Math.sqrt(distSq);
+        const strength = 1 - nDist / maxConn;
+        const bucket =
+          lineBuckets[Math.min(LINE_BUCKETS - 1, (strength * LINE_BUCKETS) | 0)];
+        bucket.push(n.x, n.y, n2.x, n2.y);
+      }
+
+      ctx.lineWidth = 0.7;
+      for (let b = 0; b < LINE_BUCKETS; b++) {
+        const seg = lineBuckets[b];
+        if (seg.length === 0) continue;
+        // Midpoint of the bucket's strength range, scaled by the same 0.18
+        // ceiling the per-line version used.
+        ctx.strokeStyle = `rgba(${nodeColor}, ${(((b + 0.5) / LINE_BUCKETS) * 0.18).toFixed(3)})`;
+        ctx.beginPath();
+        for (let i = 0; i < seg.length; i += 4) {
+          ctx.moveTo(seg[i], seg[i + 1]);
+          ctx.lineTo(seg[i + 2], seg[i + 3]);
         }
+        ctx.stroke();
       }
 
       /*
@@ -412,15 +532,55 @@ export default function ConstellationGrid({ className = "" }) {
        * accent at full size, which drew a hard-edged blue cloud with a
        * visible circular edge, it read as a rendering artefact rather than
        * as attention following the cursor.
+       *
+       * Only the lit nodes, the handful actually under the cursor, are worth
+       * their own colour; everything at rest differs by nothing but the
+       * pulse, so it goes through the same alpha buckets the lines use.
        */
+      for (const bucket of nodeBuckets) bucket.length = 0;
+      litNodes.length = 0;
+
       for (const n of nodes) {
+        const dx = pointer.x - n.x;
+        const dy = pointer.y - n.y;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < pointerRadiusSq) {
+          litNodes.push(n);
+          continue;
+        }
+
+        // 0.14 – 0.30, the resting alpha band.
+        const restAlpha = 0.22 + Math.sin(n.pulse) * 0.08;
+        const index = Math.min(
+          NODE_BUCKETS - 1,
+          Math.max(0, (((restAlpha - 0.14) / 0.16) * NODE_BUCKETS) | 0)
+        );
+        nodeBuckets[index].push(n.x, n.y, n.radius + Math.sin(n.pulse) * 0.3);
+      }
+
+      for (let b = 0; b < NODE_BUCKETS; b++) {
+        const list = nodeBuckets[b];
+        if (list.length === 0) continue;
+        const alpha = 0.14 + ((b + 0.5) / NODE_BUCKETS) * 0.16;
+        ctx.fillStyle = `rgba(${nodeColor}, ${alpha.toFixed(3)})`;
+        ctx.beginPath();
+        for (let i = 0; i < list.length; i += 3) {
+          const r = Math.max(0.5, list[i + 2]);
+          ctx.moveTo(list[i] + r, list[i + 1]);
+          ctx.arc(list[i], list[i + 1], r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      for (const n of litNodes) {
         const dx = pointer.x - n.x;
         const dy = pointer.y - n.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         // Cubed so the lit core stays tight and the edge dissolves instead
         // of ending.
-        const t = dist < pointer.radius ? Math.pow(1 - dist / pointer.radius, 3) : 0;
+        const t = Math.pow(1 - dist / pointer.radius, 3);
 
         const restAlpha = 0.22 + Math.sin(n.pulse) * 0.08;
         const alpha = restAlpha + (0.9 - restAlpha) * t;
@@ -450,12 +610,7 @@ export default function ConstellationGrid({ className = "" }) {
       stop();
       intersectionObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      resizeObserver.disconnect();
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
-      canvas.removeEventListener("touchmove", handleTouchMove);
-      canvas.removeEventListener("touchend", handleTouchEnd);
-      canvas.removeEventListener("touchcancel", handleTouchEnd);
+      teardownStatic();
     };
   }, []);
 

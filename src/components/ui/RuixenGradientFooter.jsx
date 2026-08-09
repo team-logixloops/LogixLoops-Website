@@ -6,7 +6,7 @@
 // scroll, hitting full height exactly when you reach the end of the page.
 // One inline <svg>, no canvas, no giant scroll spacer.
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef } from "react";
 
 const VBW = 1271;
 const VBH = 599;
@@ -55,26 +55,55 @@ export function RuixenGradientFooter({
 }) {
   const uid = useId().replace(/:/g, "");
   const bandRef = useRef(null);
-  const [progress, setProgress] = useState(minReveal);
 
+  /*
+   * The reveal is written straight to the node's transform, never to state.
+   *
+   * This used to `setProgress` on every scroll event, which re-rendered the
+   * whole footer, its four link columns and every per-character span in them,
+   * on every frame of every scroll on every page. That is what a "heavy"
+   * scroll near the bottom of the page was.
+   *
+   * The height is also cached rather than read per scroll: `offsetHeight` on
+   * a fixed element forces a synchronous layout, and reading it mid-scroll
+   * turns one paint into a layout-then-paint.
+   */
   useEffect(() => {
     const el = bandRef.current;
     if (!el) return;
     const doc = el.ownerDocument;
     const win = doc.defaultView ?? window;
-    const measure = () => {
-      const h = el.offsetHeight || 1;
+
+    let bandHeight = el.offsetHeight || 1;
+    let frame = 0;
+
+    const write = () => {
+      frame = 0;
       const left =
         doc.documentElement.scrollHeight - win.innerHeight - win.scrollY;
-      const t = clamp01((h - left) / h);
-      setProgress(minReveal + (1 - minReveal) * t);
+      const t = clamp01((bandHeight - left) / bandHeight);
+      const progress = minReveal + (1 - minReveal) * t;
+      el.style.transform = `scaleY(${progress.toFixed(4)})`;
     };
-    measure();
-    win.addEventListener("scroll", measure, { passive: true });
-    win.addEventListener("resize", measure, { passive: true });
+
+    // Coalesced to one write per frame: wheel and Lenis both emit scroll
+    // faster than the compositor paints.
+    const onScroll = () => {
+      if (!frame) frame = win.requestAnimationFrame(write);
+    };
+
+    const onResize = () => {
+      bandHeight = el.offsetHeight || 1;
+      onScroll();
+    };
+
+    write();
+    win.addEventListener("scroll", onScroll, { passive: true });
+    win.addEventListener("resize", onResize, { passive: true });
     return () => {
-      win.removeEventListener("scroll", measure);
-      win.removeEventListener("resize", measure);
+      if (frame) win.cancelAnimationFrame(frame);
+      win.removeEventListener("scroll", onScroll);
+      win.removeEventListener("resize", onResize);
     };
   }, [minReveal]);
 
@@ -112,8 +141,11 @@ export function RuixenGradientFooter({
           height: gradientHeight,
           pointerEvents: "none",
           transformOrigin: "bottom",
-          transform: `scaleY(${progress})`,
+          transform: `scaleY(${minReveal})`,
           willChange: "transform",
+          // Nothing outside this band can be affected by it, so the browser
+          // does not need to consider the rest of the page when it repaints.
+          contain: "layout paint style",
         }}
       >
         <svg
@@ -133,17 +165,24 @@ export function RuixenGradientFooter({
               <feGaussianBlur stdDeviation={blur} />
             </filter>
           </defs>
-          {bellHeights(bars, peak, valley).map((barH, i) => (
-            <g key={i} filter={`url(#blur-${uid})`}>
+          {/* One filter region for the whole bell, not one per bar. A
+              Gaussian is rasterised per filtered element, so nine <g>s each
+              carrying the same blur meant nine full-size blur passes every
+              time the band re-rasterised. The bars overlap anyway (1.23 ×
+              column width), so blurring them as one group is also what the
+              glow was always meant to look like. */}
+          <g filter={`url(#blur-${uid})`}>
+            {bellHeights(bars, peak, valley).map((barH, i) => (
               <rect
+                key={i}
                 x={i * colW}
                 y={VBH - barH}
                 width={colW * 1.23}
                 height={barH}
                 fill={`url(#grad-${uid})`}
               />
-            </g>
-          ))}
+            ))}
+          </g>
         </svg>
       </div>
     </footer>

@@ -1,8 +1,9 @@
 import { Inter, Bricolage_Grotesque, Oswald } from "next/font/google";
-import { Navbar, Footer, AmbientGlows, EmbedFlag, PointerLens } from "@/components/layout";
+import { Navbar, Footer, AmbientGlows, EmbedFlag, PointerLens, Preloader } from "@/components/layout";
 import { GooFilter } from "@/components/ui";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
+import { PRELOADER_GATE_SCRIPT } from "@/components/layout/preloader-gate";
 import { generateOrganizationSchema } from "@/lib/schema";
 import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 import "./globals.css";
@@ -144,6 +145,18 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
         className="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col relative overflow-x-clip"
       >
+        {/* Covers the page on the first route of a tab's session and on every
+            return to the homepage. Outside SmoothScrollProvider on purpose:
+            it locks and releases Lenis itself, and it must be the first thing
+            in <body> so the overlay is in the document before anything below
+            it can paint. */}
+        <Preloader />
+        {/* The gate has to sit after the overlay — the element it hides must
+            exist by the time it runs — and it has to be rendered from here,
+            because React 19 refuses script tags inside client components and
+            an inline script's whole job happens during HTML parse anyway. */}
+        <script dangerouslySetInnerHTML={{ __html: PRELOADER_GATE_SCRIPT }} />
+
         <SmoothScrollProvider>
           {/* Marks this document as the embedded copy when it is running
               inside a signature demo's iframe. Renders nothing. */}
