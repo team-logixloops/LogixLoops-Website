@@ -13,9 +13,12 @@ export default function Error({ error, reset }) {
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-margin-x-mobile text-center">
       <div className="w-20 h-20 bg-error/10 rounded-full flex items-center justify-center mb-6 relative">
         <div className="absolute inset-0 bg-error/20 blur-xl rounded-full animate-pulse"></div>
-        <span className="material-symbols-outlined text-error text-[40px] relative z-10">warning</span>
+        <span className="material-symbols-outlined text-error icon-lg relative z-10">warning</span>
       </div>
-      <h2 className="font-display text-display-md text-on-surface mb-4">
+      {/* `display-md` was never defined in the scale, so this rendered at the
+          browser default. `headline-lg` is the right weight for an error
+          heading, it should not compete with a page title. */}
+      <h2 className="font-display text-headline-lg text-on-surface mb-4">
         System Desynchronization
       </h2>
       <p className="font-body text-body-lg text-on-surface-variant max-w-md mb-8">

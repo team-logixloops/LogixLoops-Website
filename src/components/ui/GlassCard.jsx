@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { hoverLift, tapScale } from "@/lib/animations";
 
 /**
- * GlassCard — The core card component for the LogixLoops design system.
+ * GlassCard. The core card component for the LogixLoops design system.
  *
  * Variants:
  *  - default:   Standard glassmorphism card
@@ -15,7 +15,7 @@ import { hoverLift, tapScale } from "@/lib/animations";
  *
  * Props:
  *  - hover: "lift" | "glow" | "border" | "none"
- *  - animated: boolean — enables whileHover animation
+ *  - animated: boolean, enables whileHover animation
  *  - padding: "sm" | "md" | "lg" | "xl" (default: "lg")
  */
 const paddingMap = {
@@ -69,7 +69,7 @@ export default function GlassCard({
     className
   );
 
-  const spotlightBackground = useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, rgba(0, 74, 198, 0.08), transparent 80%)`;
+  const spotlightBackground = useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, rgba(40, 104, 198, 0.08), transparent 80%)`;
 
   const spotlightOverlayNode = (
     <motion.div

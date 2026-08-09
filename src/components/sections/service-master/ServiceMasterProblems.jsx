@@ -1,34 +1,42 @@
 "use client";
 
+import { SectionHeader } from "@/components/ui";
 import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { cn } from "@/lib/utils";
+import { SECTION, CARD, CARD_PAD, accent, pad } from "./tokens";
 
 export default function ServiceMasterProblems({ problems, color }) {
-  if (!problems || problems.length === 0) return null;
+  if (!problems?.length) return null;
+  const a = accent(color);
 
   return (
-    <section className="py-stack-xl px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto border-t border-outline-variant/30">
+    <section className={SECTION}>
       <FadeInUp>
-        <h2 className="font-display text-headline-md text-on-surface mb-stack-md text-center">Overcoming Engineering Hurdles</h2>
+        <SectionHeader
+          overline="Challenges"
+          title="What We Solve"
+          description="The recurring engineering hurdles this practice is built to remove."
+        />
       </FadeInUp>
-      
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-12">
-        {problems.map((prob, i) => (
-          <StaggerItem key={i}>
-            <div className="bg-white/60 backdrop-blur-[24px] border border-white/80 p-8 rounded-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-300 h-full group">
-              <div className={cn(
-                "w-12 h-12 rounded-full flex items-center justify-center mb-6 transition-colors",
-                i === 0 ? "bg-primary/10 text-primary group-hover:bg-primary/20" : 
-                i === 1 ? "bg-secondary/10 text-secondary group-hover:bg-secondary/20" : 
-                "bg-tertiary/10 text-tertiary group-hover:bg-tertiary/20"
-              )}>
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  {i === 0 ? "architecture" : i === 1 ? "speed" : "group"}
-                </span>
-              </div>
-              <h3 className="font-display text-headline-md text-xl mb-4 text-on-surface">{prob.title || prob}</h3>
+
+      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter mt-stack-lg">
+        {problems.map((problem, i) => (
+          <StaggerItem key={problem.title}>
+            <div className={cn(CARD, CARD_PAD, a.hover)}>
+              <span
+                className={cn(
+                  "font-label text-label-caps tracking-widest mb-6 inline-flex h-10 w-10 items-center justify-center rounded-full",
+                  a.soft,
+                  a.text
+                )}
+              >
+                {pad(i)}
+              </span>
+              <h3 className="font-heading text-headline-md text-xl mb-3 text-on-surface">
+                {problem.title}
+              </h3>
               <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
-                {prob.desc || prob}
+                {problem.desc}
               </p>
             </div>
           </StaggerItem>

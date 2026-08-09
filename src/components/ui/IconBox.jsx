@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * IconBox — Rounded icon container used throughout the design system.
+ * IconBox. Rounded icon container used throughout the design system.
  * Wraps a Material Symbols icon with a tinted background circle/square.
  *
  * Props:

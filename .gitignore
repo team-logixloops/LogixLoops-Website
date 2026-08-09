@@ -16,6 +16,10 @@
 # next.js
 /.next/
 /out/
+# metadata route shims the build writes back into src/app; regenerated every
+# `next build`, so tracking them just produces churn.
+*--route-entry.js
+*--metadata.js
 
 # production
 /build
@@ -32,6 +36,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...but the template carries no secrets and is the only record of which keys
+# the SMTP demo route needs, so it has to stay tracked.
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +46,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# brand pipeline: fetched typefaces are ~3MB and reproducible via
+# `python scripts/brand/fetch_fonts.py`, so they stay out of the repo.
+scripts/brand/fonts/
+__pycache__/

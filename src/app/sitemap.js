@@ -3,16 +3,14 @@ import { getAllPosts } from "@/data/blog";
 import { getAllCaseStudies } from "@/data/caseStudies";
 
 export default function sitemap() {
-  const baseUrl = "https://logixloops.com";
+  const baseUrl = "https://logixloops.in";
 
   // Static routes
   const staticRoutes = [
     "",
     "/about",
     "/services",
-    "/solutions",
     "/case-studies",
-    "/careers",
     "/blog",
     "/pricing",
     "/faq",

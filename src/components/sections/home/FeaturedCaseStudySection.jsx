@@ -75,10 +75,10 @@ export default function FeaturedCaseStudySection() {
                    <div className="flex-1 rounded-lg bg-surface-container w-full relative overflow-hidden">
                      {/* Map lines abstraction */}
                      <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
-                       <path d="M10,50 Q30,20 50,50 T90,50" fill="none" stroke="#004ac6" strokeWidth="2" strokeDasharray="4 4" />
-                       <circle cx="10" cy="50" r="3" fill="#004ac6" />
-                       <circle cx="50" cy="50" r="3" fill="#004ac6" />
-                       <circle cx="90" cy="50" r="3" fill="#004ac6" />
+                       <path d="M10,50 Q30,20 50,50 T90,50" fill="none" stroke="#2868c6" strokeWidth="2" strokeDasharray="4 4" />
+                       <circle cx="10" cy="50" r="3" fill="#2868c6" />
+                       <circle cx="50" cy="50" r="3" fill="#2868c6" />
+                       <circle cx="90" cy="50" r="3" fill="#2868c6" />
                      </svg>
                    </div>
                  </div>

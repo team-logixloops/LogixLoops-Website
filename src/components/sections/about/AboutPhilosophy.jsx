@@ -7,6 +7,8 @@ export default function AboutPhilosophy() {
     <section className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0 md:grid max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop grid-cols-1 md:grid-cols-2 gap-gutter items-center py-stack-xl">
       <FadeInLeft className="order-2 md:order-1 bg-white/70 backdrop-blur-[24px] border border-white/30 shadow-sm p-8 rounded-2xl relative group">
         <img 
+          width={1200}
+          height={900}
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2f-ewL0vtK3F9yQR0CaKv7DDWzp4olrIemRV0RqSylGD6fqZ2QKexe3h-sPE1SgM0epNQtaCYOcxYJdorLSjNiRZkB4It3vHu8aY1Rqxw6UjV8OlTy68V4WVWTvs5shignNDK6sa3SMmG4ppNUGbGE_526FgyxNefYj8--5Z3xGef_Nto80p27leN1oXXYXCV0pwtDVxzF7kHu0-B0ruxDaIlF7ZobWxq8yHftWQqNT_XFCIWXvlawvlbYueteXX_6OZAMMR6CLXs" 
           alt="Modern corporate architecture"
           className="w-full h-64 object-cover rounded-xl grayscale group-hover:grayscale-0 transition-all duration-700"

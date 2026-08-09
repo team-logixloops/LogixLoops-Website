@@ -5,7 +5,7 @@ import { FadeInUp, FadeIn } from "@/components/motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function LegalLayout({ title, effectiveDate, description, sections, children }) {
+export default function LegalLayout({ title, effectiveDate, description, sections, summary, children }) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || "");
 
   useEffect(() => {
@@ -52,13 +52,31 @@ export default function LegalLayout({ title, effectiveDate, description, section
       <section className="pt-[160px] pb-16 px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto">
         <FadeInUp>
           <div className="max-w-3xl">
+            {/*
+              Legal text gets printed, PDF'd and pasted into email far more
+              than the rest of the site, and it travels without the navbar
+              when it does. The lockup at the head of the document is what
+              keeps a stray page of terms attributable.
+              eslint-disable-next-line @next/next/no-img-element
+            */}
+            <img
+              src="/brand/logo-horizontal.svg"
+              alt="LogixLoops"
+              width={2058}
+              height={483}
+              className="h-9 w-auto object-contain object-left mb-8"
+            />
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest/50 backdrop-blur-md mb-6">
               <span className="material-symbols-outlined text-[16px] text-primary">gavel</span>
               <span className="font-label text-[10px] text-on-surface-variant uppercase tracking-widest">
                 Legal Documentation
               </span>
             </div>
-            <h1 className="font-display text-display-md md:text-display-lg text-on-surface mb-6 tracking-tight">
+            {/* `display-md` is not a token. The mobile size came from nowhere
+                and the heading fell back to the browser default until `md:`
+                took over at 768px; `display-lg` is now fluid, so one class
+                covers the whole range. */}
+            <h1 className="font-display text-display-lg text-on-surface mb-6 tracking-tight">
               {title}
             </h1>
             <p className="font-body text-body-lg text-on-surface-variant leading-relaxed mb-6">
@@ -68,6 +86,33 @@ export default function LegalLayout({ title, effectiveDate, description, section
               <span className="font-mono text-xs text-outline-variant uppercase tracking-wider">Effective Date:</span>
               <span className="font-label text-sm text-on-surface">{effectiveDate}</span>
             </div>
+
+            {/* Plain-language summary. The clauses below are necessarily
+                dense. This is the short version, and it is what most readers
+                came for. The full text still governs. */}
+            {summary?.length > 0 && (
+              <div className="cipher-lens mt-10 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/60 backdrop-blur-xl p-6 md:p-8">
+                <h2 className="font-display text-headline-md text-on-surface mb-4">
+                  The short version
+                </h2>
+                <ul className="flex flex-col gap-3">
+                  {summary.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <span className="material-symbols-outlined text-[18px] mt-0.5 text-primary">
+                        check
+                      </span>
+                      <span className="font-body text-body-md text-on-surface-variant">
+                        {point}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="font-body text-body-sm text-outline-variant mt-6">
+                  This summary is for readability only. The full terms below are
+                  what actually apply.
+                </p>
+              </div>
+            )}
           </div>
         </FadeInUp>
       </section>
@@ -79,9 +124,9 @@ export default function LegalLayout({ title, effectiveDate, description, section
           {/* Sticky Sidebar */}
           <FadeIn className="hidden lg:block lg:col-span-3">
             <div className="sticky top-[120px]">
-              <h3 className="font-label text-xs text-outline-variant uppercase tracking-widest mb-6">
+              <h2 className="font-label text-xs text-outline-variant uppercase tracking-widest mb-6">
                 Contents
-              </h3>
+              </h2>
               <nav className="flex flex-col gap-1 border-l-2 border-outline-variant/20">
                 {sections.map((section) => (
                   <button
@@ -99,9 +144,9 @@ export default function LegalLayout({ title, effectiveDate, description, section
                 ))}
               </nav>
               
-              <div className="mt-12 p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/50 backdrop-blur-sm shadow-glass">
-                <span className="material-symbols-outlined text-primary mb-3 text-[24px]">contact_support</span>
-                <h4 className="font-label text-sm text-on-surface mb-2">Legal Inquiries</h4>
+              <div className="dispatch mt-12 p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/50 backdrop-blur-sm shadow-glass">
+                <span data-dispatch className="material-symbols-outlined text-primary mb-3 text-[24px] block w-fit">contact_support</span>
+                <h3 className="font-label text-sm text-on-surface mb-2">Legal Inquiries</h3>
                 <p className="font-body text-xs text-on-surface-variant mb-4 leading-relaxed">
                   For any questions regarding our terms, policies, or legal agreements, please reach out.
                 </p>

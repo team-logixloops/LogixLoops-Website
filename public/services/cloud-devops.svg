@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="g-cloud" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2868c6"/>
+      <stop offset="1" stop-color="#378ce7"/>
+    </linearGradient>
+  </defs>
+  <!-- One closed outline, so the lobes meet tangentially and the base is a
+       single straight run. The previous path ended on a 3-radius arc back to
+       its own start point, which drew a hook off the bottom-left corner. -->
+  <path d="M41.6 37.4H23.7a14.7 14.7 0 1 1 14.1-18.9h3.8a9.45 9.45 0 1 1 0 18.9Z" stroke="url(#g-cloud)" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Continuous delivery: two arrows running opposite ways. It replaces
+       three overlapping fragments that rendered as a filled blob and a
+       detached dash rather than as an arrow. -->
+  <path d="M22 46h20m-5-4 5 4-5 4" stroke="url(#g-cloud)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 53H22m5-4-5 4 5 4" stroke="url(#g-cloud)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

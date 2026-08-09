@@ -35,7 +35,7 @@ export default function AboutMindset() {
         />
       </FadeInUp>
 
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-stack-xl relative z-10">
+      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter mt-stack-xl relative z-10">
         {MINDSETS.map((mindset, i) => (
           <StaggerItem key={i} className={i === 1 ? "md:-translate-y-8" : ""}>
             <GlassCard variant="elevated" padding="xl" className="h-full flex flex-col items-center text-center group hover:border-primary/40 transition-colors">

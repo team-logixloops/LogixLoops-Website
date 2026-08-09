@@ -1,181 +1,189 @@
 "use client";
 
-import { Button, GlassCard } from "@/components/ui";
-import { FadeInLeft, FadeInRight } from "@/components/motion";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui";
+import ConstellationGrid from "@/components/ui/ConstellationGrid";
+import RotatingWord from "@/components/ui/RotatingWord";
+import { FadeInUpImmediate, HeroExit } from "@/components/motion";
+
+// Each has to read grammatically in "We build the ___ that becomes your unfair
+// advantage", and each should name a different kind of thing (a surface, a
+// product, a spine, a flow) rather than being four synonyms for "system".
+const HEADLINE_WORDS = ["Platform", "Product", "Backbone", "Pipeline"];
+
+// Three commitments, not three adjectives. The third used to be "High
+// Performance / Measured, not asserted". True, but every agency claims speed.
+// Ownership is the one a prospect can check against the contract, and the only
+// one of the three a competitor is unlikely to match.
+const pillars = [
+  {
+    icon: "architecture",
+    label: "Scalable Architecture",
+    detail: "Built to survive its own success",
+  },
+  {
+    icon: "security",
+    label: "Zero-Trust Security",
+    detail: "Nothing trusted by default",
+  },
+  {
+    icon: "lock_open_right",
+    label: "Total Ownership",
+    detail: "Source, infra and IP, yours at handover",
+  },
+];
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-[90vh] pt-[140px] pb-stack-2xl overflow-hidden flex items-center">
-      {/* Animated Blobs (Mesh BG) */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60 mix-blend-multiply filter blur-2xl">
-        <motion.div 
-          animate={{ x: [0, 30, -20, 0], y: [0, -50, 20, 0], scale: [1, 1.1, 0.9, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[0%] -left-4 w-72 h-72 rounded-full bg-blue-300" 
-        />
-        <motion.div 
-          animate={{ x: [0, 30, -20, 0], y: [0, -50, 20, 0], scale: [1, 1.1, 0.9, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[0%] -right-4 w-72 h-72 rounded-full bg-indigo-300" 
-        />
-        <motion.div 
-          animate={{ x: [0, 30, -20, 0], y: [0, -50, 20, 0], scale: [1, 1.1, 0.9, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute -bottom-8 left-20 w-72 h-72 rounded-full bg-purple-300" 
-        />
+    // The section colour is flat and matches the value `ConstellationGrid`
+    // fills its canvas with, so nothing seams if the canvas is still mounting.
+    <section
+      id="home-hero"
+      // Read by `HeroExit` to find the box its scrub window measures against.
+      data-hero
+      // `100svh` minus the navbar, not `100svh`. The layout already offsets
+      // `main` by the bar's height, so a full-viewport hero was always taller
+      // than the space left for it, which is what pushed the pillars off the
+      // bottom of the screen.
+      className="relative w-full min-h-[calc(100svh-5rem)] overflow-hidden flex items-center bg-[#f2f7fe]"
+    >
+      {/* Constellation canvas, sized to this section via ResizeObserver */}
+      <div className="absolute inset-0 z-0">
+        <ConstellationGrid />
       </div>
 
-      <div className="container-site relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Column: Copy & CTA */}
-          <div className="flex flex-col gap-8 max-w-2xl text-left">
-            <FadeInLeft delay={0.1}>
-              <h1 className="font-display text-display-lg-mobile md:text-display-xl text-on-surface leading-[1.05] tracking-tight">
-                Engineering the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Future</span> of Enterprise Intelligence
-              </h1>
-            </FadeInLeft>
+      {/* Soft-dissolve the canvas texture into whatever sits below. That is
+          the marquee band, so the fade resolves to `surface-container-low`
+          and not `surface`, landing on a lighter colour than the next
+          section is what produced the pale stripe across the boundary. */}
+      <div className="absolute inset-x-0 bottom-0 h-24 sm:h-32 bg-gradient-to-t from-surface-container-low to-transparent pointer-events-none z-[1]" />
 
-            <FadeInLeft delay={0.2}>
-              <p className="font-body text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
-                LogixLoops delivers high-performance digital solutions through strategic engineering, AI integration, and tactical design for the world's most ambitious brands.
+      {/* The section centres its content, so vertical rhythm comes from the
+          gaps below rather than from a large fixed `pt-*` fighting the
+          centring. */}
+      <HeroExit className="container-site relative z-10 w-full py-10 sm:py-12">
+        <div className="flex flex-col gap-5 sm:gap-7 max-w-2xl text-left">
+          <FadeInUpImmediate delay={0.1}>
+            {/*
+              Three fixed lines, with the rotating word alone on the second.
+
+              Inline, the word was reflowing the whole heading: "Velocity" fit
+              two lines where "Architecture" needed three, so every rotation
+              moved the body copy, the button and the pillars down the page
+              and back. Giving the word its own line makes the line count
+              constant no matter which word is showing, the heading's height
+              never changes, and nothing below it moves.
+
+              It also reads better. The swap is the only thing in motion, so
+              it isn't competing with words shuffling around it.
+            */}
+            <h1 className="font-display text-[clamp(2.25rem,4.6vw,3.75rem)] text-on-surface leading-[1.08] tracking-tight">
+              <span className="block">We build the</span>
+              {/* Wrapped rather than passed `block`: RotatingWord's own box is
+                  `inline-flex` so it hugs the word, and two display utilities
+                  on one element resolve by stylesheet order, not by the order
+                  they appear in the class list. */}
+              <span className="block">
+                <RotatingWord words={HEADLINE_WORDS} />
+              </span>
+              {/* The tagline, in the h1, on every page load. It is the only
+                  three words on this site anyone repeats, and burying it in
+                  the footer was the largest single thing the old copy
+                  wasted. */}
+              <span className="block">that becomes your unfair advantage.</span>
+            </h1>
+          </FadeInUpImmediate>
+
+          <FadeInUpImmediate delay={0.2}>
+            {/* This paragraph is the search snippet, and the passage an answer
+                engine quotes when asked what LogixLoops is. So it names the
+                category, the work, the base and the reach in one sentence
+                each, with no adjective a reader cannot check. */}
+            <p className="font-body text-body-md sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+              LogixLoops is a senior software engineering studio in Jaipur. We
+              design and build custom web platforms, mobile apps, SaaS products
+              and AI systems for teams in India, the US, the UK and the UAE,
+              and you own every line of it when we are done.
+            </p>
+          </FadeInUpImmediate>
+
+          <FadeInUpImmediate delay={0.3}>
+            {/*
+              Two CTAs with genuinely different jobs, not one button repeated.
+              A visitor arrives in one of two states, ready to talk, or still
+              deciding, and a lone "Get Started" only serves the first. The
+              second button is the evidence route.
+
+              `items-start` rather than a stretched row: these are wrapped in
+              the magnetic effect's inline-block shell, so letting them stretch
+              would make the pull effect drag a full-width slab around.
+            */}
+            <div className="flex flex-wrap items-start gap-3 sm:gap-4">
+              <Button
+                href="/contact"
+                size="lg"
+                className="px-8 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_16px_-4px_rgba(40,104,198,0.4)]"
+                icon="arrow_forward"
+                iconPosition="right"
+              >
+                Book a discovery call
+              </Button>
+              {/* Points at /process, not /case-studies. For a studio this
+                  young the method is the stronger evidence: the published
+                  builds are reference architectures, and sending a sceptical
+                  reader to them first invites the one question we would rather
+                  answer on our own terms. */}
+              <Button
+                href="/process"
+                variant="ghost"
+                size="lg"
+                className="px-8 rounded-full"
+              >
+                See how we work
+              </Button>
+            </div>
+          </FadeInUpImmediate>
+
+          <FadeInUpImmediate delay={0.4}>
+            <div className="pt-5 sm:pt-6 border-t border-outline-variant">
+              <p className="font-label text-label-caps text-brand-steel uppercase tracking-widest mb-4">
+                What you get, every time
               </p>
-            </FadeInLeft>
-
-            <FadeInLeft delay={0.3}>
-              <div className="flex flex-wrap gap-4 w-full sm:w-auto">
-                <Button href="/solutions" size="lg" className="px-8 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_16px_-4px_rgba(0,74,198,0.4)]" icon="arrow_forward" iconPosition="right">
-                  Get Started
-                </Button>
+              {/*
+                Cards rather than a row of icon+label pairs. Three claims set
+                in the same weight as body copy read as a caption; giving each
+                its own surface makes them read as three things the company
+                stands behind. The second line is what earns the extra space,
+                a bare "Zero-Trust Security" is a noun, not a promise.
+              */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {pillars.map(({ icon, label, detail }) => (
+                  <div
+                    key={label}
+                    className="group relative overflow-hidden rounded-xl border border-outline-variant/60 bg-surface-container-lowest/70 backdrop-blur-md p-3.5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-glass-hover"
+                  >
+                    {/* Wipes up from the floor of the card on hover. */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-0 bg-gradient-to-t from-primary/10 to-transparent transition-[height] duration-300 group-hover:h-full"
+                    />
+                    <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
+                      <span className="material-symbols-outlined text-[18px]">
+                        {icon}
+                      </span>
+                    </span>
+                    <p className="relative mt-2.5 font-body text-sm font-semibold text-on-surface">
+                      {label}
+                    </p>
+                    <p className="relative mt-1 font-body text-xs text-on-surface-variant leading-snug">
+                      {detail}
+                    </p>
+                  </div>
+                ))}
               </div>
-            </FadeInLeft>
-
-            {/* Engineering Pillars */}
-            <FadeInLeft delay={0.4}>
-              <div className="mt-4 pt-8 border-t border-outline-variant/30">
-                <p className="text-sm text-on-surface-variant mb-4 font-medium">Core Engineering Pillars</p>
-                <div className="flex flex-wrap items-center gap-6 text-on-surface-variant">
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[18px] text-primary">architecture</span>
-                    <span className="font-body text-sm font-medium">Scalable Architecture</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[18px] text-primary">security</span>
-                    <span className="font-body text-sm font-medium">Zero-Trust Security</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[18px] text-primary">speed</span>
-                    <span className="font-body text-sm font-medium">High Performance</span>
-                  </div>
-                </div>
-              </div>
-            </FadeInLeft>
-          </div>
-
-          {/* Right Column: Visual System */}
-          <div className="relative h-[600px] hidden lg:block perspective-1000">
-            <FadeInRight delay={0.2} className="absolute inset-0">
-              
-              {/* Main Dashboard Mockup */}
-              <motion.div 
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[340px] z-20"
-              >
-                <GlassCard padding="none" className="w-full h-full p-4 border border-white/90 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.08)] bg-white/70 backdrop-blur-[20px] rounded-2xl flex flex-col">
-                  {/* Fake UI Header */}
-                  <div className="flex items-center gap-2 border-b border-outline-variant/30 pb-3 mb-3">
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                    </div>
-                    <div className="text-xs text-on-surface-variant font-medium ml-2">Intelligence Core AI</div>
-                  </div>
-
-                  {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-4 mb-4">
-                    <div className="bg-surface-container-low rounded-xl p-3 border border-white/50">
-                      <div className="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Efficiency</div>
-                      <div className="text-xl font-bold text-primary">99.9%</div>
-                    </div>
-                    <div className="bg-surface-container-low rounded-xl p-3 border border-white/50">
-                      <div className="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Processing</div>
-                      <div className="text-xl font-bold text-secondary">1.2ms</div>
-                    </div>
-                    <div className="bg-surface-container-low rounded-xl p-3 border border-white/50">
-                      <div className="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Uptime</div>
-                      <div className="text-xl font-bold text-primary">100%</div>
-                    </div>
-                  </div>
-
-                  {/* Fake Graph */}
-                  <div className="h-32 bg-surface-container-low rounded-xl border border-white/50 p-3 relative overflow-hidden flex-1">
-                    <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary/20 to-transparent" />
-                    <svg className="w-full h-full absolute inset-0 p-3" preserveAspectRatio="none" viewBox="0 0 100 100">
-                      <path className="stroke-primary animate-pulse" d="M0,80 Q20,20 40,60 T80,40 T100,10" fill="none" strokeWidth="2" />
-                    </svg>
-                  </div>
-                </GlassCard>
-              </motion.div>
-
-              {/* Floating Card 1: AI Node */}
-              <motion.div 
-                animate={{ y: [10, -10, 10] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-10 right-0 w-48 z-30"
-              >
-                <GlassCard padding="none" className="p-4 rounded-xl border border-white/90 bg-white/70 backdrop-blur-[20px] shadow-lg transform rotate-3">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                      <span className="material-symbols-outlined text-sm">memory</span>
-                    </div>
-                    <div className="text-sm font-bold text-on-surface">Neural Link</div>
-                  </div>
-                  <div className="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-primary w-3/4 h-full rounded-full relative">
-                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_8px_rgba(0,74,198,0.8)]" />
-                    </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
-
-              {/* Floating Card 2: Security */}
-              <motion.div 
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-20 -left-10 w-56 z-30"
-              >
-                <GlassCard padding="none" className="p-4 rounded-xl border border-white/90 bg-white/70 backdrop-blur-[20px] shadow-lg transform -rotate-2">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
-                      <span className="material-symbols-outlined text-sm">shield_lock</span>
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-on-surface">Secure Protocol</div>
-                      <div className="text-xs text-on-surface-variant">Active monitoring</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-primary bg-primary/10 px-2 py-1 rounded-md w-fit">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                    Encrypted
-                  </div>
-                </GlassCard>
-              </motion.div>
-
-              {/* Connecting Lines */}
-              <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-30" viewBox="0 0 600 600">
-                <path className="stroke-primary" d="M100,200 C300,200 300,400 500,400" fill="none" strokeDasharray="4 4" strokeWidth="1" />
-                <circle className="fill-primary" cx="100" cy="200" r="3" />
-                <circle className="fill-primary animate-pulse" cx="500" cy="400" r="3" />
-              </svg>
-
-            </FadeInRight>
-          </div>
-
+            </div>
+          </FadeInUpImmediate>
         </div>
-      </div>
+      </HeroExit>
     </section>
   );
 }

@@ -1,8 +1,10 @@
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { Navbar, Footer, AmbientGlows } from "@/components/layout";
-import CommandMenu from "@/components/ui/CommandMenu";
+import { Inter, Bricolage_Grotesque, Oswald } from "next/font/google";
+import { Navbar, Footer, AmbientGlows, EmbedFlag, PointerLens } from "@/components/layout";
+import { GooFilter } from "@/components/ui";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 import { generateOrganizationSchema } from "@/lib/schema";
+import { SITE_URL, OG_IMAGE } from "@/lib/seo";
 import "./globals.css";
 
 /* ─── Font Loading ─── */
@@ -12,42 +14,86 @@ const inter = Inter({
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta",
+  variable: "--font-bricolage",
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-/* ─── Metadata ─── */
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+/* ─── Metadata ───
+ * `metadataBase` is what lets every page below pass a relative canonical /
+ * og:url and have Next resolve it to an absolute URL. Without it, relative
+ * URL fields are a build error. */
+/* One title and one description, written once and reused across the three
+ * blocks below. They used to be typed out three times, which is how og:title
+ * and twitter:title drift away from the real one. */
+const SITE_TITLE = "Custom Software Development Studio in Jaipur | LogixLoops";
+const SITE_DESCRIPTION =
+  "Senior software engineering studio in Jaipur. Custom web platforms, mobile apps, SaaS products and AI systems, built fast and yours outright at handover.";
+
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "LogixLoops — Strategic Engineering for Enterprise",
+    default: SITE_TITLE,
     template: "%s | LogixLoops",
   },
-  description:
-    "Pioneering resilient enterprise architecture through strategic engineering and tactical design. High-performance software solutions for forward-thinking organizations.",
+  description: SITE_DESCRIPTION,
+  /* Head terms only. `keywords` carries no ranking weight at Google and has
+   * not for years. It is here because several AI crawlers and a number of B2B
+   * directory scrapers still read it, which makes it worth exactly the eight
+   * lines it occupies and not one more. Per-route keywords go through
+   * `buildMetadata`. */
   keywords: [
-    "enterprise software",
-    "AI solutions",
-    "cloud architecture",
-    "web development",
-    "SaaS platforms",
-    "digital engineering",
+    "custom software development company",
+    "software development company in Jaipur",
+    "web development agency",
+    "Next.js development agency",
+    "SaaS development company",
+    "AI development company",
+    "mobile app development company India",
+    "hire dedicated developers India",
     "LogixLoops",
   ],
   authors: [{ name: "LogixLoops" }],
+  creator: "LogixLoops",
+  publisher: "LogixLoops",
+  category: "Software Development",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "LogixLoops",
-    title: "LogixLoops — Strategic Engineering for Enterprise",
-    description:
-      "Pioneering resilient enterprise architecture through strategic engineering and tactical design.",
+    url: "/",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -59,30 +105,72 @@ export default function RootLayout({ children }) {
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${plusJakarta.variable}`}>
+    /* `suppressHydrationWarning` here for the same reason it is on <body>, and
+       for the same class of cause: extensions that stamp <html> before React
+       attaches. Scribe sets `data-scribe-recorder-ready`, dark-mode and
+       translation extensions set their own. None of it is application state and
+       none of it can be server-rendered. The flag is shallow, it forgives this
+       element's own attributes only, so a genuine mismatch anywhere in the tree
+       below still reports. */
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${bricolage.variable} ${oswald.variable}`}
+    >
       <head>
+        {/* Only the directives that genuinely work as <meta>. X-Frame-Options,
+            X-Content-Type-Options and Permissions-Policy are header-only and
+            are set in next.config.mjs instead, as meta tags browsers ignore
+            them entirely. */}
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link href="https://fonts.gstatic.com" rel="preconnect" crossOrigin="anonymous" />
         <link href={materialIconsHref} rel="stylesheet" />
         <SchemaMarkup schema={orgSchema} />
       </head>
-      <body className="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-        {/* Atmospheric depth layer */}
-        <AmbientGlows />
+      {/*
+        `suppressHydrationWarning` covers browser extensions that mutate
+        <body> before React attaches. ColorZilla stamps `cz-shortcut-listen`,
+        Grammarly adds `data-gr-*`, and so on. React sees an attribute the
+        server never sent and reports a mismatch for something no application
+        code controls.
 
-        {/* Global Modal & Search System */}
-        <CommandMenu />
+        It is deliberately on <body> and nowhere else: the flag is shallow, so
+        it forgives this element's own attributes and nothing inside it. Real
+        mismatches in the tree below still surface.
+      */}
+      <body
+        suppressHydrationWarning
+        className="bg-background text-on-surface font-body antialiased min-h-screen flex flex-col relative overflow-x-clip"
+      >
+        <SmoothScrollProvider>
+          {/* Marks this document as the embedded copy when it is running
+              inside a signature demo's iframe. Renders nothing. */}
+          <EmbedFlag />
 
-        {/* Global navigation */}
-        <Navbar />
+          {/* Atmospheric depth layer */}
+          <AmbientGlows />
 
-        {/* Page content */}
-        <main className="flex-grow pt-20 relative z-10">
-          {children}
-        </main>
+          {/* Feeds pointer coordinates to every `.cipher-lens` card on the
+              site. Renders nothing; inert on routes that use no lenses. */}
+          <PointerLens />
 
-        {/* Global footer */}
-        <Footer />
+          {/* The `#goo` filter the blob buttons reference. Defined once for
+              the document; renders a 0x0 SVG. */}
+          <GooFilter />
+
+          {/* Global navigation */}
+          <Navbar />
+
+          {/* Page content */}
+          <main className="flex-grow pt-20 relative z-10">
+            {children}
+          </main>
+
+          {/* Global footer */}
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

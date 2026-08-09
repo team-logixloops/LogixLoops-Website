@@ -1,317 +1,407 @@
 /**
- * LOGIXLOOPS — Case Studies Data Layer
- * Provides centralized, highly-structured enterprise transformation data.
+ * LOGIXLOOPS: Case Studies Data Layer
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * READ THIS BEFORE EDITING
+ *
+ * Every record here currently carries `demo: true`, and that flag is load
+ * bearing. It means: this is a **reference build**, an architecture we
+ * designed, can defend line by line, and have written up against a
+ * representative brief. It is not a record of a paid client engagement.
+ *
+ * The flag changes three things automatically:
+ *   1. `generateCaseStudySchema` emits `CreativeWork` with a
+ *      `disambiguatingDescription` saying so, rather than `Article`, which
+ *      would assert to Google and to every answer engine that this is
+ *      reportage about real client work.
+ *   2. The index and the detail page both render a visible notice.
+ *   3. `metrics` are read as design targets, and are written as such.
+ *
+ * The previous version of this file did none of that while publishing
+ * "1.2M Active Users", "22M Miles Saved", "0 Compliance Breaches" and a
+ * 45,000-employee weekend migration. Those are the kind of figures a
+ * prospect's procurement team asks for a reference on, and an AI assistant
+ * repeats with a citation. Removed.
+ *
+ * TO PROMOTE A RECORD TO A REAL CASE STUDY:
+ *   - set `demo: false`
+ *   - add `publishedAt` (an ISO date, required, and never invented)
+ *   - set `client` to the real name if you have written permission, or leave
+ *     the industry-only descriptor if you do not
+ *   - replace `metrics` with figures the client has signed off on, and change
+ *     the labels from targets to outcomes
+ * The layout, the schema and the index all handle the rest.
+ * ───────────────────────────────────────────────────────────────────────────
  */
 
 export const CASE_STUDIES = {
   "nexus-global-trading": {
     slug: "nexus-global-trading",
+    demo: true,
     title: "Nexus Global Trading Platform",
-    client: "Nexus Global Logistics & Finance",
+    // Not a client. The brief this architecture answers.
+    client: "Reference brief: institutional trading desk",
     industry: "FinTech",
     transformationType: "Microservices Architecture & Low-Latency Engines",
-    shortDescription: "Complete re-architecture of a legacy trading system, introducing microservices and real-time AI predictive modeling to handle millions of transactions per second.",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuD6ihbOLbKZ8wZKf-Z8h26XdDeUn4PiuCnOCs7WbtFNd3xIlYSqOZGnKQGZqgeE5-hlbaFhs71XiUevO-Oe9pXaBf5KKNRismY9uuoTEJtUUGT7CQXf1DrtP-U6jKqN_903KAiUSZMPdjmwND4C1s9i98zWJQ_jBdy7Wt1vuylz_b6JopzBdH8LZSXLWs1TzeVoZoi2B2pJ0-RHWzIeWsLv5vveEStPOH4qsKlikAMYJ1OvjyCF86ZrKTbqJE6HaGG3cT8C3mCNOstV",
-    heroImageAlt: "Complex, modern trading platform dashboard on a sleek monitor with cyan and indigo data visualizations.",
+    shortDescription:
+      "A reference build: how we would take a decade-old trading system off a shared database and onto an event-sourced, edge-deployed architecture without pausing the market.",
+    heroImage: "/case-studies/nexus-global-trading.webp",
+    heroImageAlt:
+      "Complex, modern trading platform dashboard on a sleek monitor with cyan and indigo data visualizations.",
     technologies: ["Go", "Kafka", "Redis", "React", "Kubernetes"],
     featured: true,
+    // Design targets, not measured results. Each one is a number we would
+    // commit to in an architecture brief and then test against.
     metrics: [
-      { value: "0.02ms", label: "Execution Latency", prefix: "", suffix: "" },
-      { value: "99.99%", label: "System Uptime", prefix: "", suffix: "" },
-      { value: "3.5x", label: "Throughput Increase", prefix: "", suffix: "" }
+      { value: "< 5ms", label: "p99 order-path target", prefix: "", suffix: "" },
+      { value: "3 AZ", label: "Active-active by design", prefix: "", suffix: "" },
+      { value: "100%", label: "Trades replayable from the log", prefix: "", suffix: "" },
     ],
     sections: {
       challenge: {
         title: "The Fragmentation Bottleneck",
-        content: "Nexus encountered critical scaling limitations with their decade-old infrastructure. Siloed databases across international data centers led to unacceptable latency spikes during high-volatility market events, risking institutional client trust and significant financial slippage.",
+        content:
+          "The brief: a trading platform that had outgrown infrastructure written a decade ago. Regional databases in separate data centres that never quite agreed with each other, and latency that spiked exactly when the market did, which is the only time it matters.",
         points: [
-          "Inconsistent data synchronization across regional nodes.",
-          "Monolithic architecture hindering rapid feature deployment."
+          "Regional nodes drifting out of sync under write pressure.",
+          "A monolith where every release is a market-hours risk.",
         ],
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Abstract, stylized technical architecture diagram showing fragmented, siloed data systems."
+        image:
+          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
+        imageAlt:
+          "Abstract, stylized technical architecture diagram showing fragmented, siloed data systems.",
       },
       discovery: {
-        title: "Strategic Discovery",
-        description: "Mapping the complex topography of high-frequency trading requirements to define a resilient, forward-looking architectural blueprint.",
+        title: "Where The Risk Actually Is",
+        description:
+          "Three questions we would settle before drawing a single service boundary, because getting any of them wrong is a rewrite rather than a refactor.",
         insights: [
           {
             icon: "memory",
             title: "Compute Proximity",
-            description: "Analyzed edge computing viable locations to minimize physical distance between transaction origins and matching engines.",
-            color: "secondary"
+            description:
+              "How much of the latency budget is physics? Distance between order origin and matching engine sets the floor, and no amount of application tuning moves it.",
+            color: "secondary",
           },
           {
             icon: "data_object",
             title: "Event-Driven Flow",
-            description: "Identified the necessity for an asynchronous, event-driven mesh to decouple services and ensure fault isolation.",
-            color: "primary"
+            description:
+              "An asynchronous mesh so services fail in isolation. If market data stalls, order routing does not go down with it.",
+            color: "primary",
           },
           {
             icon: "security",
             title: "Zero-Trust Protocol",
-            description: "Mandated granular, role-based access controls and pervasive encryption without introducing processing overhead.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "Per-service authorisation and encryption on internal hops, designed so the check costs microseconds rather than milliseconds.",
+            color: "tertiary",
+          },
+        ],
       },
       engineering: {
-        title: "Engineering Cadence",
+        title: "Build Sequence",
         phases: [
           {
             title: "Phase 1: Microservices Deconstruction",
-            description: "Strangling the monolith by selectively extracting high-load components (order routing, market data feeds) into scalable Go-based microservices.",
-            color: "secondary"
+            description:
+              "Strangle the monolith. Extract the highest-load paths first, order routing and market data, into Go services behind the existing gateway, so traffic moves incrementally and any step is reversible.",
+            color: "secondary",
           },
           {
             title: "Phase 2: In-Memory Data Grid",
-            description: "Implementing a distributed, clustered cache architecture to hold hot market state, guaranteeing sub-millisecond retrieval times.",
-            color: "primary"
+            description:
+              "A clustered cache holding hot market state, so the read path never touches disk. The consistency model is chosen explicitly here and recorded as an ADR, because it is the decision everything downstream inherits.",
+            color: "primary",
           },
           {
             title: "Phase 3: Resiliency & Chaos Testing",
-            description: "Rigorous automated fault injection across all environments to validate automated failover and zero-data-loss recovery protocols.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "Kill nodes on purpose, in every environment, before production does it for us. Failover and zero-data-loss recovery are validated as tests rather than assumed as properties.",
+            color: "tertiary",
+          },
+        ],
       },
       architecture: {
         title: "Stateless Edge Architecture",
-        content: "To achieve true resilience, we decoupled the monolithic order management system into independent edge-deployable nodes. Using Kafka as the central nervous system, we ensured that trade executions were processed asynchronously but accurately recorded via event sourcing."
-      }
-    }
+        content:
+          "Order management decomposed into independent, edge-deployable nodes with Kafka as the spine. Executions process asynchronously but are recorded via event sourcing, so the ledger is the log, and any state in the system can be rebuilt by replaying it.",
+      },
+    },
   },
+
   "aura-patient-portal": {
     slug: "aura-patient-portal",
+    demo: true,
     title: "Aura Patient Portal",
-    client: "Aura Health Systems",
+    client: "Reference brief: multi-site healthcare provider",
     industry: "HealthTech",
     transformationType: "IoT Medical Integration & Secure Cloud",
-    shortDescription: "Unified patient experience application integrating IoT medical devices with secure, HIPAA-compliant cloud storage.",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBzMYeZ1zQrVeeUim0rpeUeSmk0e4Ci2t-lFduFq98Z5kSEV4Jb1wxIKnmV0VPzfdhTyZLEmUkVhUGuGipvZFrH6OW9MmijAt8WUgl5dT-GISv_v_VZG7dcqknv0TGd-5WO7Ml_N3yXNpJQ-GbMS_ULSwRPIPr1xpGHPAfAFfVb7n-prE7SUgL5n6m3aI2UH2FzQk2p97wc3ZJ0uInX0gMqTOLkgRQUHRn2bP_ajSZ9PdKnFsZK-9S5cpQfL2EgWaqX-wq5Cp7a3w8m",
-    heroImageAlt: "Medical professional holding a sleek, modern tablet displaying patient health analytics.",
-    technologies: ["React Native", "Node.js", "GraphQL", "AWS HIPAA Cloud", "PostgreSQL"],
+    shortDescription:
+      "A reference build: consolidating a dozen patient-facing apps into one portal, with IoT vitals arriving over MQTT and a HIPAA-shaped control set designed in from the start.",
+    heroImage: "/case-studies/aura-patient-portal.webp",
+    heroImageAlt:
+      "Medical professional holding a sleek, modern tablet displaying patient health analytics.",
+    technologies: ["React Native", "Node.js", "GraphQL", "AWS", "PostgreSQL"],
     featured: true,
     metrics: [
-      { value: "65%", label: "Engagement Increase", prefix: "+", suffix: "" },
-      { value: "0", label: "Compliance Breaches", prefix: "", suffix: "" },
-      { value: "1.2M", label: "Active Users", prefix: "", suffix: "" }
+      { value: "AES-256", label: "At rest, TLS 1.3 in transit", prefix: "", suffix: "" },
+      { value: "MQTT", label: "Device ingest, normalised at the broker", prefix: "", suffix: "" },
+      { value: "HIPAA", label: "Designed to the control set", prefix: "", suffix: "" },
     ],
     sections: {
       challenge: {
         title: "Disjointed Patient Journeys",
-        content: "Aura Health's ecosystem consisted of 12 separate patient-facing applications. IoT vitals monitors were unable to sync with electronic health records in real-time, resulting in severe clinical blind spots.",
+        content:
+          "The brief: twelve separate patient-facing applications from three legacy vendors, and vitals monitors that could not reach the health record in anything close to real time. The clinical blind spot is not a UX problem. It is a data architecture problem wearing a UX problem's clothes.",
         points: [
-          "Fragmented data architecture spanning three legacy vendors.",
-          "High patient drop-off due to poor mobile UX."
+          "Three vendor schemas, none of which agree on what a patient is.",
+          "Device telemetry arriving hours after it was clinically useful.",
         ],
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Complex healthcare data silo visualization."
+        image:
+          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
+        imageAlt: "Complex healthcare data silo visualization.",
       },
       discovery: {
-        title: "Human-Centered Engineering",
-        description: "Balancing strict medical compliance with an elegant, consumer-grade digital experience.",
+        title: "Compliance And Comprehension",
+        description:
+          "Regulated software fails in two directions: it leaks, or nobody can use it. Both are design problems, and both get settled before build.",
         insights: [
           {
             icon: "health_and_safety",
-            title: "HIPAA Mapping",
-            description: "Auditing every data touchpoint to ensure end-to-end encryption at rest and in transit.",
-            color: "secondary"
+            title: "Data Touchpoint Mapping",
+            description:
+              "Every point where identifiable data is created, moved or stored, written down first. You cannot encrypt a path you have not found.",
+            color: "secondary",
           },
           {
             icon: "devices_other",
             title: "IoT Aggregation",
-            description: "Designing a robust MQTT broker system to normalize data from varied wearable devices.",
-            color: "primary"
+            description:
+              "An MQTT broker normalising output from wearables that each disagree about units, sampling rate and what 'now' means.",
+            color: "primary",
           },
           {
             icon: "psychology_alt",
             title: "Cognitive Load Reduction",
-            description: "Simplifying complex clinical data into digestible, actionable patient insights.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "Clinical data reduced to what a patient can act on. The hard part is deciding what not to show, and that is a clinical decision rather than a design one.",
+            color: "tertiary",
+          },
+        ],
       },
       engineering: {
-        title: "Engineering Cadence",
+        title: "Build Sequence",
         phases: [
           {
             title: "Phase 1: API Consolidation",
-            description: "Wrapping legacy EHR systems in a unified, modern GraphQL layer to streamline frontend requests.",
-            color: "secondary"
+            description:
+              "Wrap the legacy record systems in one GraphQL layer. The vendors keep disagreeing underneath; the client applications stop having to know about it.",
+            color: "secondary",
           },
           {
             title: "Phase 2: Real-time Telemetry",
-            description: "Deploying secure WebSockets and MQTT brokers to handle high-frequency biometric data streams.",
-            color: "primary"
+            description:
+              "WebSockets and an MQTT broker for high-frequency biometric streams, with backpressure handled at the edge so a chatty device cannot take the ingest path down.",
+            color: "primary",
           },
           {
             title: "Phase 3: Cross-Platform Native App",
-            description: "Releasing a unified React Native application with deep iOS HealthKit and Android Health Connect integration.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "One React Native application with real HealthKit and Health Connect integration. Offline-first, because hospital corridors are where mobile signal goes to die.",
+            color: "tertiary",
+          },
+        ],
       },
       architecture: {
         title: "Compliant Data Fabric",
-        content: "By centralizing the ingestion of all third-party IoT telemetry into a strictly controlled AWS secure enclave, we created a single source of truth for both clinicians and patients, completely eliminating data reconciliation errors."
-      }
-    }
+        content:
+          "All third-party device telemetry lands in a single controlled enclave before anything reads it. One source of truth for clinicians and patients, and one place where access, retention and audit are enforced rather than three.",
+      },
+    },
   },
+
   "optiroute-command-center": {
     slug: "optiroute-command-center",
+    demo: true,
     title: "OptiRoute Command Center",
-    client: "Global Freight Systems",
+    client: "Reference brief: national freight operator",
     industry: "Logistics",
     transformationType: "AI-Driven Supply Chain Orchestration",
-    shortDescription: "AI-driven supply chain visualization tool predicting bottlenecks before they occur and dynamically rerouting fleets.",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBZvmvrZfhsNbfdKzh6YP0cb3wmwsjKz7k1BVA_LVySLiBce4SD3CsOhjapSQhXMQQ2CnlDvUxR9GB8oIL36dWUY7Sfzo1KxEa_iP_RKhahpR6grlia04nkB1N4c2mOh3_eWMQVQvkeRXIlXpxR-DP5en4Vj1dneXG0pwtSQwu4Pd18tASE8AcCh1PJhSROB5Cnle5ljY8TEXiu9LSB9iYBrNbY_-Ypg2iAEMKaKNlQoCczibZPLo1JiQoFA3MnZFFjnfWI3v_V0q1V",
-    heroImageAlt: "A top-down perspective of a team collaborating around digital tablets showcasing logistics software.",
+    shortDescription:
+      "A reference build: streaming telematics into a routing model that re-optimises the whole fleet on a fixed cycle, and a dispatcher console that can draw ten thousand vehicles without dropping frames.",
+    heroImage: "/case-studies/optiroute-command-center.webp",
+    heroImageAlt:
+      "A top-down perspective of a team collaborating around digital tablets showcasing logistics software.",
     technologies: ["Python", "TensorFlow", "React", "Mapbox GL", "AWS IoT"],
     featured: true,
     metrics: [
-      { value: "30%", label: "Cost Reduction", prefix: "", suffix: "" },
-      { value: "22M", label: "Miles Saved", prefix: "", suffix: "" },
-      { value: "98%", label: "Prediction Accuracy", prefix: "", suffix: "" }
+      { value: "60s", label: "Full fleet re-optimisation cycle", prefix: "", suffix: "" },
+      { value: "3s", label: "Telematics ingest interval", prefix: "", suffix: "" },
+      { value: "WebGL", label: "10k+ vehicles on one canvas", prefix: "", suffix: "" },
     ],
     sections: {
       challenge: {
         title: "Reactive Fleet Operations",
-        content: "Operating a fleet of 10,000+ vehicles globally, GFS was paralyzed by unpredictable weather, traffic events, and manual routing processes. Dispatchers were reacting to crises rather than anticipating them.",
+        content:
+          "The brief: a fleet in the tens of thousands, routed by hand, reacting to weather and traffic after they have already cost the day. Dispatchers were not short of data. They were short of a system that could act on it inside the window where acting still helps.",
         points: [
-          "Manual routing leading to massive fuel inefficiencies.",
-          "Inability to process real-time weather and traffic telemetry at scale."
+          "Manual routing, and fuel spend nobody could attribute.",
+          "Live weather and traffic feeds arriving faster than anyone could read them.",
         ],
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Abstract chaotic global logistics map."
+        image:
+          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
+        imageAlt: "Abstract chaotic global logistics map.",
       },
       discovery: {
         title: "Predictive Foundations",
-        description: "Moving from a reactive monitoring state to a proactive, AI-driven prediction model.",
+        description:
+          "Prediction is the easy half. The hard half is a pipeline that can feed it and a console a dispatcher will actually trust at 6am.",
         insights: [
           {
             icon: "route",
             title: "Geospatial Analysis",
-            description: "Integrating high-performance vector mapping and routing algorithms capable of handling millions of nodes.",
-            color: "secondary"
+            description:
+              "Vector mapping and routing over a graph large enough that the algorithm choice, not the hardware, sets the response time.",
+            color: "secondary",
           },
           {
             icon: "insights",
-            title: "Machine Learning Models",
-            description: "Training neural networks on 5 years of historical traffic, weather, and seasonal delay data.",
-            color: "primary"
+            title: "Model Scope",
+            description:
+              "Historical traffic, weather and seasonal delay as features, plus an honest read on where a model beats a well-tuned heuristic, which is less often than it is sold.",
+            color: "primary",
           },
           {
             icon: "speed",
             title: "Real-time Telematics",
-            description: "Establishing a low-latency pipeline to ingest live vehicle diagnostics every 3 seconds.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "A low-latency path for live vehicle diagnostics on a few-second interval, sized for the whole fleet reporting at once rather than for the average.",
+            color: "tertiary",
+          },
+        ],
       },
       engineering: {
-        title: "Engineering Cadence",
+        title: "Build Sequence",
         phases: [
           {
             title: "Phase 1: Data Pipeline Construction",
-            description: "Building robust Kinesis streams to ingest, clean, and standardize telematics data from diverse truck hardware.",
-            color: "secondary"
+            description:
+              "Ingest, clean and standardise telematics from truck hardware of a dozen vintages. Most of the work in any AI project is here, and pretending otherwise is how AI projects fail.",
+            color: "secondary",
           },
           {
-            title: "Phase 2: AI Model Deployment",
-            description: "Implementing TensorFlow Serving clusters to execute real-time inference and route scoring.",
-            color: "primary"
+            title: "Phase 2: Model Deployment",
+            description:
+              "Inference serving with route scoring on the live path, versioned so a model can be rolled back exactly like code, because eventually one will need to be.",
+            color: "primary",
           },
           {
-            title: "Phase 3: Dispatcher UI Integration",
-            description: "Developing a highly performant, WebGL-accelerated command center dashboard for global dispatchers.",
-            color: "tertiary"
-          }
-        ]
+            title: "Phase 3: Dispatcher Console",
+            description:
+              "A WebGL-accelerated command centre. Ten thousand moving markers is a rendering problem before it is a product problem, and it is solved at the canvas rather than in React.",
+            color: "tertiary",
+          },
+        ],
       },
       architecture: {
-        title: "The Predictive Neural Mesh",
-        content: "By layering machine learning inference directly on top of real-time geospatial streaming data, OptiRoute acts as a living system. It recalculates the optimal global state of the fleet every 60 seconds, dispatching micro-corrections to drivers seamlessly."
-      }
-    }
+        title: "The Predictive Mesh",
+        content:
+          "Inference layered directly over streaming geospatial data, recalculating the optimal fleet state on a fixed cycle and dispatching micro-corrections. Fixed cycle rather than event-triggered on purpose: a system that re-routes drivers unpredictably is one drivers stop following.",
+      },
+    },
   },
+
   "core-identity-framework": {
     slug: "core-identity-framework",
+    demo: true,
     title: "Core Identity Framework",
-    client: "OmniCorp Enterprise Solutions",
+    client: "Reference brief: acquisitive enterprise group",
     industry: "Enterprise",
     transformationType: "Zero-Trust Security Infrastructure",
-    shortDescription: "A centralized, zero-trust authentication protocol deployed across 50+ global corporate subsidiaries.",
-    heroImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQHoCZ_5_lPRuG5JxozpWfBLrawGk-XQtTX9e9SSqz4CfMl5csBptT7QI1rvgGWOz61M1QyCSbXycnr2NifglQXfHNtxUnDBx8YBDP8tqisZ7BMmSRkbkSuQa50KTio_38Ld5woGsyZ5bz3K_AKafh5u3xRxbYTeFGMTqYyxGUTvY59NdaqEzafbRjbi0HBVVIY2jBbM1A0OTweLaQEY1qlWsisVahJLVRRl0U3alj9PWrZy6cyxtgh6hymcATP9JnneJoAoCDjtQX",
-    heroImageAlt: "A detailed view of a programmer's workstation featuring multiple frameless monitors.",
-    technologies: ["Node.js", "OAuth 2.0", "Redis", "Docker", "Terraform"],
+    shortDescription:
+      "A reference build: one zero-trust identity authority federating a group's inherited directories, so offboarding somebody takes one action instead of eighteen.",
+    heroImage: "/case-studies/core-identity-framework.webp",
+    heroImageAlt:
+      "A detailed view of a programmer's workstation featuring multiple frameless monitors.",
+    technologies: ["Node.js", "OAuth 2.0", "OIDC", "Redis", "Terraform"],
     featured: true,
     metrics: [
-      { value: "0", label: "Security Breaches", prefix: "", suffix: "" },
-      { value: "50+", label: "Subsidiaries Onboarded", prefix: "", suffix: "" },
-      { value: "2M+", label: "Daily Auth Events", prefix: "", suffix: "" }
+      { value: "5k/s", label: "Auth throughput target", prefix: "", suffix: "" },
+      { value: "OIDC", label: "Federation across legacy directories", prefix: "", suffix: "" },
+      { value: "0", label: "Standing long-lived credentials", prefix: "", suffix: "" },
     ],
     sections: {
       challenge: {
         title: "The Identity Sprawl",
-        content: "Following years of rapid acquisitions, OmniCorp possessed 18 distinct active directory domains. Employees required an average of 6 distinct credentials to perform their daily roles, resulting in massive shadow IT and critical security vulnerabilities.",
+        content:
+          "The brief: a group that had acquired its way into eighteen directory domains, where an average employee needed six sets of credentials to do their job. Password fatigue is not a user education problem at that point. It is an architecture producing shadow IT on purpose.",
         points: [
-          "Severely compromised perimeter security due to password fatigue.",
-          "Inability to quickly offboard ex-employees across all systems."
+          "Perimeter security defeated by the people it was protecting.",
+          "No single action that reliably removes a leaver from everything.",
         ],
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Abstract fragmented identity nodes visualization."
+        image:
+          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
+        imageAlt: "Abstract fragmented identity nodes visualization.",
       },
       discovery: {
         title: "Federation & Unification",
-        description: "Designing a centralized authority that trusts no one by default, regardless of network position.",
+        description:
+          "A central authority that trusts nothing by default, including itself, and that can be adopted one system at a time, because a big-bang identity cutover is how companies lose a Monday.",
         insights: [
           {
             icon: "key",
             title: "Identity Federation",
-            description: "Mapping disparate Active Directory and LDAP schemas into a single, unified GraphQL identity graph.",
-            color: "secondary"
+            description:
+              "Mapping directory and LDAP schemas that disagree about what a person is into one identity graph, with the conflicts resolved explicitly rather than by last-write-wins.",
+            color: "secondary",
           },
           {
             icon: "policy",
             title: "Adaptive Risk Policies",
-            description: "Implementing AI scoring that evaluates IP, device posture, and behavior before granting access.",
-            color: "primary"
+            description:
+              "Scoring on IP, device posture and behaviour before granting access, plus a documented answer for what happens when the score is wrong, which is the part most designs skip.",
+            color: "primary",
           },
           {
             icon: "cable",
-            title: "Seamless OIDC Integration",
-            description: "Ensuring all internal tools and external SaaS apps could plug into the system via standard OpenID Connect.",
-            color: "tertiary"
-          }
-        ]
+            title: "Standards, Not Adapters",
+            description:
+              "Everything speaks OpenID Connect. Anything that cannot is put behind a proxy that can, so there is exactly one integration pattern to maintain.",
+            color: "tertiary",
+          },
+        ],
       },
       engineering: {
-        title: "Engineering Cadence",
+        title: "Build Sequence",
         phases: [
           {
             title: "Phase 1: The Core Broker",
-            description: "Establishing the central Identity Provider (IdP) capable of handling 5,000 auth requests per second globally.",
-            color: "secondary"
+            description:
+              "A central identity provider sized for group-wide peak rather than average, because auth load is a Monday-morning spike, and an identity service that degrades under it takes everything else with it.",
+            color: "secondary",
           },
           {
             title: "Phase 2: Legacy Bridging",
-            description: "Deploying secure reverse-proxies in front of legacy on-premise applications incapable of modern SAML/OIDC.",
-            color: "primary"
+            description:
+              "Reverse proxies in front of on-premise applications that will never speak SAML or OIDC, so the estate can migrate without waiting for its oldest system.",
+            color: "primary",
           },
           {
             title: "Phase 3: Rollout & Deprecation",
-            description: "A meticulously orchestrated, zero-downtime migration of 45,000 employees over a single weekend.",
-            color: "tertiary"
-          }
-        ]
+            description:
+              "Directory by directory, with the old path live until the new one has carried real traffic. Rollback stays available at every step, and the legacy domain is switched off last.",
+            color: "tertiary",
+          },
+        ],
       },
       architecture: {
         title: "Distributed Zero-Trust Authority",
-        content: "By deploying lightweight identity gateways at the edge via a globally distributed Kubernetes cluster, we minimized authentication latency while ensuring that every single network request is explicitly validated and signed."
-      }
-    }
-  }
+        content:
+          "Lightweight identity gateways at the edge over a distributed cluster, so authentication latency does not track distance from head office. Every request is explicitly validated and signed, including the ones already inside the network, which are the ones that matter.",
+      },
+    },
+  },
 };
 
 export function getAllCaseStudies() {

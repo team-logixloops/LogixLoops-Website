@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * StatCard — Metric display with border-left accent.
+ * StatCard. Metric display with border-left accent.
  * Used in case study heroes, portfolio stats, and hero sections.
  *
  * Props:

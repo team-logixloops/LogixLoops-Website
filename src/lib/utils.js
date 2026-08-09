@@ -1,9 +1,9 @@
 /**
- * LOGIXLOOPS — Utility Helpers
+ * LOGIXLOOPS: Utility Helpers
  */
 
 /**
- * Merge class names — filters falsy values and joins.
+ * Merge class names, filters falsy values and joins.
  * Lightweight alternative to clsx/classnames.
  * @param  {...(string|false|null|undefined)} classes
  * @returns {string}

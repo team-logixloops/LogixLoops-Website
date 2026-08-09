@@ -1,35 +1,43 @@
 "use client";
 
+import { SectionHeader } from "@/components/ui";
 import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
+import { cn } from "@/lib/utils";
+import { SECTION, CARD, accent } from "./tokens";
 
-export default function ServiceMasterMetrics({ metrics }) {
-  if (!metrics || metrics.length === 0) return null;
+export default function ServiceMasterMetrics({ metrics, color }) {
+  if (!metrics?.length) return null;
+  const a = accent(color);
 
   return (
-    <section className="py-stack-xl bg-surface-container-lowest/50 border-y border-outline-variant/30">
-      <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop flex flex-col md:flex-row gap-stack-lg items-center">
-        <FadeInUp className="md:w-1/3">
-          <h2 className="font-display text-headline-lg text-on-surface mb-4">Performance & Scalability</h2>
-          <p className="font-body text-body-md text-on-surface-variant">
-            We engineer for absolute reliability. Our architectures are load-tested and optimized to ensure milliseconds of latency even under intense enterprise workloads.
-          </p>
-        </FadeInUp>
-        
-        <StaggerContainer className="md:w-2/3 grid grid-cols-2 gap-gutter w-full">
-          {metrics.map((metric, i) => (
-            <StaggerItem key={i}>
-              <div className="bg-white/60 backdrop-blur-md border border-outline-variant/30 p-6 rounded-xl hover:bg-white/80 transition-colors shadow-sm text-center">
-                <div className="font-display text-display-md text-primary mb-2 font-bold tracking-tight">
-                  {metric.value}
-                </div>
-                <div className="font-label text-label-caps text-on-surface-variant uppercase tracking-widest">
-                  {metric.label}
-                </div>
+    <section className={SECTION}>
+      <FadeInUp>
+        <SectionHeader
+          overline="Benchmarks"
+          title="Engineering Targets"
+          description="The service levels we architect and load-test against."
+        />
+      </FadeInUp>
+
+      <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-gutter mt-stack-lg">
+        {metrics.map((metric) => (
+          <StaggerItem key={metric.label}>
+            <div className={cn(CARD, a.hover, "text-center p-6")}>
+              <div
+                className={cn(
+                  "font-display text-headline-lg-mobile md:text-headline-lg mb-2 tracking-tight break-words",
+                  a.text
+                )}
+              >
+                {metric.value}
               </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
+              <div className="font-label text-label-caps text-on-surface-variant uppercase tracking-widest">
+                {metric.label}
+              </div>
+            </div>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
     </section>
   );
 }

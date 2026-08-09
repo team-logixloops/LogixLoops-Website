@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Badge — Pills for categories, tech tags, and status indicators.
+ * Badge. Pills for categories, tech tags, and status indicators.
  *
  * Variants:
  *  - default:  Subtle bg with tinted text

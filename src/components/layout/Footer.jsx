@@ -1,45 +1,66 @@
 import Link from "next/link";
-import Image from "next/image";
 import { BRAND, FOOTER_LINKS, SOCIAL_LINKS } from "@/lib/constants";
+import { BubbleText } from "@/components/ui";
+import { RuixenGradientFooter } from "@/components/ui/RuixenGradientFooter";
+import SocialIcon, { SOCIAL_BRAND_COLORS } from "@/components/ui/SocialIcon";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-surface-container-lowest border-t border-outline-variant/30 relative z-10 mt-auto">
+    <RuixenGradientFooter
+      // 30vh of glow meant ~16vh of clearance beneath the last line even at
+      // 0.55, still a visible void under the footer. The band only needs to
+      // read as a wash off the floor of the page, not as a third of a screen.
+      gradientHeight="14vh"
+      className="w-full bg-surface-container-lowest border-t border-outline-variant/30 relative z-10 mt-auto"
+    >
       <div className="container-site py-stack-xl">
         {/* ── Main Grid ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 lg:gap-gutter">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-4">
-            <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <Image 
-                src="/logixloops_logo.png" 
-                alt={`${BRAND.name} Logo`} 
-                width={160} 
-                height={32} 
-                className="h-6 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+            {/*
+              The lockup, fox + wordmark, no tagline.
+
+              Not `logo-full.svg`, which bakes the tagline in at 6% of its
+              height: at any width the fox looks right at, that lands around a
+              6px cap height with 0.7px stems, and sub-pixel strokes get eaten
+              by antialiasing. That was the holes. The tagline lives in the
+              bottom bar as live text instead, where it renders crisp.
+            */}
+            <Link href="/" className="inline-block mb-6 group w-52">
+              <img
+                src="/brand/logo-lockup.svg"
+                alt={BRAND.name}
+                width={1312}
+                height={1029}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity"
               />
-              <span className="font-display font-semibold text-xl text-on-surface">
-                {BRAND.name}
-              </span>
             </Link>
             <p className="font-body text-body-md text-on-surface-variant mb-6 max-w-xs">
               {BRAND.description}
             </p>
 
-            {/* Social Links */}
+            {/* Social Links.
+                Each button carries its platform's own hex as a CSS variable,
+                so one rule handles all three: neutral at rest, the real brand
+                colour on hover and on keyboard focus. Driving it from a
+                variable rather than per-platform classes also keeps the
+                colours out of Tailwind's scan, they are data, not design
+                tokens, and they don't belong in the palette. */}
             <div className="flex items-center gap-4">
               {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors"
+                  style={{ "--brand": SOCIAL_BRAND_COLORS[social.label] }}
+                  className="group w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-[color,background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-surface-container-lowest hover:text-[var(--brand)] focus-visible:text-[var(--brand)] hover:shadow-glass"
                   aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="material-symbols-outlined text-[20px]">
-                    {social.icon}
-                  </span>
+                  <SocialIcon label={social.label} className="w-[18px] h-[18px]" />
                 </a>
               ))}
             </div>
@@ -47,17 +68,18 @@ export default function Footer() {
 
           {/* Company Column */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
+            <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
               Company
-            </h4>
+            </h2>
             <ul className="flex flex-col gap-3">
               {FOOTER_LINKS.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors underline-offset-4 hover:underline"
+                    aria-label={link.label}
+                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors"
                   >
-                    {link.label}
+                    <BubbleText text={link.label} />
                   </Link>
                 </li>
               ))}
@@ -66,17 +88,18 @@ export default function Footer() {
 
           {/* Resources Column */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
+            <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
               Resources
-            </h4>
+            </h2>
             <ul className="flex flex-col gap-3">
               {FOOTER_LINKS.resources.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors underline-offset-4 hover:underline"
+                    aria-label={link.label}
+                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors"
                   >
-                    {link.label}
+                    <BubbleText text={link.label} />
                   </Link>
                 </li>
               ))}
@@ -85,17 +108,18 @@ export default function Footer() {
 
           {/* Services Column */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
+            <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
               Services
-            </h4>
+            </h2>
             <ul className="flex flex-col gap-3">
               {FOOTER_LINKS.services.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors underline-offset-4 hover:underline"
+                    aria-label={link.label}
+                    className="font-body text-body-md text-on-surface-variant hover:text-secondary transition-colors"
                   >
-                    {link.label}
+                    <BubbleText text={link.label} />
                   </Link>
                 </li>
               ))}
@@ -104,17 +128,18 @@ export default function Footer() {
 
           {/* Legal Column */}
           <div className="col-span-1 lg:col-span-2">
-            <h4 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
+            <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
               Legal
-            </h4>
+            </h2>
             <div className="flex flex-col gap-3">
               {FOOTER_LINKS.legal.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-body text-body-sm text-on-surface-variant hover:text-secondary transition-colors underline-offset-4 hover:underline"
+                  aria-label={link.label}
+                  className="font-body text-body-sm text-on-surface-variant hover:text-secondary transition-colors"
                 >
-                  {link.label}
+                  <BubbleText text={link.label} />
                 </Link>
               ))}
             </div>
@@ -126,11 +151,15 @@ export default function Footer() {
           <p className="font-body text-body-sm text-on-surface-variant">
             {BRAND.copyright}
           </p>
-          <p className="font-body text-body-sm text-on-surface-variant">
-            Engineered with precision.
+          {/* The mark's own tagline, set in the artwork's steel. This is the
+              only place it appears, it used to sit under the lockup above
+              as well, and a tagline said twice in one footer is a tagline
+              nobody reads. */}
+          <p className="font-body text-body-sm font-medium tracking-wide text-brand-steel">
+            {BRAND.logoTagline}
           </p>
         </div>
       </div>
-    </footer>
+    </RuixenGradientFooter>
   );
 }

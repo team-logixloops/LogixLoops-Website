@@ -5,6 +5,11 @@ import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from
 import Link from "next/link";
 
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import CaseStudyMotion from "@/components/sections/case-study/CaseStudyMotion";
+import ReferenceBuildNotice from "@/components/sections/case-study/ReferenceBuildNotice";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { generateBreadcrumbSchema, generateCaseStudySchema } from "@/lib/schema";
+import { buildMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const caseStudies = getAllCaseStudies();
@@ -18,13 +23,27 @@ export async function generateMetadata({ params }) {
   const study = getCaseStudyBySlug(slug);
   
   if (!study) {
-    return { title: "Case Study Not Found | LogixLoops" };
+    return { title: "Case Study Not Found" };
   }
 
-  return {
-    title: `${study.title} Case Study | LogixLoops`,
+  return buildMetadata({
+    // "Case Study" would be the wrong word in a title tag while the record is
+    // a reference build. The title is the one line quoted in a search result,
+    // and it should not overclaim there either.
+    title: study.demo
+      ? `${study.title}: Reference Build`
+      : `${study.title} Case Study`,
     description: study.shortDescription,
-  };
+    path: `/case-studies/${study.slug}`,
+    // `article` asserts reportage. A reference build is a page about a design,
+    // so it stays a website-type document until the record is promoted.
+    type: study.demo ? "website" : "article",
+    keywords: [
+      study.industry,
+      study.transformationType,
+      ...study.technologies,
+    ],
+  });
 }
 
 export default async function CaseStudyDetailPage({ params }) {
@@ -38,7 +57,16 @@ export default async function CaseStudyDetailPage({ params }) {
   const { sections } = study;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <CaseStudyMotion className="flex flex-col min-h-screen">
+      <SchemaMarkup schema={generateCaseStudySchema(study)} />
+      <SchemaMarkup
+        schema={generateBreadcrumbSchema([
+          { label: "Home", path: "/" },
+          { label: "Case Studies", path: "/case-studies" },
+          { label: study.title, path: `/case-studies/${study.slug}` },
+        ])}
+      />
+
       {/* 1. Transformation Hero */}
       <section className="pt-32 pb-stack-xl px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto relative z-10">
         {/* Ambient Background Glows */}
@@ -60,11 +88,22 @@ export default async function CaseStudyDetailPage({ params }) {
                 {study.shortDescription}
               </p>
               
+              {/* Labelled as targets while the record is a reference build.
+                  The same three figures under a bare heading read as results,
+                  and that distinction is the one this page has to keep
+                  straight. */}
+              {study.demo && (
+                <p className="font-label text-label-caps uppercase tracking-widest text-secondary mb-4">
+                  Design targets, not measured results
+                </p>
+              )}
               <div className="flex flex-wrap gap-8 pt-4">
                 {study.metrics.map((metric, idx) => (
                   <div key={idx} className="flex flex-col border-l-2 border-secondary/30 pl-4">
-                    <span className="font-display text-display-lg-mobile text-primary">
-                      {metric.prefix}{metric.value}<span className="text-headline-md">{metric.suffix}</span>
+                    <span className="font-display text-display-lg-mobile text-primary tabular-nums">
+                      {metric.prefix}
+                      <span data-cs-count>{metric.value}</span>
+                      <span className="text-headline-md">{metric.suffix}</span>
                     </span>
                     <span className="font-body text-body-md text-on-surface-variant">{metric.label}</span>
                   </div>
@@ -76,18 +115,37 @@ export default async function CaseStudyDetailPage({ params }) {
           <div className="lg:col-span-5 relative mt-12 lg:mt-0">
             <FadeInRight>
               <div className="absolute inset-0 bg-secondary/10 blur-2xl rounded-full transform scale-110 pointer-events-none"></div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
-                src={study.heroImage} 
-                alt={study.heroImageAlt}
-                className="relative rounded-xl border border-white/40 shadow-glass-elevated w-full object-cover aspect-[4/3] glass-panel"
-              />
+              {/* Frame tilts toward the cursor; the image inside drifts on
+                  scroll, so it is over-scaled to keep the frame filled. */}
+              <div
+                data-cs-hero-frame
+                className="relative rounded-xl overflow-hidden border border-white/40 shadow-glass-elevated glass-panel aspect-[4/3] will-change-transform"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  width={1600}
+                  height={900}
+                  data-cs-hero-image
+                  src={study.heroImage}
+                  alt={study.heroImageAlt}
+                  className="w-full h-full object-cover scale-110 will-change-transform"
+                />
+              </div>
             </FadeInRight>
           </div>
         </div>
       </section>
 
-      {/* 2 & 3. Client Challenge & Operational Problems */}
+      {/* The disclosure, immediately under the hero, before the reader has
+          absorbed three large figures and formed a view. Renders nothing once
+          a record is promoted to real client work. */}
+      {study.demo && (
+        <section className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop relative z-10">
+          <ReferenceBuildNotice />
+        </section>
+      )}
+
+      {/* 2 & 3. The brief and the constraints */}
       {sections.challenge && (
         <section className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop py-stack-xl">
           <FadeInUp>
@@ -109,10 +167,13 @@ export default async function CaseStudyDetailPage({ params }) {
               <div className="relative w-full h-[300px] rounded-xl overflow-hidden glass-panel bg-surface-bright flex items-center justify-center shadow-inner mt-8 md:mt-0">
                 {sections.challenge.image && (
                   /* eslint-disable-next-line @next/next/no-img-element */
-                  <img 
-                    src={sections.challenge.image} 
+                  <img
+                    width={1200}
+                    height={800}
+                    data-cs-zoom
+                    src={sections.challenge.image}
                     alt={sections.challenge.imageAlt}
-                    className="w-full h-full object-cover opacity-80"
+                    className="w-full h-full object-cover opacity-80 will-change-transform"
                   />
                 )}
               </div>
@@ -131,10 +192,13 @@ export default async function CaseStudyDetailPage({ params }) {
             </FadeInUp>
           </div>
           
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
             {sections.discovery.insights.map((insight, idx) => (
               <StaggerItem key={idx}>
-                <div className="bg-surface/60 backdrop-blur-2xl p-8 rounded-xl border border-white/50 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform duration-300 h-full">
+                <div
+                  data-cs-spotlight
+                  className="cs-spotlight bg-surface/60 backdrop-blur-2xl p-8 rounded-xl border border-white/50 shadow-[0_10px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 hover:border-primary/25 transition-[translate,border-color,box-shadow] duration-300 h-full"
+                >
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-6 bg-${insight.color}/10`}>
                     <span className={`material-symbols-outlined text-${insight.color}`}>{insight.icon}</span>
                   </div>
@@ -150,21 +214,48 @@ export default async function CaseStudyDetailPage({ params }) {
       {/* 7. Engineering Implementation (Cadence) */}
       {sections.engineering && (
         <section className="bg-surface-container-low py-stack-xl mt-stack-lg border-y border-outline-variant/30">
-          <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop">
-            <FadeInUp>
-              <h2 className="font-display text-display-lg text-on-surface mb-12 border-b border-outline-variant/30 pb-6">{sections.engineering.title}</h2>
-            </FadeInUp>
-            
-            <div className="relative border-l border-outline/20 ml-6 pl-8 space-y-16">
-              {sections.engineering.phases.map((phase, idx) => (
-                <FadeInLeft key={idx} delay={idx * 0.1}>
-                  <div className="relative">
-                    <div className={`absolute w-4 h-4 rounded-full bg-surface border-2 border-${phase.color} -left-[40px] top-1.5 shadow-[0_0_10px_rgba(70,72,212,0.4)]`}></div>
+          {/* Scrollytelling: on large screens the heading sticks while the
+              phases move past it and the rail fills with scroll progress. On
+              small screens it collapses to a plain stacked timeline, sticky
+              headings eat too much of a short viewport. */}
+          <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <div className="lg:col-span-4">
+              <div className="lg:sticky lg:top-28">
+                <FadeInUp>
+                  <span className="font-label text-label-caps text-secondary tracking-widest uppercase mb-3 block">
+                    Build Sequence
+                  </span>
+                  <h2 className="font-display text-display-lg text-on-surface mb-8 lg:mb-0 border-b lg:border-b-0 border-outline-variant/30 pb-6 lg:pb-0">
+                    {sections.engineering.title}
+                  </h2>
+                </FadeInUp>
+              </div>
+            </div>
+
+            <div className="lg:col-span-8">
+              <div className="relative pl-8 sm:pl-10 space-y-14 sm:space-y-20">
+                {/* Static track, then the rail that draws over it. */}
+                <div className="absolute left-0 top-0 bottom-0 w-px bg-outline-variant/40" aria-hidden="true"></div>
+                <div
+                  data-cs-rail
+                  aria-hidden="true"
+                  className="cs-rail absolute left-0 top-0 bottom-0 w-px will-change-transform"
+                ></div>
+
+                {sections.engineering.phases.map((phase, idx) => (
+                  <div key={idx} data-cs-phase className="relative">
+                    <span
+                      aria-hidden="true"
+                      className="cs-dot absolute -left-[calc(2rem+6px)] sm:-left-[calc(2.5rem+6px)] top-2 w-3 h-3 rounded-full bg-outline-variant ring-4 ring-surface-container-low"
+                    ></span>
+                    <span className="font-label text-label-caps text-on-surface-variant/70 tracking-widest uppercase mb-2 block">
+                      {String(idx + 1).padStart(2, "0")} / {String(sections.engineering.phases.length).padStart(2, "0")}
+                    </span>
                     <h3 className="font-display text-headline-lg-mobile text-on-surface mb-2">{phase.title}</h3>
                     <p className="font-body text-body-md text-on-surface-variant max-w-3xl">{phase.description}</p>
                   </div>
-                </FadeInLeft>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -183,7 +274,8 @@ export default async function CaseStudyDetailPage({ params }) {
                 />
                 
                 <div className="mt-8">
-                  <h4 className="font-display text-headline-md text-on-surface mb-4">Technology Stack</h4>
+                  {/* h3, not h4, it sits directly under the SectionHeader's h2. */}
+                  <h3 className="font-display text-headline-md text-on-surface mb-4">Technology Stack</h3>
                   <div className="flex flex-wrap gap-2">
                     {study.technologies.map(tech => (
                       <Badge key={tech} variant="subtle">{tech}</Badge>
@@ -193,36 +285,37 @@ export default async function CaseStudyDetailPage({ params }) {
               </FadeInLeft>
             </div>
             
-            <div className="relative h-[400px] w-full rounded-2xl bg-inverse-surface overflow-hidden p-8 shadow-2xl flex items-center justify-center">
+            <div className="relative h-[340px] sm:h-[400px] w-full rounded-2xl bg-inverse-surface overflow-hidden p-4 sm:p-8 shadow-2xl flex items-center justify-center">
               <FadeInRight className="w-full h-full relative">
-                {/* Abstract Architecture CSS Diagram */}
-                <div className="absolute inset-0 flex flex-col justify-between py-12 px-8">
+                {/* Abstract architecture diagram, assembles top-down as the
+                    section scrolls past (desktop only; on mobile it just is). */}
+                <div data-cs-diagram className="absolute inset-0 flex flex-col justify-between py-6 sm:py-12 px-2 sm:px-8">
                   {/* API Gateway */}
-                  <div className="w-full h-12 border-2 border-primary/50 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-mono text-sm">
+                  <div data-cs-node className="w-full h-12 border-2 border-primary/50 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-mono text-xs sm:text-sm">
                     EDGE API GATEWAY
                   </div>
-                  
+
                   {/* Connecting lines */}
-                  <div className="flex justify-between px-16 h-12">
+                  <div data-cs-node className="flex justify-between px-8 sm:px-16 h-8 sm:h-12">
                     <div className="w-px h-full bg-primary/30"></div>
                     <div className="w-px h-full bg-primary/30"></div>
                     <div className="w-px h-full bg-primary/30"></div>
                   </div>
-                  
+
                   {/* Microservices */}
-                  <div className="flex justify-between gap-4">
-                    <div className="flex-1 h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-xs text-center">AUTH</div>
-                    <div className="flex-1 h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-xs text-center">ROUTING</div>
-                    <div className="flex-1 h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-xs text-center">DATA</div>
+                  <div data-cs-node className="flex justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">AUTH</div>
+                    <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">ROUTING</div>
+                    <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">DATA</div>
                   </div>
-                  
+
                   {/* Connecting lines */}
-                  <div className="flex justify-center h-12">
+                  <div data-cs-node className="flex justify-center h-8 sm:h-12">
                     <div className="w-px h-full bg-tertiary/30"></div>
                   </div>
-                  
+
                   {/* Database */}
-                  <div className="w-full h-12 border-2 border-tertiary/50 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary font-mono text-sm">
+                  <div data-cs-node className="w-full h-12 border-2 border-tertiary/50 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary font-mono text-xs sm:text-sm">
                     DISTRIBUTED CLUSTER
                   </div>
                 </div>
@@ -236,7 +329,7 @@ export default async function CaseStudyDetailPage({ params }) {
       <section className="bg-surface-container-lowest pt-stack-xl border-t border-outline-variant/30">
         <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop pb-stack-lg">
           <div className="flex justify-between items-end mb-8">
-            <h3 className="font-display text-headline-md text-on-surface">Explore Related Archives</h3>
+            <h3 className="font-display text-headline-md text-on-surface">Other reference builds</h3>
             <Link href="/case-studies" className="text-primary hover:text-secondary transition-colors font-label text-label-caps uppercase tracking-widest flex items-center gap-1">
               View All <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
             </Link>
@@ -246,16 +339,18 @@ export default async function CaseStudyDetailPage({ params }) {
         <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto pb-stack-xl">
           <div className="bg-gradient-to-br from-surface-container-low to-surface border border-white/50 rounded-2xl p-12 text-center shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full transform scale-150 pointer-events-none"></div>
-            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Ready to Engineer Your Success?</h2>
+            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Recognise your own system in this?</h2>
             <p className="font-body text-body-lg text-on-surface-variant mb-8 max-w-2xl mx-auto relative z-10">
-              Partner with LogixLoops to transform your technical debt into a competitive advantage.
+              Then the next useful thing is forty-five minutes and a written
+              brief on yours. Same format as this page, your constraints, and
+              yours to keep either way.
             </p>
             <Button href="/contact" size="lg" className="relative z-10 shadow-lg">
-              Start Your Transformation
+              Book a discovery call
             </Button>
           </div>
         </div>
       </section>
-    </div>
+    </CaseStudyMotion>
   );
 }

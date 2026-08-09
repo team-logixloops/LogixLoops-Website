@@ -18,6 +18,8 @@ export default function AboutHero() {
         <div className="absolute inset-0 bg-white/70 backdrop-blur-[24px] border border-white/30 rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.04)] transform md:translate-x-12 md:-translate-y-8">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent z-10 pointer-events-none" />
           <img 
+            width={1200}
+            height={900}
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuB55ku6Conor5aS5dtWmFo7Q0W5wBu4-ZlmFY0jZj_YUnNmWVXQ5ygQk4LNGtuMXthVXKW1MCsRCO6Xi6ROfDcT79f2dXdy39WRwUfk7WWW5fz897-9EsbS57KC4vwTqO0rFvZ1a5lSc_-Ofa2PEw6HAI73lN4kb6Ybv7Qd3CEWdYcGcSrpNCzY_9BGV8JQxQFKmbNPw-xG6FBJ08gJwn5g6J4tGKoI4K-7x5Bojz3HG1iY-f_Nv9V-kN9ONSFo93DWCFKSF_VM2XId" 
             alt="Abstract architectural concept"
             className="w-full h-full object-cover opacity-90 mix-blend-overlay"

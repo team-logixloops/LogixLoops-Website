@@ -1,8 +1,11 @@
 import { cn } from "@/lib/utils";
 
 /**
- * SectionHeader — Consistent section heading pattern.
+ * SectionHeader. Consistent section heading pattern.
  * Renders: overline label → headline → optional description
+ *
+ * `as` exists because a few pages use this component as their page title, not
+ * as a section heading, hardcoding <h2> left those routes with no <h1>.
  */
 export default function SectionHeader({
   overline,
@@ -11,7 +14,10 @@ export default function SectionHeader({
   align = "center",
   className,
   titleClassName,
+  overlineClassName,
+  descriptionClassName,
   size = "lg",
+  as: Heading = "h2",
 }) {
   const alignClasses = {
     center: "text-center mx-auto",
@@ -34,21 +40,31 @@ export default function SectionHeader({
       )}
     >
       {overline && (
-        <span className="font-label text-label-caps text-primary tracking-widest uppercase mb-4 block">
+        <span
+          className={cn(
+            "font-label text-label-caps tracking-widest uppercase mb-4 block",
+            overlineClassName || "text-primary"
+          )}
+        >
           {overline}
         </span>
       )}
-      <h2
+      <Heading
         className={cn(
           sizeClasses[size],
-          "text-on-surface mb-stack-sm",
-          titleClassName
+          "mb-stack-sm",
+          titleClassName || "text-on-surface"
         )}
       >
         {title}
-      </h2>
+      </Heading>
       {description && (
-        <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+        <p
+          className={cn(
+            "font-body text-body-lg max-w-2xl mx-auto",
+            descriptionClassName || "text-on-surface-variant"
+          )}
+        >
           {description}
         </p>
       )}

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Input — Styled form input matching the LogixLoops design system.
+ * Input. Styled form input matching the LogixLoops design system.
  * Uses the .input-field class from globals.css.
  */
 export function Input({ label, id, className, ...props }) {
@@ -21,7 +21,7 @@ export function Input({ label, id, className, ...props }) {
 }
 
 /**
- * Textarea — Styled multi-line input.
+ * Textarea. Styled multi-line input.
  */
 export function Textarea({ label, id, className, rows = 4, ...props }) {
   return (
@@ -45,7 +45,7 @@ export function Textarea({ label, id, className, rows = 4, ...props }) {
 }
 
 /**
- * Select — Styled dropdown select.
+ * Select. Styled dropdown select.
  */
 export function Select({ label, id, options = [], placeholder, className, ...props }) {
   return (

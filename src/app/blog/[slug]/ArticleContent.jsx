@@ -4,6 +4,10 @@ import { useRef } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Badge } from "@/components/ui";
 import ReactMarkdown from 'react-markdown';
+// react-markdown parses CommonMark only. The posts are written in GitHub
+// Flavored Markdown, so without this every pipe table in `post.content`
+// rendered as a paragraph of literal `|` characters.
+import remarkGfm from 'remark-gfm';
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export default function ArticleContent({ post }) {
@@ -56,21 +60,77 @@ export default function ArticleContent({ post }) {
          <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-3xl mx-auto relative">
            
            {/* Abstract Left Sidebar for Socials (Desktop Only) */}
-           <div className="hidden lg:flex absolute -left-32 top-0 flex-col gap-4 sticky-sidebar">
+           {/* The rail is parked out in the left margin for the whole length
+               of the article, and its contents stick inside that column, so
+               the share controls stay with the reader without the rail itself
+               having to leave the flow. */}
+           <div className="hidden lg:block absolute -left-32 top-0 bottom-0 sticky-sidebar">
+            <div className="sticky top-36 flex flex-col gap-4">
               <span className="font-mono text-[10px] text-outline-variant uppercase tracking-widest rotate-180" style={{ writingMode: 'vertical-rl' }}>Share Article</span>
               <div className="w-[1px] h-12 bg-outline-variant/30 mx-auto"></div>
-              <button className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span className="material-symbols-outlined text-[16px]">link</span></button>
-              <button className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span className="material-symbols-outlined text-[16px]">share</span></button>
+              {/* Both buttons were icon-only with no accessible name and no
+                  handler, a screen reader announced two unlabelled buttons,
+                  and pressing either did nothing. They are 32px of artwork
+                  with a 44px hit area via `tap-target`, which keeps the visual
+                  size the design wanted without failing WCAG 2.5.8. */}
+              <button
+                type="button"
+                aria-label="Copy link to this article"
+                onClick={() => navigator.clipboard?.writeText(window.location.href)}
+                className="tap-target w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <span aria-hidden="true" className="material-symbols-outlined text-[16px]">link</span>
+              </button>
+              <button
+                type="button"
+                aria-label="Share this article"
+                onClick={() => {
+                  // `navigator.share` is absent on most desktop browsers, which
+                  // is where this sidebar lives; falling back to the clipboard
+                  // means the control always does something.
+                  if (navigator.share) {
+                    navigator.share({ title: post.title, url: window.location.href }).catch(() => {});
+                  } else {
+                    navigator.clipboard?.writeText(window.location.href);
+                  }
+                }}
+                className="tap-target w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+              >
+                <span aria-hidden="true" className="material-symbols-outlined text-[16px]">share</span>
+              </button>
+            </div>
            </div>
 
            {/* Markdown Content */}
-           <div className="prose prose-invert prose-lg max-w-none 
-                prose-headings:font-display prose-headings:text-on-surface 
-                prose-p:font-body prose-p:text-on-surface-variant prose-p:leading-relaxed 
-                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                prose-code:font-mono prose-code:text-secondary prose-code:bg-surface-container-lowest prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                prose-pre:bg-inverse-surface prose-pre:border prose-pre:border-outline/20 prose-pre:shadow-glass-elevated">
-             <ReactMarkdown>{post.content}</ReactMarkdown>
+           {/* Colours come from the `typography` block in tailwind.config.js,
+               which maps the plugin's prose variables onto the site tokens.
+               Only the typeface and the code-block chrome are set here.
+
+               On the underline, `hover` goes last, after `prose-a`. Leading
+               with it compiles to `.class:hover :is(a)`, which puts the hover
+               state on the container rather than the link, so pointing at any
+               part of the article underlined every link in it at once. */}
+           <div className="prose prose-lg max-w-none
+                prose-headings:font-display
+                prose-p:font-body prose-p:leading-relaxed
+                prose-a:no-underline prose-a:hover:underline
+                prose-code:font-mono
+                prose-pre:border prose-pre:border-outline/20 prose-pre:shadow-glass-elevated">
+             {/* `body` is `overflow-x: hidden`, so a table wider than the
+                 3xl column would be silently clipped rather than scrolled.
+                 Each one gets its own scroll container instead. */}
+             <ReactMarkdown
+               remarkPlugins={[remarkGfm]}
+               components={{
+                 table: ({ node, ...props }) => (
+                   <div className="overflow-x-auto my-8">
+                     <table {...props} className="my-0" />
+                   </div>
+                 ),
+               }}
+             >
+               {post.content}
+             </ReactMarkdown>
            </div>
            
          </div>

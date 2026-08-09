@@ -1,5 +1,5 @@
 /**
- * LOGIXLOOPS — Analytics Abstraction Layer
+ * LOGIXLOOPS: Analytics Abstraction Layer
  * 
  * Hydration-safe, non-blocking telemetry abstraction.
  * Prepares the architecture for Vercel Web Vitals, Google Analytics, or PostHog

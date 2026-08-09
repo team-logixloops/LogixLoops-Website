@@ -3,7 +3,7 @@
 @config "../../tailwind.config.js";
 
 /* ═══════════════════════════════════════════════════
- * LOGIXLOOPS — GLOBAL STYLES
+ * LOGIXLOOPS: GLOBAL STYLES
  * Premium soft-light luxury interface foundation
  * ═══════════════════════════════════════════════════ */
 
@@ -28,9 +28,31 @@
     color: #00174b;
   }
 
-  /* Prevent layout shift from scrollbar */
+  /* ─── Scrollbar ───
+     Hidden, and `scrollbar-gutter` goes with it.
+
+     The page scrolls under Lenis, which eases the document toward a target
+     over several frames. A native thumb reports the document's real position,
+     so it lands in eased steps rather than tracking the wheel — it reads as a
+     stuttering bar being dragged around, which is the one artefact smooth
+     scrolling is supposed to remove. Position is reported by the navbar's
+     progress line instead, which is driven from the same eased value and so
+     never disagrees with what is on screen.
+
+     A reserved gutter has nothing left to reserve for once the bar is gone;
+     leaving it holds open an empty strip down the right edge.
+
+     Scrolling itself is untouched — wheel, keys, touch, and programmatic
+     scrolling all still work. This removes the widget, not the behaviour. */
   html {
-    scrollbar-gutter: stable;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   /* ─── Accessibility & Focus Systems ─── */
@@ -49,7 +71,7 @@
 
 /* ─── Glassmorphism Utilities ─── */
 @layer utilities {
-  /* Standard glass panel — cards, navbars, form containers */
+  /* Standard glass panel, cards, navbars, form containers */
   .glass-panel {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(24px);
@@ -60,7 +82,7 @@
     border-bottom: 1px solid rgba(195, 198, 215, 0.4);
   }
 
-  /* Elevated glass — modals, featured cards */
+  /* Elevated glass, modals, featured cards */
   .glass-elevated {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(32px);
@@ -72,7 +94,7 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
   }
 
-  /* Subtle glass — background sections */
+  /* Subtle glass, background sections */
   .glass-subtle {
     background: rgba(243, 243, 254, 0.4);
     backdrop-filter: blur(16px);
@@ -238,5 +260,1495 @@
       padding-left: 64px;
       padding-right: 64px;
     }
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * Hand-authored interaction utilities.
+ *
+ * These were reconstructed from the last production CSS build after the
+ * authoring copy of this file was lost, so they are the compiled form rather
+ * than the original nested source: the rules are flattened and the colour
+ * values are resolved. They are functionally identical to what shipped, and
+ * every one of them is referenced by a component (`glow-sweep` on the service
+ * cards, `cipher-lens` on /security, `cs-*` on a case study, and so on), a
+ * missing rule here is a silently dead hover state, not a build error.
+ *
+ * Re-nest them by hand when convenient. Do not delete one without grepping
+ * `src/` for its class name first.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@layer components {
+  .how-it-works-stage {
+    height: auto;
+  }
+
+  @media (min-width: 768px) {
+    .how-it-works-stage {
+      height: var(--md-height);
+    }
+  }
+
+  /* The step board's two reached-states, driven by `.is-active` on the
+     `[data-step]` wrapper from the scroll driver in `HowItWorks.jsx`.
+     A card the fox has not got to yet is drained and slightly sunk; the one
+     it has walked past is full colour and carries the mark stamped into its
+     corner. The watermark is deliberately near the floor of visibility, it
+     is texture behind the copy, not a second logo on the page. */
+  .step-watermark {
+    opacity: 0.07;
+  }
+
+  @media (min-width: 768px) {
+    /* Lift rather than a heavier shadow: the card's `shadow-[…]` is a
+       utility, and utilities outrank this layer, so a `box-shadow` here
+       would never land. */
+    .step-body {
+      opacity: 0.62;
+      filter: saturate(0.25);
+      transform: translateY(4px);
+      transition: opacity 0.5s, filter 0.5s,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    [data-step].is-active .step-body {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    /* Hidden until reached, then it fades up as the card lights. */
+    .step-watermark {
+      opacity: 0;
+      transform: translate(6px, 6px) scale(0.94);
+      transition: opacity 0.7s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    [data-step].is-active .step-watermark {
+      opacity: 0.07;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step-body,
+    .step-watermark {
+      transition: none;
+    }
+  }
+}
+
+@property --glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes glow-sweep-rotate {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+.focus-blur-cards > * {
+    transition: filter .3s, translate .3s cubic-bezier(.22, 1, .36, 1), box-shadow .3s, border-color .3s;
+  }
+
+.cs-spotlight {
+    position: relative;
+  }
+
+.cs-spotlight > * {
+    z-index: 1;
+    position: relative;
+  }
+
+.cs-spotlight:after {
+    content: "";
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%),
+      #378ce72e,
+      #378ce700 70%);
+    transition: opacity .4s;
+    position: absolute;
+    inset: 0;
+  }
+
+.cs-rail {
+    transform-origin: top;
+    background: linear-gradient(#2868c6b3, #378ce780, #378ce700);
+  }
+
+.cs-dot {
+    transition: scale .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s, background-color .4s;
+  }
+
+[data-cs-phase].is-active .cs-dot {
+    background-color: #2868c6;
+    scale: 1.35;
+    box-shadow: 0 0 0 4px #378ce724, 0 0 18px #378ce773;
+  }
+
+.glow-sweep {
+    isolation: isolate;
+    position: relative;
+  }
+
+.glow-sweep > * {
+    z-index: 1;
+    position: relative;
+  }
+
+.glow-sweep:before {
+    content: "";
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: conic-gradient(from var(--glow-angle, 0deg),
+      #378ce700 0deg,
+      #378ce700 55deg,
+      #378ce7 105deg,
+      #2868c6 135deg,
+      #378ce700 190deg,
+      #378ce700 360deg);
+    -webkit-mask-composite: xor;
+    padding: 1px;
+    transition: opacity .45s;
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-position: 0 0, 0 0;
+    mask-position: 0 0, 0 0;
+    -webkit-mask-size: auto, auto;
+    mask-size: auto, auto;
+    -webkit-mask-repeat: repeat, repeat;
+    mask-repeat: repeat, repeat;
+    -webkit-mask-clip: content-box, border-box;
+    mask-clip: content-box, border-box;
+    -webkit-mask-origin: content-box, border-box;
+    mask-origin: content-box, border-box;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-source-type: auto, auto;
+    mask-mode: match-source, match-source;
+  }
+
+.glow-sweep.is-lit:before {
+    opacity: .85;
+    animation: 7s linear infinite glow-sweep-rotate;
+  }
+
+.ambient-glow-royal {
+    background: radial-gradient(circle, #2868c61f 0%, #0000 70%);
+  }
+
+.ambient-glow-cyan {
+    background: radial-gradient(circle, #12a0b217 0%, #0000 70%);
+  }
+
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+.cipher-lens {
+    isolation: isolate;
+    position: relative;
+  }
+
+.cipher-lens:after {
+    content: "";
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-mask-image: radial-gradient(190px circle at var(--mx, 50%) var(--my, 50%),
+      #000 0%,
+      #00000073 52%,
+      transparent 76%);
+    -webkit-mask-image: radial-gradient(190px circle at var(--mx, 50%) var(--my, 50%),
+      #000 0%,
+      #00000073 52%,
+      transparent 76%);
+    mask-image: radial-gradient(190px circle at var(--mx, 50%) var(--my, 50%),
+      #000 0%,
+      #00000073 52%,
+      transparent 76%);
+    background-color: #378ce712;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='180'%3E%3Cg font-family='ui-monospace,SFMono-Regular,Menlo,monospace' font-size='11' fill='%232868c6' fill-opacity='0.55'%3E%3Ctext x='0' y='12'%3E9f4c2a71 0xB4E2 d81fa09c 4e7b%3C/text%3E%3Ctext x='0' y='30'%3Ea30d 7fe1 55c9 0ab8 e64d 91f3 2c%3C/text%3E%3Ctext x='0' y='48'%3E3d9a f0c4 71be 82d5 44e9 1a6c 08%3C/text%3E%3Ctext x='0' y='66'%3E0x7C1D bb40 e2f8 5a93 c176 4d02%3C/text%3E%3Ctext x='0' y='84'%3Ecf62 18ad 9e35 b7c1 0f48 6a2e d9%3C/text%3E%3Ctext x='0' y='102'%3E45b0 e91c 3f7a 260d 8cb5 f134 7e%3C/text%3E%3Ctext x='0' y='120'%3E0xA9F3 04d7 c85b 6e20 b3fa 1957%3C/text%3E%3Ctext x='0' y='138'%3Ed21e 6b84 af09 73c6 5d1b e0a7 32%3C/text%3E%3Ctext x='0' y='156'%3E8e57 c3d2 10fb 94a6 2b7e 6f81 45%3C/text%3E%3Ctext x='0' y='174'%3E0x1B6E fa25 d047 93c8 e5b2 7a13%3C/text%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 260px 180px;
+    transition: opacity .4s;
+    position: absolute;
+    inset: 0;
+  }
+
+.rule-draw {
+    position: relative;
+  }
+
+.rule-draw:before {
+    content: "";
+    pointer-events: none;
+    transform-origin: 0;
+    background: linear-gradient(to right, #2868c6, #12a0b2);
+    height: 2px;
+    transition: scale .5s cubic-bezier(.22, 1, .36, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    scale: 0 1;
+  }
+
+.rule-draw--under:before {
+    top: auto;
+    bottom: 0;
+  }
+
+.level-gauge {
+    isolation: isolate;
+    position: relative;
+    /* Horizontal inset for the ::after gauge bar. Must clear the card's own
+       corner radius, otherwise a full-bleed bar runs straight past the curve
+       and reads as a rule sitting under the card rather than inside it.
+       2rem matches `rounded-2xl`, which is what every .level-gauge card uses.
+       Override per-card when a card is rounded differently. */
+    --gauge-inset: 2rem;
+  }
+
+.level-gauge:before {
+    content: "";
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(to top, #378ce729, #378ce700);
+    height: 40%;
+    transition: opacity .45s;
+    position: absolute;
+    inset: auto 0 0;
+  }
+
+.level-gauge:after {
+    content: "";
+    pointer-events: none;
+    transform-origin: 0;
+    background: linear-gradient(to right, #2868c6, #12a0b2);
+    height: 3px;
+    border-radius: 999px;
+    transition: scale .55s cubic-bezier(.22, 1, .36, 1);
+    position: absolute;
+    bottom: 1px;
+    left: var(--gauge-inset);
+    right: var(--gauge-inset);
+    scale: 0 1;
+  }
+
+.stack-compile [data-stack] > * {
+    transition: color .3s, border-color .3s, background-color .3s, translate .3s cubic-bezier(.22, 1, .36, 1);
+  }
+
+.dispatch {
+    position: relative;
+  }
+
+.dispatch:before {
+    content: "";
+    pointer-events: none;
+    transform-origin: top;
+    background: linear-gradient(#2868c6, #12a0b2);
+    width: 2px;
+    transition: scale .45s cubic-bezier(.22, 1, .36, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    scale: 1 0;
+  }
+
+.dispatch [data-dispatch] {
+    transition: translate .35s cubic-bezier(.22, 1, .36, 1);
+  }
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * RESTORED + NEW.
+ *
+ * The reconstruction above recovered most of the hand-authored utilities but
+ * not all of them. Seven families were still referenced by components with no
+ * rule left to match: `roll-text` (every nav and footer link),
+ * `scroll-cue-marker` (every PageHero), `icon-md/lg/xl` (13 call sites),
+ * `tap-target`, `pt-*` (the eight-phase timeline on /process),
+ * `lifecycle-pulse`, and `flip-card` (/about). Each was a silently dead
+ * effect rather than a build error, which is exactly the failure the note
+ * above warns about.
+ *
+ * A separate `@layer components` block on purpose: Tailwind merges it with
+ * the one above, and keeping these in the components layer means a Tailwind
+ * utility on the same element still wins.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@keyframes scroll-cue {
+  0%        { transform: translateY(-100%) scaleY(0.4); opacity: 0; }
+  18%       { transform: translateY(0) scaleY(1);       opacity: 1; }
+  70%       { transform: translateY(200%) scaleY(1);    opacity: 1; }
+  88%, 100% { transform: translateY(300%) scaleY(0.4);  opacity: 0; }
+}
+
+@keyframes lifecycle-travel {
+  from { offset-distance: 0%; }
+  to   { offset-distance: 100%; }
+}
+
+@layer components {
+  /* ─── Scroll cue ───
+     The marker on a hero's depth rule. Runs the rule's length, holds at the
+     bottom, returns from the top: a gauge taking a reading, not a bouncing
+     arrow. Reduced motion keeps the marker (it is the only thing telling a
+     reader there is a page under a full-viewport hero) and stops it moving. */
+  .scroll-cue-marker {
+    transform-origin: top;
+    animation: scroll-cue 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue-marker {
+      animation: none;
+      transform: translateY(100%);
+      opacity: 1;
+    }
+  }
+
+  /* ─── Letter roll-up (nav / footer / menu links) ───
+     The visible characters are drawn from a data attribute rather than from
+     text nodes, so the duplicate accent copy never enters the document's text
+     content; `.roll-text__label` carries the real, visually-hidden string so
+     the link keeps its anchor text. */
+  .roll-text {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: bottom;
+  }
+  .roll-text__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .roll-text__visual {
+    display: inline-block;
+    line-height: 1;
+  }
+  .roll-text__ch {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    transition: translate 0.35s cubic-bezier(0.3, 1, 0.3, 1), color 0.3s ease;
+  }
+  .roll-text__ch::before {
+    content: attr(data-char);
+  }
+  .roll-text__ch::after {
+    content: attr(data-char);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    color: var(--roll-accent, #378ce7);
+  }
+  a:hover .roll-text__ch,
+  a:focus-visible .roll-text__ch {
+    translate: 0 -100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .roll-text__ch {
+      transition: color 0.3s ease;
+    }
+    a:hover .roll-text__ch,
+    a:focus-visible .roll-text__ch {
+      translate: 0 0;
+      color: var(--roll-accent, #378ce7);
+    }
+  }
+
+  /* ─── Icon sizes ───
+     Font-size only, deliberately. Icons were previously sized with the
+     heading tokens, which also carry letter-spacing, line-height and
+     font-weight, and Material Symbols is a variable font whose `wght` axis
+     responds to `font-weight`, so a 600-weight heading token silently
+     rendered every icon bolder than intended. Same 360 to 1440 anchors as the
+     type scale, so icons and the text beside them grow together. */
+  .icon-md { font-size: clamp(1.5rem, 1.333rem + 0.741vw, 2rem); }
+  .icon-lg { font-size: clamp(1.75rem, 1.5rem + 1.111vw, 2.5rem); }
+  .icon-xl { font-size: clamp(2rem, 1.667rem + 1.481vw, 3rem); }
+
+  /* ─── Touch target floor ───
+     WCAG 2.5.8 and both platform HIGs land on 44px. Applied to controls whose
+     visual size is deliberately smaller than their hit area, so the target
+     grows without the artwork growing with it. */
+  @media (pointer: coarse) {
+    .tap-target {
+      position: relative;
+    }
+    .tap-target::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      min-width: 44px;
+      min-height: 44px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  /* ─── Process timeline (/process) ───
+     GSAP only scrubs the rail's scaleY and toggles `.is-active` on each
+     `[data-phase]`; everything visual is here. Below 768px the sticky index
+     is gone and phases are read one at a time, so dimming there would just
+     make the section look broken. */
+  .pt-rail {
+    transform-origin: top center;
+    background: linear-gradient(
+      to bottom,
+      rgba(40, 104, 198, 0.85),
+      rgba(55, 140, 231, 0.6) 60%,
+      rgba(18, 160, 178, 0.35)
+    );
+  }
+  .pt-node {
+    transition: background-color 0.45s ease, box-shadow 0.45s ease,
+      scale 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-phase].is-active .pt-node {
+    scale: 1.3;
+    background-color: #2868c6;
+    box-shadow: 0 0 0 5px rgba(55, 140, 231, 0.13),
+      0 0 22px rgba(55, 140, 231, 0.55);
+  }
+  @media (min-width: 768px) {
+    .pt-body {
+      opacity: 0.42;
+      transition: opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-phase].is-active .pt-body {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pt-node,
+    .pt-body {
+      transition: none;
+    }
+    .pt-body {
+      opacity: 1;
+    }
+  }
+
+  /* ─── Lifecycle pulse ───
+     Rides the same path the diagram draws, via `offset-path`, so one `d`
+     string drives both. Hidden unless `offset-path` actually resolves:
+     without it the dot has no position of its own and would park in the
+     corner of the viewBox, which reads as a rendering bug rather than as a
+     missing enhancement. */
+  .lifecycle-pulse {
+    opacity: 0;
+  }
+  @supports (offset-path: path("M0 0 L1 1")) {
+    .lifecycle-pulse {
+      opacity: 1;
+      offset-rotate: 0deg;
+      animation: lifecycle-travel 7s linear infinite;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lifecycle-pulse {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  /* ─── Flip card (ui/FlipCard.jsx) ───
+     The component owns the tap/keyboard state and writes `data-flipped`;
+     everything visual is here. Both faces are always in the DOM and neither
+     is hidden from assistive technology, so the back's content is read in
+     order whether or not the card has ever been turned. */
+  .flip-card {
+    perspective: 1400px;
+  }
+  .flip-card__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .flip-card__face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .flip-card__face--back {
+    transform: rotateY(180deg);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .flip-card:hover .flip-card__inner,
+    .flip-card:focus-within .flip-card__inner {
+      transform: rotateY(180deg);
+    }
+  }
+  /* Tap state wins over hover, so a pointer user can pin a card open and a
+     touch user has any way in at all. */
+  .flip-card[data-flipped="true"] .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+  .flip-card[data-flipped="false"] .flip-card__inner {
+    transform: rotateY(0deg);
+  }
+  /* Rotation in depth is a reliable motion-sickness trigger, so reduced
+     motion gets the same reveal as a crossfade in place. */
+  @media (prefers-reduced-motion: reduce) {
+    .flip-card {
+      perspective: none;
+    }
+    .flip-card__inner {
+      transform-style: flat;
+      transition: none;
+    }
+    .flip-card__face {
+      backface-visibility: visible;
+      -webkit-backface-visibility: visible;
+      transition: opacity 0.35s ease;
+    }
+    .flip-card__face--back {
+      transform: none;
+      opacity: 0;
+    }
+    .flip-card:hover .flip-card__face--back,
+    .flip-card:focus-within .flip-card__face--back,
+    .flip-card[data-flipped="true"] .flip-card__face--back {
+      opacity: 1;
+    }
+    .flip-card:hover .flip-card__face--front,
+    .flip-card:focus-within .flip-card__face--front,
+    .flip-card[data-flipped="true"] .flip-card__face--front {
+      opacity: 0;
+    }
+    .flip-card[data-flipped="false"] .flip-card__face--back {
+      opacity: 0;
+    }
+    .flip-card[data-flipped="false"] .flip-card__face--front {
+      opacity: 1;
+    }
+  }
+
+  /* ═══ Scroll timeline (ui/ScrollTimeline.jsx) ═══
+     One animation in two orientations. The JS writes `--tl-progress` and
+     toggles `.is-active`; everything below is the look. */
+
+  /* ─── Vertical ─── */
+  .tl-rail {
+    background: linear-gradient(
+      to bottom,
+      rgba(195, 208, 228, 0.7),
+      rgba(195, 208, 228, 0.25)
+    );
+  }
+  .tl-rail__fill {
+    transform-origin: top center;
+    scale: 1 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(40, 104, 198, 0.9),
+      rgba(55, 140, 231, 0.7) 60%,
+      rgba(18, 160, 178, 0.45)
+    );
+  }
+  .tl-node {
+    transition: scale 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.45s ease, box-shadow 0.45s ease;
+  }
+  [data-tl-step].is-active .tl-node {
+    scale: 1.3;
+    background-color: #2868c6;
+    box-shadow: 0 0 0 5px rgba(55, 140, 231, 0.13),
+      0 0 22px rgba(55, 140, 231, 0.5);
+  }
+  /* Resting steps sit back so the one being read carries the eye. Desktop
+     only: below 1024px steps are read one at a time anyway, matching how
+     `.pt-body` behaves on /process. */
+  @media (min-width: 1024px) {
+    .tl-body {
+      opacity: 0.45;
+      transition: opacity 0.5s ease;
+    }
+    [data-tl-step].is-active .tl-body {
+      opacity: 1;
+    }
+  }
+
+  /* ─── Horizontal ───
+     Two modes, chosen at runtime and published on the root as `data-tl-mode`.
+
+     sticky  the stage holds still under the navbar and the row is translated
+             through it by a scrubbed tween, so page scroll IS the sequence
+             advancing. Desktop pointers on a tall enough viewport.
+
+     rail    an ordinary horizontal scroller the reader moves themselves.
+             Phones, tablets, short viewports, reduced motion, and any width
+             where the row already fits. */
+  .tl-stage {
+    position: sticky;
+  }
+  [data-tl-mode="rail"] .tl-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1rem;
+  }
+  [data-tl-step] {
+    scroll-snap-align: start;
+  }
+  /* In sticky mode the track is a window, not a scroller: the row is
+     translated through it, and two scroll positions for one rail would
+     fight. The buttons go with it, since page scroll is the control there. */
+  [data-tl-mode="sticky"] .tl-track {
+    overflow: hidden;
+  }
+  [data-tl-mode="sticky"] .tl-arrows {
+    display: none;
+  }
+
+  .tl-card {
+    transition: opacity 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  [data-tl-step]:not(.is-active) .tl-card {
+    opacity: 0.6;
+  }
+  [data-tl-step].is-active .tl-card {
+    opacity: 1;
+    border-color: rgba(40, 104, 198, 0.35);
+    box-shadow: 0 18px 40px -22px rgba(8, 29, 74, 0.35);
+  }
+
+  /* The connector the nodes sit on. It lives inside the row and is as wide as
+     the row, so it travels with the cards rather than sliding under a fixed
+     line. */
+  .tl-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--tl-node-y, 10px);
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(195, 208, 228, 0.2),
+      rgba(195, 208, 228, 0.8) 6%,
+      rgba(195, 208, 228, 0.8) 94%,
+      rgba(195, 208, 228, 0.2)
+    );
+  }
+
+  /* Position readout. `--tl-progress` comes from the scrubbed tween in sticky
+     mode and from the scroller's own `scrollLeft` in rail mode, so it stays
+     truthful however the reader is moving. */
+  .tl-progress__fill {
+    transform-origin: left center;
+    scale: var(--tl-progress, 0) 1;
+    background: linear-gradient(to right, #2868c6, #12a0b2);
+    transition: scale 0.15s linear;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-rail__fill {
+      scale: 1 1;
+    }
+    .tl-node,
+    .tl-body,
+    .tl-card,
+    .tl-progress__fill {
+      transition: none;
+    }
+    .tl-body {
+      opacity: 1;
+    }
+    [data-tl-step]:not(.is-active) .tl-card {
+      opacity: 1;
+    }
+    [data-tl-mode="rail"] .tl-track {
+      scroll-snap-type: none;
+    }
+  }
+}
+/* ═══════════════════════════════════════════════════════════════════════════
+ * INTERACTION STATES AND COMPONENT PRESENTATION
+ *
+ * Everything above this line is a resting state. The rules that turn those
+ * resting states on, plus the presentation for the components that keep their
+ * whole appearance in this file, live here.
+ *
+ * Convention throughout: `:hover` is gated behind `(hover: hover) and
+ * (pointer: fine)` so a touch device never gets a state stuck on after a tap,
+ * and every hover state has a keyboard equivalent outside that gate. The JS
+ * drivers (`PointerLens`, `CaseStudyMotion`) gate themselves on the same query
+ * and supply pointer coordinates only, never visibility.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Pointer states for the resting utilities above ─────────────────────── */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Conic border sweep. `.is-lit` is the same state driven from JS where a
+     component owns selection rather than the pointer (MethodologyExplorer). */
+  .glow-sweep:hover::before {
+    opacity: 0.85;
+    animation: 7s linear infinite glow-sweep-rotate;
+  }
+
+  /* The ciphertext lens. `--mx`/`--my` come from PointerLens; with no pointer
+     over the card the mask has nothing to centre on, which is why this one
+     has no keyboard equivalent below. */
+  .cipher-lens:hover::after {
+    opacity: 1;
+  }
+
+  .cs-spotlight:hover::after {
+    opacity: 1;
+  }
+
+  .rule-draw:hover::before {
+    scale: 1 1;
+  }
+
+  .level-gauge:hover::before {
+    opacity: 1;
+  }
+
+  .level-gauge:hover::after {
+    scale: 1 1;
+  }
+
+  .dispatch:hover::before {
+    scale: 1 1;
+  }
+
+  .dispatch:hover [data-dispatch] {
+    translate: 4px 0;
+  }
+
+  /* Focus by subtraction: the card under the pointer stays as it is and the
+     others fall back, which reads as attention rather than as one card
+     growing out of the grid. */
+  .focus-blur-cards:hover > *:not(:hover) {
+    filter: saturate(0.35) blur(1px);
+    opacity: 0.72;
+  }
+
+  .focus-blur-cards > *:hover {
+    translate: 0 -4px;
+  }
+
+  /* The chips tint and lift together, so the stack reads as one object
+     answering the card's hover rather than fifteen separate pills. */
+  .stack-compile:hover [data-stack] > * {
+    border-color: #2868c64d;
+    background-color: #2868c60f;
+    color: #081d4a;
+    translate: 0 -2px;
+  }
+}
+
+/* Keyboard equivalents. Outside the pointer gate on purpose: anyone tabbing
+   gets the same affordance a pointer user gets. */
+.rule-draw:focus-within::before {
+  scale: 1 1;
+}
+
+.level-gauge:focus-within::before {
+  opacity: 1;
+}
+
+.level-gauge:focus-within::after {
+  scale: 1 1;
+}
+
+.dispatch:focus-within::before {
+  scale: 1 1;
+}
+
+.dispatch:focus-within [data-dispatch] {
+  translate: 4px 0;
+}
+
+.glow-sweep:focus-within::before {
+  opacity: 0.85;
+  animation: 7s linear infinite glow-sweep-rotate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The sweep is a rotating gradient with nowhere to go. Held at the angle it
+     starts on it is still a lit border. */
+  .glow-sweep:hover::before,
+  .glow-sweep:focus-within::before,
+  .glow-sweep.is-lit::before {
+    animation: none;
+  }
+
+  .focus-blur-cards > * {
+    transition: none;
+  }
+
+  .focus-blur-cards > *:hover {
+    translate: none;
+  }
+}
+
+/* ─── Flip card ──────────────────────────────────────────────────────────────
+ * Both faces occupy the same grid cell, so the card is as tall as its taller
+ * face and nothing reflows when it turns. `backface-visibility` is what hides
+ * the face pointing away; without it the two stack and both read at once.
+ *
+ * Precedence, in source order: hover, then keyboard, then the pinned
+ * attribute. Pinned comes last so clicking a card the pointer is still
+ * sitting on can actually close it.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.flip-card {
+  perspective: 1400px;
+}
+
+.flip-card__inner {
+  display: grid;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flip-card__face {
+  grid-area: 1 / 1;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card__face--back {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+}
+
+/* `:focus-visible` rather than `:focus-within`: the toggle covers the whole
+   card, so a mouse click leaves focus inside it. Keying on the visible-focus
+   heuristic stops a click leaving the card wedged open against the pinned
+   state that same click just set. */
+.flip-card:has(:focus-visible) .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card[data-flipped="true"] .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card[data-flipped="false"] .flip-card__inner {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Turning a plane in depth is a common motion-sickness trigger, so the same
+     three states crossfade instead. The faces stop being back-to-back and
+     become stacked, which is why visibility here is driven by opacity rather
+     than by which way a face points. */
+  .flip-card__inner,
+  .flip-card:hover .flip-card__inner,
+  .flip-card:has(:focus-visible) .flip-card__inner,
+  .flip-card[data-flipped="true"] .flip-card__inner,
+  .flip-card[data-flipped="false"] .flip-card__inner {
+    transform: none;
+    transition: none;
+  }
+
+  .flip-card__face {
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transition: opacity 0.25s linear;
+  }
+
+  .flip-card__face--back {
+    transform: none;
+    opacity: 0;
+  }
+
+  .flip-card:hover .flip-card__face--back,
+  .flip-card:has(:focus-visible) .flip-card__face--back,
+  .flip-card[data-flipped="true"] .flip-card__face--back {
+    opacity: 1;
+  }
+
+  .flip-card:hover .flip-card__face--front,
+  .flip-card:has(:focus-visible) .flip-card__face--front,
+  .flip-card[data-flipped="true"] .flip-card__face--front {
+    opacity: 0;
+  }
+
+  .flip-card[data-flipped="false"] .flip-card__face--back {
+    opacity: 0;
+  }
+
+  .flip-card[data-flipped="false"] .flip-card__face--front {
+    opacity: 1;
+  }
+}
+
+/* ─── Scroll timeline ────────────────────────────────────────────────────────
+ * Both orientations. `is-active` is written straight to the step by GSAP in
+ * the vertical case and by the scroller's own position in the horizontal one,
+ * so nothing here assumes which driver is running.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.tl-rail {
+  background-color: #dce4f2;
+}
+
+.tl-rail__fill {
+  transform-origin: top;
+  background: linear-gradient(#2868c6, #378ce7, #12a0b2);
+}
+
+.tl-node {
+  transition: background-color 0.4s, scale 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s;
+}
+
+[data-tl-step].is-active .tl-node {
+  background-color: #2868c6;
+  scale: 1.15;
+  box-shadow: 0 0 0 4px #378ce724, 0 0 18px #378ce759;
+}
+
+.tl-body,
+.tl-card {
+  transition: opacity 0.5s, filter 0.5s, border-color 0.5s;
+}
+
+[data-tl-step]:not(.is-active) .tl-body,
+[data-tl-step]:not(.is-active) .tl-card {
+  opacity: 0.6;
+  filter: saturate(0.3);
+}
+
+[data-tl-step].is-active .tl-card {
+  border-color: #2868c640;
+}
+
+/* The strip the horizontal nodes sit on, drawn behind them at their centre
+   line (22px node, so 11px down) so the row reads as one rail rather than a
+   line of unrelated dots. */
+.tl-row::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #dce4f2, #dce4f2 85%, transparent);
+  pointer-events: none;
+}
+
+.tl-track {
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 1.5rem;
+}
+
+.tl-track [data-tl-step] {
+  scroll-snap-align: start;
+}
+
+.tl-progress__fill {
+  transform-origin: left;
+  scale: var(--tl-progress, 0) 1;
+  background: linear-gradient(to right, #2868c6, #12a0b2);
+  transition: scale 0.15s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-node,
+  .tl-body,
+  .tl-card,
+  .tl-progress__fill {
+    transition: none;
+  }
+}
+
+/* ─── Process timeline ───────────────────────────────────────────────────── */
+
+.pt-rail {
+  background: linear-gradient(#2868c6, #378ce7 55%, #12a0b200);
+}
+
+.pt-node {
+  transition: background-color 0.4s, scale 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s;
+}
+
+[data-phase].is-active .pt-node {
+  background-color: #2868c6;
+  scale: 1.25;
+  box-shadow: 0 0 0 3px #378ce72e;
+}
+
+/* A phase the reader has not reached is drained rather than hidden: the copy
+   is readable at any point, it just does not compete with the phase that
+   currently owns the viewport. */
+.pt-body {
+  transition: opacity 0.5s, filter 0.5s, border-color 0.5s;
+}
+
+[data-phase]:not(.is-active) .pt-body {
+  opacity: 0.66;
+  filter: saturate(0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-node,
+  .pt-body {
+    transition: none;
+  }
+}
+
+/* ─── Expanding panels ───────────────────────────────────────────────────────
+ * The layout animation is Tailwind's, on the rail's track string. What lives
+ * here is the photography: a collapsed panel is pulled in and desaturated so
+ * the expanded one is the only full-brightness image in the row.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.xp-rail {
+  list-style: none;
+}
+
+.xp-panel {
+  transition: border-color 0.5s, box-shadow 0.5s;
+}
+
+.xp-panel[data-active="true"] {
+  border-color: #2868c640;
+}
+
+.xp-panel__media {
+  transform: scale(1.08);
+  filter: saturate(0.55);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+}
+
+.xp-panel[data-active="true"] .xp-panel__media {
+  transform: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-panel,
+  .xp-panel__media {
+    transition: none;
+  }
+
+  .xp-panel__media {
+    transform: none;
+  }
+}
+
+/* ─── Scroll cue ─────────────────────────────────────────────────────────────
+ * A 12px marker travelling a 36px rule, then holding at the bottom before it
+ * restarts, so the eye is led down once per cycle rather than pulsed at.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@keyframes scroll-cue-travel {
+  0% {
+    translate: 0 -100%;
+  }
+  60% {
+    translate: 0 300%;
+  }
+  100% {
+    translate: 0 300%;
+  }
+}
+
+.scroll-cue-marker {
+  animation: 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite scroll-cue-travel;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Frozen at the head of the rule. Still reads as a gauge, stops moving. */
+  .scroll-cue-marker {
+    animation: none;
+    translate: 0 0;
+  }
+}
+
+/* ─── Lifecycle pulse ────────────────────────────────────────────────────────
+ * Rides the `offset-path` set inline from the same `d` the curve is drawn
+ * from, so it follows whichever model is on screen with no extra maths.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+@keyframes lifecycle-travel {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+.lifecycle-pulse {
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  animation: 6s linear infinite lifecycle-travel;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lifecycle-pulse {
+    animation: none;
+    offset-distance: 50%;
+  }
+}
+
+/* ─── Legal document body ────────────────────────────────────────────────────
+ * The clause text is authored as plain headings, paragraphs and lists rather
+ * than with a utility on every element, because it is the one part of the site
+ * that gets pasted into email and printed. Its rhythm lives here so the markup
+ * stays clean.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.legal-content-wrapper h2 {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 1.333rem + 0.741vw, 2rem);
+  line-height: 1.3;
+  font-weight: 600;
+  color: #191b23;
+  margin-bottom: 1rem;
+  scroll-margin-top: 8rem;
+}
+
+.legal-content-wrapper h3 {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #191b23;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.legal-content-wrapper p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #45485a;
+  margin-bottom: 1rem;
+}
+
+.legal-content-wrapper ul,
+.legal-content-wrapper ol {
+  margin: 0 0 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legal-content-wrapper ul {
+  list-style: disc;
+}
+
+.legal-content-wrapper ol {
+  list-style: decimal;
+}
+
+.legal-content-wrapper li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #45485a;
+  padding-left: 0.25rem;
+}
+
+.legal-content-wrapper a {
+  color: #2868c6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-content-wrapper strong {
+  color: #191b23;
+  font-weight: 600;
+}
+
+/* ─── Icon sizing ────────────────────────────────────────────────────────────
+ * Material Symbols is a font, so its size is `font-size` and its box is the
+ * line box. These exist so an icon can be sized by role, matched to the type
+ * scale, rather than by an arbitrary pixel value at every call site.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.icon-md {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.icon-lg {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.icon-xl {
+  font-size: 40px;
+  line-height: 1;
+}
+
+/* ─── Hit area ───────────────────────────────────────────────────────────────
+ * WCAG 2.5.8 wants 44px of target. This supplies it without growing the
+ * artwork, which is the difference between meeting the criterion and
+ * redesigning the control. `max()` means it never shrinks a target that is
+ * already bigger.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.tap-target {
+  position: relative;
+}
+
+.tap-target::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  translate: -50% -50%;
+}
+
+/* The share rail is positioned out in the left margin by its own utilities.
+   This only gives it the height its sticky contents need to travel in. */
+.sticky-sidebar {
+  height: 100%;
+}
+/* ─── Bubble text ────────────────────────────────────────────────────────────
+ * The footer link treatment. Weight ramps down with distance from the hovered
+ * character, so the pointer reads as pressing into the word rather than
+ * lighting it. `data-distance` is capped at 3 by the component, which is the
+ * last step that is still visible.
+ *
+ * `font-weight` rather than a class swap: Inter is a variable font, so the
+ * axis interpolates and the transition is continuous. On a static font this
+ * would snap between cuts, which is the effect this is trying not to be.
+ *
+ * A bolder glyph is a wider glyph, so the word does breathe by a pixel or two
+ * as the ramp crosses it. That is the effect, not a layout fault; it is
+ * bounded because the links are single short words.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.bubble-text {
+  display: inline-block;
+}
+
+.bubble-text__ch {
+  display: inline-block;
+  white-space: pre;
+  font-weight: 400;
+  transition: font-weight 0.3s ease, color 0.3s ease;
+}
+
+.bubble-text__ch[data-distance="0"] {
+  font-weight: 800;
+  color: #081d4a;
+}
+
+.bubble-text__ch[data-distance="1"] {
+  font-weight: 650;
+  color: #2868c6;
+}
+
+.bubble-text__ch[data-distance="2"] {
+  font-weight: 550;
+  color: #378ce7;
+}
+
+.bubble-text__ch[data-distance="3"] {
+  font-weight: 480;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble-text__ch {
+    transition: none;
+  }
+}
+
+/* Coarse pointers never hover, and a tap would leave one character stuck
+   bold. The links keep their own colour transition on those devices. */
+@media not all and (hover: hover) {
+  .bubble-text__ch[data-distance] {
+    font-weight: 400;
+    color: inherit;
+  }
+}
+
+/* ─── Blob button ────────────────────────────────────────────────────────────
+ * Four circles rise from under the button and are welded into one rising fill
+ * by the `#goo` filter in the root layout: a Gaussian blur, then a colour
+ * matrix that pushes alpha back to a hard edge, so overlapping blurs read as
+ * one surface with a meniscus between them rather than four ovals.
+ *
+ * The `@supports (filter: url("#goo"))` blocks are the fallback path. Without
+ * the filter the blobs stay separate, so they are scaled up to overlap enough
+ * to still cover the button; with it they can sit smaller and let the weld do
+ * the work.
+ *
+ * Every radius is `inherit`, so the same treatment works on the pill and the
+ * rounded shapes without a second declaration.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.blob-btn {
+  position: relative;
+  z-index: 1;
+  color: #2868c6;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  transition: color 0.4s ease;
+}
+
+.blob-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 1.5px solid #2868c6;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.4s ease;
+}
+
+.blob-btn:hover,
+.blob-btn:focus-visible {
+  color: #ffffff;
+}
+
+.blob-btn:hover::before,
+.blob-btn:focus-visible::before {
+  border-color: #2868c6;
+}
+
+.blob-btn__inner {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  background-color: transparent;
+}
+
+.blob-btn__blobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url("#goo");
+}
+
+/* Four ellipses of four different sizes, sitting at four different heights.
+   Equal circles in a row weld into a sausage; unequal ones weld into a cloud,
+   because the crest is what the eye reads and an uneven crest is the whole
+   difference. Sizes and offsets are set per blob below.
+
+   The fill runs brand blue at the crest into royal and then deep navy at the
+   base. The label sits over the middle of that ramp, which is where white
+   still clears 4.5:1; brand blue alone is a 3.4:1 background and would fail
+   the label at 12px. */
+.blob-btn__blob {
+  position: absolute;
+  height: 116%;
+  border-radius: 100%;
+  background: linear-gradient(to bottom, #378ce7 0%, #2868c6 45%, #123a7a 100%);
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@supports (filter: url("#goo")) {
+  .blob-btn__blob {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+}
+
+/* The silhouette, read left to right: a low shoulder, the tall puff just left
+   of centre, a middle lobe, then a small trailing one. Overlap is deliberate,
+   the percentages sum past 100 because the goo filter needs the blurs to meet
+   before it can weld them. */
+.blob-btn__blob:nth-child(1) {
+  left: -6%;
+  top: 14%;
+  width: 40%;
+  transition-delay: 0s;
+}
+
+.blob-btn__blob:nth-child(2) {
+  left: 17%;
+  top: -8%;
+  width: 48%;
+  transition-delay: 0.07s;
+}
+
+.blob-btn__blob:nth-child(3) {
+  left: 45%;
+  top: 6%;
+  width: 42%;
+  transition-delay: 0.14s;
+}
+
+.blob-btn__blob:nth-child(4) {
+  left: 71%;
+  top: 18%;
+  width: 35%;
+  transition-delay: 0.21s;
+}
+
+.blob-btn:hover .blob-btn__blob,
+.blob-btn:focus-visible .blob-btn__blob {
+  transform: translateZ(0) scale(1.7);
+}
+
+@supports (filter: url("#goo")) {
+  .blob-btn:hover .blob-btn__blob,
+  .blob-btn:focus-visible .blob-btn__blob {
+    transform: translateZ(0) scale(1.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The rise is the animation; the fill is the state. Held still, the button
+     still answers, it just arrives rather than climbs. */
+  .blob-btn__blob {
+    transition: opacity 0.25s linear;
+    transform: translateZ(0) scale(1.4);
+    opacity: 0;
+  }
+
+  .blob-btn:hover .blob-btn__blob,
+  .blob-btn:focus-visible .blob-btn__blob {
+    transform: translateZ(0) scale(1.4);
+    opacity: 1;
   }
 }

@@ -1,47 +1,117 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionHeader } from "@/components/ui";
-import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
+import { FadeInUp } from "@/components/motion";
+import { cn } from "@/lib/utils";
+import { SECTION, accent } from "./tokens";
 
-export default function ServiceMasterProcess({ workflow }) {
-  if (!workflow || workflow.length === 0) return null;
+/**
+ * Height of the strip each stuck card keeps visible once the next one parks
+ * under it: enough for the number badge and the phase title, nothing more.
+ * Card N sticks PEEK px below card N-1, so the phases read top-to-bottom as a
+ * growing deck instead of piling onto the same spot.
+ */
+const PEEK = 64;
+const TOP_BASE = 88;
+
+/**
+ * The phases are a real sequence, so they get a real sequential device: each
+ * card sticks, the next parks just under it, and the deck grows downward.
+ *
+ * Cards here are OPAQUE on purpose, the shared CARD token is translucent
+ * glass, and stacked glass lets six cards' text bleed through each other.
+ *
+ * Desktop only. On phones the cards are a plain list: a sticky deck there
+ * costs a scroll-linked repaint per frame on the weakest hardware, and tall
+ * cards on a short viewport leave nothing to stack against anyway.
+ */
+export default function ServiceMasterProcess({ workflow, color }) {
+  const a = accent(color);
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || !workflow?.length) return;
+
+    const heavyMotionOk = window.matchMedia(
+      "(min-width: 768px) and (hover: hover) and (pointer: fine)"
+    ).matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!heavyMotionOk || reduced) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Settle in on first approach. The tween targets the inner card, never
+      // the sticky <li>, transforming the sticky box itself fights the stick.
+      gsap.utils.toArray("[data-phase-card]").forEach((card) => {
+        gsap.from(card, {
+          y: 28,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 90%" },
+        });
+      });
+    }, root);
+
+    ScrollTrigger.refresh();
+    return () => ctx.revert();
+  }, [workflow]);
+
+  if (!workflow?.length) return null;
 
   return (
-    <section className="py-stack-2xl px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto relative">
+    <section className={SECTION}>
       <FadeInUp>
-        <SectionHeader 
+        <SectionHeader
           overline="Methodology"
-          title="Architecture & Development Process"
-          description="A rigorous, phased approach to engineering enterprise digital systems."
-          centered
+          title="How We Deliver"
+          description="Six phases, in order. Each one closes before the next opens."
         />
       </FadeInUp>
 
-      <div className="mt-stack-xl relative max-w-4xl mx-auto">
-        <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-px bg-outline-variant/30 -translate-x-1/2" />
-        
-        <StaggerContainer className="flex flex-col gap-12">
-          {workflow.map((step, i) => {
-            const isEven = i % 2 === 0;
-            return (
-              <StaggerItem key={i} className="relative flex flex-col md:flex-row items-start md:items-center w-full w-[85vw] sm:w-[60vw] shrink-0 snap-center md:w-auto md:shrink">
-                {/* Timeline node */}
-                <div className="absolute left-[24px] md:left-1/2 w-4 h-4 rounded-full bg-primary -translate-x-1/2 z-10 border-4 border-surface shadow-[0_0_0_4px_rgba(37,99,235,0.1)]" />
-                
-                {/* Content */}
-                <div className={`w-full md:w-1/2 pl-16 md:pl-0 flex flex-col ${isEven ? "md:pr-16 md:items-end md:text-right" : "md:ml-auto md:pl-16 md:items-start md:text-left"}`}>
-                  <div className="bg-white/60 backdrop-blur-md border border-outline-variant/30 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow w-full">
-                    <span className="font-label text-label-caps text-primary mb-2 block tracking-widest uppercase">Phase {step.phase}</span>
-                    <h3 className="font-display text-headline-md text-lg mb-2 text-on-surface">{step.title}</h3>
-                    <p className="font-body text-body-sm text-on-surface-variant leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
+      <div ref={rootRef} className="mt-stack-lg max-w-3xl mx-auto md:pb-[16vh]">
+        <ol className="flex flex-col gap-4 md:gap-[24vh]">
+          {workflow.map((step, i) => (
+            <li
+              key={step.phase}
+              className="md:sticky"
+              /* Ignored while the card is static on mobile. */
+              style={{ top: `${TOP_BASE + i * PEEK}px` }}
+            >
+              <div
+                data-phase-card
+                className={cn(
+                  "glow-sweep rounded-2xl border border-outline-variant/40 p-5 md:p-6",
+                  /* Opaque, see the note above the component. */
+                  "bg-surface-container-lowest shadow-[0_12px_32px_-12px_rgba(8,29,74,0.18)]"
+                )}
+              >
+                <div className="flex items-center gap-4">
+                  <span
+                    className={cn(
+                      "flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-label text-label-caps tracking-widest",
+                      a.soft,
+                      a.text
+                    )}
+                  >
+                    {step.phase}
+                  </span>
+                  <h3 className="font-heading text-headline-md text-xl text-on-surface">
+                    {step.title}
+                  </h3>
                 </div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+                <p className="font-body text-body-md text-on-surface-variant leading-relaxed mt-3 md:pl-14">
+                  {step.desc}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

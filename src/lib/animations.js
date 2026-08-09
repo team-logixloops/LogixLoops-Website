@@ -1,5 +1,5 @@
 /**
- * LOGIXLOOPS — Framer Motion Animation Variants
+ * LOGIXLOOPS: Framer Motion Animation Variants
  *
  * Centralized animation presets for consistent motion across the site.
  * All durations, easings, and behaviors are defined here to prevent
@@ -16,7 +16,7 @@ export const easings = {
 
 /* ─── Entry Animations ─── */
 
-/** Fade in from below — default section/card reveal */
+/** Fade in from below, default section/card reveal */
 export const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
@@ -101,7 +101,7 @@ export const staggerContainerSlow = {
 
 /* ─── Interactive Micro-animations ─── */
 
-/** Button press — scale down */
+/** Button press, scale down */
 export const tapScale = { scale: 0.98 };
 
 /** Button deep press */
@@ -186,7 +186,7 @@ export const mobileMenuPanel = {
 
 /* ─── Viewport Trigger Defaults ─── */
 
-/** Standard viewport config — animate once when 20% visible */
+/** Standard viewport config, animate once when 20% visible */
 export const viewportOnce = {
   once: true,
   amount: 0.2,

@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
             >
               <GlassCard padding="lg" hover="lift" className="w-full flex flex-col h-full bg-surface-container-lowest/60">
-                <span className="material-symbols-outlined text-primary/30 text-[40px] mb-4">
+                <span className="material-symbols-outlined text-primary/30 icon-lg mb-4">
                   format_quote
                 </span>
                 <p className="font-body text-body-lg text-on-surface mb-8 flex-grow leading-relaxed">

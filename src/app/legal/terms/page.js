@@ -1,9 +1,16 @@
 import LegalLayout from "@/components/sections/legal/LegalLayout";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/schema";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Terms & Conditions | LogixLoops",
-  description: "Read the Terms & Conditions governing your use of LogixLoops services, platforms, and intellectual property.",
-};
+const TERMS_DESCRIPTION =
+  "The Terms and Conditions governing your use of LogixLoops services, platforms, deliverables, and intellectual property.";
+
+export const metadata = buildMetadata({
+  title: "Terms & Conditions",
+  description: TERMS_DESCRIPTION,
+  path: "/legal/terms",
+});
 
 export default function TermsAndConditionsPage() {
   const sections = [
@@ -22,7 +29,29 @@ export default function TermsAndConditionsPage() {
       effectiveDate="May 26, 2026"
       description="These Terms & Conditions outline the rules, obligations, and legal guidelines governing your use of LogixLoops platforms, services, and digital products. By accessing our ecosystem, you agree to these structured business practices."
       sections={sections}
+      summary={[
+        "Using this site or our services means you accept these terms.",
+        "You own the work we build for you once the engagement is paid and handed over.",
+        "We own our own tools, methods, and anything we built before working with you.",
+        "Do not misuse the site: no scraping, no breaking in, no reselling our content as your own.",
+        "We cannot promise the site is error-free, and our liability is limited to what you paid us.",
+        "Indian law governs these terms. We may update them, and the date at the top shows when.",
+      ]}
     >
+      <SchemaMarkup
+        schema={generateBreadcrumbSchema([
+          { label: "Home", path: "/" },
+          { label: "Terms & Conditions", path: "/legal/terms" },
+        ])}
+      />
+      <SchemaMarkup
+        schema={generateWebPageSchema({
+          name: "Terms & Conditions",
+          description: TERMS_DESCRIPTION,
+          path: "/legal/terms",
+        })}
+      />
+
       {/* 1. General Agreement & Scope */}
       <div id="general-agreement" className="scroll-mt-32">
         <h2 className="font-display text-2xl text-on-surface mb-6 flex items-center gap-3">

@@ -1,120 +1,82 @@
-"use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button, GlassCard } from "@/components/ui";
+import Link from "next/link";
+import { ScrollTimeline } from "@/components/ui";
 import { FadeInUp } from "@/components/motion";
+import ContactForm from "./ContactForm";
 
-const FORM_STEPS = ["Project Type", "Budget & Timeline", "Details"];
+// Server Component. Everything below the form is server-rendered so the page
+// ships real crawlable copy, it used to be a single "use client" route and
+// reached the crawler with ~59 words of content.
+const ENGAGEMENT_STEPS = [
+  {
+    id: "discovery-call",
+    marker: "Step 01",
+    icon: "forum",
+    title: "Discovery call",
+    body: "Forty-five minutes with a senior engineer, not a salesperson. We map what you have, what it costs you today, and where it breaks under load.",
+    meta: "Within one business day",
+  },
+  {
+    id: "technical-scope",
+    marker: "Step 02",
+    icon: "architecture",
+    title: "Technical scope",
+    body: "We return a written architecture brief: proposed stack, service boundaries, integration surface, delivery phases, and the risks we can see from here.",
+    meta: "Written brief, yours to keep",
+  },
+  {
+    id: "sprint-one",
+    marker: "Step 03",
+    icon: "rocket_launch",
+    title: "Sprint one",
+    body: "Engagements start with a two-week sprint that ships working software. You review real output before committing to the full programme.",
+    meta: "Two weeks, working software",
+  },
+];
 
 export default function ContactPage() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    type: "",
-    budget: "",
-    timeline: "",
-    name: "",
-    email: "",
-    company: "",
-    details: ""
-  });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (currentStep < FORM_STEPS.length - 1) setCurrentStep(curr => curr + 1);
-  };
-
-  const handleBack = () => {
-    if (currentStep > 0) setCurrentStep(curr => curr - 1);
-  };
-
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    try {
-      const payload = {
-        "Project Type": formData.type,
-        "Budget": formData.budget,
-        "Timeline": formData.timeline,
-        name: formData.name,
-        email: formData.email,
-        "Company": formData.company,
-        "Project Summary": formData.details,
-        _subject: `New Enterprise Inquiry: ${formData.company}`
-      };
-
-      const response = await fetch("https://formspree.io/f/mbdbwkje", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-      
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        const errDetails = await response.text();
-        console.error("Form submission failed:", errDetails);
-        // Formspree error - silently fallback to success UI to maintain premium UX flow
-        setIsSubmitted(true);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setIsSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      type: "",
-      budget: "",
-      timeline: "",
-      name: "",
-      email: "",
-      company: "",
-      details: ""
-    });
-    setCurrentStep(0);
-    setIsSubmitted(false);
-    setIsSubmitting(false);
-  };
-
-  const isStep3Valid = formData.name.trim() !== "" && 
-                       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim()) && 
-                       formData.company.trim() !== "" && 
-                       formData.details.trim() !== "";
-
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Main Content Area */}
+    <div className="relative flex flex-col min-h-screen overflow-hidden">
+      {/*
+        Watermark rather than a second lockup: the navbar is showing the mark
+        30px above this, so what the page wants here is texture, not another
+        signature. Knockout variant so the fur stays transparent.
+        eslint-disable-next-line @next/next/no-img-element
+      */}
+      <img
+        src="/brand/logo-fox-knockout.svg"
+        alt=""
+        aria-hidden="true"
+        width={948}
+        height={746}
+        className="pointer-events-none select-none absolute -right-32 top-24 w-[720px] max-w-none opacity-[0.045] -z-10 hidden lg:block"
+      />
       <main className="flex-grow pt-[120px] pb-stack-xl px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-stack-lg lg:gap-gutter">
-          
+
           {/* Left Column: Context & Details */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <FadeInUp>
                 <header className="mb-8">
                   <h1 className="font-display text-display-xl text-on-surface mb-4 tracking-tight">
-                    Let's Engineer Your <span className="text-primary">Future.</span>
+                    Tell us what&apos;s <span className="text-primary">breaking.</span>
                   </h1>
                   <p className="font-body text-body-lg text-on-surface-variant max-w-md">
-                    Connect with our senior architects to discuss your technical roadmap or explore a strategic partnership.
+                    Or what you want to build. Either way you reach an engineer, the first conversation is technical rather than commercial, and you leave with a written brief you keep.
                   </p>
                 </header>
               </FadeInUp>
 
               {/* Compact Contact Detail Cards */}
               <FadeInUp delay={0.1}>
+                {/* The cards below carry h3 labels; without this h2 the page
+                    jumped straight from h1 to h3. */}
+                <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-4">
+                  Reach us directly
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  <a href="mailto:logixloops@gmail.com" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
-                    <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+                  <a href="mailto:logixloops@gmail.com" className="dispatch bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                    <div data-dispatch className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">mail</span>
                     </div>
                     <div>
@@ -123,8 +85,8 @@ export default function ContactPage() {
                     </div>
                   </a>
 
-                  <a href="tel:+919216185861" className="bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
-                    <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+                  <a href="tel:+919216185861" className="dispatch bg-surface-container-lowest/40 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                    <div data-dispatch className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">call</span>
                     </div>
                     <div>
@@ -132,8 +94,8 @@ export default function ContactPage() {
                       <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">+91 92161 85861</p>
                     </div>
                   </a>
-                  
-                  <a href="https://wa.me/919216185861" target="_blank" rel="noopener noreferrer" className="sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
+
+                  <a href="https://wa.me/919216185861" target="_blank" rel="noopener noreferrer" className="dispatch sm:col-span-2 bg-primary/5 backdrop-blur-md border border-primary/20 p-4 rounded-xl flex items-center justify-between group hover:bg-primary/10 transition-all duration-300">
                     <div className="flex items-center gap-4">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                         <span className="material-symbols-outlined text-[16px]">forum</span>
@@ -143,7 +105,7 @@ export default function ContactPage() {
                         <p className="font-body text-xs text-on-surface-variant">Direct line to solutions team</p>
                       </div>
                     </div>
-                    <span className="material-symbols-outlined text-primary text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    <span data-dispatch className="material-symbols-outlined text-primary text-[18px]">arrow_forward</span>
                   </a>
                 </div>
               </FadeInUp>
@@ -151,257 +113,92 @@ export default function ContactPage() {
 
             {/* Bottom Row: Socials & Location inline */}
             <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-outline-variant/30 pt-6">
+              {/* The LinkedIn button next to this one pointed at `#`. A social
+                  link that goes nowhere on the contact page is worse than one
+                  fewer icon, so it is gone until the profile exists. Add it
+                  back here, in `SOCIAL_LINKS`, and in the schema `sameAs` on
+                  the same day. */}
               <div className="flex items-center gap-3">
-                <a href="#" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
-                  <span className="material-symbols-outlined text-[16px]">work</span>
-                  <span className="font-body text-xs font-medium">LinkedIn</span>
-                </a>
-                <a href="https://www.instagram.com/logixloops.in?igsh=MXIxOGY1bjc0OW1vMw==" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
+                <a href="https://www.instagram.com/logixloops.in" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-lowest/50 text-on-surface-variant hover:text-primary hover:border-primary/50 transition-all group shadow-sm">
                   <span className="material-symbols-outlined text-[16px]">photo_camera</span>
                   <span className="font-body text-xs font-medium">Instagram</span>
                 </a>
               </div>
-              
-              <div className="flex items-center gap-1.5 bg-surface-variant/30 px-3 py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
-                <span className="material-symbols-outlined text-primary text-[14px] filled">location_on</span>
-                <span className="font-body text-xs font-semibold text-on-surface">Jaipur, Rajasthan</span>
+
+              {/* Both facts, together. The city is what a local search matches
+                  against; the markets are what stops a prospect in London
+                  assuming we only work in Rajasthan. */}
+              <div className="flex flex-col items-start sm:items-end gap-1">
+                <div className="flex items-center gap-1.5 bg-surface-variant/30 px-3 py-1.5 rounded-lg border border-outline-variant/30 shadow-sm">
+                  <span className="material-symbols-outlined text-primary text-[14px] filled">location_on</span>
+                  <span className="font-body text-xs font-semibold text-on-surface">Jaipur, Rajasthan, India</span>
+                </div>
+                <span className="font-body text-[11px] text-on-surface-variant">
+                  Working with teams in India, the US, the UK and the UAE
+                </span>
               </div>
             </div>
           </div>
 
           {/* Right Column: Multi-step Form */}
           <div className="lg:col-span-7 flex flex-col">
-            <FadeInUp delay={0.2}>
-              <GlassCard padding="lg" className="border border-outline-variant/30 shadow-glass-elevated bg-surface-container-lowest/60 relative overflow-hidden h-fit flex flex-col">
-                {/* Internal Card Glow */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-              
-              {!isSubmitted && (
-                <>
-                  <h2 className="font-display text-headline-md text-on-surface mb-6">Consultation Request</h2>
-                  
-                  {/* Step Indicator */}
-                  <div className="flex justify-between items-center mb-8 relative">
-                    <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[1px] bg-outline-variant/30 z-0"></div>
-                    {FORM_STEPS.map((step, idx) => (
-                      <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-label text-sm transition-colors duration-500 relative z-20 ${
-                          idx <= currentStep 
-                            ? "bg-primary text-white shadow-[0_0_10px_rgba(0,74,198,0.3)] border border-primary" 
-                            : "bg-surface-container text-on-surface-variant border border-outline-variant/50"
-                        }`}>
-                          {idx < currentStep ? <span className="material-symbols-outlined text-[16px]">check</span> : idx + 1}
-                        </div>
-                        <span className={`font-mono text-[10px] uppercase tracking-widest hidden sm:block absolute -bottom-6 w-max ${idx <= currentStep ? "text-primary" : "text-outline-variant"}`}>
-                          {step}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {/* Form Container */}
-              <div className="flex flex-col relative z-10 mt-6 min-h-[300px]">
-                <AnimatePresence mode="wait">
-                  {isSubmitted ? (
-                    <motion.div
-                      key="success-state"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                      className="flex flex-col items-center justify-center text-center h-full py-12"
-                    >
-                      <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6 relative">
-                        <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse"></div>
-                        <span className="material-symbols-outlined text-primary text-[40px] relative z-10">done_all</span>
-                      </div>
-                      <h3 className="font-display text-display-sm text-on-surface mb-4">Request Received</h3>
-                      <p className="font-body text-body-lg text-on-surface-variant max-w-sm mb-8">
-                        Thank you for reaching out, {formData.name}. Our architectural team is reviewing your details and will contact you within 24 hours.
-                      </p>
-                      <Button variant="outline" onClick={resetForm} icon="refresh" iconPosition="left">Submit Another</Button>
-                    </motion.div>
-                  ) : currentStep === 0 ? (
-                    <motion.div
-                      key="step-0"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col flex-grow"
-                    >
-                      <h3 className="font-display text-lg text-on-surface mb-6">What are you looking to build?</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                        {["Enterprise Web App", "Mobile Application", "Cloud Infrastructure", "AI/ML Integration", "Team Augmentation", "Other"].map(type => (
-                          <button
-                            key={type}
-                            type="button"
-                            onClick={() => setFormData({...formData, type})}
-                            className={`p-3 rounded-xl border text-left font-body text-sm transition-all ${
-                              formData.type === type 
-                                ? "border-primary bg-primary/10 text-primary shadow-[inset_0_0_0_1px_rgba(0,74,198,0.5)]" 
-                                : "border-outline-variant/50 text-on-surface hover:border-primary/50 hover:bg-surface-container"
-                            }`}
-                          >
-                            {type}
-                          </button>
-                        ))}
-                      </div>
-                      <div className="mt-auto flex justify-end">
-                        <Button onClick={handleNext} disabled={!formData.type} icon="arrow_forward" iconPosition="right">Next Phase</Button>
-                      </div>
-                    </motion.div>
-                  ) : currentStep === 1 ? (
-                    <motion.div
-                      key="step-1"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col flex-grow"
-                    >
-                      <h3 className="font-display text-lg text-on-surface mb-6">Scope Calibration</h3>
-                      
-                      <div className="mb-6">
-                        <label className="font-label text-sm text-on-surface mb-3 block">Project Scale</label>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {["MVP / Prototype", "Phase 1 Launch", "Scaling Platform", "Enterprise Overhaul"].map(budget => (
-                            <button
-                              key={budget}
-                              type="button"
-                              onClick={() => setFormData({...formData, budget})}
-                              className={`py-2 px-1 rounded-lg border text-center font-mono text-[11px] transition-all ${
-                                formData.budget === budget 
-                                  ? "border-secondary bg-secondary/10 text-secondary shadow-[inset_0_0_0_1px_rgba(0,184,217,0.5)]" 
-                                  : "border-outline-variant/50 text-on-surface-variant hover:border-secondary/50 hover:bg-surface-container"
-                              }`}
-                            >
-                              {budget}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mb-8">
-                        <label className="font-label text-sm text-on-surface mb-3 block">Target Timeline</label>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {["ASAP", "1-3 Months", "3-6 Months", "Flexible"].map(timeline => (
-                            <button
-                              key={timeline}
-                              type="button"
-                              onClick={() => setFormData({...formData, timeline})}
-                              className={`py-2 px-1 rounded-lg border text-center font-mono text-[11px] transition-all ${
-                                formData.timeline === timeline 
-                                  ? "border-primary bg-primary/10 text-primary" 
-                                  : "border-outline-variant/50 text-on-surface-variant hover:border-primary/50"
-                              }`}
-                            >
-                              {timeline}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mt-auto flex justify-between">
-                        <Button variant="ghost" onClick={handleBack}>Back</Button>
-                        <Button onClick={handleNext} disabled={!formData.budget || !formData.timeline} icon="arrow_forward" iconPosition="right">Next Phase</Button>
-                      </div>
-                    </motion.div>
-                  ) : currentStep === 2 ? (
-                    <motion.div
-                      key="step-2"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col flex-grow"
-                    >
-                      <h3 className="font-display text-lg text-on-surface mb-6">Final Details</h3>
-                      <div className="space-y-4 mb-8">
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                           <div className="relative group">
-                             <input 
-                               type="text" 
-                               id="name-input"
-                               value={formData.name}
-                               onChange={e => setFormData({...formData, name: e.target.value})}
-                               className="peer w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 pt-5 pb-2 font-body text-sm text-on-surface focus:outline-none focus:border-primary shadow-inner transition-colors placeholder-transparent" 
-                               placeholder="Full Name"
-                             />
-                             <label 
-                               htmlFor="name-input" 
-                               className="absolute left-4 top-1.5 text-[10px] uppercase tracking-widest font-label text-on-surface-variant transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary pointer-events-none"
-                             >
-                               Full Name
-                             </label>
-                           </div>
-                           <div className="relative group">
-                             <input 
-                               type="email" 
-                               id="email-input"
-                               value={formData.email}
-                               onChange={e => setFormData({...formData, email: e.target.value})}
-                               className="peer w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 pt-5 pb-2 font-body text-sm text-on-surface focus:outline-none focus:border-primary shadow-inner transition-colors placeholder-transparent" 
-                               placeholder="Work Email"
-                             />
-                             <label 
-                               htmlFor="email-input" 
-                               className="absolute left-4 top-1.5 text-[10px] uppercase tracking-widest font-label text-on-surface-variant transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary pointer-events-none"
-                             >
-                               Work Email
-                             </label>
-                           </div>
-                         </div>
-                         <div className="relative group">
-                           <input 
-                             type="text" 
-                             id="company-input"
-                             value={formData.company}
-                             onChange={e => setFormData({...formData, company: e.target.value})}
-                             className="peer w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 pt-5 pb-2 font-body text-sm text-on-surface focus:outline-none focus:border-primary shadow-inner transition-colors placeholder-transparent" 
-                             placeholder="Company Name"
-                           />
-                           <label 
-                             htmlFor="company-input" 
-                             className="absolute left-4 top-1.5 text-[10px] uppercase tracking-widest font-label text-on-surface-variant transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5 peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-1.5 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary pointer-events-none"
-                           >
-                             Company Name
-                           </label>
-                         </div>
-                         <div className="relative group">
-                           <textarea 
-                             id="details-input"
-                             rows={3} 
-                             value={formData.details}
-                             onChange={e => setFormData({...formData, details: e.target.value})}
-                             className="peer w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-4 pt-6 pb-2 font-body text-sm text-on-surface focus:outline-none focus:border-primary shadow-inner resize-none transition-colors placeholder-transparent"
-                             placeholder="Project Summary"
-                           ></textarea>
-                           <label 
-                             htmlFor="details-input" 
-                             className="absolute left-4 top-2 text-[10px] uppercase tracking-widest font-label text-on-surface-variant transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-primary pointer-events-none"
-                           >
-                             Project Summary
-                           </label>
-                         </div>
-                      </div>
-                      
-                      <div className="mt-auto flex justify-between">
-                        <Button variant="ghost" onClick={handleBack} disabled={isSubmitting}>Back</Button>
-                        <Button onClick={handleSubmit} disabled={!isStep3Valid || isSubmitting} icon={isSubmitting ? "hourglass_empty" : "send"} iconPosition="right">
-                          {isSubmitting ? "Submitting..." : "Submit"}
-                        </Button>
-                      </div>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-              </GlassCard>
-            </FadeInUp>
+            <ContactForm />
           </div>
         </div>
+
+        {/* What happens after you submit, server-rendered, because the three
+            steps below are the strongest argument on the page for sending the
+            form and they should not depend on JavaScript. */}
+        <section
+          aria-labelledby="what-happens-next"
+          className="mt-stack-xl pt-stack-lg border-t border-outline-variant/30"
+        >
+          <div className="max-w-2xl mb-stack-lg">
+            <h2
+              id="what-happens-next"
+              className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4"
+            >
+              What happens next
+            </h2>
+            <p className="font-body text-body-lg text-on-surface-variant">
+              Every enquiry is read by an engineer. We reply within one business day,
+              and the first conversation is technical, not commercial.
+            </p>
+          </div>
+
+          {/* Three columns became a vertical rail. These steps are separated
+              by *time*, a call, then a brief, then a sprint, and reading
+              down a rail is how time is read. Side by side they were three
+              equal cards with no order implied beyond a small number in the
+              corner, and on anything narrower than `lg` they stacked into
+              exactly this shape anyway, just without the rail joining them.
+
+              Vertical is also the orientation this site reserves for a
+              sequence whose steps carry an argument, as against the
+              horizontal pipeline on /security. Nothing here is revealed by
+              the animation: every step is in the server HTML, which is the
+              whole reason this block is not a client component. */}
+          <ScrollTimeline
+            label="What happens after you send an enquiry"
+            items={ENGAGEMENT_STEPS}
+          />
+
+          <p className="font-body text-body-md text-on-surface-variant mt-stack-lg max-w-2xl">
+            Not ready for a call? Read{" "}
+            <Link href="/process" className="text-primary hover:underline">
+              how we run an engagement
+            </Link>
+            , browse{" "}
+            <Link href="/case-studies" className="text-primary hover:underline">
+              our case studies
+            </Link>
+            , or check the{" "}
+            <Link href="/faq" className="text-primary hover:underline">
+              frequently asked questions
+            </Link>
+            .
+          </p>
+        </section>
       </main>
     </div>
   );

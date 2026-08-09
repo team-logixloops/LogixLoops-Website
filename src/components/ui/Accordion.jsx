@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils";
 import { accordionContent } from "@/lib/animations";
 
 /**
- * Accordion — Expandable FAQ / content panel with Framer animation.
+ * Accordion. Expandable FAQ / content panel with Framer animation.
  *
  * Props:
  *  - items: Array of { question, answer } or { title, content }
- *  - allowMultiple: boolean — allow multiple panels open at once
+ *  - allowMultiple: boolean, allow multiple panels open at once
  *  - variant: "glass" | "bordered" | "minimal"
  */
 const variantClasses = {
@@ -24,8 +24,13 @@ export default function Accordion({
   allowMultiple = false,
   variant = "glass",
   className,
+  defaultOpenIndex = null,
 }) {
-  const [openIndices, setOpenIndices] = useState([]);
+  const [openIndices, setOpenIndices] = useState(
+    defaultOpenIndex === null || defaultOpenIndex === undefined
+      ? []
+      : [defaultOpenIndex]
+  );
 
   const toggle = (index) => {
     if (allowMultiple) {
@@ -44,9 +49,16 @@ export default function Accordion({
   const isOpen = (index) => openIndices.includes(index);
 
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn("flex flex-col gap-4", className)}>
       {items.map((item, index) => (
-        <div key={index} className={variantClasses[variant]}>
+        <div
+          key={index}
+          className={cn(
+            variantClasses[variant],
+            "transition-shadow duration-300",
+            isOpen(index) && "shadow-glass-hover"
+          )}
+        >
           {/* Trigger */}
           <button
             className={cn(
@@ -64,7 +76,10 @@ export default function Accordion({
             <motion.span
               animate={{ rotate: isOpen(index) ? 180 : 0 }}
               transition={{ duration: 0.3 }}
-              className="material-symbols-outlined text-on-surface-variant flex-shrink-0"
+              className={cn(
+                "material-symbols-outlined flex-shrink-0",
+                isOpen(index) ? "text-primary" : "text-on-surface-variant"
+              )}
             >
               expand_more
             </motion.span>

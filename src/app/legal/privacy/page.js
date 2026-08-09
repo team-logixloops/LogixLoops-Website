@@ -1,9 +1,16 @@
 import LegalLayout from "@/components/sections/legal/LegalLayout";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/schema";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy | LogixLoops",
-  description: "Learn how LogixLoops collects, protects, and utilizes your data in our digital ecosystem.",
-};
+const PRIVACY_DESCRIPTION =
+  "How LogixLoops collects, stores, protects, and uses your data, including cookies, third-party services, and your rights over your information.";
+
+export const metadata = buildMetadata({
+  title: "Privacy Policy",
+  description: PRIVACY_DESCRIPTION,
+  path: "/legal/privacy",
+});
 
 export default function PrivacyPolicyPage() {
   const sections = [
@@ -22,7 +29,29 @@ export default function PrivacyPolicyPage() {
       effectiveDate="May 26, 2026"
       description="This Privacy Policy outlines how LogixLoops collects, utilizes, and protects information across our digital ecosystem. We believe in transparent operational practices and responsible data stewardship."
       sections={sections}
+      summary={[
+        "We collect what you send us through forms, plus basic analytics about how the site is used.",
+        "We use it to reply to you, run the site, and improve it. We do not sell it.",
+        "We share data only with the services we need to operate, such as hosting and email delivery.",
+        "Your data is encrypted in transit and at rest, and access is limited to the people who need it.",
+        "You can ask us what we hold about you, or ask us to delete it, at any time.",
+        "You can turn off cookies in your browser. Some parts of the site may work less well if you do.",
+      ]}
     >
+      <SchemaMarkup
+        schema={generateBreadcrumbSchema([
+          { label: "Home", path: "/" },
+          { label: "Privacy Policy", path: "/legal/privacy" },
+        ])}
+      />
+      <SchemaMarkup
+        schema={generateWebPageSchema({
+          name: "Privacy Policy",
+          description: PRIVACY_DESCRIPTION,
+          path: "/legal/privacy",
+        })}
+      />
+
       {/* 1. Information Collection & Usage */}
       <div id="information-collection" className="scroll-mt-32">
         <h2 className="font-display text-2xl text-on-surface mb-6 flex items-center gap-3">
