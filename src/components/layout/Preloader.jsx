@@ -183,6 +183,23 @@ export default function Preloader() {
         <div
           id={PRELOADER_ID}
           ref={overlayRef}
+          /*
+           * The gate script hides this element during HTML parse, before React
+           * attaches. React then hydrates, finds a `style` attribute the server
+           * never sent, and reports a mismatch.
+           *
+           * That is the same situation `<html>` and `<body>` already carry this
+           * flag for, and for the same reason: something outside React's
+           * knowledge legitimately mutated the DOM ahead of hydration. React
+           * does not patch the difference, which is exactly what is wanted, the
+           * hide has to survive, so the only thing the warning was reporting
+           * was correct behaviour.
+           *
+           * The flag is shallow. It forgives this element's own attributes and
+           * nothing inside it, so a genuine mismatch in the overlay's contents
+           * still surfaces.
+           */
+          suppressHydrationWarning
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#f7faff]"
         >
           {/* Two soft brand washes, the same atmospheric layer the site sits

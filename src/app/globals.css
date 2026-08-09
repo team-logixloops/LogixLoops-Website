@@ -459,6 +459,43 @@
     background: radial-gradient(circle, #12a0b217 0%, #0000 70%);
   }
 
+/* ─── CTA panel washes ───────────────────────────────────────────────────────
+ * The two colour layers drifting behind the closing call to action.
+ *
+ * These are gradients, not blurred rectangles, and that is the whole point.
+ * They used to be linear gradients carrying `blur-[64px]` / `blur-[80px]`,
+ * each about 900×1400 CSS px, and they are parallaxed on scroll. A filter is
+ * rasterised, not composited: `will-change: transform` is supposed to let the
+ * browser blur once and then just move the result, but the panel clips them
+ * with a rounded `overflow: hidden`, and under a rounded clip Chrome will fall
+ * back to re-rastering the subtree. That meant two multi-megapixel Gaussians
+ * per frame for the entire time the section was on screen. It was the last
+ * thing on the site still dropping frames.
+ *
+ * A radial gradient that ends at transparent is already soft, so it needs no
+ * filter to look like a wash, and a transform on it is pure compositor work.
+ * Stops carry the same brand hues and alphas the gradients did: primary
+ * #2868c6, secondary #378ce7, tertiary #0e7c8b.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
+.cta-wash-a {
+  background: radial-gradient(
+    ellipse 62% 46% at 46% 50%,
+    rgba(40, 104, 198, 0.3) 0%,
+    rgba(55, 140, 231, 0.22) 42%,
+    rgba(55, 140, 231, 0) 74%
+  );
+}
+
+.cta-wash-b {
+  background: radial-gradient(
+    ellipse 58% 44% at 54% 50%,
+    rgba(55, 140, 231, 0.2) 0%,
+    rgba(14, 124, 139, 0.14) 42%,
+    rgba(14, 124, 139, 0) 74%
+  );
+}
+
 .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;

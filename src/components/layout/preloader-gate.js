@@ -14,6 +14,11 @@
  * visitor who asked for reduced motion — it hides the overlay before the
  * browser can paint it. React never writes this element's `style` attribute,
  * so the hide holds until the component's own layout effect unmounts the node.
+ *
+ * Writing that attribute before hydration is, however, exactly what React's
+ * hydration check looks for, so the overlay carries `suppressHydrationWarning`.
+ * See the note on the element in `Preloader.jsx`. If this script ever stops
+ * touching `style`, that flag should come off with it.
  */
 
 /** Per tab: a new tab is a new visit, a refresh is not. */

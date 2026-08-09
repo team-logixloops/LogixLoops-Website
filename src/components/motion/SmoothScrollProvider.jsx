@@ -59,6 +59,37 @@ export default function SmoothScrollProvider({ children }) {
     ScrollTrigger.refresh();
   }, [pathname]);
 
+  /*
+   * Re-measure when the document's height changes, on every device.
+   *
+   * This used to live inside the Lenis branch, so phones, the one place where
+   * late-arriving images and font swaps move the most, got exactly one
+   * refresh at mount and then nothing. Triggers stayed measured against a
+   * document that had not finished loading, which for a scrubbed reveal means
+   * a start position that is never reached and content that never appears.
+   *
+   * Height only, and debounced: a refresh re-measures every trigger and
+   * re-runs every pin, so a hover that reflows a link must not cost one.
+   */
+  useEffect(() => {
+    let refreshTimer;
+    let lastHeight = document.body.offsetHeight;
+
+    const observer = new ResizeObserver(() => {
+      const height = document.body.offsetHeight;
+      if (Math.abs(height - lastHeight) < 2) return;
+      lastHeight = height;
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    });
+    observer.observe(document.body);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      observer.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
     const prefersReducedMotion = window.matchMedia(
@@ -101,26 +132,7 @@ export default function SmoothScrollProvider({ children }) {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    /*
-     * `ScrollTrigger.refresh()` re-measures every trigger on the page and
-     * re-runs every pin, so it is one of the most expensive things this site
-     * can do. Firing it straight from a ResizeObserver on <body> meant any
-     * width change fired it, and, worse, any refresh that itself nudged the
-     * body's box fired it again.
-     *
-     * So: height changes only (a hover that reflows a footer link must not
-     * cost a full refresh), coalesced to one call on an idle frame.
-     */
-    let refreshTimer;
-    let lastHeight = document.body.offsetHeight;
-    const resizeObserver = new ResizeObserver(() => {
-      const height = document.body.offsetHeight;
-      if (Math.abs(height - lastHeight) < 2) return;
-      lastHeight = height;
-      clearTimeout(refreshTimer);
-      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
-    });
-    resizeObserver.observe(document.body);
+    // Height-change refreshes are handled once, above, for every device.
 
     // Exposed so things like the navbar's mega-menu / mobile menu can pause
     // scrolling. Lenis drives scroll via its own rAF loop and ignores
@@ -128,8 +140,6 @@ export default function SmoothScrollProvider({ children }) {
     window.lenis = lenis;
 
     return () => {
-      clearTimeout(refreshTimer);
-      resizeObserver.disconnect();
       gsap.ticker.remove(tick);
       lenis.destroy();
       delete window.lenis;

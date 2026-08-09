@@ -58,8 +58,55 @@ const clamp = (position) => `clamp(${position})`;
  */
 const retireWhenRevealed = (targets) => (self) => {
   if (self.progress < 1) return;
+  settle(self, targets);
+};
+
+/** Kill a trigger and drop everything GSAP wrote, leaving the end state. */
+const settle = (self, targets) => {
   self.kill(false);
   gsap.set(targets, { clearProps: "transform,opacity,willChange" });
+};
+
+/**
+ * The safety net that makes "invisible content" impossible.
+ *
+ * Every reveal here starts at `opacity: 0` and is driven by scroll position,
+ * which means there is a failure mode with no visual warning: if the scroll
+ * window collapses, the tween never advances and the content is simply never
+ * shown. That is not hypothetical, it is what put the hero copy of /contact
+ * and /services/[slug] at zero opacity on phones. A hero sits at the top of
+ * the document, so `start: top 100%` and `end: top 38%` both resolve to
+ * negative scroll offsets, `clamp()` pulls both back to 0, and a window of
+ * zero length can never reach progress 1.
+ *
+ * So on every refresh: if the window has no length, there is nothing to
+ * scrub. Show the content and retire the trigger.
+ *
+ * `onRefresh` and not just mount, because the window's length depends on
+ * document height, which changes as images and fonts land.
+ */
+const settleIfUnscrollable = (targets) => (self) => {
+  if (self.end - self.start >= 1) return;
+  settle(self, targets);
+};
+
+/*
+ * Both a mobile and a non-mobile condition, deliberately.
+ *
+ * `gsap.matchMedia().add()` only calls its callback when at least one listed
+ * condition matches: in GSAP's own source, `active && func(...)`, where
+ * `active` is set only by a query that matched. Every wrapper on this site
+ * listed a single `(max-width: …)` condition, so above that width the
+ * callback never ran and none of these reveals existed at all, while below it
+ * they were the only place the `opacity: 0` start state came from. The site
+ * had no scroll reveals on desktop and invisible content on mobile, from one
+ * missing line.
+ *
+ * The second query is never read. It is there so the callback runs.
+ */
+const REVEAL_QUERIES = {
+  isMobile: "(max-width: 639px)",
+  isWide: "(min-width: 640px)",
 };
 
 /**
@@ -127,7 +174,7 @@ function useScrollReveal(
     const mm = gsap.matchMedia();
 
     mm.add(
-      { isMobile: "(max-width: 639px)" },
+      REVEAL_QUERIES,
       (context) => {
         const { isMobile } = context.conditions;
         const scaleDown = (v) => (v === undefined ? undefined : v * (isMobile ? 0.45 : 1));
@@ -159,6 +206,7 @@ function useScrollReveal(
             // Fold the catch-up in at the end of a fast flick instead of
             // letting it trail behind a scroll that has already stopped.
             fastScrollEnd: true,
+            onRefresh: settleIfUnscrollable(el),
             onScrubComplete: retireWhenRevealed(el),
           },
         });
@@ -266,7 +314,7 @@ export function StaggerContainer({ children, className, slow = false, ...props }
 
     const mm = gsap.matchMedia();
 
-    mm.add({ isMobile: "(max-width: 639px)" }, (context) => {
+    mm.add(REVEAL_QUERIES, (context) => {
       const { isMobile } = context.conditions;
       const distance = isMobile ? 44 : 104;
 
@@ -293,6 +341,7 @@ export function StaggerContainer({ children, className, slow = false, ...props }
             end: clamp("top 25%"),
             scrub: 0.55,
             fastScrollEnd: true,
+            onRefresh: settleIfUnscrollable(items),
             onScrubComplete: retireWhenRevealed(items),
           },
         }

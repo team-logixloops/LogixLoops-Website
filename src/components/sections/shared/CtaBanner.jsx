@@ -66,10 +66,23 @@ export default function CtaBanner() {
        * `onScrubComplete` rather than `onUpdate` so the teardown waits for
        * the half-second of scrub catch-up instead of cutting it short.
        */
-      const retire = (targets, props) => (self) => {
-        if (self.progress < 1) return;
+      const clear = (self, targets, props) => {
         self.kill(false);
         gsap.set(targets, { clearProps: props });
+      };
+
+      const retire = (targets, props) => (self) => {
+        if (self.progress < 1) return;
+        clear(self, targets, props);
+      };
+
+      /* The panel's items fade in from `opacity: 0`, so if their scroll
+         window ever collapses, and on a phone this section is the last thing
+         before the footer, so it can, the copy never appears at all. A reveal
+         is allowed to not animate; it is not allowed to hide the content. */
+      const settleIfUnscrollable = (targets, props) => (self) => {
+        if (self.end - self.start >= 1) return;
+        clear(self, targets, props);
       };
 
       gsap.fromTo(
@@ -84,6 +97,7 @@ export default function CtaBanner() {
             end: "top 35%",
             scrub: 0.5,
             fastScrollEnd: true,
+            onRefresh: settleIfUnscrollable(panel, "clipPath"),
             onScrubComplete: retire(panel, "clipPath"),
           },
         }
@@ -100,6 +114,7 @@ export default function CtaBanner() {
           end: "top 30%",
           scrub: 0.6,
           fastScrollEnd: true,
+          onRefresh: settleIfUnscrollable(items, "transform,opacity,willChange"),
           onScrubComplete: retire(items, "transform,opacity,willChange"),
         },
       });
@@ -141,25 +156,20 @@ export default function CtaBanner() {
         {/* Immersive Background */}
         <div className="absolute inset-0 bg-surface-container-highest/30 z-0" />
 
-        {/* Colour washes.
-            `will-change: transform` is not decoration here, it is what makes
-            the section scrollable at all. These are large blurred layers
-            being moved on scroll inside a panel whose clip-path is animating
-            at the same time; without the hint the browser re-runs both 100px
-            Gaussians on every frame of the scrub. Promoted, each blur is
-            rasterised once and the parallax is a compositor transform.
-
-            The radii came down with it (100→64, 120→80): the visual
-            difference at this scale is close to nil, and blur cost grows
-            with the radius. */}
+        {/* Colour washes. No `blur-*` on either, deliberately, see
+            `.cta-wash-a` / `.cta-wash-b` in globals.css for why: these are the
+            only two layers on the site that are both large, blurred and moved
+            on scroll, and that combination cannot be composited under this
+            panel's rounded clip. The gradients carry their own softness, so
+            the parallax below is now pure compositor work. */}
         <div
           data-cta-wash="a"
-          className="absolute top-[-50%] left-[-20%] w-[70%] h-[200%] bg-gradient-to-r from-primary/30 to-secondary/30 blur-[64px] z-0 pointer-events-none"
+          className="cta-wash-a absolute top-[-50%] left-[-20%] w-[70%] h-[200%] z-0 pointer-events-none"
           style={{ willChange: "transform" }}
         />
         <div
           data-cta-wash="b"
-          className="absolute bottom-[-50%] right-[-20%] w-[60%] h-[200%] bg-gradient-to-l from-secondary/20 to-tertiary/20 blur-[80px] z-0 pointer-events-none"
+          className="cta-wash-b absolute bottom-[-50%] right-[-20%] w-[60%] h-[200%] z-0 pointer-events-none"
           style={{ willChange: "transform" }}
         />
 

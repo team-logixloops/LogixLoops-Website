@@ -30,6 +30,38 @@ const isReduced = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/*
+ * A mobile condition AND its complement, always.
+ *
+ * `gsap.matchMedia().add()` runs its callback only when one of the listed
+ * conditions matches — `active && func(...)` in GSAP's source. Each of the
+ * three wrappers below listed nothing but a `(max-width: …)` query, so above
+ * that width the callback never ran and the effect did not exist, and below
+ * it the effect was the only thing applying an `opacity: 0` start state. The
+ * second query is never read; it exists so the callback runs at every width.
+ */
+const MOBILE_QUERIES = {
+  isMobile: "(max-width: 767px)",
+  isWide: "(min-width: 768px)",
+};
+
+const REVEAL_QUERIES = {
+  isMobile: "(max-width: 639px)",
+  isWide: "(min-width: 640px)",
+};
+
+/**
+ * A scrubbed reveal whose window has collapsed can never reach progress 1, so
+ * anything it faded in from zero would stay invisible forever. That is a real
+ * failure this site shipped, see the note in `MotionWrappers`. Any effect that
+ * starts from `opacity: 0` gets this guard.
+ */
+const settleIfUnscrollable = (target) => (self) => {
+  if (self.end - self.start >= 1) return;
+  self.kill(false);
+  gsap.set(target, { clearProps: "transform,opacity,willChange" });
+};
+
 /**
  * Parallax, moves a decorative layer against the scroll direction.
  *
@@ -51,7 +83,7 @@ export function Parallax({ children, className, amount = 10, ...props }) {
     const mm = gsap.matchMedia();
 
     mm.add(
-      { isMobile: "(max-width: 767px)" },
+      MOBILE_QUERIES,
       (context) => {
         const { isMobile } = context.conditions;
         const tween = gsap.fromTo(
@@ -152,6 +184,17 @@ export function SplitHeadline({
           trigger: el,
           start: "top 88%",
           once,
+          // This is the `h1` of every interior page, and it starts at
+          // `opacity: 0`. A heading that fails to reveal is a blank page, so
+          // it does not get to depend on a scroll position being reached:
+          // if the window is already behind us at refresh, play it now.
+          // `self.animation`, not the `tween` const: ScrollTrigger can fire
+          // this synchronously while it is still being constructed, before
+          // the binding exists.
+          onRefresh: (self) => {
+            if (self.isActive || self.progress > 0) return;
+            if (self.scroll() >= self.start) self.animation?.progress(1);
+          },
         },
       }
     );
@@ -223,7 +266,7 @@ export function HeroExit({ children, className, ...props }) {
 
     const mm = gsap.matchMedia();
 
-    mm.add({ isMobile: "(max-width: 767px)" }, (context) => {
+    mm.add(MOBILE_QUERIES, (context) => {
       const { isMobile } = context.conditions;
 
       const tween = gsap.to(el, {
@@ -298,7 +341,7 @@ export function ScrubReveal({
 
     const mm = gsap.matchMedia();
 
-    mm.add({ isMobile: "(max-width: 639px)" }, (context) => {
+    mm.add(REVEAL_QUERIES, (context) => {
       const { isMobile } = context.conditions;
 
       const tween = gsap.fromTo(
@@ -317,6 +360,7 @@ export function ScrubReveal({
             start: "clamp(top 100%)",
             end: "clamp(top 40%)",
             scrub: 0.5,
+            onRefresh: settleIfUnscrollable(el),
           },
         }
       );
