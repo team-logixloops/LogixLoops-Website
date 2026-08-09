@@ -81,7 +81,7 @@ const DELIVERY_PHASES = [
 ];
 
 const ABOUT_DESCRIPTION =
-  "LogixLoops is a small senior software studio in Jaipur working with clients in India, the US, the UK and the UAE. How we are structured, and what every build is held to.";
+  "LogixLoops is a senior software studio in Jaipur working with clients in India, the US, the UK and the UAE. How we are structured, and what every build is held to.";
 
 export const metadata = buildMetadata({
   // Not "About LogixLoops": the root template already prefixes the brand, so
@@ -136,7 +136,7 @@ export default function AboutPage() {
         <PageHero
           preset="about"
           eyebrow="Who we are"
-          title="Small team."
+          title="Senior team."
           accent="Deliberately."
           lead="LogixLoops is a senior software engineering studio in Jaipur, working with clients in India, the US, the UK and the UAE. No junior bench, no account manager relaying messages. The people you meet on the first call are the people who write the code."
           cue="The axiom"

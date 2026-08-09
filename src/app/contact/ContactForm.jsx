@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, GlassCard } from "@/components/ui";
-import { FadeInUp } from "@/components/motion";
+import { FadeInUpImmediate } from "@/components/motion";
 
 const FORM_STEPS = ["Project Type", "Budget & Timeline", "Details"];
 
@@ -96,7 +96,7 @@ export default function ContactForm() {
                        formData.details.trim() !== "";
 
   return (
-    <FadeInUp delay={0.2}>
+    <FadeInUpImmediate delay={0.2}>
       <GlassCard padding="lg" className="border border-outline-variant/30 shadow-glass-elevated bg-surface-container-lowest/60 relative overflow-hidden h-fit flex flex-col">
         {/* Internal Card Glow */}
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -348,6 +348,6 @@ export default function ContactForm() {
         </AnimatePresence>
       </div>
       </GlassCard>
-    </FadeInUp>
+    </FadeInUpImmediate>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BRAND } from "@/lib/constants";
 import { ScrollTimeline } from "@/components/ui";
-import { FadeInUp } from "@/components/motion";
+import { FadeInUpImmediate } from "@/components/motion";
 import ContactForm from "./ContactForm";
 
 // Server Component. Everything below the form is server-rendered so the page
@@ -57,7 +57,7 @@ export default function ContactPage() {
           {/* Left Column: Context & Details */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <FadeInUp>
+              <FadeInUpImmediate>
                 <header className="mb-8">
                   <h1 className="font-display text-display-xl text-on-surface mb-4 tracking-tight">
                     Tell us what&apos;s <span className="text-primary">breaking.</span>
@@ -66,10 +66,10 @@ export default function ContactPage() {
                     Or what you want to build. Either way you reach an engineer, the first conversation is technical rather than commercial, and you leave with a written brief you keep.
                   </p>
                 </header>
-              </FadeInUp>
+              </FadeInUpImmediate>
 
               {/* Compact Contact Detail Cards */}
-              <FadeInUp delay={0.1}>
+              <FadeInUpImmediate delay={0.1}>
                 {/* The cards below carry h3 labels; without this h2 the page
                     jumped straight from h1 to h3. */}
                 <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-4">
@@ -126,7 +126,7 @@ export default function ContactPage() {
                     <span data-dispatch className="material-symbols-outlined text-primary text-[18px]">arrow_forward</span>
                   </a>
                 </div>
-              </FadeInUp>
+              </FadeInUpImmediate>
             </div>
 
             {/* The Instagram button and the location pill both used to live

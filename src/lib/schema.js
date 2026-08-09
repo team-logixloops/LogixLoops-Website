@@ -38,6 +38,10 @@ const PUBLISHER = {
  * constants.js.
  */
 const VERIFIED_PROFILES = [
+  // First on purpose. `sameAs` is how a crawler proves this site and a known
+  // profile are the same organisation, and LinkedIn is the profile that
+  // carries the most weight in that reconciliation.
+  "https://www.linkedin.com/company/logixloops",
   "https://github.com/team-logixloops",
   "https://www.instagram.com/logixloops.in",
 ];

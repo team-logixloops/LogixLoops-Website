@@ -59,7 +59,7 @@ export default function AboutTeam() {
           <SectionHeader
             overline="The team"
             title="Who actually writes the code"
-            description="Four people, all senior. On a small team the person you meet on the first call is the person on the pull request, which is most of what you are buying."
+            description="Four people, all senior. The person you meet on the first call is the person on the pull request, which is most of what you are buying."
             centered
           />
         </FadeInUp>

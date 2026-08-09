@@ -153,7 +153,7 @@ export const FAQS = [
     category: "Engagement & Collaboration",
     question: "Who will actually be working on my project?",
     answer:
-      "Senior engineers, and the same people you met on the discovery call. We are a small studio, which means there is no junior bench to hide behind and no account manager relaying messages between you and the build. It also means we take on a handful of engagements at a time and will say so when we are full.",
+      "Senior engineers, and the same people you met on the discovery call. We are a senior studio, which means there is no junior bench to hide behind and no account manager relaying messages between you and the build. It also means we take on a handful of engagements at a time and will say so when we are full.",
   },
   {
     id: "faq-4",

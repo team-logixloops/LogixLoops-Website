@@ -138,7 +138,7 @@ export default function ProcessPage() {
                 This band used to read "100% SLA Compliance, 2 Wks, Zero
                 Downtime Deploys, 24/7 Incident Response". Three of those four
                 were unverifiable, and the fourth, round-the-clock incident
-                response, is something a small studio should only advertise
+                response, is something a studio should only advertise
                 where a signed support agreement actually says it.
                 What is here now is how the work runs, which is true on day one
                 of every engagement and is what the page is about anyway. */}

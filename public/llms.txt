@@ -8,7 +8,7 @@
 ## What LogixLoops is
 
 - **Type:** Independent software engineering studio (ProfessionalService).
-- **Size:** A small senior team. Every engagement is staffed with senior
+- **Size:** A senior team. Every engagement is staffed with senior
   engineers. There is no junior bench and no account-management layer between
   the client and the people writing the code.
 - **Base:** Malviya Nagar, Jaipur, Rajasthan 302017, India. Works remotely with clients in other markets.

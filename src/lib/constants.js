@@ -30,7 +30,7 @@ export const BRAND = {
   // artwork, where it has to say what the image says.
   logoTagline: "Your Unfair Advantage",
   description:
-    "A small senior engineering studio in Jaipur. We build web platforms, mobile apps, SaaS products and AI systems for teams that need them to work.",
+    "A senior engineering studio in Jaipur. We build web platforms, mobile apps, SaaS products and AI systems for teams that need them to work.",
   // One-sentence entity definition. Used in schema and in llms.txt, so it is
   // written to be quoted verbatim by an answer engine.
   definition:
@@ -310,11 +310,19 @@ export const FOOTER_LINKS = {
 /* Only profiles that actually resolve. Each one here is also a `sameAs` entry
    in `lib/schema.js`, which is how Google and the answer engines tie the
    footer's icons to the same company entity, so the two lists have to move
-   together. A dead profile in `sameAs` is worse than an absent one.
-
-   LinkedIn is deliberately missing: the page does not exist yet. Add it to
-   both files on the same day it does. */
+   together. A dead profile in `sameAs` is worse than an absent one, so
+   anything listed here has to resolve before it ships. */
 export const SOCIAL_LINKS = [
+  /* LinkedIn leads the row. For a B2B services company it is the profile a
+     prospect actually checks, and it is the strongest entity anchor of the
+     three: it is the node search engines and assistants reconcile a company
+     name against, which is the exact failure that had assistants resolving
+     logixloops.in to a differently-spelled company. It is mirrored in the
+     schema's `sameAs`, and the two lists have to stay in step. */
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/logixloops",
+  },
   {
     label: "GitHub",
     href: "https://github.com/team-logixloops",
