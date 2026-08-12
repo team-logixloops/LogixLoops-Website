@@ -1,6 +1,6 @@
 "use client";
 
-import { StaggerContainer, StaggerItem, FadeInUp } from "@/components/motion";
+import { StaggerContainer, StaggerItem } from "@/components/motion";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { cn } from "@/lib/utils";
 
@@ -25,11 +25,26 @@ const STATS = [
   { value: 1, unit: " day", label: "To reply, every enquiry", accent: "primary", prefix: "" },
 ];
 
+/*
+ * Two things keep the numbers from being eaten on the way in.
+ *
+ * `z-10`: the reveal starts each figure ~104px below where it lands, which is
+ * further than this band's 32–48px of bottom padding, so mid-scroll the
+ * numbers sit outside the section box. ProcessSection follows immediately,
+ * paints an opaque gradient, and comes later in the DOM, so with both at auto
+ * z-index it won a paint it should never have been in: the digits arrived
+ * sliced along a hard horizontal line, each column cut at a different height
+ * because the stagger puts them at different heights.
+ *
+ * And no `FadeInUp` around the grid. It moved the container 96px while the
+ * stagger moved each item another 104px inside it, so the figures began the
+ * reveal ~200px low, a third of the way into the next section. One reveal is
+ * the whole effect; the second only ever added travel.
+ */
 export default function StatsSection() {
   return (
-    <section className="container-site py-stack-lg border-y border-outline-variant/20 relative bg-surface-container-lowest/40 backdrop-blur-md">
-      <FadeInUp>
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-2 md:gap-x-8 lg:gap-gutter lg:divide-x divide-outline-variant/20">
+    <section className="container-site py-stack-lg border-y border-outline-variant/20 relative z-10 bg-surface-container-lowest/40 backdrop-blur-md">
+      <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-2 md:gap-x-8 lg:gap-gutter lg:divide-x divide-outline-variant/20">
           {STATS.map((stat, i) => (
             <StaggerItem key={i} className="flex flex-col items-center text-center px-4 pt-6 sm:pt-0 first:pt-0">
               <div className="font-display text-headline-md sm:text-display-lg md:text-[56px] text-on-surface leading-none font-bold mb-2 flex items-baseline">
@@ -54,8 +69,7 @@ export default function StatsSection() {
               </div>
             </StaggerItem>
           ))}
-        </StaggerContainer>
-      </FadeInUp>
+      </StaggerContainer>
     </section>
   );
 }

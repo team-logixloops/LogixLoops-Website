@@ -223,7 +223,8 @@ export default function CtaBanner() {
             Forty-five minutes with an engineer, not a salesperson. You leave
             with a written architecture brief covering the stack, the
             boundaries, the phases and the risks we can already see. It is
-            yours whether or not you hire us.
+            yours whether or not you hire us, and if we are not the right fit
+            we will say so on the call.
           </p>
 
           <div

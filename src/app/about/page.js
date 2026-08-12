@@ -85,8 +85,10 @@ const ABOUT_DESCRIPTION =
 
 export const metadata = buildMetadata({
   // Not "About LogixLoops": the root template already prefixes the brand, so
-  // that rendered as "LogixLoops | About LogixLoops".
-  title: "About",
+  // that rendered as "LogixLoops | About LogixLoops". Not a bare "About"
+  // either, which rendered as an 18-character title and gave the SERP nothing
+  // past the brand to match on.
+  title: "About the Studio",
   description: ABOUT_DESCRIPTION,
   path: "/about",
   keywords: [

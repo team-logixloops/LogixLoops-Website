@@ -35,9 +35,11 @@ import FaqPreviewSection from "@/components/sections/home/FaqPreviewSection";
 import CtaBanner from "@/components/sections/shared/CtaBanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { HOME_FAQS } from "@/data/faq";
+import { HOME_PROCESS_STEPS } from "@/data/infrastructure";
 import { SERVICES } from "@/lib/constants";
 import {
   generateFaqSchema,
+  generateHowToSchema,
   generateItemListSchema,
   generateWebPageSchema,
   generateWebSiteSchema,
@@ -46,6 +48,17 @@ import { buildMetadata } from "@/lib/seo";
 
 // `title.absolute`, the home page is the one route that must bypass the
 // template: run through `LogixLoops | %s` it would say the brand twice.
+/*
+ * Hand-maintained, and it has to stay that way: this is a claim about when the
+ * copy on this page last changed, not about when the site was last deployed.
+ * Move it when the words move. `datePublished` is the day the rewritten home
+ * page went live and does not change again.
+ */
+// Both taken from this file's git history, not invented: first commit and the
+// day the copy was last rewritten.
+const HOME_PUBLISHED = "2026-05-16";
+const HOME_MODIFIED = "2026-08-13";
+
 const HOME_DESCRIPTION =
   "Senior software engineering studio in Jaipur. Custom web platforms, mobile apps, SaaS products and AI systems for teams in India, the US, the UK and the UAE.";
 
@@ -80,6 +93,24 @@ export default function HomePage() {
           description: HOME_DESCRIPTION,
           path: "/",
           speakable: ["h1", "h2"],
+          datePublished: HOME_PUBLISHED,
+          dateModified: HOME_MODIFIED,
+        })}
+      />
+      {/* The six phases shown in `ProcessSection`, marked up as the ordered
+          procedure they already are. Built from the same exported array the
+          cards render, so the markup cannot describe a step the visitor
+          cannot see, which is the condition Google attaches to HowTo. The
+          full eight-phase version is on /process and carries its own. */}
+      <SchemaMarkup
+        schema={generateHowToSchema({
+          name: "How a LogixLoops engagement runs",
+          description:
+            "The six phases of a LogixLoops engineering engagement, from reading the existing system through to handing over the repository, the runbooks and the keys.",
+          steps: HOME_PROCESS_STEPS.map((step) => ({
+            name: step.title,
+            text: step.description,
+          })),
         })}
       />
       <SchemaMarkup

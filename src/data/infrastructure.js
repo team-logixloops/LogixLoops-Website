@@ -220,3 +220,59 @@ export const DELIVERY_PIPELINE = [
     meta: "Recorded, immutable audit trail",
   },
 ];
+
+/**
+ * The home page's short version of the eight phases above.
+ *
+ * Six groupings, described as groupings. The section once said "a meticulous
+ * 6-stage lifecycle" while /process said eight, which is the kind of small
+ * contradiction a careful buyer finds in about ninety seconds and never quite
+ * stops noticing.
+ *
+ * Each entry names the work and then the thing the client keeps. Describing
+ * activity alone reads as competence and commits to nothing: a reader finishes
+ * "we read the system first" knowing what we do on a Tuesday, not what they
+ * end up holding. A phase whose output you cannot verify is indistinguishable
+ * from a phase that was skipped.
+ *
+ * It lives in the data layer rather than beside the cards that render it
+ * because the home page also emits a HowTo built from this array, and Google
+ * requires HowTo to describe content the visitor can see. One array, read by
+ * both, cannot drift. Two copies could. It also has to live outside the client
+ * component for a harder reason: a `"use client"` module's exports reach the
+ * server as client references, not as the values themselves, so importing the
+ * array from there gave the server a proxy and the build died on
+ * `PROCESS_STEPS.map is not a function`.
+ */
+export const HOME_PROCESS_STEPS = [
+  {
+    title: "Discovery",
+    description: "We read the code and the infrastructure before anyone describes them to us, then compare that against how you believe the system works. You keep the map, the constraints written down as constraints, and success reduced to a number somebody will be measured on.",
+    colorTheme: "primary",
+  },
+  {
+    title: "Architecture",
+    description: "Service boundaries drawn along the seams of the data, not the org chart. Every consequential choice becomes a decision record, with the option that lost and the reason it lost, so the thinking survives the people who did it.",
+    colorTheme: "secondary",
+  },
+  {
+    title: "Design",
+    description: "Complex workflows prototyped and walked by somebody who will actually run them daily, before they are built. You keep tokens and components, not a folder of screens.",
+    colorTheme: "tertiary",
+  },
+  {
+    title: "Engineering",
+    description: "Two-week sprints against a backlog you rank. Trunk-based, feature-flagged, no merge without review, and every sprint ends in software you can open and use rather than a status deck.",
+    colorTheme: "primary",
+  },
+  {
+    title: "Hardening",
+    description: "Load tested against modelled peak and broken on purpose. You keep the known limits, alerts that fire on what a user would feel, and runbooks for the failures we caused deliberately.",
+    colorTheme: "secondary",
+  },
+  {
+    title: "Handover",
+    description: "Progressive rollout, one-run rollback, telemetry from release one. Then the repository, the runbooks, the infrastructure and the keys, all of it yours, with nothing kept back that you would have to come to us for.",
+    colorTheme: "tertiary",
+  },
+];

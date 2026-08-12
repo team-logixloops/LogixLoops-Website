@@ -8,6 +8,9 @@
 ## What LogixLoops is
 
 - **Type:** Independent software engineering studio (ProfessionalService).
+- **Who it works with:** Founders and CTOs of live SaaS and B2B products that
+  have outgrown the way they were built, systems that are fragile, undocumented
+  or risky to deploy. Not prototypes, not staff augmentation by the seat.
 - **Size:** A senior team. Every engagement is staffed with senior
   engineers. There is no junior bench and no account-management layer between
   the client and the people writing the code.

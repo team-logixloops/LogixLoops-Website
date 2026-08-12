@@ -5,25 +5,30 @@ import ConstellationGrid from "@/components/ui/ConstellationGrid";
 import RotatingWord from "@/components/ui/RotatingWord";
 import { FadeInUpImmediate, HeroExit } from "@/components/motion";
 
-// Each has to read grammatically in "We build the ___ that becomes your unfair
-// advantage", and each should name a different kind of thing (a surface, a
-// product, a spine, a flow) rather than being four synonyms for "system".
-const HEADLINE_WORDS = ["Platform", "Product", "Backbone", "Pipeline"];
+// Each has to read grammatically in "We fix the ___ you're scared to touch",
+// and each should name a different scar rather than being four synonyms for
+// "system". A CTO recognises all four immediately, which is the job: the
+// heading has to describe their week, not our capability.
+const HEADLINE_WORDS = ["Systems", "Deploys", "Migrations", "Integrations"];
 
 // Three commitments, not three adjectives. The third used to be "High
 // Performance / Measured, not asserted". True, but every agency claims speed.
 // Ownership is the one a prospect can check against the contract, and the only
 // one of the three a competitor is unlikely to match.
+//
+// The second line of each is the outcome, not the mechanism. "Nothing trusted
+// by default" describes how we work; "your security answers ready before the
+// questionnaire" describes the morning the founder stops dreading.
 const pillars = [
   {
     icon: "architecture",
     label: "Scalable Architecture",
-    detail: "Built to survive its own success",
+    detail: "Load-tested to its ceiling before your traffic finds it",
   },
   {
     icon: "security",
     label: "Zero-Trust Security",
-    detail: "Nothing trusted by default",
+    detail: "Your security answers ready before the questionnaire is",
   },
   {
     icon: "lock_open_right",
@@ -77,7 +82,7 @@ export default function HeroSection() {
               it isn't competing with words shuffling around it.
             */}
             <h1 className="font-display text-[clamp(2.25rem,4.6vw,3.75rem)] text-on-surface leading-[1.08] tracking-tight">
-              <span className="block">We build the</span>
+              <span className="block">We fix the</span>
               {/* Wrapped rather than passed `block`: RotatingWord's own box is
                   `inline-flex` so it hugs the word, and two display utilities
                   on one element resolve by stylesheet order, not by the order
@@ -85,24 +90,37 @@ export default function HeroSection() {
               <span className="block">
                 <RotatingWord words={HEADLINE_WORDS} />
               </span>
-              {/* The tagline, in the h1, on every page load. It is the only
-                  three words on this site anyone repeats, and burying it in
-                  the footer was the largest single thing the old copy
-                  wasted. */}
-              <span className="block">that becomes your unfair advantage.</span>
+              {/* The tagline used to close the h1, and the reasoning for that
+                  still holds: it is the only three words on this site anyone
+                  repeats. What changed is what the first line is worth. A
+                  founder whose deploys are frightening does not scan for a
+                  studio that builds platforms; every studio builds platforms.
+                  They scan for someone who names the thing they are avoiding.
+                  So the h1 buys recognition and the tagline moves four lines
+                  down, where it is still in the hero, still above the fold,
+                  and now lands as the payoff rather than the pitch. */}
+              <span className="block">you&apos;re scared to touch.</span>
             </h1>
           </FadeInUpImmediate>
 
           <FadeInUpImmediate delay={0.2}>
             {/* This paragraph is the search snippet, and the passage an answer
                 engine quotes when asked what LogixLoops is. So it names the
-                category, the work, the base and the reach in one sentence
-                each, with no adjective a reader cannot check. */}
+                category, the base, the reach and the work, with no adjective
+                a reader cannot check.
+
+                It also has to finish the sentence the h1 starts, which is why
+                it is two sentences and not four: the heading names the fear,
+                this names who we are and what leaves with the client. The
+                tagline is not glossed here. If the hero has to explain what
+                an unfair advantage is, the hero has not shown one. */}
             <p className="font-body text-body-md sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
-              LogixLoops is a senior software engineering studio in Jaipur. We
-              design and build custom web platforms, mobile apps, SaaS products
-              and AI systems for teams in India, the US, the UK and the UAE,
-              and you own every line of it when we are done.
+              LogixLoops is a senior software engineering studio in Jaipur,
+              working with teams in India, the US, the UK and the UAE.
+              Founders bring us live SaaS and B2B products that have outgrown
+              the way they were built, web platforms, mobile apps, cloud
+              pipelines and AI systems, and leave owning something stable,
+              documented and safe to change.
             </p>
           </FadeInUpImmediate>
 
@@ -125,7 +143,12 @@ export default function HeroSection() {
                 icon="arrow_forward"
                 iconPosition="right"
               >
-                Book a discovery call
+                {/* Names the length and who is on the call. "Discovery call"
+                    is what every agency's button says and commits to nothing;
+                    this one tells the reader what they are agreeing to before
+                    they click, which is the same argument the button is
+                    making about how we work. */}
+                Book 45 minutes with an engineer
               </Button>
               {/* Points at /process, not /case-studies. For a studio this
                   young the method is the stronger evidence: the published

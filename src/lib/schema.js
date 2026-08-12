@@ -61,7 +61,16 @@ const VERIFIED_PROFILES = [
 export const generateOrganizationSchema = () => {
   return {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
+    /*
+     * Both types, not just the narrow one. `ProfessionalService` is already a
+     * subtype of `Organization` two levels up, so a consumer that resolves the
+     * schema.org hierarchy learns nothing new from the second entry. Plenty of
+     * them do not resolve it, and instead pattern-match the literal string
+     * "Organization" to decide whether a site has declared a company at all,
+     * which is how a page carrying a full company node reads as having none.
+     * Declaring both is accurate either way, and costs a word.
+     */
+    "@type": ["ProfessionalService", "Organization"],
     "@id": `${BASE_URL}/#organization`,
     name: BRAND.name,
     // The registered entity. Without it the only string on offer is the
@@ -175,6 +184,8 @@ export const generateWebPageSchema = ({
   description,
   path,
   speakable,
+  datePublished,
+  dateModified,
 }) => {
   return {
     "@context": "https://schema.org",
@@ -185,6 +196,19 @@ export const generateWebPageSchema = ({
     inLanguage: "en",
     isPartOf: { "@id": `${BASE_URL}/#website` },
     publisher: { "@id": `${BASE_URL}/#organization` },
+    /*
+     * Both optional, and both omitted unless a caller passes a real date.
+     *
+     * An assistant deciding whether to repeat what a page says weighs how
+     * stale it looks, and a page with no date at all is treated as undated
+     * rather than as current. The temptation is to emit `new Date()` at build
+     * time so every page always looks fresh, which is worth saying out loud
+     * and refusing: it would claim the copy changed on every unrelated
+     * deploy, and a date that moves without the content moving is the exact
+     * signal the field exists to carry.
+     */
+    ...(datePublished && { datePublished }),
+    ...(dateModified && { dateModified }),
     ...(speakable && {
       speakable: {
         "@type": "SpeakableSpecification",
