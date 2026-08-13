@@ -104,23 +104,31 @@ export default function HeroSection() {
           </FadeInUpImmediate>
 
           <FadeInUpImmediate delay={0.2}>
-            {/* This paragraph is the search snippet, and the passage an answer
-                engine quotes when asked what LogixLoops is. So it names the
-                category, the base, the reach and the work, with no adjective
-                a reader cannot check.
+            {/*
+              Two sentences, and it stays two.
 
-                It also has to finish the sentence the h1 starts, which is why
-                it is two sentences and not four: the heading names the fear,
-                this names who we are and what leaves with the client. The
-                tagline is not glossed here. If the hero has to explain what
-                an unfair advantage is, the hero has not shown one. */}
+              This used to carry the entire search snippet: category, base,
+              the four markets, the four service lines. All of that is true
+              and none of it belongs to a reader who has been on the page for
+              four seconds. It rendered as a six-line slab under the heading,
+              which is the shape a reader skips.
+
+              Every fact that was cut is still crawlable, in the places built
+              to hold it: the meta description, `areaServed` and the service
+              catalogue on the Organization node, and llms.txt. A paragraph is
+              not the only surface an answer engine reads, and it is the only
+              one a human has to get past.
+
+              What stays is the entity anchor in the first four words and the
+              qualifying clause in the second sentence. The tagline is not
+              glossed here: if the hero has to explain what an unfair
+              advantage is, the hero has not shown one.
+            */}
             <p className="font-body text-body-md sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
-              LogixLoops is a senior software engineering studio in Jaipur,
-              working with teams in India, the US, the UK and the UAE.
-              Founders bring us live SaaS and B2B products that have outgrown
-              the way they were built, web platforms, mobile apps, cloud
-              pipelines and AI systems, and leave owning something stable,
-              documented and safe to change.
+              LogixLoops is a senior software engineering studio in Jaipur.
+              Founders bring us live products that have outgrown the way they
+              were built, and leave owning something stable and safe to
+              change.
             </p>
           </FadeInUpImmediate>
 
