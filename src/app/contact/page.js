@@ -76,13 +76,13 @@ export default function ContactPage() {
                   Reach us directly
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  <a href="mailto:logixloops@gmail.com" className="dispatch bg-surface-container-lowest/70 border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
+                  <a href="mailto:connect@logixloops.in" className="dispatch bg-surface-container-lowest/70 border border-outline-variant/30 p-4 rounded-xl flex flex-col gap-3 group hover:bg-surface-container-lowest hover:border-primary/40 transition-all duration-300">
                     <div data-dispatch className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
                       <span className="material-symbols-outlined text-[16px] filled">mail</span>
                     </div>
                     <div>
                       <h3 className="font-label text-[10px] text-on-surface-variant tracking-widest uppercase mb-0.5">Email</h3>
-                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">logixloops@gmail.com</p>
+                      <p className="font-body text-sm text-on-surface font-medium group-hover:text-primary transition-colors">connect@logixloops.in</p>
                     </div>
                   </a>
 
