@@ -46,39 +46,10 @@ export default function CaseStudyMotion({ children, className }) {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    /** Counts the leading number and keeps whatever unit trails it
-     *  ("0.02ms", "1.2M", "50+"). Cheap enough to run on every screen. */
-    const countMetrics = () => {
-      gsap.utils.toArray("[data-cs-count]", root).forEach((el) => {
-        const final = el.textContent.trim();
-        const parts = final.match(/^([\d.,]+)(.*)$/);
-        if (!parts) return;
-        const target = parseFloat(parts[1].replace(/,/g, ""));
-        if (!Number.isFinite(target) || target === 0) return;
-        const decimals = (parts[1].split(".")[1] || "").length;
-        const unit = parts[2];
-        const counter = { value: 0 };
-
-        gsap.to(counter, {
-          value: target,
-          duration: 1.6,
-          ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 92%", once: true },
-          onUpdate: () => {
-            el.textContent = counter.value.toFixed(decimals) + unit;
-          },
-          onComplete: () => {
-            el.textContent = final;
-          },
-        });
-      });
-    };
-
     const mm = gsap.matchMedia(root);
 
     // ─── Desktop: the full pass ─────────────────────────────────────────
     mm.add("(min-width: 768px)", () => {
-      countMetrics();
 
       if (progressRef.current) {
         gsap.fromTo(

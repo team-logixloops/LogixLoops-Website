@@ -86,8 +86,20 @@ const settle = (self, targets) => {
  * document height, which changes as images and fonts land.
  */
 const settleIfUnscrollable = (targets) => (self) => {
-  if (self.end - self.start >= 1) return;
-  settle(self, targets);
+  if (self.end - self.start < 1 || self.progress >= 1) {
+    settle(self, targets);
+    return;
+  }
+  // Safety net: If element is already in the upper part of the viewport upon load, immediately reveal
+  if (typeof window !== "undefined") {
+    const el = Array.isArray(targets) || (typeof NodeList !== "undefined" && targets instanceof NodeList) ? targets[0] : targets;
+    if (el?.getBoundingClientRect) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.45) {
+        settle(self, targets);
+      }
+    }
+  }
 };
 
 /*

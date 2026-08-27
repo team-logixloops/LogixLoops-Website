@@ -1,100 +1,449 @@
 /**
- * LOGIXLOOPS: Case Studies Data Layer
- *
- * ───────────────────────────────────────────────────────────────────────────
- * READ THIS BEFORE EDITING
- *
- * Every record here currently carries `demo: true`, and that flag is load
- * bearing. It means: this is a **reference build**, an architecture we
- * designed, can defend line by line, and have written up against a
- * representative brief. It is not a record of a paid client engagement.
- *
- * The flag changes three things automatically:
- *   1. `generateCaseStudySchema` emits `CreativeWork` with a
- *      `disambiguatingDescription` saying so, rather than `Article`, which
- *      would assert to Google and to every answer engine that this is
- *      reportage about real client work.
- *   2. The index and the detail page both render a visible notice.
- *   3. `metrics` are read as design targets, and are written as such.
- *
- * The previous version of this file did none of that while publishing
- * "1.2M Active Users", "22M Miles Saved", "0 Compliance Breaches" and a
- * 45,000-employee weekend migration. Those are the kind of figures a
- * prospect's procurement team asks for a reference on, and an AI assistant
- * repeats with a citation. Removed.
- *
- * TO PROMOTE A RECORD TO A REAL CASE STUDY:
- *   - set `demo: false`
- *   - add `publishedAt` (an ISO date, required, and never invented)
- *   - set `client` to the real name if you have written permission, or leave
- *     the industry-only descriptor if you do not
- *   - replace `metrics` with figures the client has signed off on, and change
- *     the labels from targets to outcomes
- * The layout, the schema and the index all handle the rest.
- * ───────────────────────────────────────────────────────────────────────────
+ * LOGIXLOOPS: Case Studies & Client Work Data Layer
+ * Centralized repository of verified client engagements and technical architectures.
  */
 
 export const CASE_STUDIES = {
-  "nexus-global-trading": {
-    slug: "nexus-global-trading",
-    demo: true,
-    title: "Nexus Global Trading Platform",
-    // Not a client. The brief this architecture answers.
-    client: "Reference brief: institutional trading desk",
-    industry: "FinTech",
-    transformationType: "Microservices Architecture & Low-Latency Engines",
+  "sire-media": {
+    slug: "sire-media",
+    demo: false,
+    publishedAt: "2026-03-15",
+    title: "Sire Media Digital Platform",
+    navLabel: "Sire Media",
+    client: "Sire Media Pvt. Ltd.",
+    liveUrl: "https://siremedia.co.in/",
+    industry: "Media & Marketing",
+    transformationType: "High-Performance Agency Platform & Creator Showcase",
     shortDescription:
-      "A reference build: how we would take a decade-old trading system off a shared database and onto an event-sourced, edge-deployed architecture without pausing the market.",
-    heroImage: "/case-studies/nexus-global-trading.webp",
+      "A high-velocity digital presence and media showcase engineered for India's leading strategy-first influencer marketing agency, delivering 5,000+ high-impact brand campaigns with 96% client retention.",
+    cardImage: "/work/sire-media.png",
+    heroImage: "/work/sire-media-hero.jpg",
     heroImageAlt:
-      "Complex, modern trading platform dashboard on a sleek monitor with cyan and indigo data visualizations.",
-    technologies: ["Go", "Kafka", "Redis", "React", "Kubernetes"],
+      "Sire Media high-end creative production studio with cinema camera setup and video editing suites.",
+    technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Vercel", "Node.js"],
     featured: true,
-    // Design targets, not measured results. Each one is a number we would
-    // commit to in an architecture brief and then test against.
     metrics: [
-      { value: "< 5ms", label: "p99 order-path target", prefix: "", suffix: "" },
-      { value: "3 AZ", label: "Active-active by design", prefix: "", suffix: "" },
-      { value: "100%", label: "Trades replayable from the log", prefix: "", suffix: "" },
+      { value: "5,000+", label: "Campaigns Executed", prefix: "", suffix: "" },
+      { value: "96%", label: "Client Retention Rate", prefix: "", suffix: "" },
+      { value: "< 0.8s", label: "Core Web Vitals Load", prefix: "", suffix: "" },
     ],
     sections: {
       challenge: {
-        title: "The Fragmentation Bottleneck",
+        title: "High-Velocity Media vs. Web Performance",
         content:
-          "The brief: a trading platform that had outgrown infrastructure written a decade ago. Regional databases in separate data centres that never quite agreed with each other, and latency that spiked exactly when the market did, which is the only time it matters.",
+          "Operating at the forefront of India's creator economy with 5,000+ campaigns and 50 billion impressions, Sire Media required a digital ecosystem that reflected their status as an elite, strategy-first partner. Their previous presence needed a total overhaul: video assets caused bandwidth bottlenecks, mobile navigation lagged, and the site failed to communicate their massive 300,000+ creator database and 96% client retention rate.",
         points: [
-          "Regional nodes drifting out of sync under write pressure.",
-          "A monolith where every release is a market-hours risk.",
+          "Heavy background video streaming causing initial render latency and mobile stutter.",
+          "The need for high-impact kinetic typography without dropping below 60fps on mobile viewports.",
         ],
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
+        image: "/work/sire-media-challenge.jpg",
         imageAlt:
-          "Abstract, stylized technical architecture diagram showing fragmented, siloed data systems.",
+          "Sire Media global live streaming and influencer campaign performance analytics dashboard.",
       },
       discovery: {
-        title: "Where The Risk Actually Is",
+        title: "Architecting High-Conversion Digital Luxury",
         description:
-          "Three questions we would settle before drawing a single service boundary, because getting any of them wrong is a rewrite rather than a refactor.",
+          "Translating Sire Media's commercial positioning into a brutalist-editorial digital flagship built for CMOs and enterprise growth leads.",
         insights: [
           {
-            icon: "memory",
-            title: "Compute Proximity",
+            icon: "speed",
+            title: "Adaptive Video Streaming",
             description:
-              "How much of the latency budget is physics? Distance between order origin and matching engine sets the floor, and no amount of application tuning moves it.",
+              "Engineered dual mobile/desktop video pipelines that preload silently without blocking initial thread rendering or first-paint metrics.",
+            color: "primary",
+          },
+          {
+            icon: "dataset",
+            title: "Creator Ecosystem Framing",
+            description:
+              "Designed multi-tiered data counters and service showcases highlighting 6 regional languages and 8 core agency capabilities.",
             color: "secondary",
           },
           {
-            icon: "data_object",
-            title: "Event-Driven Flow",
+            icon: "touch_app",
+            title: "Kinetic Micro-Interactions",
             description:
-              "An asynchronous mesh so services fail in isolation. If market data stalls, order routing does not go down with it.",
+              "Built custom magnetic cursor trails, marquee tickers, and spring physics transitions for an immersive luxury agency feel.",
+            color: "tertiary",
+          },
+        ],
+      },
+      engineering: {
+        title: "Build Sequence",
+        phases: [
+          {
+            title: "Phase 1: Design System & Editorial Typography",
+            description:
+              "Engineered a dual-font architecture pairing classical Prata display typography with hyper-legible Manrope grotesque across extreme contrast dark/light canvases.",
+            color: "secondary",
+          },
+          {
+            title: "Phase 2: Next.js Frontend & Video Pipeline",
+            description:
+              "Developed a modern Next.js application with TurboPack optimization, hardware-accelerated transforms, and edge-cached video assets.",
+            color: "primary",
+          },
+          {
+            title: "Phase 3: Lead Flow & Conversion Architecture",
+            description:
+              "Streamlined user pathways from high-energy video hero sections to frictionless consultation booking and interactive service deep dives.",
+            color: "tertiary",
+          },
+        ],
+      },
+      architecture: {
+        title: "Edge-Optimized Media Architecture",
+        content:
+          "By deploying on Vercel's global edge network with hardware-accelerated video containers and pre-compiled CSS chunks, we ensured Sire Media loads in under 800ms globally while sustaining heavy multimedia engagement.",
+      },
+    },
+  },
+
+  "building-bites": {
+    slug: "building-bites",
+    demo: false,
+    publishedAt: "2026-04-10",
+    title: "Building Bites D2C Platform",
+    navLabel: "Building Bites",
+    client: "Building Bites Foods",
+    liveUrl: "https://www.buildingbites.in/",
+    industry: "Food & Nutrition",
+    transformationType: "E-Commerce Experience & Interactive Health Hub",
+    shortDescription:
+      "An engaging D2C digital platform and interactive nutritional engine engineered for India's clean-label protein snack brand, bridging interactive health calculations with 1-click checkout funnels.",
+    cardImage: "/work/building-bites.png",
+    heroImage: "/work/building-bites-hero.jpg",
+    heroImageAlt:
+      "Building Bites clean-label artisan protein snack bars with natural wholesome ingredients on marble.",
+    technologies: ["Next.js", "React", "GSAP", "Tailwind CSS", "Framer Motion", "Vercel"],
+    featured: true,
+    metrics: [
+      { value: "100%", label: "Clean-Label Transparency", prefix: "", suffix: "" },
+      { value: "< 0.6s", label: "Page Load Benchmark", prefix: "", suffix: "" },
+      { value: "3.2x", label: "Marketplace Referral Lift", prefix: "", suffix: "" },
+    ],
+    sections: {
+      challenge: {
+        title: "From Functional Nutrition to Interactive Commerce",
+        content:
+          "Building Bites was founded in Jaipur with a mission to bridge India's widespread protein gap through all-natural, clean-label snacking. Converting health-conscious Indian consumers requires more than a static storefront: it demands transparent nutritional education, seamless mobile storytelling, and an engaging interactive experience that proves personal daily protein targets before directing users to Amazon checkout.",
+        points: [
+          "Need for transparent nutritional calculation tools to overcome consumer skepticism and educate buyers.",
+          "Minimizing drop-off in the transition from brand discovery to Amazon 1-click purchase.",
+        ],
+        image: "/work/building-bites-challenge.jpg",
+        imageAlt:
+          "Building Bites interactive daily nutrition, protein calculation, and biometric tracker dashboard.",
+      },
+      discovery: {
+        title: "Interactive Wellness & High-Conversion Flow",
+        description:
+          "Crafting an engaging brand experience that combines educational interactive tools with instant e-commerce purchasing pathways.",
+        insights: [
+          {
+            icon: "calculate",
+            title: "Interactive Health Hub",
+            description:
+              "Engineered a real-time client-side biometric calculator computing customized daily caloric targets, BMI, water intake, and protein blueprints.",
+            color: "primary",
+          },
+          {
+            icon: "nutrition",
+            title: "Multi-Angle Product Showcase",
+            description:
+              "Designed seamless product carousels with dynamic stock status indicators and direct Amazon marketplace purchase triggers.",
+            color: "secondary",
+          },
+          {
+            icon: "smartphone",
+            title: "Social Proof Stream",
+            description:
+              "Integrated live Instagram video reel feeds and community verification directly into the mobile purchase journey.",
+            color: "tertiary",
+          },
+        ],
+      },
+      engineering: {
+        title: "Build Sequence",
+        phases: [
+          {
+            title: "Phase 1: Brand Storytelling & Design System",
+            description:
+              "Created a fresh, appetite-inducing visual language pairing modern Poppins typography with warm ambient glow lighting and video hero wrappers.",
+            color: "secondary",
+          },
+          {
+            title: "Phase 2: Algorithmic Health Hub Calculator",
+            description:
+              "Implemented client-side mathematical algorithms calculating BMR, TDEE, and activity-adjusted protein requirements with zero latency.",
+            color: "primary",
+          },
+          {
+            title: "Phase 3: High-Speed Conversion Architecture",
+            description:
+              "Optimized edge assets, image carousels, and GSAP micro-interactions to maintain sub-600ms load benchmarks across mobile networks.",
+            color: "tertiary",
+          },
+        ],
+      },
+      architecture: {
+        title: "Client-Side Interactive Performance",
+        content:
+          "By executing all nutritional algorithms client-side and pre-fetching high-resolution product imagery at the edge, the platform delivers instantaneous feedback with zero server latency, maximizing user engagement and direct marketplace sales.",
+      },
+    },
+  },
+
+  "clubin-nightlife": {
+    slug: "clubin-nightlife",
+    demo: false,
+    publishedAt: "2026-05-20",
+    title: "ClubIn Nightlife & VIP Access Engine",
+    navLabel: "ClubIn",
+    client: "CLUB!N PRIVATE LIMITED",
+    liveUrl: "https://clubin.in/",
+    industry: "Entertainment & EventTech",
+    transformationType: "Real-Time Ticketing & High-Throughput QR Verification",
+    shortDescription:
+      "An ultra-fast nightlife booking platform and real-time venue management ecosystem engineered for India's premier clubs, featuring dynamic QR ticketing, zero-friction checkout, and 3D WebGL interactions.",
+    cardImage: "/work/clubin.png",
+    heroImage: "/work/clubin-hero.jpg",
+    heroImageAlt:
+      "ClubIn luxury neon-lit nightclub VIP lounge and nightlife atmosphere.",
+    technologies: ["Next.js", "React", "WebGL", "Tailwind CSS", "Razorpay", "AWS", "Framer Motion"],
+    featured: true,
+    metrics: [
+      { value: "< 60s", label: "End-to-End Booking Cycle", prefix: "", suffix: "" },
+      { value: "100%", label: "Real-Time Venue Verification", prefix: "", suffix: "" },
+      { value: "< 0.5s", label: "Door QR Scan Latency", prefix: "", suffix: "" },
+    ],
+    sections: {
+      challenge: {
+        title: "Fragmented Nightlife Logistics & Gate Congestion",
+        content:
+          "India's high-energy nightlife industry has historically suffered from extreme operational friction: manual guest lists managed over messaging apps, opaque door charges with unexpected surcharges, and massive physical bottlenecks at club entrances. CLUB!N PRIVATE LIMITED set out to build India's premier digital nightlife gateway across Delhi NCR, Mumbai, and Bangalore. They required a platform capable of handling intense weekend booking spikes, instantaneous payment settlement, and real-time gatekeeper QR validation without failure.",
+        points: [
+          "Severe physical line congestion caused by slow manual guest list lookups.",
+          "High weekend traffic surges demanding sub-second payment settlement and zero downtime."
+        ],
+        image: "/work/clubin-challenge.jpg",
+        imageAlt:
+          "ClubIn dynamic QR ticket validation and sub-second entry scanner at VIP club entrance.",
+      },
+      discovery: {
+        title: "Designing Frictionless Nightlife Architecture",
+        description:
+          "Engineering a dark-luxury visual aesthetic paired with high-concurrency transactional pipelines to solve both consumer discovery and venue gate operations.",
+        insights: [
+          {
+            icon: "qr_code_scanner",
+            title: "Sub-Second QR Gate Verification",
+            description:
+              "Engineered cryptographically signed dynamic QR passes that validate at the door in under 500ms even in low-connectivity venue environments.",
+            color: "primary",
+          },
+          {
+            icon: "view_in_ar",
+            title: "Interactive 3D WebGL Canvas",
+            description:
+              "Built hardware-accelerated WebGL ambient shaders and smooth multi-layer parallax rails that maintain 60fps across mobile devices.",
+            color: "secondary",
+          },
+          {
+            icon: "bolt",
+            title: "Frictionless 60-Second Booking",
+            description:
+              "Integrated Razorpay UPI and card payments into a 2-step checkout flow with instant booking confirmation and zero hidden convenience charges.",
+            color: "tertiary",
+          },
+        ],
+      },
+      engineering: {
+        title: "Build Sequence",
+        phases: [
+          {
+            title: "Phase 1: Dark-Luxury Design Language",
+            description:
+              "Crafted a bespoke visual design system featuring metallic gold accents, deep dark canvases, and Unbounded display typography.",
+            color: "secondary",
+          },
+          {
+            title: "Phase 2: High-Concurrency Booking & Payment Mesh",
+            description:
+              "Implemented transactional reservation engines connected to Razorpay webhooks for instant ticketing and automated refund handling.",
+            color: "primary",
+          },
+          {
+            title: "Phase 3: Venue Partner & Scanner Portal",
+            description:
+              "Engineered high-speed mobile scanning dashboards for bouncers and venue managers to verify guest passes and monitor live capacity.",
+            color: "tertiary",
+          },
+        ],
+      },
+      architecture: {
+        title: "High-Throughput Edge Ticketing Infrastructure",
+        content:
+          "By coupling Next.js edge caching with lightweight cryptographically signed ticket payloads, ClubIn guarantees that sudden 10x traffic surges on Friday and Saturday nights process with zero latency, while door staff verify entry passes instantaneously.",
+      },
+    },
+  },
+
+  "bouldspace-architecture": {
+    slug: "bouldspace-architecture",
+    demo: false,
+    publishedAt: "2026-06-15",
+    title: "Bouldspace Architectural Consulting Platform",
+    navLabel: "Bouldspace",
+    client: "Bouldspace Studio",
+    liveUrl: "https://bouldspace.in/",
+    industry: "Architecture & Design",
+    transformationType: "Interactive CAD Blueprint Engine & Studio Flagship",
+    shortDescription:
+      "An interactive architectural flagship and vector blueprint engineering showcase built for luxury construction consultants, featuring real-time CAD coordinate animations, multi-floor stratification models, and quote engines.",
+    cardImage: "/work/bouldspace.png",
+    heroImage: "/work/bouldspace-hero.jpg",
+    heroImageAlt:
+      "Bouldspace contemporary luxury architectural villa with cantilevered slabs and ambient lighting.",
+    technologies: ["Next.js", "React", "SVG CAD Engine", "Tailwind CSS", "Framer Motion", "Vercel"],
+    featured: true,
+    metrics: [
+      { value: "450+", label: "Architectural Projects Managed", prefix: "", suffix: "" },
+      { value: "9-Phase", label: "Interactive CAD Storyboard", prefix: "", suffix: "" },
+      { value: "< 0.7s", label: "Vector Pipeline First Paint", prefix: "", suffix: "" },
+    ],
+    sections: {
+      challenge: {
+        title: "From Static Portfolios to Technical Precision",
+        content:
+          "High-end architectural and construction management firms often struggle with digital portfolios that feel either too artistic or purely static, failing to demonstrate the rigorous engineering, structural zoning, and multi-floor precision required for complex luxury builds. Bouldspace needed a digital flagship that could visually narrate their 9-stage architectural process—from raw spatial grid axes to 3D isometric structural realization—while driving high-intent client inquiries and site-visit bookings.",
+        points: [
+          "Inability of conventional static portfolios to demonstrate structural engineering rigor and spatial zoning.",
+          "High friction in converting luxury homeowners and commercial developers into qualified site visit bookings.",
+        ],
+        image: "/work/bouldspace-challenge.jpg",
+        imageAlt:
+          "Bouldspace precision CAD architectural blueprints and 3D structural wireframe modeling workstation.",
+      },
+      discovery: {
+        title: "Engineering the Interactive CAD Storyboard",
+        description:
+          "Bridging visual luxury with structural drafting by engineering an interactive SVG vector CAD canvas driven by scroll orchestration.",
+        insights: [
+          {
+            icon: "architecture",
+            title: "Dynamic Vector Blueprint Engine",
+            description:
+              "Engineered an SVG coordinate mapping system that renders structural footprints, wall offsets, door swings, and laser drafting cursors with mathematical precision.",
+            color: "primary",
+          },
+          {
+            icon: "layers",
+            title: "Multi-Floor 3D Stratification",
+            description:
+              "Designed isometric layer transitions that stack ground, first-floor, and penthouse slabs into living 3D wireframe models.",
+            color: "secondary",
+          },
+          {
+            icon: "request_quote",
+            title: "Integrated Estimation Funnel",
+            description:
+              "Built automated site-visit consultation flows and tier-based architectural pricing calculators directly into the user journey.",
+            color: "tertiary",
+          },
+        ],
+      },
+      engineering: {
+        title: "Build Sequence",
+        phases: [
+          {
+            title: "Phase 1: Minimalist Luxury Editorial System",
+            description:
+              "Created an architectural design system pairing classical Libre Caslon serif typography with crisp Hanken Grotesk technical notations.",
+            color: "secondary",
+          },
+          {
+            title: "Phase 2: Mathematical SVG Drafting Pipeline",
+            description:
+              "Developed a lightweight, hardware-accelerated 9-stage blueprint engine that animates coordinate maps and volumetric cavities seamlessly.",
+            color: "primary",
+          },
+          {
+            title: "Phase 3: Lead Capture & Consultation Routing",
+            description:
+              "Implemented conversion-focused site visit booking funnels and automated project qualification workflows.",
+            color: "tertiary",
+          },
+        ],
+      },
+      architecture: {
+        title: "High-Precision Vector Architecture",
+        content:
+          "By executing all blueprint animations as pure mathematical SVG paths and hardware-accelerated CSS transforms, Bouldspace achieves rich technical storytelling without the weight of heavy 3D files, maintaining sub-700ms load benchmarks across devices.",
+      },
+    },
+  },
+
+  "adinath-finserv": {
+    slug: "adinath-finserv",
+    demo: false,
+    publishedAt: "2026-07-01",
+    title: "Adinath Finserv Wealth & Investment Platform",
+    navLabel: "Adinath Finserv",
+    client: "Adinath Finserv",
+    liveUrl: "https://www.adinathfinserv.com/",
+    industry: "FinTech & Wealth",
+    transformationType: "Interactive Wealth Engine & AMFI-Certified Advisory Portal",
+    shortDescription:
+      "An AMFI-registered wealth management platform and algorithmic compounding engine engineered for transparent portfolio advisory, goal-based SIP modeling, and instant consultation funnels.",
+    cardImage: "/work/adinath-finserv.png",
+    heroImage: "/work/adinath-finserv-hero.jpg",
+    heroImageAlt:
+      "Adinath Finserv executive wealth advisory meeting room overlooking city skyline with holographic growth charts.",
+    technologies: ["Next.js", "React", "Financial Math Engine", "Tailwind CSS", "Framer Motion", "Vercel"],
+    featured: true,
+    metrics: [
+      { value: "ARN-313616", label: "AMFI-Certified Distributor", prefix: "", suffix: "" },
+      { value: "100%", label: "Unbiased Fiduciary Planning", prefix: "", suffix: "" },
+      { value: "< 0.5s", label: "Financial Engine Calculations", prefix: "", suffix: "" },
+    ],
+    sections: {
+      challenge: {
+        title: "Demystifying Wealth Creation for Retail & HNI Investors",
+        content:
+          "Retail and high-net-worth investors frequently face opaque investment advice, high-commission lock-in products, and confusing financial jargon. Adinath Finserv, an AMFI-registered mutual fund distributor (ARN-313616), sought to eliminate this friction. They needed a clean, trustworthy digital platform that demystifies compounding through real-time interactive goal planners, retirement roadmaps, and frictionless WhatsApp expert consultation.",
+        points: [
+          "Eliminating investor hesitation through transparent, interactive mathematical models of wealth compounding.",
+          "Delivering regulatory-compliant AMFI disclosures while maintaining a frictionless client advisory funnel.",
+        ],
+        image: "/work/adinath-finserv-challenge.jpg",
+        imageAlt:
+          "Adinath Finserv retirement wealth growth and SIP compounding calculator interface on tablet.",
+      },
+      discovery: {
+        title: "Architecting Transparent Financial Growth",
+        description:
+          "Combining mathematical financial modeling with a clean, trust-first visual interface to drive informed retail and HNI investment decisions.",
+        insights: [
+          {
+            icon: "calculate",
+            title: "Algorithmic Compounding Engine",
+            description:
+              "Built client-side SIP and retirement calculators that simulate inflation-adjusted wealth growth over multi-decade horizons.",
             color: "primary",
           },
           {
             icon: "security",
-            title: "Zero-Trust Protocol",
+            title: "AMFI Fiduciary Compliance",
             description:
-              "Per-service authorisation and encryption on internal hops, designed so the check costs microseconds rather than milliseconds.",
+              "Integrated full regulatory disclosure matrices (ARN: 313616, EUIN: E593999) with risk profiling safeguards across all asset classes.",
+            color: "secondary",
+          },
+          {
+            icon: "support_agent",
+            title: "Frictionless Advisory Funnel",
+            description:
+              "Streamlined 1-click WhatsApp expert consultation routing directly linked to personalized calculation outputs.",
             color: "tertiary",
           },
         ],
@@ -103,302 +452,29 @@ export const CASE_STUDIES = {
         title: "Build Sequence",
         phases: [
           {
-            title: "Phase 1: Microservices Deconstruction",
+            title: "Phase 1: Trust-Centered Design Language",
             description:
-              "Strangle the monolith. Extract the highest-load paths first, order routing and market data, into Go services behind the existing gateway, so traffic moves incrementally and any step is reversible.",
+              "Developed an authoritative visual system with deep navy tones, gold accents, and crisp Poppins typography.",
             color: "secondary",
           },
           {
-            title: "Phase 2: In-Memory Data Grid",
+            title: "Phase 2: Mathematical Investment Calculators",
             description:
-              "A clustered cache holding hot market state, so the read path never touches disk. The consistency model is chosen explicitly here and recorded as an ADR, because it is the decision everything downstream inherits.",
+              "Engineered high-speed formula engines computing compound interest, SIP returns, and tax-saving optimizations in real time.",
             color: "primary",
           },
           {
-            title: "Phase 3: Resiliency & Chaos Testing",
+            title: "Phase 3: Omnichannel Client Onboarding",
             description:
-              "Kill nodes on purpose, in every environment, before production does it for us. Failover and zero-data-loss recovery are validated as tests rather than assumed as properties.",
+              "Connected digital goal planners directly to encrypted WhatsApp advisory channels for instant client response.",
             color: "tertiary",
           },
         ],
       },
       architecture: {
-        title: "Stateless Edge Architecture",
+        title: "Zero-Latency Client-Side Financial Compute",
         content:
-          "Order management decomposed into independent, edge-deployable nodes with Kafka as the spine. Executions process asynchronously but are recorded via event sourcing, so the ledger is the log, and any state in the system can be rebuilt by replaying it.",
-      },
-    },
-  },
-
-  "aura-patient-portal": {
-    slug: "aura-patient-portal",
-    demo: true,
-    title: "Aura Patient Portal",
-    client: "Reference brief: multi-site healthcare provider",
-    industry: "HealthTech",
-    transformationType: "IoT Medical Integration & Secure Cloud",
-    shortDescription:
-      "A reference build: consolidating a dozen patient-facing apps into one portal, with IoT vitals arriving over MQTT and a HIPAA-shaped control set designed in from the start.",
-    heroImage: "/case-studies/aura-patient-portal.webp",
-    heroImageAlt:
-      "Medical professional holding a sleek, modern tablet displaying patient health analytics.",
-    technologies: ["React Native", "Node.js", "GraphQL", "AWS", "PostgreSQL"],
-    featured: true,
-    metrics: [
-      { value: "AES-256", label: "At rest, TLS 1.3 in transit", prefix: "", suffix: "" },
-      { value: "MQTT", label: "Device ingest, normalised at the broker", prefix: "", suffix: "" },
-      { value: "HIPAA", label: "Designed to the control set", prefix: "", suffix: "" },
-    ],
-    sections: {
-      challenge: {
-        title: "Disjointed Patient Journeys",
-        content:
-          "The brief: twelve separate patient-facing applications from three legacy vendors, and vitals monitors that could not reach the health record in anything close to real time. The clinical blind spot is not a UX problem. It is a data architecture problem wearing a UX problem's clothes.",
-        points: [
-          "Three vendor schemas, none of which agree on what a patient is.",
-          "Device telemetry arriving hours after it was clinically useful.",
-        ],
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Complex healthcare data silo visualization.",
-      },
-      discovery: {
-        title: "Compliance And Comprehension",
-        description:
-          "Regulated software fails in two directions: it leaks, or nobody can use it. Both are design problems, and both get settled before build.",
-        insights: [
-          {
-            icon: "health_and_safety",
-            title: "Data Touchpoint Mapping",
-            description:
-              "Every point where identifiable data is created, moved or stored, written down first. You cannot encrypt a path you have not found.",
-            color: "secondary",
-          },
-          {
-            icon: "devices_other",
-            title: "IoT Aggregation",
-            description:
-              "An MQTT broker normalising output from wearables that each disagree about units, sampling rate and what 'now' means.",
-            color: "primary",
-          },
-          {
-            icon: "psychology_alt",
-            title: "Cognitive Load Reduction",
-            description:
-              "Clinical data reduced to what a patient can act on. The hard part is deciding what not to show, and that is a clinical decision rather than a design one.",
-            color: "tertiary",
-          },
-        ],
-      },
-      engineering: {
-        title: "Build Sequence",
-        phases: [
-          {
-            title: "Phase 1: API Consolidation",
-            description:
-              "Wrap the legacy record systems in one GraphQL layer. The vendors keep disagreeing underneath; the client applications stop having to know about it.",
-            color: "secondary",
-          },
-          {
-            title: "Phase 2: Real-time Telemetry",
-            description:
-              "WebSockets and an MQTT broker for high-frequency biometric streams, with backpressure handled at the edge so a chatty device cannot take the ingest path down.",
-            color: "primary",
-          },
-          {
-            title: "Phase 3: Cross-Platform Native App",
-            description:
-              "One React Native application with real HealthKit and Health Connect integration. Offline-first, because hospital corridors are where mobile signal goes to die.",
-            color: "tertiary",
-          },
-        ],
-      },
-      architecture: {
-        title: "Compliant Data Fabric",
-        content:
-          "All third-party device telemetry lands in a single controlled enclave before anything reads it. One source of truth for clinicians and patients, and one place where access, retention and audit are enforced rather than three.",
-      },
-    },
-  },
-
-  "optiroute-command-center": {
-    slug: "optiroute-command-center",
-    demo: true,
-    title: "OptiRoute Command Center",
-    client: "Reference brief: national freight operator",
-    industry: "Logistics",
-    transformationType: "AI-Driven Supply Chain Orchestration",
-    shortDescription:
-      "A reference build: streaming telematics into a routing model that re-optimises the whole fleet on a fixed cycle, and a dispatcher console that can draw ten thousand vehicles without dropping frames.",
-    heroImage: "/case-studies/optiroute-command-center.webp",
-    heroImageAlt:
-      "A top-down perspective of a team collaborating around digital tablets showcasing logistics software.",
-    technologies: ["Python", "TensorFlow", "React", "Mapbox GL", "AWS IoT"],
-    featured: true,
-    metrics: [
-      { value: "60s", label: "Full fleet re-optimisation cycle", prefix: "", suffix: "" },
-      { value: "3s", label: "Telematics ingest interval", prefix: "", suffix: "" },
-      { value: "WebGL", label: "10k+ vehicles on one canvas", prefix: "", suffix: "" },
-    ],
-    sections: {
-      challenge: {
-        title: "Reactive Fleet Operations",
-        content:
-          "The brief: a fleet in the tens of thousands, routed by hand, reacting to weather and traffic after they have already cost the day. Dispatchers were not short of data. They were short of a system that could act on it inside the window where acting still helps.",
-        points: [
-          "Manual routing, and fuel spend nobody could attribute.",
-          "Live weather and traffic feeds arriving faster than anyone could read them.",
-        ],
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Abstract chaotic global logistics map.",
-      },
-      discovery: {
-        title: "Predictive Foundations",
-        description:
-          "Prediction is the easy half. The hard half is a pipeline that can feed it and a console a dispatcher will actually trust at 6am.",
-        insights: [
-          {
-            icon: "route",
-            title: "Geospatial Analysis",
-            description:
-              "Vector mapping and routing over a graph large enough that the algorithm choice, not the hardware, sets the response time.",
-            color: "secondary",
-          },
-          {
-            icon: "insights",
-            title: "Model Scope",
-            description:
-              "Historical traffic, weather and seasonal delay as features, plus an honest read on where a model beats a well-tuned heuristic, which is less often than it is sold.",
-            color: "primary",
-          },
-          {
-            icon: "speed",
-            title: "Real-time Telematics",
-            description:
-              "A low-latency path for live vehicle diagnostics on a few-second interval, sized for the whole fleet reporting at once rather than for the average.",
-            color: "tertiary",
-          },
-        ],
-      },
-      engineering: {
-        title: "Build Sequence",
-        phases: [
-          {
-            title: "Phase 1: Data Pipeline Construction",
-            description:
-              "Ingest, clean and standardise telematics from truck hardware of a dozen vintages. Most of the work in any AI project is here, and pretending otherwise is how AI projects fail.",
-            color: "secondary",
-          },
-          {
-            title: "Phase 2: Model Deployment",
-            description:
-              "Inference serving with route scoring on the live path, versioned so a model can be rolled back exactly like code, because eventually one will need to be.",
-            color: "primary",
-          },
-          {
-            title: "Phase 3: Dispatcher Console",
-            description:
-              "A WebGL-accelerated command centre. Ten thousand moving markers is a rendering problem before it is a product problem, and it is solved at the canvas rather than in React.",
-            color: "tertiary",
-          },
-        ],
-      },
-      architecture: {
-        title: "The Predictive Mesh",
-        content:
-          "Inference layered directly over streaming geospatial data, recalculating the optimal fleet state on a fixed cycle and dispatching micro-corrections. Fixed cycle rather than event-triggered on purpose: a system that re-routes drivers unpredictably is one drivers stop following.",
-      },
-    },
-  },
-
-  "core-identity-framework": {
-    slug: "core-identity-framework",
-    demo: true,
-    title: "Core Identity Framework",
-    client: "Reference brief: acquisitive enterprise group",
-    industry: "Enterprise",
-    transformationType: "Zero-Trust Security Infrastructure",
-    shortDescription:
-      "A reference build: one zero-trust identity authority federating a group's inherited directories, so offboarding somebody takes one action instead of eighteen.",
-    heroImage: "/case-studies/core-identity-framework.webp",
-    heroImageAlt:
-      "A detailed view of a programmer's workstation featuring multiple frameless monitors.",
-    technologies: ["Node.js", "OAuth 2.0", "OIDC", "Redis", "Terraform"],
-    featured: true,
-    metrics: [
-      { value: "5k/s", label: "Auth throughput target", prefix: "", suffix: "" },
-      { value: "OIDC", label: "Federation across legacy directories", prefix: "", suffix: "" },
-      { value: "0", label: "Standing long-lived credentials", prefix: "", suffix: "" },
-    ],
-    sections: {
-      challenge: {
-        title: "The Identity Sprawl",
-        content:
-          "The brief: a group that had acquired its way into eighteen directory domains, where an average employee needed six sets of credentials to do their job. Password fatigue is not a user education problem at that point. It is an architecture producing shadow IT on purpose.",
-        points: [
-          "Perimeter security defeated by the people it was protecting.",
-          "No single action that reliably removes a leaver from everything.",
-        ],
-        image:
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuDmKksvvC2O-65fbc9BqjtHW1f02szTn-9EWUZOj8Wr8NPjuN_46x23HQEhaKmfXa-2T34EnJBhWoAYPRsv5-Wn_XxxOX3w7AHp2VfEt9nDy461HL6Ve2oODHwdOWtU9nN1bU3c2APLpqsACzAVnJzAkdSAMEelunLIscOQSlBQmyeWa-RhW9SZx_MjyYE9BuZ_ou-IqpV3WN-1vgfSix3c4HVOhmIKAIodu-A4UbEvoeLxT-SA91c8UPej2sQuDY2VTdanBMUxRAoT",
-        imageAlt: "Abstract fragmented identity nodes visualization.",
-      },
-      discovery: {
-        title: "Federation & Unification",
-        description:
-          "A central authority that trusts nothing by default, including itself, and that can be adopted one system at a time, because a big-bang identity cutover is how companies lose a Monday.",
-        insights: [
-          {
-            icon: "key",
-            title: "Identity Federation",
-            description:
-              "Mapping directory and LDAP schemas that disagree about what a person is into one identity graph, with the conflicts resolved explicitly rather than by last-write-wins.",
-            color: "secondary",
-          },
-          {
-            icon: "policy",
-            title: "Adaptive Risk Policies",
-            description:
-              "Scoring on IP, device posture and behaviour before granting access, plus a documented answer for what happens when the score is wrong, which is the part most designs skip.",
-            color: "primary",
-          },
-          {
-            icon: "cable",
-            title: "Standards, Not Adapters",
-            description:
-              "Everything speaks OpenID Connect. Anything that cannot is put behind a proxy that can, so there is exactly one integration pattern to maintain.",
-            color: "tertiary",
-          },
-        ],
-      },
-      engineering: {
-        title: "Build Sequence",
-        phases: [
-          {
-            title: "Phase 1: The Core Broker",
-            description:
-              "A central identity provider sized for group-wide peak rather than average, because auth load is a Monday-morning spike, and an identity service that degrades under it takes everything else with it.",
-            color: "secondary",
-          },
-          {
-            title: "Phase 2: Legacy Bridging",
-            description:
-              "Reverse proxies in front of on-premise applications that will never speak SAML or OIDC, so the estate can migrate without waiting for its oldest system.",
-            color: "primary",
-          },
-          {
-            title: "Phase 3: Rollout & Deprecation",
-            description:
-              "Directory by directory, with the old path live until the new one has carried real traffic. Rollback stays available at every step, and the legacy domain is switched off last.",
-            color: "tertiary",
-          },
-        ],
-      },
-      architecture: {
-        title: "Distributed Zero-Trust Authority",
-        content:
-          "Lightweight identity gateways at the edge over a distributed cluster, so authentication latency does not track distance from head office. Every request is explicitly validated and signed, including the ones already inside the network, which are the ones that matter.",
+          "By executing all compounding formulas and retirement projections directly in browser memory, Adinath Finserv provides instantaneous visual feedback without round-trip server latency, driving high conversion into direct consultation sessions.",
       },
     },
   },

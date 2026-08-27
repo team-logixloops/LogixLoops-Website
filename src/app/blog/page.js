@@ -144,7 +144,7 @@ export default function BlogPage() {
               than the `opacity` property, these cards are also being revealed
               by `StaggerContainer`, which writes `opacity` on every scroll
               frame, and the two cannot share it. Same effect as the work grid
-              on /case-studies: point at one card and its siblings recede. */}
+              on /work: point at one card and its siblings recede. */}
           <StaggerContainer className="focus-blur-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mt-stack-lg">
             {rest.map((post) => (
               <StaggerItem key={post.slug}>

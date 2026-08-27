@@ -9,7 +9,7 @@ export default function FeaturedCaseStudySection() {
     <section className="container-site py-stack-2xl">
       <FadeInUp>
         <SectionHeader 
-          overline="Featured Case Study"
+          overline="Featured Work"
           title="Transforming Global Logistics" 
           description="How we engineered a predictive routing and supply chain analytics platform for a Fortune 500 logistics provider."
         />
@@ -44,8 +44,8 @@ export default function FeaturedCaseStudySection() {
                 </div>
               </div>
 
-              <Button href="/case-studies/nexus-global" icon="arrow_forward" iconPosition="right">
-                Read Full Case Study
+              <Button href="/work" icon="arrow_forward" iconPosition="right">
+                Explore Selected Work
               </Button>
             </FadeInLeft>
           </div>

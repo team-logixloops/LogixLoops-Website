@@ -61,7 +61,7 @@ export default function ServiceMasterHero({ service }) {
               Consult an Architect
             </Link>
             <Link
-              href="/case-studies"
+              href="/work"
               className="bg-white/60 backdrop-blur-[24px] border border-white/80 text-on-surface px-8 py-4 rounded-lg font-label text-label-caps uppercase tracking-widest hover:bg-white/80 transition-all text-center"
             >
               View Portfolio

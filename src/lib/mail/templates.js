@@ -135,7 +135,7 @@ const WORKFLOW_STEPS = [
 const PREVIEW_ROUTES = [
   "/",
   "/services",
-  "/case-studies",
+  "/work",
   "/process",
   "/technology",
   "/pricing",

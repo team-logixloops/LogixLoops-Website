@@ -19,7 +19,7 @@ export default function ServiceMasterCaseStudy({ caseStudy, color }) {
               a.text
             )}
           >
-            Featured Case Study
+            Featured Work
           </span>
           <h2 className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
             {caseStudy.client}
@@ -28,13 +28,13 @@ export default function ServiceMasterCaseStudy({ caseStudy, color }) {
             {caseStudy.result}
           </p>
           <Link
-            href="/case-studies"
+            href="/work"
             className={cn(
               "font-body text-body-md inline-flex items-center gap-2 w-fit hover:gap-3 transition-all",
               a.text
             )}
           >
-            Read the full case study
+            Explore our work
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
         </div>

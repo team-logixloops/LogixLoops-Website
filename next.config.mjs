@@ -13,7 +13,9 @@ const nextConfig = {
   // 308s so any indexed or inbound URL passes through instead of dying.
   async redirects() {
     return [
-      { source: "/solutions", destination: "/case-studies", permanent: true },
+      { source: "/solutions", destination: "/work", permanent: true },
+      { source: "/case-studies", destination: "/work", permanent: true },
+      { source: "/case-studies/:slug", destination: "/work/:slug", permanent: true },
       { source: "/careers", destination: "/contact", permanent: true },
     ];
   },

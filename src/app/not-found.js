@@ -56,7 +56,7 @@ export default function NotFound() {
             {[
               { href: "/", label: "Home" },
               { href: "/services", label: "Engineering services" },
-              { href: "/case-studies", label: "Case studies" },
+              { href: "/work", label: "Selected work" },
               { href: "/blog", label: "Engineering insights" },
               { href: "/process", label: "Our process" },
               { href: "/pricing", label: "Pricing and engagement models" },

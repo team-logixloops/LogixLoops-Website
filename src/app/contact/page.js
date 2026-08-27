@@ -195,8 +195,8 @@ export default function ContactPage() {
               how we run an engagement
             </Link>
             , browse{" "}
-            <Link href="/case-studies" className="text-primary hover:underline">
-              our case studies
+            <Link href="/work" className="text-primary hover:underline">
+              our selected work
             </Link>
             , or check the{" "}
             <Link href="/faq" className="text-primary hover:underline">

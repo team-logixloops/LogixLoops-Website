@@ -186,16 +186,22 @@ export const NAV_LINKS = [
     // is a case study, and a label that disagrees with its URL reads as a
     // mis-click waiting to happen.
     label: "Work",
-    href: "/case-studies",
+    href: "/work",
     hasDropdown: true,
     children: Object.values(CASE_STUDIES).map((study) => ({
-      label: study.title,
-      href: `/case-studies/${study.slug}`,
+      label: study.navLabel || study.title,
+      href: `/work/${study.slug}`,
       icon: {
         FinTech: "payments",
+        "FinTech & Wealth": "payments",
+        "Food & Nutrition": "nutrition",
+        "D2C & Nutrition": "nutrition",
         HealthTech: "health_and_safety",
         Logistics: "local_shipping",
         Enterprise: "verified_user",
+        "Media & Marketing": "campaign",
+        "Entertainment & EventTech": "nightlife",
+        "Architecture & Design": "architecture",
       }[study.industry] || "insights",
       description: study.shortDescription,
       // Not study.heroImage, those are 512px square stills that upscale 5x in
@@ -283,7 +289,7 @@ export const FOOTER_LINKS = {
     { label: "All Services", href: "/services" },
   ],
   resources: [
-    { label: "Case Studies", href: "/case-studies" },
+    { label: "Work", href: "/work" },
     { label: "Engineering Blog", href: "/blog" },
     { label: "Technology Stack", href: "/technology" },
     { label: "Trust & Security", href: "/security" },

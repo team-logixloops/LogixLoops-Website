@@ -204,8 +204,8 @@ export default function ServicesOverviewPage() {
             stack behind every build
           </Link>
           , or{" "}
-          <Link href="/case-studies" className="text-primary hover:underline">
-            what this looks like in production
+          <Link href="/work" className="text-primary hover:underline">
+            our work in production
           </Link>
           .
         </p>

@@ -328,7 +328,7 @@ export const generateCaseStudySchema = (study) => {
     publisher: PUBLISHER,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${BASE_URL}/case-studies/${study.slug}`,
+      "@id": `${BASE_URL}/work/${study.slug}`,
     },
   };
 };

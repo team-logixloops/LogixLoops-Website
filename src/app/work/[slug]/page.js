@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getAllCaseStudies, getCaseStudyBySlug } from "@/data/caseStudies";
-import { SectionHeader, Button, Badge, GlassCard } from "@/components/ui";
-import { FadeInUp, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from "@/components/motion";
+import { SectionHeader, Button, Badge } from "@/components/ui";
+import { FadeInUp, FadeInUpImmediate, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from "@/components/motion";
 import Link from "next/link";
 
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -23,20 +23,13 @@ export async function generateMetadata({ params }) {
   const study = getCaseStudyBySlug(slug);
   
   if (!study) {
-    return { title: "Case Study Not Found" };
+    return { title: "Work Not Found" };
   }
 
   return buildMetadata({
-    // "Case Study" would be the wrong word in a title tag while the record is
-    // a reference build. The title is the one line quoted in a search result,
-    // and it should not overclaim there either.
-    title: study.demo
-      ? `${study.title}: Reference Build`
-      : `${study.title} Case Study`,
+    title: `${study.title} | Work`,
     description: study.shortDescription,
-    path: `/case-studies/${study.slug}`,
-    // `article` asserts reportage. A reference build is a page about a design,
-    // so it stays a website-type document until the record is promoted.
+    path: `/work/${study.slug}`,
     type: study.demo ? "website" : "article",
     keywords: [
       study.industry,
@@ -46,7 +39,7 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default async function CaseStudyDetailPage({ params }) {
+export default async function WorkDetailPage({ params }) {
   const { slug } = await params;
   const study = getCaseStudyBySlug(slug);
 
@@ -62,8 +55,8 @@ export default async function CaseStudyDetailPage({ params }) {
       <SchemaMarkup
         schema={generateBreadcrumbSchema([
           { label: "Home", path: "/" },
-          { label: "Case Studies", path: "/case-studies" },
-          { label: study.title, path: `/case-studies/${study.slug}` },
+          { label: "Work", path: "/work" },
+          { label: study.title, path: `/work/${study.slug}` },
         ])}
       />
 
@@ -77,7 +70,7 @@ export default async function CaseStudyDetailPage({ params }) {
             <div className="mb-4">
               <Breadcrumbs />
             </div>
-            <FadeInUp>
+            <FadeInUpImmediate>
               <span className="font-label text-label-caps text-secondary tracking-widest uppercase mb-4 block">
                 {study.industry} Sector
               </span>
@@ -88,35 +81,29 @@ export default async function CaseStudyDetailPage({ params }) {
                 {study.shortDescription}
               </p>
               
-              {/* Labelled as targets while the record is a reference build.
-                  The same three figures under a bare heading read as results,
-                  and that distinction is the one this page has to keep
-                  straight. */}
               {study.demo && (
                 <p className="font-label text-label-caps uppercase tracking-widest text-secondary mb-4">
                   Design targets, not measured results
                 </p>
               )}
+
               <div className="flex flex-wrap gap-8 pt-4">
                 {study.metrics.map((metric, idx) => (
                   <div key={idx} className="flex flex-col border-l-2 border-secondary/30 pl-4">
                     <span className="font-display text-display-lg-mobile text-primary tabular-nums">
-                      {metric.prefix}
-                      <span data-cs-count>{metric.value}</span>
-                      <span className="text-headline-md">{metric.suffix}</span>
+                      {metric.prefix}{metric.value}{metric.suffix}
                     </span>
                     <span className="font-body text-body-md text-on-surface-variant">{metric.label}</span>
                   </div>
                 ))}
               </div>
-            </FadeInUp>
+            </FadeInUpImmediate>
           </div>
           
           <div className="lg:col-span-5 relative mt-12 lg:mt-0">
-            <FadeInRight>
+            <FadeInUpImmediate delay={0.15}>
               <div className="absolute inset-0 bg-secondary/10 blur-2xl rounded-full transform scale-110 pointer-events-none"></div>
-              {/* Frame tilts toward the cursor; the image inside drifts on
-                  scroll, so it is over-scaled to keep the frame filled. */}
+              {/* Frame tilts toward the cursor; the image inside drifts on scroll */}
               <div
                 data-cs-hero-frame
                 className="relative rounded-xl overflow-hidden border border-white/40 shadow-glass-elevated glass-panel aspect-[4/3] will-change-transform"
@@ -131,14 +118,12 @@ export default async function CaseStudyDetailPage({ params }) {
                   className="w-full h-full object-cover scale-110 will-change-transform"
                 />
               </div>
-            </FadeInRight>
+            </FadeInUpImmediate>
           </div>
         </div>
       </section>
 
-      {/* The disclosure, immediately under the hero, before the reader has
-          absorbed three large figures and formed a view. Renders nothing once
-          a record is promoted to real client work. */}
+      {/* The disclosure, immediately under the hero */}
       {study.demo && (
         <section className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop relative z-10">
           <ReferenceBuildNotice />
@@ -214,10 +199,6 @@ export default async function CaseStudyDetailPage({ params }) {
       {/* 7. Engineering Implementation (Cadence) */}
       {sections.engineering && (
         <section className="bg-surface-container-low py-stack-xl mt-stack-lg border-y border-outline-variant/30">
-          {/* Scrollytelling: on large screens the heading sticks while the
-              phases move past it and the rail fills with scroll progress. On
-              small screens it collapses to a plain stacked timeline, sticky
-              headings eat too much of a short viewport. */}
           <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter">
             <div className="lg:col-span-4">
               <div className="lg:sticky lg:top-28">
@@ -234,7 +215,6 @@ export default async function CaseStudyDetailPage({ params }) {
 
             <div className="lg:col-span-8">
               <div className="relative pl-8 sm:pl-10 space-y-14 sm:space-y-20">
-                {/* Static track, then the rail that draws over it. */}
                 <div className="absolute left-0 top-0 bottom-0 w-px bg-outline-variant/40" aria-hidden="true"></div>
                 <div
                   data-cs-rail
@@ -274,7 +254,6 @@ export default async function CaseStudyDetailPage({ params }) {
                 />
                 
                 <div className="mt-8">
-                  {/* h3, not h4, it sits directly under the SectionHeader's h2. */}
                   <h3 className="font-display text-headline-md text-on-surface mb-4">Technology Stack</h3>
                   <div className="flex flex-wrap gap-2">
                     {study.technologies.map(tech => (
@@ -287,34 +266,27 @@ export default async function CaseStudyDetailPage({ params }) {
             
             <div className="relative h-[340px] sm:h-[400px] w-full rounded-2xl bg-inverse-surface overflow-hidden p-4 sm:p-8 shadow-2xl flex items-center justify-center">
               <FadeInRight className="w-full h-full relative">
-                {/* Abstract architecture diagram, assembles top-down as the
-                    section scrolls past (desktop only; on mobile it just is). */}
                 <div data-cs-diagram className="absolute inset-0 flex flex-col justify-between py-6 sm:py-12 px-2 sm:px-8">
-                  {/* API Gateway */}
                   <div data-cs-node className="w-full h-12 border-2 border-primary/50 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-mono text-xs sm:text-sm">
                     EDGE API GATEWAY
                   </div>
 
-                  {/* Connecting lines */}
                   <div data-cs-node className="flex justify-between px-8 sm:px-16 h-8 sm:h-12">
                     <div className="w-px h-full bg-primary/30"></div>
                     <div className="w-px h-full bg-primary/30"></div>
                     <div className="w-px h-full bg-primary/30"></div>
                   </div>
 
-                  {/* Microservices */}
                   <div data-cs-node className="flex justify-between gap-2 sm:gap-4">
                     <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">AUTH</div>
                     <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">ROUTING</div>
                     <div className="flex-1 h-14 sm:h-16 border border-secondary/50 rounded bg-secondary/10 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center">DATA</div>
                   </div>
 
-                  {/* Connecting lines */}
                   <div data-cs-node className="flex justify-center h-8 sm:h-12">
                     <div className="w-px h-full bg-tertiary/30"></div>
                   </div>
 
-                  {/* Database */}
                   <div data-cs-node className="w-full h-12 border-2 border-tertiary/50 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary font-mono text-xs sm:text-sm">
                     DISTRIBUTED CLUSTER
                   </div>
@@ -325,13 +297,43 @@ export default async function CaseStudyDetailPage({ params }) {
         </section>
       )}
 
-      {/* 14. Related Solutions & 15. Final CTA */}
+      {/* 14. Bottom Section: Live Project Link, Related Solutions & Final CTA */}
       <section className="bg-surface-container-lowest pt-stack-xl border-t border-outline-variant/30">
         <div className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop pb-stack-lg">
+          {/* Dedicated Live Website Link Card at bottom */}
+          {study.liveUrl && (
+            <div className="mb-12 p-8 md:p-10 rounded-2xl border border-outline-variant/30 bg-surface-container-low/60 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-glass">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span className="font-label text-label-caps uppercase tracking-wider text-secondary">
+                    Live Production Project
+                  </span>
+                </div>
+                <h3 className="font-display text-headline-lg-mobile md:text-headline-md text-on-surface">
+                  Experience {study.title} Live
+                </h3>
+                <p className="font-body text-body-md text-on-surface-variant max-w-xl mt-1">
+                  Explore the live website and platform in production at <span className="font-mono text-primary">{study.liveUrl}</span>
+                </p>
+              </div>
+
+              <a
+                href={study.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-label text-label-caps uppercase tracking-wider text-white bg-primary hover:bg-primary/90 shadow-glass transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shrink-0"
+              >
+                <span>Visit Live Website</span>
+                <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+            </div>
+          )}
+
           <div className="flex justify-between items-end mb-8">
-            <h3 className="font-display text-headline-md text-on-surface">Other reference builds</h3>
-            <Link href="/case-studies" className="text-primary hover:text-secondary transition-colors font-label text-label-caps uppercase tracking-widest flex items-center gap-1">
-              View All <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            <h3 className="font-display text-headline-md text-on-surface">More Projects</h3>
+            <Link href="/work" className="text-primary hover:text-secondary transition-colors font-label text-label-caps uppercase tracking-widest flex items-center gap-1">
+              View All Work <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
             </Link>
           </div>
         </div>
@@ -339,11 +341,9 @@ export default async function CaseStudyDetailPage({ params }) {
         <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto pb-stack-xl">
           <div className="bg-gradient-to-br from-surface-container-low to-surface border border-white/50 rounded-2xl p-12 text-center shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full transform scale-150 pointer-events-none"></div>
-            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Recognise your own system in this?</h2>
+            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Ready to engineer your digital platform?</h2>
             <p className="font-body text-body-lg text-on-surface-variant mb-8 max-w-2xl mx-auto relative z-10">
-              Then the next useful thing is forty-five minutes and a written
-              brief on yours. Same format as this page, your constraints, and
-              yours to keep either way.
+              Partner with LogixLoops to build robust, scalable architectures and bespoke software solutions tailored to your growth goals.
             </p>
             <Button href="/contact" size="lg" className="relative z-10 shadow-lg">
               Book a discovery call

@@ -10,7 +10,7 @@ export default function sitemap() {
     "",
     "/about",
     "/services",
-    "/case-studies",
+    "/work",
     "/blog",
     "/pricing",
     "/faq",
@@ -44,14 +44,14 @@ export default function sitemap() {
     priority: 0.7,
   }));
 
-  // Dynamic Case Study routes
+  // Dynamic Work routes
   const caseStudies = getAllCaseStudies();
-  const caseStudyRoutes = caseStudies.map((study) => ({
-    url: `${baseUrl}/case-studies/${study.slug}`,
+  const workRoutes = caseStudies.map((study) => ({
+    url: `${baseUrl}/work/${study.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...blogRoutes, ...caseStudyRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...blogRoutes, ...workRoutes];
 }

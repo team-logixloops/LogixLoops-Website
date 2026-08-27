@@ -40,7 +40,7 @@ export default function ServiceMasterRelatedWork({ color }) {
         {studies.map((study) => (
           <Link
             key={study.slug}
-            href={`/case-studies/${study.slug}`}
+            href={`/work/${study.slug}`}
             className={cn(CARD, CARD_PAD, a.hover, "group flex flex-col")}
           >
             <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant mb-3">
@@ -60,7 +60,7 @@ export default function ServiceMasterRelatedWork({ color }) {
                 a.text
               )}
             >
-              Read the case study
+              Explore project
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </span>
           </Link>
