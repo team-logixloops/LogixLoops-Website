@@ -157,8 +157,6 @@ export default function CaseStudyMotion({ children, className }) {
 
     // ─── Mobile: one fade per phase, nothing scrubbed ────────────────────
     mm.add("(max-width: 767px)", () => {
-      countMetrics();
-
       gsap.utils.toArray("[data-cs-phase]", root).forEach((phase) => {
         gsap.from(phase, {
           y: 20,
