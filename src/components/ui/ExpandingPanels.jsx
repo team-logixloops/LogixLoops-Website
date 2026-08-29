@@ -101,17 +101,17 @@ export default function ExpandingPanels({
               alt={item.imageAlt}
               fill
               sizes="(max-width: 767px) 100vw, 60vw"
-              className="xp-panel__media object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="xp-panel__media object-cover scale-110 blur-[8px] opacity-45 group-data-[active=true]:opacity-60 group-data-[active=true]:blur-[6px] transition-all duration-700 ease-out group-hover:scale-115"
             />
 
-            {/* Two washes: bottom gradient for text contrast and dim wash for collapsed panels */}
+            {/* Dark glass washes: makes background subdued and blur prominent, elevating text readability */}
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-on-surface/85 via-on-surface/45 to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/65 to-black/40 backdrop-blur-[2px]"
             />
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-on-surface/25 transition-opacity duration-500 group-data-[active=true]:opacity-0"
+              className="absolute inset-0 bg-black/35 transition-opacity duration-500 group-data-[active=true]:opacity-0"
             />
 
             {/* Resting spine for collapsed panel in desktop */}
