@@ -7,6 +7,8 @@ import PageHero from "@/components/sections/shared/PageHero";
 import PageSurface from "@/components/sections/shared/PageSurface";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { CASE_STUDIES } from "@/data/caseStudies";
+import { STUDIO_PROJECTS } from "@/data/projects";
+import ProjectDetailModal from "@/components/sections/work/ProjectDetailModal";
 import { generateBreadcrumbSchema, generateCollectionPageSchema } from "@/lib/schema";
 
 const COLLECTION_DESCRIPTION =
@@ -15,6 +17,10 @@ const COLLECTION_DESCRIPTION =
 export default function WorkPage() {
   const caseStudiesList = Object.values(CASE_STUDIES);
   
+  // State for project detail modal
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Dynamically extract unique industries from active case studies
   const availableIndustries = Array.from(new Set(caseStudiesList.map(study => study.industry)));
   const categories = ["All Projects", ...availableIndustries];
@@ -31,6 +37,17 @@ export default function WorkPage() {
   const studyRows = Array.from({ length: numRows }, (_, rowIndex) => 
     filteredStudies.slice(rowIndex * CHUNK_SIZE, rowIndex * CHUNK_SIZE + CHUNK_SIZE)
   );
+
+  // Group studio projects into rows of up to 4 cards
+  const projectNumRows = Math.ceil(STUDIO_PROJECTS.length / CHUNK_SIZE);
+  const projectRows = Array.from({ length: projectNumRows }, (_, rowIndex) =>
+    STUDIO_PROJECTS.slice(rowIndex * CHUNK_SIZE, rowIndex * CHUNK_SIZE + CHUNK_SIZE)
+  );
+
+  const handleOpenProjectModal = (project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -64,7 +81,7 @@ export default function WorkPage() {
       />
 
       <PageSurface>
-        {/* 2. Work Showcase & Category Filters */}
+        {/* 2. Case Studies Showcase & Category Filters */}
         <section
           aria-labelledby="work-grid"
           className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto mb-stack-xl min-h-[500px]"
@@ -82,7 +99,7 @@ export default function WorkPage() {
             </p>
           </div>
 
-          {/* Category Filter Tabs in a completely new dedicated line */}
+          {/* Category Filter Tabs in a dedicated line */}
           {categories.length > 2 && (
             <div className="w-full flex flex-wrap items-center gap-2 sm:gap-3 mb-stack-lg border-b border-outline-variant/20 pb-6">
               {categories.map((category) => (
@@ -111,7 +128,6 @@ export default function WorkPage() {
           {/* Staggered Multi-Row Accordion Panels (4 in a row, staggered default active card) */}
           <div className="flex flex-col gap-8 w-full">
             {studyRows.map((rowItems, rowIndex) => {
-              // Stagger default expanded item across rows (0th on Row 1, 1st on Row 2, 2nd on Row 3, 3rd on Row 4, 0th on Row 5, etc.)
               const targetActiveIndex = rowIndex % CHUNK_SIZE;
               const defaultIndex = Math.min(targetActiveIndex, rowItems.length - 1);
 
@@ -136,7 +152,57 @@ export default function WorkPage() {
           </div>
         </section>
 
-        {/* 3. Final CTA */}
+        {/* 3. Studio Projects Section (Below Case Studies & Above CTA) */}
+        <section
+          aria-labelledby="projects-grid"
+          className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto mb-stack-xl pt-stack-xl border-t border-outline-variant/20"
+        >
+          {/* Header block */}
+          <div className="max-w-3xl mb-8">
+            <span className="font-label text-label-caps text-secondary tracking-widest uppercase mb-3 block">
+              Engineering Labs & Prototypes
+            </span>
+            <h2
+              id="projects-grid"
+              className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-3"
+            >
+              Proprietary Systems & Technical Builds
+            </h2>
+            <p className="font-body text-body-md text-on-surface-variant">
+              In addition to our client engagements, we architect specialized in-house systems, autonomous AI voice pipelines, and modern software prototypes. Click any project card below to inspect the full architecture breakdown, technical highlights, and operational use cases.
+            </p>
+          </div>
+
+          {/* Project Expanding Cards (chunked in rows of 4) */}
+          <div className="flex flex-col gap-8 w-full">
+            {projectRows.map((rowProjects, rowIndex) => {
+              const targetActiveIndex = rowIndex % CHUNK_SIZE;
+              const defaultIndex = Math.min(targetActiveIndex, rowProjects.length - 1);
+
+              return (
+                <ExpandingPanels
+                  key={`project-row-${rowIndex}`}
+                  label={`Studio projects row ${rowIndex + 1}`}
+                  defaultActiveIndex={defaultIndex}
+                  items={rowProjects.map((project) => ({
+                    id: project.id,
+                    title: project.title,
+                    shortTitle: project.shortTitle,
+                    spineTitle: project.shortTitle || project.title,
+                    description: project.shortDescription,
+                    eyebrow: project.eyebrow,
+                    meta: project.meta,
+                    gradient: project.gradient,
+                    gradientStyle: project.gradientStyle,
+                    onClick: () => handleOpenProjectModal(project),
+                  }))}
+                />
+              );
+            })}
+          </div>
+        </section>
+
+        {/* 4. Final CTA */}
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center border-t border-outline-variant/20">
           <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
@@ -150,6 +216,13 @@ export default function WorkPage() {
           </div>
         </section>
       </PageSurface>
+
+      {/* Project Detail Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
