@@ -5,24 +5,32 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button, GlassCard } from "@/components/ui";
 import { FadeInUpImmediate } from "@/components/motion";
 
-const FORM_STEPS = ["Project Type", "Budget & Timeline", "Details"];
+const FORM_STEPS = ["What you need", "Size & Timeline", "Details"];
+
+const SIZES = ["One kit", "A few kits together", "Something bigger", "Not sure yet"];
 
 /**
  * Split out of page.js so the contact page can be a Server Component. The page
  * previously rendered ~59 crawlable words because the whole route was
  * "use client" and the interesting markup only existed after hydration.
+ *
+ * `topics` are the lines a visitor can pick. `pick` is the kit, plan or line
+ * the link that brought them here named, if any (see ContactFormFromLink):
+ * it preselects the topic and travels with the enquiry.
  */
-export default function ContactForm() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    type: "",
+export default function ContactForm({ topics, pick = null }) {
+  const initialData = {
+    type: pick?.topic ?? "",
+    kit: pick?.label ?? "",
     budget: "",
     timeline: "",
     name: "",
     email: "",
     company: "",
     details: ""
-  });
+  };
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState(initialData);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,13 +49,14 @@ export default function ContactForm() {
     try {
       const payload = {
         "Project Type": formData.type,
-        "Budget": formData.budget,
+        "Kit or Plan": formData.kit || "None picked",
+        "Size": formData.budget,
         "Timeline": formData.timeline,
         name: formData.name,
         email: formData.email,
         "Company": formData.company,
         "Project Summary": formData.details,
-        _subject: `New Enterprise Inquiry: ${formData.company}`
+        _subject: `New enquiry${formData.kit ? ` for the ${formData.kit}` : ""}: ${formData.company}`
       };
 
       const response = await fetch("https://formspree.io/f/mbdbwkje", {
@@ -76,15 +85,7 @@ export default function ContactForm() {
   };
 
   const resetForm = () => {
-    setFormData({
-      type: "",
-      budget: "",
-      timeline: "",
-      name: "",
-      email: "",
-      company: "",
-      details: ""
-    });
+    setFormData(initialData);
     setCurrentStep(0);
     setIsSubmitted(false);
     setIsSubmitting(false);
@@ -168,7 +169,7 @@ export default function ContactForm() {
               </div>
               <h3 className="font-display text-display-sm text-on-surface mb-4">Request Received</h3>
               <p className="font-body text-body-lg text-on-surface-variant max-w-sm mb-8">
-                Thank you for reaching out, {formData.name}. Our architectural team is reviewing your details and will contact you within 24 hours.
+                Thank you for reaching out, {formData.name}. The people who would build it are reading your details and will reply within 24 hours.
               </p>
               <Button variant="outline" onClick={resetForm} icon="refresh" iconPosition="left">Submit Another</Button>
             </motion.div>
@@ -181,9 +182,16 @@ export default function ContactForm() {
               transition={{ duration: 0.3 }}
               className="flex flex-col flex-grow"
             >
-              <h3 className="font-display text-lg text-on-surface mb-6">What are you looking to build?</h3>
+              <h3 className="font-display text-lg text-on-surface mb-2">What do you need?</h3>
+              {formData.kit && formData.kit !== formData.type ? (
+                <p className="font-body text-sm text-on-surface-variant mb-6">
+                  Starting from the <span className="text-primary">{formData.kit}</span>. Change the area below if it is not quite right.
+                </p>
+              ) : (
+                <div className="mb-6" />
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                {["Enterprise Web App", "Mobile Application", "Cloud Infrastructure", "AI/ML Integration", "Team Augmentation", "Other"].map(type => (
+                {topics.map(type => (
                   <button
                     key={type}
                     type="button"
@@ -211,12 +219,12 @@ export default function ContactForm() {
               transition={{ duration: 0.3 }}
               className="flex flex-col flex-grow"
             >
-              <h3 className="font-display text-lg text-on-surface mb-6">Scope Calibration</h3>
+              <h3 className="font-display text-lg text-on-surface mb-6">Size and timing</h3>
 
               <div className="mb-6">
-                <label className="font-label text-sm text-on-surface mb-3 block">Project Scale</label>
+                <label className="font-label text-sm text-on-surface mb-3 block">How big is it?</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {["MVP / Prototype", "Phase 1 Launch", "Scaling Platform", "Enterprise Overhaul"].map(budget => (
+                  {SIZES.map(budget => (
                     <button
                       key={budget}
                       type="button"

@@ -2,7 +2,10 @@ import Link from "next/link";
 import { BRAND } from "@/lib/constants";
 import { ScrollTimeline } from "@/components/ui";
 import { FadeInUpImmediate } from "@/components/motion";
+import { Suspense } from "react";
 import ContactForm from "./ContactForm";
+import ContactFormFromLink from "./ContactFormFromLink";
+import { CONTACT_TOPICS, contactPicks } from "@/lib/contact-picks";
 
 // Server Component. Everything below the form is server-rendered so the page
 // ships real crawlable copy, it used to be a single "use client" route and
@@ -13,24 +16,24 @@ const ENGAGEMENT_STEPS = [
     marker: "Step 01",
     icon: "forum",
     title: "Discovery call",
-    body: "Forty-five minutes with a senior engineer, not a salesperson. We map what you have, what it costs you today, and where it breaks under load.",
+    body: "Forty-five minutes with the people who would build it, not a salesperson. We talk through what you need and which kit fits, or whether none does.",
     meta: "Within one business day",
   },
   {
-    id: "technical-scope",
+    id: "written-quote",
     marker: "Step 02",
-    icon: "architecture",
-    title: "Technical scope",
-    body: "We return a written architecture brief: proposed stack, service boundaries, integration surface, delivery phases, and the risks we can see from here.",
-    meta: "Written brief, yours to keep",
+    icon: "request_quote",
+    title: "Written quote",
+    body: "You get the kit, any add-ons and the final price in writing, starting from the published price. Anything outside a kit is scoped against a short brief.",
+    meta: "Fixed for the scope it describes",
   },
   {
-    id: "sprint-one",
+    id: "kick-off",
     marker: "Step 03",
     icon: "rocket_launch",
-    title: "Sprint one",
-    body: "Engagements start with a two-week sprint that ships working software. You review real output before committing to the full programme.",
-    meta: "Two weeks, working software",
+    title: "Kick-off",
+    body: "Work starts on the kit's published timeline, and you see real progress every week, not status reports. Every kit ends with 30 days of The Loop after launch.",
+    meta: "On the kit's timeline",
   },
 ];
 
@@ -148,7 +151,11 @@ export default function ContactPage() {
 
           {/* Right Column: Multi-step Form */}
           <div className="lg:col-span-7 flex flex-col">
-            <ContactForm />
+            {/* The fallback is the same form without a preselection, so the
+                static HTML carries a working form before the query is read. */}
+            <Suspense fallback={<ContactForm topics={CONTACT_TOPICS} />}>
+              <ContactFormFromLink topics={CONTACT_TOPICS} picks={contactPicks()} />
+            </Suspense>
           </div>
         </div>
 

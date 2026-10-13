@@ -3,14 +3,15 @@ import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
 const CONTACT_DESCRIPTION =
-  "Talk to a LogixLoops engineer in Jaipur about your platform, timeline and scale. Every enquiry is read by an engineer and answered within one business day.";
+  "Talk to LogixLoops in Jaipur about a website, app, brand, SEO or AI project. Every enquiry is read by the people who would build it and answered within one business day.";
 
-// The page itself is a Client Component (stateful form), so metadata lives here.
+// Metadata and the page-level JSON-LD for /contact live here.
 export const metadata = buildMetadata({
   title: "Contact Us",
   description: CONTACT_DESCRIPTION,
   path: "/contact",
   keywords: [
+    "website design company in Jaipur",
     "software development company in Jaipur",
     "hire software developers Jaipur",
     "web development company Jaipur contact",
