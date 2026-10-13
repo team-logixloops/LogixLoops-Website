@@ -150,3 +150,12 @@ test("no FAQ question appears on two URLs", () => {
 test("line copy follows the voice rules", () => {
   assert.deepEqual(voiceReport({ LINES }), []);
 });
+
+test("the /services FAQs describe the lines and kits, not the retired practices", () => {
+  const text = SERVICES_FAQS.map((faq) => `${faq.question} ${faq.answer}`).join(" ");
+  for (const retired of [/\bpractices?\b/i, /strangler fig/i, /dedicated squad/i, /greenfield/i]) {
+    assert.ok(!retired.test(text), `still mentions ${retired.source}`);
+  }
+  assert.ok(/\bkits?\b/i.test(text), "never mentions kits");
+  assert.deepEqual(voiceReport({ SERVICES_FAQS }), []);
+});

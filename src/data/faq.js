@@ -71,27 +71,27 @@ export const PRICING_FAQS = [
 export const SERVICES_FAQS = [
   {
     id: "services-faq-1",
-    question: "Which service do I actually need?",
+    question: "Which line or kit do I need?",
     answer:
-      "Pick the practice closest to your primary constraint and let the discovery call sort out the rest. Most engagements draw on two or three at once: a SaaS build almost always pulls in cloud infrastructure and UI/UX, and an AI integration is a data pipeline problem long before it is a model problem.",
+      "Start from the result you want. A new website, store or app sits in web and app development, a logo and look in branding, a better version of a site you already have in website redesign, being found on Google and in AI answers in SEO and AI search, routine work handled for you in AI and automation, and ongoing care in a maintenance plan. Each line page lists its kits, and the first call ends with a named kit or a plain no.",
   },
   {
     id: "services-faq-2",
-    question: "Can you work alongside our in-house engineers?",
+    question: "Can I combine kits from different lines?",
     answer:
-      "Yes, and on a Dedicated Squad engagement that is the default. We work in your Jira or Linear instance, attend your standups and live in your Slack or Teams channels. Nothing gets copied into a private tracker and summarised back to you.",
+      "Yes, and most growing businesses do. A common pairing is the Brand Identity Kit with the Business Website Kit, or a Website Glow-Up Kit followed by the SEO Foundation Kit. One team handles every kit, so nothing is lost between them, and the Brand Launch Kit bundles the most common combination for less than its parts.",
   },
   {
     id: "services-faq-3",
-    question: "Do you take on legacy systems, or only greenfield work?",
+    question: "Can you work alongside our in-house team?",
     answer:
-      "Both, and legacy modernisation is the larger share. Our standard approach is the Strangler Fig pattern: route traffic through a gateway, replace monolithic endpoints with new services one at a time, and keep the old path live until the new one has carried real load. The business never stops trading during the migration.",
+      "Yes. On a Pit Crew Squad plan that is the default: we work in your tracker, join your standups and talk in your Slack or WhatsApp. For one-off kits we hand over the code, the accounts and a recorded walkthrough, so your team can carry on without us.",
   },
   {
     id: "services-faq-4",
-    question: "What technology stack do you standardise on?",
+    question: "What technology do you build on?",
     answer:
-      "React and Next.js on the front, Node.js or Go behind them, PostgreSQL for data, and AWS or GCP for infrastructure. Everything is open source or a standard managed service, deliberately, so the next team to touch the repository recognises all of it.",
+      "Mostly Next.js and React on the web, React Native for apps, Node.js or Python behind them and PostgreSQL for data, hosted on Vercel, AWS or GCP in your own account. Everything is open source or a standard managed service, so any good developer can pick it up after us.",
   },
 ];
 
