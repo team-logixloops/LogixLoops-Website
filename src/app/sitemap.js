@@ -1,7 +1,16 @@
 import { LINES } from "@/data/lines";
-import { KITS } from "@/data/kits";
+import { CATALOGUE_UPDATED, KITS } from "@/data/kits";
 import { getAllPosts } from "@/data/blog";
 import { getAllCaseStudies } from "@/data/caseStudies";
+
+/*
+ * `lastModified` is only set where the content carries a real date: the kit
+ * catalogue (lines, kits, /kits, /pricing, /services read their prices from
+ * it) and each blog post. Everything else omits it. A build-time date on
+ * every URL tells Google that every page changed on every deploy, and it
+ * learns to ignore the field for the whole site.
+ */
+const CATALOGUE_ROUTES = new Set(["/services", "/kits", "/pricing"]);
 
 export default function sitemap() {
   const baseUrl = "https://logixloops.in";
@@ -24,7 +33,7 @@ export default function sitemap() {
     "/legal/terms",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    ...(CATALOGUE_ROUTES.has(route) && { lastModified: new Date(CATALOGUE_UPDATED) }),
     changeFrequency: "weekly",
     priority: route === "" ? 1 : 0.8,
   }));
@@ -32,7 +41,7 @@ export default function sitemap() {
   // Line pages
   const serviceRoutes = LINES.map((line) => ({
     url: `${baseUrl}/services/${line.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(CATALOGUE_UPDATED),
     changeFrequency: "monthly",
     priority: 0.9,
   }));
@@ -40,7 +49,7 @@ export default function sitemap() {
   // Kit pages
   const kitRoutes = KITS.map((kit) => ({
     url: `${baseUrl}/kits/${kit.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(CATALOGUE_UPDATED),
     changeFrequency: "monthly",
     priority: 0.9,
   }));
@@ -49,7 +58,7 @@ export default function sitemap() {
   const posts = getAllPosts();
   const blogRoutes = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.publishedAt),
+    lastModified: new Date(post.updatedAt || post.isoDate),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
@@ -58,7 +67,6 @@ export default function sitemap() {
   const caseStudies = getAllCaseStudies();
   const workRoutes = caseStudies.map((study) => ({
     url: `${baseUrl}/work/${study.slug}`,
-    lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.8,
   }));

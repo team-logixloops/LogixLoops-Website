@@ -3,17 +3,7 @@ import assert from "node:assert/strict";
 import nextConfig from "../next.config.mjs";
 import { LINES } from "@/data/lines";
 import { KITS } from "@/data/kits";
-
-export const RETIRED = {
-  "web-development": "web-and-app-development",
-  "mobile-apps": "web-and-app-development",
-  "saas-platforms": "web-and-app-development",
-  "enterprise-software": "web-and-app-development",
-  "cloud-devops": "web-and-app-development",
-  "ui-ux-design": "website-redesign",
-  "ai-ml-solutions": "ai-automation",
-  "automation-systems": "ai-automation",
-};
+import { RETIRED } from "./helpers/retired.mjs";
 
 test("every retired practice URL redirects permanently to its line", async () => {
   const redirects = await nextConfig.redirects();
