@@ -4,9 +4,37 @@
  * Generates structured data for rich search results.
  */
 
-import { BRAND, BRAND_TOPICS, SERVICES } from "./constants";
+import { BRAND, BRAND_TOPICS } from "./constants";
+import { KITS } from "@/data/kits";
+import { PLANS } from "@/data/plans";
 
 const BASE_URL = "https://logixloops.in";
+
+const ORG_REF = { "@id": `${BASE_URL}/#organization` };
+
+/**
+ * A "from" price in both currencies. Monthly prices say so through
+ * `unitText`, so an assistant never reads $150 a month as $150 once.
+ */
+const priceSpecification = (price) =>
+  [
+    ["USD", price.usd],
+    ["INR", price.inr],
+  ].map(([priceCurrency, minPrice]) => ({
+    "@type": price.per === "month" ? "UnitPriceSpecification" : "PriceSpecification",
+    priceCurrency,
+    minPrice,
+    ...(price.per === "month" && { unitText: "MONTH" }),
+  }));
+
+const offer = ({ name, description, url, price }) => ({
+  "@type": "Offer",
+  url,
+  priceSpecification: priceSpecification(price),
+  itemOffered: { "@type": "Service", name, description, url, provider: ORG_REF },
+});
+
+export const kitUrl = (kit) => `${BASE_URL}/kits/${kit.slug}`;
 
 /**
  * The one logo node every publisher reference points at. It was written out
@@ -130,22 +158,25 @@ export const generateOrganizationSchema = () => {
         availableLanguage: ["en", "hi"],
       },
     ],
-    // The eight practices as offers rather than as prose. This is the node an
-    // assistant enumerates when asked what LogixLoops does, and it can answer
-    // without crawling eight detail routes.
+    // Every kit and plan as an offer with its price. This is the node an
+    // assistant enumerates when asked what LogixLoops sells and for how much,
+    // and it can answer without crawling a single kit page.
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Software engineering services",
-      itemListElement: SERVICES.map((service) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: service.title,
-          description: service.shortDescription,
-          url: `${BASE_URL}/services/${service.slug}`,
-          provider: { "@id": `${BASE_URL}/#organization` },
-        },
-      })),
+      name: "Advantage Kits",
+      itemListElement: [
+        ...KITS.map((kit) =>
+          offer({ name: kit.name, description: kit.summary, url: kitUrl(kit), price: kit.price })
+        ),
+        ...PLANS.map((plan) =>
+          offer({
+            name: `Pit Crew ${plan.name} plan`,
+            description: plan.summary,
+            url: `${BASE_URL}/services/maintenance-and-support`,
+            price: plan.price,
+          })
+        ),
+      ],
     },
     sameAs: VERIFIED_PROFILES,
   };
@@ -380,6 +411,26 @@ export const generateServiceSchema = ({ title, shortDescription, slug, serviceTy
     areaServed: BRAND.servesMarkets.map((name) => ({ "@type": "Country", name })),
   };
 };
+
+/**
+ * One kit as a `Service` with its starting price. The page also emits HowTo
+ * (the steps) and FAQPage, built from the same record.
+ */
+export const generateKitSchema = (kit) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: kit.name,
+  description: kit.summary,
+  serviceType: kit.keyword,
+  url: kitUrl(kit),
+  provider: ORG_REF,
+  areaServed: BRAND.servesMarkets.map((name) => ({ "@type": "Country", name })),
+  offers: {
+    "@type": "Offer",
+    url: kitUrl(kit),
+    priceSpecification: priceSpecification(kit.price),
+  },
+});
 
 /**
  * `speakable` marks which parts of a page a voice assistant should read aloud.

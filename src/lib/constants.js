@@ -30,11 +30,12 @@ export const BRAND = {
   // artwork, where it has to say what the image says.
   logoTagline: "Your Unfair Advantage",
   description:
-    "A senior engineering studio in Jaipur. We build web platforms, mobile apps, SaaS products and AI systems for teams that need them to work.",
+    "A brand, tech and growth studio in Jaipur. Websites, apps, branding, SEO and AI visibility, and AI automation, sold as kits with published prices.",
   // One-sentence entity definition. Used in schema and in llms.txt, so it is
-  // written to be quoted verbatim by an answer engine.
+  // written to be quoted verbatim by an answer engine. Must match
+  // docs/brand-voice-and-search.md word for word.
   definition:
-    "LogixLoops is a software engineering studio based in Jaipur, India, building custom web platforms, mobile apps, SaaS products, AI systems and cloud infrastructure for clients in India, the US, the UK and the UAE.",
+    "LogixLoops is a brand, technology and growth studio based in Jaipur, India. It sells fixed-scope Advantage Kits with published starting prices for websites, apps, branding, SEO and AI search visibility, and AI automation, for businesses in India, the US, the UK and the UAE.",
   email: "logixloops@gmail.com",
   // E.164 for schema and tel: links. The display string is what humans read.
   phone: "+918764373589",
@@ -84,24 +85,68 @@ export const BRAND = {
  * than any adjective on any page and costs nothing to keep accurate. Every
  * entry must correspond to something the site actually documents. */
 export const BRAND_TOPICS = [
-  "Custom software development",
-  "Web application development",
-  "Next.js development",
-  "React development",
+  "Web development",
+  "Website design",
   "Mobile app development",
-  "SaaS platform architecture",
-  "Multi-tenant architecture",
-  "Artificial intelligence integration",
-  "Retrieval-augmented generation",
-  "Machine learning engineering",
-  "Cloud infrastructure",
-  "Kubernetes",
-  "DevOps and CI/CD",
-  "Legacy system modernisation",
-  "Monolith to microservices migration",
-  "Zero-trust security architecture",
+  "Ecommerce development",
+  "MVP development",
+  "Brand identity design",
+  "Logo design",
+  "Website redesign",
+  "Website speed optimisation",
+  "Search engine optimisation",
+  "Generative engine optimisation",
+  "AI search visibility",
+  "WhatsApp Business automation",
+  "AI chatbots",
+  "AI agents",
   "Workflow automation",
-  "UI/UX design systems",
+  "Website maintenance",
+  "Next.js development",
+  "React Native development",
+];
+
+/* ─── The six promises ───
+ * Every kit carries all six. Each one is the opposite of a common agency
+ * habit, which is what `usual` records: the home page sets the two side by
+ * side, and kit pages show the promise alone. */
+export const PROMISES = [
+  {
+    icon: "sell",
+    title: "Price on the box",
+    detail: "Every kit has a published starting price, a fixed scope and a timeline.",
+    usual: "Prices hidden behind a quote request",
+  },
+  {
+    icon: "hub",
+    title: "One studio",
+    detail: "Brand, tech and growth on one team, in one thread.",
+    usual: "Three vendors who blame each other",
+  },
+  {
+    icon: "all_inclusive",
+    title: "The Loop",
+    detail: "For 30 days after launch we measure, fix and tune with real data.",
+    usual: "Ship the project and disappear",
+  },
+  {
+    icon: "travel_explore",
+    title: "Built to be found",
+    detail: "Every build ships ready for Google and AI search.",
+    usual: "A good-looking site nobody finds",
+  },
+  {
+    icon: "key",
+    title: "Yours from day one",
+    detail: "Domain, code, designs and accounts are created in your name.",
+    usual: "Your domain and code held in the agency's name",
+  },
+  {
+    icon: "forum",
+    title: "Talk to the builders",
+    detail: "The people on the call are the people doing the work.",
+    usual: "A senior pitch, then a junior team",
+  },
 ];
 
 /* ─── Navigation ───
