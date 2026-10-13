@@ -1,7 +1,8 @@
 # LogixLoops: Voice, Messaging & Search Strategy
 
 Source of truth for every word on logixloops.in. If a sentence on the site
-disagrees with this file, the file wins.
+disagrees with this file, the file wins. Design record:
+`docs/superpowers/specs/2026-10-13-advantage-kits-repositioning-design.md`.
 
 ---
 
@@ -9,180 +10,181 @@ disagrees with this file, the file wins.
 
 **Tagline: Your Unfair Advantage.**
 
-Not decoration. It is the promise, and every page has to earn it. The unfair
-advantage is not "we write good code", because everyone claims that. It is:
+LogixLoops is a brand, tech and growth studio in Jaipur, selling to India and
+the world. The unfair advantage is the combination:
 
-> Senior engineers working directly on your product, at a rate a Bay Area
-> agency cannot match, on a stack you own outright when we leave.
+> Brand, build and growth from one studio, sold as kits with public prices.
+> Everything is yours, and it is built to be found.
 
-Three audiences, one voice:
+The name does work too. Agencies sell one-off projects; LogixLoops builds
+loops, systems that keep compounding after launch. Every kit ends with **The
+Loop**: 30 days of measuring, fixing and tuning with real data.
 
-| Audience | What they fear | What the copy must do |
+### Entity definition
+
+Used verbatim in schema, `llms.txt`, About and anywhere an assistant might
+quote what LogixLoops is:
+
+> LogixLoops is a brand, technology and growth studio based in Jaipur, India.
+> It sells fixed-scope Advantage Kits with published starting prices for
+> websites, apps, branding, SEO and AI search visibility, and AI automation,
+> for businesses in India, the US, the UK and the UAE.
+
+### Six lines
+
+Every line has a name people remember and a plain label search engines read.
+**The two always appear together.** Titles, H1s and schema lead with the
+plain label.
+
+| Name | Plain label | URL |
 |---|---|---|
-| Enterprise / corporate buyers | Being the person who picked the vendor that failed the audit | Remove risk. Name the standard, the gate, the artefact. |
-| Gen Z / seed-stage founders | Burning runway on an agency that ships a deck | Show speed and ownership. Two weeks to working software, code is yours. |
-| Engineering leads (the real gatekeeper) | Being sold to by someone who cannot read a trace | Be technically specific. Name the pattern, not the outcome. |
+| Engine | Web & App Development | `/services/web-and-app-development` |
+| Spark | Branding & Identity | `/services/branding` |
+| Glow-Up | Website Redesign & Upgrades | `/services/website-redesign` |
+| Spotlight | SEO & AI Search Visibility | `/services/seo-and-ai-search` |
+| Autopilot | AI & Automation | `/services/ai-automation` |
+| Pit Crew | Maintenance & Support Plans | `/services/maintenance-and-support` |
 
-The same sentence serves all three when it is **concrete**. Vagueness is what
-splits the audience, not tone.
+Kits are called **Advantage Kits** and live at `/kits/<slug>`. Their data is
+`src/data/kits.js`; plans are `src/data/plans.js`; lines are `src/data/lines.js`.
+
+### Six promises
+
+Each one is the opposite of a common agency habit. They appear on every kit
+page and as a comparison on the home page. Data: `PROMISES` in
+`src/lib/constants.js`.
+
+1. **Price on the box.** Published starting price, scope and timeline.
+2. **One studio.** Brand, tech and growth on one team, one thread.
+3. **The Loop.** 30 days after launch to measure, fix and tune.
+4. **Built to be found.** Every build ships ready for Google and AI search.
+5. **Yours from day one.** Domain, code, designs and accounts in the client's name.
+6. **Talk to the builders.** The people on the call do the work.
 
 ---
 
-## 2. Voice
+## 2. Audiences
 
-**Professional. Sharp. Witty when it costs nothing. Never loud.**
+| Reader | What they need from a page |
+|---|---|
+| Business owners and founders who are not technical | What it is, what it costs, how long it takes, what to click. In the first screen. |
+| Startup founders | Speed, ownership and a clear path from first version to growth. |
+| Engineering leads checking our work | Named tools, standards and trade-offs, without having to ask. |
 
-Four rules:
+**Plain on top, depth underneath.** The top half of every page is written for
+the first reader, at a reading age of about 12 to 14. Technical depth lives in
+"Under the hood" sections, `/technology`, `/security`, the lower half of
+`/process`, and blog deep-dives. Nobody should have to read a stack list to
+find out what we sell.
 
-1. **Proof over adjective.** Every adjective must be replaceable by a number, a
-   named mechanism, or a named standard. If it cannot be, cut it.
-   - No: "Blazingly fast, world-class architecture"
-   - Yes: "Trunk-based, feature-flagged, deployable at the end of every sprint"
-2. **Short line, then one that earns it.** A declarative fragment sets the
-   claim; the next sentence pays for it. Never three long sentences in a row.
-3. **Wit is a scalpel.** One dry turn per section, maximum, and only where it
-   carries meaning. "Built to survive its own success" is fine. Jokes are not.
-4. **Say the uncomfortable thing first.** Naming a limit ("we are a small
-   studio", "these are reference builds") buys more credibility than any
-   superlative, and it is what AI answer engines quote.
+---
 
-### Punctuation rule
+## 3. Voice
 
-**No em-dashes anywhere in site content.** Not in copy, not in data files, not
-in metadata, not in `llms.txt`. Use a comma, a colon, a full stop, or rewrite
-the sentence. Em-dashes read as machine-written prose in 2026 and the whole
-voice depends on not reading that way. Hyphens in compounds (`zero-trust`,
-`multi-tenant`) and en-dashes inside numeric ranges are fine.
+**Clear. Specific. Warm. Never loud.**
+
+1. **Proof over adjective.** Every adjective must be replaceable by a number,
+   a named thing or a named standard. If it cannot be, cut it.
+   - No: "Blazing-fast, world-class websites"
+   - Yes: "Checked on a mid-range Android phone before launch"
+2. **Answer first.** The first sentence of a page, a kit summary or an FAQ
+   answer answers the question. The rest earns it.
+3. **Short line, then one that pays for it.** Never three long sentences in a row.
+4. **Say the uncomfortable thing first.** "Nobody can guarantee the first
+   position on Google" buys more trust than any superlative, and it is what
+   AI answer engines quote.
+5. **Wit is a scalpel.** One light turn per section at most, and only where it
+   carries meaning.
+
+### Headings
+
+No question-phrased section headings ("What is X?") under a hero. Questions
+belong in FAQ accordions. Section headings are short declarative labels
+("Everything included in the price", "Pick a kit").
+
+### Punctuation
+
+**No em-dashes anywhere in site content**: copy, data files, metadata,
+`llms.txt`. Use a comma, colon or full stop, or rewrite. Hyphens in compounds
+(`fixed-scope`) and en-dashes in numeric ranges (`3–4 weeks`) are fine.
 
 ### Banned vocabulary
 
-These appeared across the old site and are now prohibited:
-
 `elite` · `world-class` · `cutting-edge` · `best-in-class` · `unparalleled` ·
 `unprecedented` · `seamless(ly)` · `hyper-` anything · `revolutionise` ·
-`leverage` (as a verb) · `synergy` · `luxury` · `atmospheric` · `immersive` ·
-`bespoke` · `holistic` · `journey` (unless a user literally travels) ·
-`solutions` as a standalone noun · `in today's fast-paced world`
+`leverage` · `synergy` · `luxury` · `atmospheric` · `immersive` · `bespoke` ·
+`holistic` · `journey` · `solution` / `solutions` · `in today's fast-paced world`
 
-### Numbers policy
+`test/helpers/voice.mjs` enforces this list over every data file.
 
-**Every number on the site must be one of three things:**
+### Numbers and prices
 
-1. **Countable from the site itself.** Eight practices, four published builds,
-   two-week sprints, three-month minimum.
-2. **A commitment we are signing.** "We target", "the SLA we sign", "reviewed
-   before merge". Written as a standard, never as a past result.
-3. **A client-verified outcome.** Only with written permission, only with the
-   client named or the industry stated, and only once we have it.
+Every number on the site is one of:
 
-Anything else is deleted. No invented uptime percentages, no fabricated
-"threats mitigated" counters, no live-looking dashboards showing fake logs.
-As an early-stage studio, "we have not run this for five years yet" is a
-stronger position than a number a prospect cannot verify.
+1. **Countable from the site itself.** Six lines, 13 kits, 30-day Loop.
+2. **A commitment we sign.** Written as a standard: "we target", "included".
+3. **A client-verified outcome.** Only with written permission, and always
+   attributed to the client, never presented as our own figure.
+
+**Every price comes from the data files.** No price is typed into a page or
+a component. FAQ answers that quote prices build them from the kit and plan
+records. All prices are "from" prices, shown in USD and INR together.
 
 ---
 
-## 3. Search strategy
+## 4. Search strategy
 
-Five surfaces, one content system.
+| Surface | What wins it |
+|---|---|
+| SEO (Google, Bing) | Entity clarity, one keyword per URL, internal links, Core Web Vitals |
+| GEO (ChatGPT, Perplexity, Gemini, AI Overviews) | Answer-first summaries, named facts, comparison tables, `llms.txt`, Bing indexing |
+| AEO (snippets, People Also Ask, voice) | Direct first sentences, FAQPage and HowTo schema |
+| Local | Identical NAP everywhere, Google Business Profile, `/locations/jaipur` |
 
-| Surface | What it is | What wins it |
-|---|---|---|
-| **SEO** | Google/Bing blue links | Entity clarity, internal links, crawlable copy, Core Web Vitals |
-| **GEO** | Generative Engine Optimisation: ChatGPT, Perplexity, AI Overviews, Gemini | Extractable claims, named mechanisms, comparison tables, `llms.txt`, bot access |
-| **AEO** | Answer Engine: featured snippets, People Also Ask, voice | Direct-answer first sentence, FAQPage and HowTo schema, `speakable` |
-| **AIO** | AI Overviews and assistant grounding | Consistent NAP, `ProfessionalService` entity, `sameAs`, `knowsAbout` |
-| **SXO** | Search Experience Optimisation | One CTA per screen, no dead-end pages, fast LCP, no layout shift |
+### Keyword ownership
 
-### Keyword map
+One primary keyword per URL. **Line pages own the category head term, kit
+pages own the "package / price / cost" variant, blog posts own the
+informational question.** A line page and a kit page never compete for the
+same query. Each kit's owned keyword is its `keyword` field.
 
-**Cluster A. Brand (own outright)**
-`LogixLoops` · `LogixLoops Jaipur` · `LogixLoops software` · `Your Unfair Advantage agency`
+Clusters:
 
-**Cluster B. Head commercial (global, hard, long game)**
-`custom software development company` · `product engineering company` ·
-`web development agency` · `SaaS development company` ·
-`AI development company` · `software development company for startups`
-
-**Cluster C. Local pack and GEO (winnable now, highest ROI)**
-`software development company in Jaipur` · `web development company in Jaipur` ·
-`app development company in Jaipur` · `IT company in Jaipur` ·
-`Next.js developers India` · `React development company India` ·
-`offshore development team India` · `hire dedicated developers India`
-
-**Cluster D. Long-tail commercial intent (fastest to rank)**
-`monolith to microservices migration services` · `strangler fig migration agency` ·
-`legacy system modernisation company` · `multi-tenant SaaS architecture consultants` ·
-`MVP development agency for startups` · `Next.js agency for enterprise` ·
-`zero-trust Kubernetes consultants` · `RAG implementation services` ·
-`dedicated development squad monthly retainer`
-
-**Cluster E. Conversational and AEO (what people type into chatbots)**
-- "who should I hire to build my SaaS MVP"
-- "how much does a custom web application cost"
-- "fixed price vs retainer software development which is better"
-- "how do you migrate a monolith without downtime"
-- "best software development agency in Jaipur"
-- "do software agencies give you the source code"
-- "what is a dedicated development squad"
-
-Cluster E lives in FAQ answers, not in headings. Each answer must **lead with
-the answer** in one sentence, then justify it. That first sentence is the
-snippet.
-
-### Page to keyword assignment
-
-| Route | Primary | Secondary |
-|---|---|---|
-| `/` | custom software development company | product engineering, Your Unfair Advantage |
-| `/services` | software engineering services | eight practices, discipline names |
-| `/services/web-development` | web development agency, Next.js agency | React, TypeScript, Node |
-| `/services/ai-ml-solutions` | AI development company | RAG, LLM, predictive analytics |
-| `/services/saas-platforms` | SaaS development company | multi-tenant architecture |
-| `/services/cloud-devops` | DevOps consulting | Kubernetes, Terraform, CI/CD |
-| `/services/mobile-apps` | mobile app development company | React Native, Swift, Kotlin |
-| `/services/enterprise-software` | enterprise software development | microservices, legacy modernisation |
-| `/services/automation-systems` | workflow automation services | RPA, orchestration |
-| `/services/ui-ux-design` | UI UX design agency | design systems, product design |
-| `/process` | software development process | Scrum, Kanban, V-model, Spiral |
-| `/technology` | technology stack | named frameworks |
-| `/security` | zero-trust architecture consultants | SOC 2, HIPAA, GDPR readiness |
-| `/pricing` | software development pricing models | retainer vs fixed price |
-| `/case-studies` | software architecture examples | per-industry reference builds |
-| `/contact` | software development company Jaipur | hire developers |
-| `/blog` | engineering deep-dives | per-post long tail |
+- **Brand:** LogixLoops, LogixLoops Jaipur, LogixLoops kits, Advantage Kits.
+- **Global head terms (line pages):** branding agency, web development
+  company, app development company, website redesign services, SEO agency,
+  AI automation agency, GEO agency.
+- **Local (location page and home):** website development company in
+  Jaipur, branding agency in Jaipur, app development company in Jaipur, SEO
+  company in Jaipur, digital agency in Jaipur.
+- **Kit long-tail (kit pages):** the `keyword` field of each kit.
+- **Global outsourcing (market pages):** hire web developers from India,
+  outsource app development to India, branding agency for UAE startups.
+- **Cost and how-to questions (FAQ answers and blog):** how much does a
+  website cost, logo design cost, how to get my business mentioned by
+  ChatGPT, what is GEO. Each question lives in exactly one place.
 
 ### Non-negotiable technical rules
 
 - **NAP consistency.** Malviya Nagar, Jaipur, Rajasthan 302017, India, plus
   `+91 87643 73589` and `logixloops@gmail.com`, identical in schema, footer,
-  contact page and every external directory. One mismatch and the local entity
-  fragments. In the site itself these live only on `BRAND` in
-  `src/lib/constants.js` — nothing renders a typed-out copy — so a change is
-  that object plus `public/llms.txt` plus the external directories, and this
-  line. (Move to `hello@logixloops.in` when the mailbox exists. Change every
-  place together, never one.)
-- **One `ProfessionalService` entity** in the root layout with `address`,
-  `areaServed`, `knowsAbout`, `hasOfferCatalog` and `sameAs`. This is what an
-  AI assistant reads to decide LogixLoops is a real company.
-- **Every FAQ answer starts with the answer.** No preamble.
-- **No FAQ question appears on two URLs.** Duplicate `FAQPage` entities get
-  discarded.
-- **`sameAs` lists only profiles that resolve.** An unreachable profile weakens
-  the entity instead of strengthening it.
-- **`llms.txt` stays in sync** with the sitemap. It is the cheapest GEO asset
-  on the site.
-- **No fake data in the DOM.** Fabricated dashboards and invented telemetry are
-  a trust liability and get quoted verbatim by answer engines.
+  contact page and every external directory. In the site these live only on
+  `BRAND` in `src/lib/constants.js`.
+- **One `ProfessionalService` entity** in the root layout, with the entity
+  definition above and an `OfferCatalog` of every kit and plan with prices.
+- **Every FAQ answer starts with the answer.**
+- **No FAQ question appears on two URLs.** `test/content.test.mjs` checks it.
+- **`sameAs` lists only profiles that resolve.**
+- **`llms.txt` stays in sync with the sitemap.** `test/llms.test.mjs` checks
+  the lines and kits.
+- **No fake data in the DOM.**
 
 ---
 
-## 4. Section-keep test
+## 5. Section-keep test
 
 Every section on every page must pass one of these, or it is deleted:
 
 1. It **answers** a question a buyer actually asks.
 2. It **proves** a claim made above it.
 3. It **moves** the visitor toward exactly one next action.
-
-Decoration that does none of the three is deleted, no matter how good it looks.
