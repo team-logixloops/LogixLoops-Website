@@ -29,6 +29,9 @@ const CHECKS = [
   { path: "/kits/mobile-app", status: 200, includes: ["Take the Signal Away"], excludes: ["Built with this kit"] },
   { path: "/kits/whatsapp-ai", status: 200, includes: ["Plus Meta&#x27;s message charges"] },
   { path: "/kits/not-a-kit", status: 404 },
+  // Kit catalogue. Matches the lead, not the heading: PageHero animates its
+  // heading word by word, so "Pick a kit." is not one string in the HTML.
+  { path: "/kits", status: 200, includes: ["Advantage Kits are fixed-scope packages", "Business Website Kit", "Workflow Automation Kit", "Essentials", '"@type":"CollectionPage"'] },
 ];
 
 let failed = 0;
