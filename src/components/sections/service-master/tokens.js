@@ -12,8 +12,9 @@ export const SECTION =
  * tailwind-merge, so a later `p-6` would lose to a baked-in `p-8` on CSS
  * source order alone. Every consumer sets its own padding.
  */
+/* Opaque, not glass: content cards carry no backdrop-blur (perf budget). */
 export const CARD =
-  "h-full rounded-2xl border border-outline-variant/30 bg-white/60 backdrop-blur-[24px] shadow-sm transition-colors";
+  "h-full rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 shadow-sm transition-colors";
 
 /** Default card padding, comfortable on desktop, tighter on phones. */
 export const CARD_PAD = "p-6 md:p-8";
