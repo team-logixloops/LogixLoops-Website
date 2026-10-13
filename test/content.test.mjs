@@ -3,8 +3,11 @@ import assert from "node:assert/strict";
 import { KITS, getKitBySlug, getKitsByLine } from "@/data/kits";
 import { PLANS, getPlanBySlug } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
-import { formatPrice } from "@/lib/pricing";
+import { formatPrice, formatPriceProse } from "@/lib/pricing";
 import { copyStrings, voiceProblems, wordCount } from "./helpers/voice.mjs";
+import { existsSync } from "node:fs";
+import { LINES, getLineBySlug } from "@/data/lines";
+import { FAQS, HOME_FAQS, PRICING_FAQS, SERVICES_FAQS } from "@/data/faq";
 
 export const LINE_SLUGS = [
   "web-and-app-development",
@@ -95,4 +98,55 @@ test("related work points at real case studies", () => {
 
 test("kit and plan copy follows the voice rules", () => {
   assert.deepEqual(voiceReport({ KITS, PLANS }), []);
+});
+
+test("lines.js defines exactly the six line slugs, in order", () => {
+  assert.deepEqual(LINES.map((line) => line.slug), LINE_SLUGS);
+  assert.equal(getLineBySlug("branding").name, "Spark");
+  assert.equal(getLineBySlug("not-a-line"), null);
+});
+
+test("every line except Pit Crew sells at least one kit", () => {
+  for (const line of LINES) {
+    if (line.slug === "maintenance-and-support") continue;
+    assert.ok(getKitsByLine(line.slug).length > 0, line.slug);
+  }
+});
+
+test("line art and nav images exist on disk", () => {
+  for (const line of LINES) {
+    assert.ok(existsSync(`public${line.art}`), line.art);
+    assert.ok(existsSync(`public${line.navImage}`), line.navImage);
+  }
+});
+
+test("line summaries are 40 to 60 words and meta fits the limits", () => {
+  for (const line of LINES) {
+    const words = wordCount(line.summary);
+    assert.ok(words >= 40 && words <= 60, `${line.slug}: ${words} words`);
+    assert.ok(line.metaTitle.length <= 47, `${line.slug}: title ${line.metaTitle.length}`);
+    const d = line.metaDescription.length;
+    assert.ok(d >= 70 && d <= 160, `${line.slug}: description ${d}`);
+  }
+});
+
+test("line FAQ answers quote the live kit and plan prices", () => {
+  const engineCost = getLineBySlug("web-and-app-development").faqs[0].a;
+  assert.ok(engineCost.includes(formatPriceProse(getKitBySlug("business-website").price)));
+  const pitCrewCost = getLineBySlug("maintenance-and-support").faqs[0].a;
+  assert.ok(pitCrewCost.includes(formatPriceProse(getPlanBySlug("squad").price)));
+});
+
+test("no FAQ question appears on two URLs", () => {
+  const questions = [
+    ...KITS.flatMap((kit) => kit.faqs.map((faq) => faq.q)),
+    ...LINES.flatMap((line) => line.faqs.map((faq) => faq.q)),
+    ...[FAQS, HOME_FAQS, PRICING_FAQS, SERVICES_FAQS].flat().map((faq) => faq.question),
+  ].map((q) => q.trim().toLowerCase());
+  const repeated = questions.filter((q, i) => questions.indexOf(q) !== i);
+  assert.deepEqual(repeated, []);
+});
+
+test("line copy follows the voice rules", () => {
+  assert.deepEqual(voiceReport({ LINES }), []);
 });
