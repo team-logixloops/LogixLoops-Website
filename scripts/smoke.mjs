@@ -23,6 +23,12 @@ const CHECKS = [
   { path: "/services/ui-ux-design", status: 308, location: "/services/website-redesign" },
   { path: "/services/ai-ml-solutions", status: 308, location: "/services/ai-automation" },
   { path: "/services/web-development?ref=nav", status: 308, location: "/services/web-and-app-development?ref=nav" },
+  // Kit pages
+  { path: "/kits/brand-identity", status: 200, includes: ["Brand Identity Kit", "$1,000 · ₹45,000", "2–3 weeks", "The Loop", "Under the hood", "Build a Design System", '"@type":"Service"', '"@type":"HowTo"', '"@type":"FAQPage"', '"priceCurrency":"INR"'] },
+  { path: "/kits/business-website", status: 200, includes: ["Built with this kit", "Sire Media"] },
+  { path: "/kits/mobile-app", status: 200, includes: ["Take the Signal Away"], excludes: ["Built with this kit"] },
+  { path: "/kits/whatsapp-ai", status: 200, includes: ["Plus Meta&#x27;s message charges"] },
+  { path: "/kits/not-a-kit", status: 404 },
 ];
 
 let failed = 0;
