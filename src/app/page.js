@@ -36,7 +36,7 @@ import CtaBanner from "@/components/sections/shared/CtaBanner";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { HOME_FAQS } from "@/data/faq";
 import { HOME_PROCESS_STEPS } from "@/data/infrastructure";
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
 import {
   generateFaqSchema,
   generateHowToSchema,
@@ -115,11 +115,11 @@ export default function HomePage() {
       />
       <SchemaMarkup
         schema={generateItemListSchema({
-          name: "LogixLoops engineering practices",
-          items: SERVICES.map((service) => ({
-            name: service.title,
-            description: service.shortDescription,
-            path: `/services/${service.slug}`,
+          name: "LogixLoops service lines",
+          items: LINES.map((line) => ({
+            name: line.label,
+            description: line.summary,
+            path: `/services/${line.slug}`,
           })),
         })}
       />

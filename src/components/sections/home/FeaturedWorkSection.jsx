@@ -10,33 +10,33 @@ const TITLE_SIZE = "clamp(1.25rem,3vw,2.5rem)";
 
 const WORK_ITEMS = [
   {
-    id: "enterprise-software",
-    title: "Enterprise Software",
-    href: "/services/enterprise-software",
+    id: "engine",
+    title: "Web & App Development",
+    href: "/services/web-and-app-development",
     image:
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1583&q=80",
     objectPosition: "object-center",
   },
   {
-    id: "ai-ml",
-    title: "AI & ML",
-    href: "/services/ai-ml-solutions",
+    id: "autopilot",
+    title: "AI & Automation",
+    href: "/services/ai-automation",
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1583&q=80",
     objectPosition: "object-center",
   },
   {
-    id: "cloud-devops",
-    title: "Cloud & DevOps",
-    href: "/services/cloud-devops",
+    id: "spotlight",
+    title: "SEO & AI Search",
+    href: "/services/seo-and-ai-search",
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1583&q=80",
     objectPosition: "object-center",
   },
   {
-    id: "ui-ux-design",
-    title: "UI/UX Design",
-    href: "/services/ui-ux-design",
+    id: "spark",
+    title: "Branding & Identity",
+    href: "/services/branding",
     image:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1583&q=80",
     objectPosition: "object-center",

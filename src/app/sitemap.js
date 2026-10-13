@@ -1,4 +1,4 @@
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
 import { getAllPosts } from "@/data/blog";
 import { getAllCaseStudies } from "@/data/caseStudies";
 
@@ -27,9 +27,9 @@ export default function sitemap() {
     priority: route === "" ? 1 : 0.8,
   }));
 
-  // Dynamic Service routes
-  const serviceRoutes = SERVICES.map((service) => ({
-    url: `${baseUrl}/services/${service.slug}`,
+  // Line pages
+  const serviceRoutes = LINES.map((line) => ({
+    url: `${baseUrl}/services/${line.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.9,

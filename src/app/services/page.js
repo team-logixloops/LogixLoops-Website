@@ -2,7 +2,10 @@ import Link from "next/link";
 import ServicesInertiaGrid from "@/components/sections/services/ServicesInertiaGrid";
 import { FadeInUpImmediate } from "@/components/motion";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
+import { getKitsByLine } from "@/data/kits";
+import { getAllPlans } from "@/data/plans";
+import { cheapest, formatPrice } from "@/lib/pricing";
 import { SERVICES_FAQS } from "@/data/faq";
 import {
   generateBreadcrumbSchema,
@@ -11,21 +14,27 @@ import {
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
+/* The cheapest way into a line, for the directory cards. */
+const fromPrice = (line) => {
+  const offers = getKitsByLine(line.slug);
+  return formatPrice(cheapest(offers.length ? offers : getAllPlans()).price);
+};
+
 const SERVICES_DESCRIPTION =
-  "Eight engineering practices: enterprise software, AI and ML, web development, mobile apps, cloud and DevOps, SaaS platforms, automation and UI/UX design.";
+  "Web and app development, branding, website redesign, SEO and AI visibility, AI automation and maintenance, sold as kits with published prices.";
 
 export const metadata = buildMetadata({
-  title: "Software Engineering Services",
+  title: "Services: Web, App, Branding, SEO and AI",
   description: SERVICES_DESCRIPTION,
   path: "/services",
   keywords: [
-    "software engineering services",
-    "custom software development services",
-    "web development agency",
-    "mobile app development company",
-    "AI development services",
-    "cloud and DevOps consulting",
-    "UI UX design agency",
+    "digital agency services",
+    "web and app development company",
+    "branding agency",
+    "website redesign services",
+    "SEO and AI search optimization",
+    "AI automation agency",
+    "website maintenance services",
   ],
 });
 
@@ -46,17 +55,17 @@ export default function ServicesOverviewPage() {
           }))
         )}
       />
-      {/* The eight practices as an enumerable list, an answer engine can read
-          the directory without crawling all eight detail routes. */}
+      {/* The six lines as an enumerable list, an answer engine can read the
+          directory without crawling all six detail routes. */}
       <SchemaMarkup
         schema={generateCollectionPageSchema({
-          name: "Engineering Services",
+          name: "LogixLoops services",
           description: SERVICES_DESCRIPTION,
           path: "/services",
-          items: SERVICES.map((service) => ({
-            name: service.title,
-            description: service.shortDescription,
-            path: `/services/${service.slug}`,
+          items: LINES.map((line) => ({
+            name: line.label,
+            description: line.summary,
+            path: `/services/${line.slug}`,
           })),
         })}
       />
@@ -74,26 +83,26 @@ export default function ServicesOverviewPage() {
           </FadeInUpImmediate>
           <FadeInUpImmediate delay={0.12}>
             <h1 className="font-display text-display-lg-mobile md:text-display-xl text-on-surface tracking-tight leading-[1.05] mb-stack-sm">
-              Eight things we&apos;re{" "}
+              Six ways to get your{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                genuinely good at.
+                unfair advantage.
               </span>
             </h1>
           </FadeInUpImmediate>
           <FadeInUpImmediate delay={0.24}>
             <p className="font-body text-body-lg text-on-surface-variant">
-              And nothing outside them. Every practice below has its own reference architecture and standard stack. Scroll to bring the grid home, then pick the one closest to your problem.
+              Web and app development, branding, website redesign, SEO and AI search visibility, AI and automation, and maintenance plans. Each line is sold as kits with published prices. Scroll to bring the grid home, then pick the one closest to what you need.
             </p>
           </FadeInUpImmediate>
         </header>
       </ServicesInertiaGrid>
 
-      {/* The constellation above carries the eight links, but nothing else,
-          a tile is an icon and a title. This directory is where each practice
-          gets described: the shortDescription and stack tags an answer engine
+      {/* The constellation above carries the six links, but nothing else,
+          a tile is an icon and a title. This directory is where each line
+          gets described: the pitch and starting price an answer engine
           quotes, and the plain scannable list a keyboard or reduced-motion
-          visitor reaches without scrubbing a pinned stage. Four across, two
-          deep, one row per half of the practice set. */}
+          visitor reaches without scrubbing a pinned stage. Three across, two
+          deep. */}
       <section
         aria-labelledby="services-directory"
         className="border-t border-outline-variant/30 pt-stack-lg"
@@ -103,24 +112,23 @@ export default function ServicesOverviewPage() {
             id="services-directory"
             className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4"
           >
-            The eight, in plain text
+            The six, in plain text
           </h2>
           <p className="font-body text-body-lg text-on-surface-variant">
-            Each with its own reference architecture and standard stack. Most
-            engagements draw on two or three at once, and the discovery call is
-            where we work out which.
+            Each line links to its kits, with what is included and what it
+            costs. Most businesses start with one kit and add another later.
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-gutter">
-          {SERVICES.map((service) => (
-            <li key={service.slug}>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter">
+          {LINES.map((line) => (
+            <li key={line.slug}>
               {/* `glow-sweep` is the shared hover treatment (globals.css): a
                   1px conic ring that travels the border, over the card's own
                   glass. It masks itself out on coarse pointers, so the tap
                   state on mobile stays clean. */}
               <Link
-                href={`/services/${service.slug}`}
+                href={`/services/${line.slug}`}
                 /* No `backdrop-blur` here, deliberately, and this is why the
                    grid used to drag while you scrolled it. Eight cards each
                    carrying a 24px backdrop filter means eight sample-and-blur
@@ -132,24 +140,20 @@ export default function ServicesOverviewPage() {
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
                   <span className="material-symbols-outlined text-[22px]">
-                    {service.icon}
+                    {line.icon}
                   </span>
                 </span>
+                <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant mb-1">
+                  {line.name}
+                </span>
                 <h3 className="font-display text-headline-md text-on-surface mb-3 transition-colors duration-300 group-hover:text-primary">
-                  {service.title}
+                  {line.label}
                 </h3>
                 <p className="font-body text-body-sm text-on-surface-variant mb-5 flex-1">
-                  {service.shortDescription}
+                  {line.pitch}
                 </p>
-                <span className="flex flex-wrap gap-1.5">
-                  {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant border border-outline-variant/40 rounded-full px-2.5 py-1 transition-colors duration-300 group-hover:border-primary/25 group-hover:text-primary"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <span className="font-label text-[11px] uppercase tracking-widest text-primary">
+                  From {fromPrice(line)}
                 </span>
                 <span
                   aria-hidden="true"

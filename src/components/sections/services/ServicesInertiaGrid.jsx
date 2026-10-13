@@ -6,12 +6,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import InertiaPlugin from "gsap/InertiaPlugin";
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
 
-/* 3x3, the 8 services plus a closing call to action, no repeats. */
+/* 3x3: the six lines, then the kits, pricing and a closing call to action. */
 const TILES = [
-  ...SERVICES.map((s) => ({ key: s.slug, label: s.title, href: `/services/${s.slug}` })),
-  { key: "start-a-project", label: "Start a Project", href: "/contact" },
+  ...LINES.map((line) => ({ key: line.slug, label: line.label, href: `/services/${line.slug}`, art: line.art })),
+  { key: "kits", label: "All Advantage Kits", href: "/kits", art: "/services/saas-platforms.svg" },
+  { key: "pricing", label: "Pricing", href: "/pricing", art: "/services/enterprise-software.svg" },
+  { key: "start-a-project", label: "Start a Project", href: "/contact", art: "/services/start-a-project.svg" },
 ];
 
 /**
@@ -446,7 +448,7 @@ export default function ServicesInertiaGrid({ children }) {
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={`/services/${tile.key}.svg`}
+                          src={tile.art}
                           alt=""
                           width={64}
                           height={64}

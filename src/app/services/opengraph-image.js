@@ -1,15 +1,14 @@
 import { ogCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
-export const alt =
-  "LogixLoops engineering services: eight practices across web, mobile, SaaS, AI, and cloud.";
+export const alt = "LogixLoops services: six lines, sold as kits with published prices.";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default function Image() {
   return ogCard({
     eyebrow: "Services",
-    title: "Eight engineering practices.",
+    title: "Six lines. One studio.",
     subtitle:
-      "Enterprise software, AI and ML, web, mobile, cloud and DevOps, SaaS, automation, UI/UX.",
+      "Web and app development, branding, redesign, SEO and AI visibility, AI automation and maintenance, sold as kits.",
   });
 }

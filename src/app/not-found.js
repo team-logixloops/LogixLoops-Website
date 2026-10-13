@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
 import { LogoPuzzle } from "@/components/ui";
 
 // Next's built-in 404 shipped a 167-char meta description and no internal
@@ -83,13 +83,13 @@ export default function NotFound() {
             Services
           </h2>
           <ul className="flex flex-col gap-2">
-            {SERVICES.map((service) => (
-              <li key={service.slug}>
+            {LINES.map((line) => (
+              <li key={line.slug}>
                 <Link
-                  href={`/services/${service.slug}`}
+                  href={`/services/${line.slug}`}
                   className="font-body text-body-md text-on-surface-variant hover:text-primary transition-colors"
                 >
-                  {service.title}
+                  {line.label}
                 </Link>
               </li>
             ))}
