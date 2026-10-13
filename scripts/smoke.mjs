@@ -32,6 +32,8 @@ const CHECKS = [
   // Kit catalogue. Matches the lead, not the heading: PageHero animates its
   // heading word by word, so "Pick a kit." is not one string in the HTML.
   { path: "/kits", status: 200, includes: ["Advantage Kits are fixed-scope packages", "Business Website Kit", "Workflow Automation Kit", "Essentials", '"@type":"CollectionPage"'] },
+  // Generated llms.txt
+  { path: "/llms.txt", status: 200, includes: ["# LogixLoops", "https://logixloops.in/kits/ai-visibility", "$1,000 · ₹45,000"], excludes: ["/case-studies"] },
 ];
 
 let failed = 0;
