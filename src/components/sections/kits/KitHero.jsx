@@ -3,7 +3,7 @@ import { FadeInUpImmediate } from "@/components/motion";
 import { Button } from "@/components/ui";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/lib/pricing";
+import { CURRENCY_NOTE, formatPrice } from "@/lib/pricing";
 import { accent } from "@/components/sections/service-master/tokens";
 
 /**
@@ -44,9 +44,14 @@ export default function KitHero({ kit, line }) {
             <dd className="font-display text-xl font-semibold text-on-surface">{kit.timeline}</dd>
           </div>
         </dl>
-        {kit.priceNote && (
-          <p className="-mt-4 mb-8 font-body text-body-sm text-on-surface-variant">{kit.priceNote}.</p>
-        )}
+        <p className="-mt-4 mb-8 font-body text-body-sm text-on-surface-variant">
+          {kit.priceNote && `${kit.priceNote}. `}
+          {CURRENCY_NOTE}{" "}
+          <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
+            See every price
+          </Link>
+          .
+        </p>
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button href={`/contact?kit=${kit.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
             Start this kit

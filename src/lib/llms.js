@@ -13,15 +13,19 @@ import { getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
 import { getAllPosts } from "@/data/blog";
-import { formatPrice } from "@/lib/pricing";
+import { CURRENCY_NOTE, formatPrice } from "@/lib/pricing";
 
 const SITE = "https://logixloops.in";
+
+/* A kit's extra cost, such as Meta's message charges, travels with its price. */
+const note = (kit) => (kit.priceNote ? ` (${kit.priceNote[0].toLowerCase()}${kit.priceNote.slice(1)})` : "");
 
 function lineSection(line) {
   const kits = getKitsByLine(line.slug);
   const items = kits.length
     ? kits.map(
-        (kit) => `- [${kit.name}](${SITE}/kits/${kit.slug}): from ${formatPrice(kit.price)}, ${kit.timeline}. ${kit.summary}`
+        (kit) =>
+          `- [${kit.name}](${SITE}/kits/${kit.slug}): from ${formatPrice(kit.price)}${note(kit)}, ${kit.timeline}. ${kit.summary}`
       )
     : getAllPlans().map(
         (plan) => `- **${plan.name} plan:** from ${formatPrice(plan.price)}. ${plan.summary} ${plan.terms}`
@@ -44,6 +48,7 @@ export function buildLlmsTxt() {
     `- **Base:** ${BRAND.addressDisplay}. Works remotely with clients in ${BRAND.servesMarkets.join(", ")}.`,
     `- **Contact:** ${BRAND.email}, ${BRAND.phoneDisplay}, ${SITE}/contact`,
     "- **How it sells:** Advantage Kits, fixed-scope packages with a published starting price in USD and INR, a timeline and a list of what is included. Monthly Pit Crew plans cover maintenance and support.",
+    `- **Currencies:** ${CURRENCY_NOTE} Each is the entry price of its own market, set separately rather than converted.`,
     "- **Ownership:** Domain, code, designs and accounts are created in the client's name from day one.",
     "",
     "## Six promises",

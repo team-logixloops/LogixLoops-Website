@@ -64,6 +64,15 @@ Prices below are **proposals** set from 2026 India and global market ranges
 copy phase; the data model takes them from one file, so changing them is a
 one-line edit each. INR is priced for the Indian market, not converted from USD.
 
+> **Superseded 2026-10-14.** The owner chose entry-level starting prices:
+> each kit now starts at the basic price of its own market, INR for
+> businesses in India and USD everywhere else, with scope trimmed to match
+> (fewer pages, products, screens or automations at the starting price; the
+> rest are add-ons). `src/data/kits.js` and `src/data/plans.js` are the
+> source of truth; the figures in the tables below are historical. Examples:
+> Business Website $500 · ₹15,000, Brand Identity $400 · ₹10,000, Speed
+> $250 · ₹8,000, Mobile App $5,000 · ₹1,50,000, Essentials $75/mo · ₹2,500/mo.
+
 Wave 1 ships at launch. Wave 2 follows once wave 1 is live and indexed.
 
 ### Engine: Web & App Development

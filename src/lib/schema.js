@@ -27,14 +27,18 @@ const priceSpecification = (price) =>
     ...(price.per === "month" && { unitText: "MONTH" }),
   }));
 
-const offer = ({ name, description, url, price }) => ({
+const offer = ({ id, name, description, url, price }) => ({
   "@type": "Offer",
   url,
   priceSpecification: priceSpecification(price),
-  itemOffered: { "@type": "Service", name, description, url, provider: ORG_REF },
+  itemOffered: { "@type": "Service", ...(id && { "@id": id }), name, description, url, provider: ORG_REF },
 });
 
 export const kitUrl = (kit) => `${BASE_URL}/kits/${kit.slug}`;
+
+/* One node per kit across the site: the catalogue on every page and the
+   Service on the kit's own page share this id, so a crawler merges them. */
+const kitServiceId = (kit) => `${kitUrl(kit)}#service`;
 
 /**
  * The one logo node every publisher reference points at. It was written out
@@ -166,7 +170,7 @@ export const generateOrganizationSchema = () => {
       name: "Advantage Kits",
       itemListElement: [
         ...KITS.map((kit) =>
-          offer({ name: kit.name, description: kit.summary, url: kitUrl(kit), price: kit.price })
+          offer({ id: kitServiceId(kit), name: kit.name, description: kit.summary, url: kitUrl(kit), price: kit.price })
         ),
         ...PLANS.map((plan) =>
           offer({
@@ -419,6 +423,7 @@ export const generateServiceSchema = ({ title, shortDescription, slug, serviceTy
 export const generateKitSchema = (kit) => ({
   "@context": "https://schema.org",
   "@type": "Service",
+  "@id": kitServiceId(kit),
   name: kit.name,
   description: kit.summary,
   serviceType: kit.keyword,

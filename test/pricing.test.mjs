@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { cheapest, formatInr, formatPrice, formatPriceProse, formatUsd } from "@/lib/pricing";
+import { CURRENCY_NOTE, cheapest, formatInr, formatPrice, formatPriceProse, formatUsd } from "@/lib/pricing";
 
 test("USD uses international grouping", () => {
   assert.equal(formatUsd(1500), "$1,500");
@@ -18,9 +18,15 @@ test("formatPrice shows both currencies, with /mo for monthly prices", () => {
   assert.equal(formatPrice({ usd: 150, inr: 6000, per: "month" }), "$150/mo · ₹6,000/mo");
 });
 
-test("formatPriceProse reads naturally in a sentence", () => {
-  assert.equal(formatPriceProse({ usd: 1500, inr: 60000 }), "$1,500 (₹60,000)");
-  assert.equal(formatPriceProse({ usd: 150, inr: 6000, per: "month" }), "$150 (₹6,000) a month");
+test("formatPriceProse says the rupee price is the India price", () => {
+  assert.equal(formatPriceProse({ usd: 1500, inr: 60000 }), "$1,500 (₹60,000 in India)");
+  assert.equal(formatPriceProse({ usd: 150, inr: 6000, per: "month" }), "$150 (₹6,000 in India) a month");
+});
+
+test("the currency note says which price applies where", () => {
+  assert.match(CURRENCY_NOTE, /₹/);
+  assert.match(CURRENCY_NOTE, /India/);
+  assert.match(CURRENCY_NOTE, /\$/);
 });
 
 test("cheapest picks the lowest USD price", () => {

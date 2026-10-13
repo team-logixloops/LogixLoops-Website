@@ -23,9 +23,10 @@ test("the offer catalogue lists every kit and plan", () => {
 test("kit offers carry their page URL and a from-price in both currencies", () => {
   const mvp = catalog().itemListElement.find((offer) => offer.itemOffered.name === "MVP Kit");
   assert.equal(mvp.url, "https://logixloops.in/kits/mvp");
+  const { usd, inr } = getKitBySlug("mvp").price;
   assert.deepEqual(
     mvp.priceSpecification.map((spec) => [spec.priceCurrency, spec.minPrice]),
-    [["USD", 8000], ["INR", 400000]]
+    [["USD", usd], ["INR", inr]]
   );
 });
 
@@ -42,7 +43,16 @@ test("a kit's Service node points at its page and carries its price", () => {
   assert.equal(node["@type"], "Service");
   assert.equal(node.url, "https://logixloops.in/kits/whatsapp-ai");
   assert.equal(node.provider["@id"], "https://logixloops.in/#organization");
-  assert.equal(node.offers.priceSpecification[0].minPrice, 1200);
+  assert.equal(node.offers.priceSpecification[0].minPrice, getKitBySlug("whatsapp-ai").price.usd);
+});
+
+test("a kit's Service node and its catalogue offer share one @id", () => {
+  for (const kit of KITS) {
+    const node = generateKitSchema(kit);
+    assert.equal(node["@id"], `https://logixloops.in/kits/${kit.slug}#service`, kit.slug);
+    const listed = catalog().itemListElement.find((offer) => offer.itemOffered.name === kit.name);
+    assert.equal(listed.itemOffered["@id"], node["@id"], kit.slug);
+  }
 });
 
 test("knowsAbout covers the new lines", () => {

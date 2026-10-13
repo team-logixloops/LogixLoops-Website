@@ -12,8 +12,15 @@
  *   - The last step is always The Loop.
  *   - `underTheHood` is the only place technical vocabulary is expected.
  *
- * Prices are proposals awaiting the owner's sign-off (spec section 11).
+ * Prices are starting prices at the entry level of each market, researched
+ * in October 2026: `inr` is the price for businesses in India, `usd` the
+ * price everywhere else. They are set separately, not converted, so the two
+ * never need to match. The scope in `includes` is what that starting price
+ * buys; more pages, products or screens come through `addOns`.
  */
+
+/** When the catalogue's prices or scope last changed. Feeds the sitemap. */
+export const CATALOGUE_UPDATED = "2026-10-14";
 
 /** The 30-day after-launch period every kit ends with. Kits may reword it. */
 const LOOP = {
@@ -29,15 +36,15 @@ export const KITS = [
     name: "Business Website Kit",
     promise: "a fast, search-ready website for a growing business",
     summary:
-      "The Business Website Kit is a custom website of up to eight pages for a growing business, designed and built in three to four weeks. It loads fast on an ordinary phone, is ready for Google and AI search from launch, and you can edit the content yourself. Domain, hosting and code are in your name.",
-    price: { usd: 1500, inr: 60000 },
+      "The Business Website Kit is a custom website of up to five pages for a growing business, designed and built in three to four weeks. It loads fast on an ordinary phone, is ready for Google and AI search from launch, and you can edit the content yourself. Domain, hosting and code are in your name.",
+    price: { usd: 500, inr: 15000 },
     timeline: "3–4 weeks",
     keyword: "business website development package",
     metaTitle: "Business Website Design and Development Package",
     metaDescription:
-      "A custom website of up to eight pages, built in three to four weeks. Fast, ready for Google and AI search, and yours from day one.",
+      "A custom website of up to five pages, built in three to four weeks. Fast, ready for Google and AI search, and yours from day one.",
     includes: [
-      "Custom design for up to 8 pages, on desktop and mobile",
+      "Custom design for up to 5 pages, on desktop and mobile",
       "A content editor so you can change text and images yourself",
       "Contact form, WhatsApp button and map where useful",
       "SEO setup: titles, descriptions, sitemap and structured data",
@@ -62,9 +69,9 @@ export const KITS = [
       LOOP,
     ],
     addOns: [
-      { name: "Extra page", price: { usd: 120, inr: 5000 } },
-      { name: "Copywriting for every page", price: { usd: 400, inr: 15000 } },
-      { name: "Second language", price: { usd: 500, inr: 20000 } },
+      { name: "Extra page", price: { usd: 40, inr: 1500 } },
+      { name: "Copywriting for every page", price: { usd: 150, inr: 5000 } },
+      { name: "Second language", price: { usd: 150, inr: 5000 } },
     ],
     underTheHood: [
       "Next.js with server rendering, deployed on Vercel or your own cloud account",
@@ -97,7 +104,7 @@ export const KITS = [
     promise: "an online store that is quick to browse and easy to buy from",
     summary:
       "The Online Store Kit is an ecommerce website built on Shopify or a custom stack, ready to take payments in four to six weeks. It includes product pages, cart, checkout with UPI, cards and wallets, order emails and inventory, and it is set up for Google Shopping and search from day one.",
-    price: { usd: 3000, inr: 120000 },
+    price: { usd: 1000, inr: 30000 },
     timeline: "4–6 weeks",
     keyword: "ecommerce website development cost",
     metaTitle: "Ecommerce Website Development: Online Store Kit",
@@ -105,7 +112,7 @@ export const KITS = [
       "A Shopify or custom online store with payments, inventory and order emails, live in four to six weeks and ready for Google Shopping.",
     includes: [
       "Store design for home, collection, product, cart and checkout pages",
-      "Up to 50 products loaded, with variants and stock tracking",
+      "Up to 25 products loaded, with variants and stock tracking",
       "Payments through Razorpay or Stripe: UPI, cards and wallets",
       "Shipping and tax rules for the markets you sell to",
       "Order, shipping and abandoned-cart emails",
@@ -124,14 +131,14 @@ export const KITS = [
     steps: [
       { title: "Kick-off call", desc: "We choose Shopify or a custom stack together, list your products, payment methods and shipping rules, and agree the launch date." },
       { title: "Design", desc: "Store pages designed around your brand and your best-selling products, with two rounds of changes." },
-      { title: "Build and load", desc: "We build the store, load up to 50 products, connect payments and shipping, and test real orders end to end." },
+      { title: "Build and load", desc: "We build the store, load up to 25 products, connect payments and shipping, and test real orders end to end." },
       { title: "Launch", desc: "Your domain is connected, feeds are submitted to Google and Meta, analytics is checked, and the store opens." },
       LOOP,
     ],
     addOns: [
-      { name: "Another 50 products loaded", price: { usd: 150, inr: 6000 } },
-      { name: "Product photography direction", price: { usd: 300, inr: 12000 } },
-      { name: "Subscriptions or bundles", price: { usd: 500, inr: 20000 } },
+      { name: "Another 50 products loaded", price: { usd: 100, inr: 3000 } },
+      { name: "Product photography direction", price: { usd: 150, inr: 5000 } },
+      { name: "Subscriptions or bundles", price: { usd: 250, inr: 8000 } },
     ],
     underTheHood: [
       "Shopify with a custom theme, or a headless Next.js storefront on Shopify, Medusa or a custom backend",
@@ -163,10 +170,10 @@ export const KITS = [
     promise: "the first working version of your product, in front of real users",
     summary:
       "The MVP Kit turns a startup idea into a working web product that real users can sign up for and pay for, in six to eight weeks. You get user accounts, the core feature, payments, an admin panel and analytics, built on a stack that can grow with the business instead of being thrown away.",
-    price: { usd: 8000, inr: 400000 },
+    price: { usd: 3500, inr: 125000 },
     timeline: "6–8 weeks",
     keyword: "MVP development for startups",
-    metaTitle: "MVP Development for Startups in 6 to 8 Weeks",
+    metaTitle: "MVP Development for Startups: MVP Kit",
     metaDescription:
       "A working web product with sign-up, payments, an admin panel and analytics in six to eight weeks, on a stack built to grow.",
     includes: [
@@ -195,9 +202,9 @@ export const KITS = [
       LOOP,
     ],
     addOns: [
-      { name: "Marketing website for the product", price: { usd: 1200, inr: 50000 } },
-      { name: "iOS and Android app wrapper", price: { usd: 3000, inr: 150000 } },
-      { name: "An AI feature using your data", price: { usd: 2000, inr: 90000 } },
+      { name: "Marketing website for the product", price: { usd: 500, inr: 15000 } },
+      { name: "iOS and Android app wrapper", price: { usd: 1500, inr: 50000 } },
+      { name: "An AI feature using your data", price: { usd: 800, inr: 30000 } },
     ],
     underTheHood: [
       "Next.js and TypeScript front to back, with PostgreSQL and a typed ORM",
@@ -230,14 +237,14 @@ export const KITS = [
     promise: "one app for iPhone and Android, published in both stores",
     summary:
       "The Mobile App Kit builds one app for iPhone and Android from a single codebase and publishes it in the App Store and Google Play in eight to twelve weeks. It covers design, sign-in, the core screens, push notifications, offline use and an admin panel, all published under your own developer accounts.",
-    price: { usd: 10000, inr: 500000 },
+    price: { usd: 5000, inr: 150000 },
     timeline: "8–12 weeks",
     keyword: "mobile app development cost",
-    metaTitle: "Mobile App Development for iOS and Android",
+    metaTitle: "iOS and Android App Development: Mobile App Kit",
     metaDescription:
       "One app for iPhone and Android, designed, built and published in both stores in eight to twelve weeks, in your own accounts.",
     includes: [
-      "App design for up to 15 screens, following iOS and Android conventions",
+      "App design for up to 10 screens, following iOS and Android conventions",
       "Sign-in with phone OTP, email, Google or Apple",
       "Push notifications and in-app messages",
       "Works offline and syncs when the connection returns",
@@ -262,9 +269,9 @@ export const KITS = [
       LOOP,
     ],
     addOns: [
-      { name: "Another 5 screens", price: { usd: 1500, inr: 70000 } },
-      { name: "Website for the app", price: { usd: 1200, inr: 50000 } },
-      { name: "Second language", price: { usd: 800, inr: 35000 } },
+      { name: "Another 5 screens", price: { usd: 800, inr: 25000 } },
+      { name: "Website for the app", price: { usd: 500, inr: 15000 } },
+      { name: "Second language", price: { usd: 300, inr: 10000 } },
     ],
     underTheHood: [
       "React Native with Expo and TypeScript, with Swift or Kotlin modules where the hardware needs them",
@@ -299,7 +306,7 @@ export const KITS = [
     promise: "logo, colours, type and brand guidelines for a new business",
     summary:
       "The Brand Identity Kit gives a new or growing business a complete visual identity in two to three weeks: logo, colour palette, typefaces and a brand guidelines document. You get every file in every format for print, web and social, plus editable sources, so anyone you work with can use the brand correctly.",
-    price: { usd: 1000, inr: 45000 },
+    price: { usd: 400, inr: 10000 },
     timeline: "2–3 weeks",
     keyword: "brand identity design package",
     metaTitle: "Brand Identity Package: Logo and Guidelines",
@@ -310,7 +317,7 @@ export const KITS = [
       "Three logo directions, one refined into your final logo",
       "Logo versions for light, dark and small sizes, plus an icon",
       "A colour palette and typefaces chosen for print and screen",
-      "A brand guidelines document of 10 to 15 pages",
+      "A brand guidelines document of 8 to 12 pages",
       "Business card and letterhead designs",
       "Every file in SVG, PNG and PDF, with editable Figma sources",
     ],
@@ -334,9 +341,9 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Social media kit: templates and profile assets", price: { usd: 400, inr: 18000 } },
-      { name: "Brand voice and messaging guide", price: { usd: 350, inr: 15000 } },
-      { name: "A fourth logo direction", price: { usd: 250, inr: 10000 } },
+      { name: "Social media kit: templates and profile assets", price: { usd: 150, inr: 4000 } },
+      { name: "Brand voice and messaging guide", price: { usd: 150, inr: 4000 } },
+      { name: "A fourth logo direction", price: { usd: 100, inr: 3000 } },
     ],
     underTheHood: [
       "Logos drawn as clean vectors and checked at 16 pixels for favicons and app icons",
@@ -369,7 +376,7 @@ export const KITS = [
     promise: "brand identity, website, social kit and Google profile, launched together",
     summary:
       "The Brand Launch Kit takes a new business from name to open for business in five to six weeks. It combines the Brand Identity Kit with a business website, a social media kit and a Google Business Profile, all designed together by one team, so everything looks consistent from the first day.",
-    price: { usd: 3000, inr: 130000 },
+    price: { usd: 800, inr: 22000 },
     timeline: "5–6 weeks",
     keyword: "branding and website package for new business",
     metaTitle: "Branding and Website Package for New Businesses",
@@ -399,9 +406,9 @@ export const KITS = [
       LOOP,
     ],
     addOns: [
-      { name: "Launch photography direction", price: { usd: 400, inr: 15000 } },
-      { name: "Brand voice and messaging guide", price: { usd: 350, inr: 15000 } },
-      { name: "An online store instead of a website", price: { usd: 1800, inr: 75000 } },
+      { name: "Launch photography direction", price: { usd: 150, inr: 5000 } },
+      { name: "Brand voice and messaging guide", price: { usd: 150, inr: 4000 } },
+      { name: "An online store instead of a website", price: { usd: 500, inr: 15000 } },
     ],
     underTheHood: [
       "The website reads the brand's design tokens directly, so colours and type match exactly",
@@ -434,7 +441,7 @@ export const KITS = [
     promise: "a redesign that makes your current website look current and sell more",
     summary:
       "The Website Glow-Up Kit redesigns your existing website in three to five weeks without losing the search rankings it has earned. We measure speed and enquiries first, redesign the pages that matter most, rebuild them to load fast, and measure again after launch, so you see exactly what the glow-up changed.",
-    price: { usd: 2000, inr: 80000 },
+    price: { usd: 600, inr: 20000 },
     timeline: "3–5 weeks",
     keyword: "website redesign cost",
     metaTitle: "Website Redesign Package: Website Glow-Up Kit",
@@ -442,7 +449,7 @@ export const KITS = [
       "Redesign your website in three to five weeks, keep your rankings, and see before and after numbers for speed and enquiries.",
     includes: [
       "An audit of your current site: speed, search, design and enquiry rate",
-      "Redesign of up to 10 pages on desktop and mobile",
+      "Redesign of up to 6 pages on desktop and mobile",
       "A rebuild for speed, or a careful upgrade on your current platform",
       "Every old URL kept or redirected, so rankings carry over",
       "Clear calls to action and simpler forms",
@@ -469,9 +476,9 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Another 5 pages", price: { usd: 500, inr: 20000 } },
-      { name: "Copy rewrite for the redesigned pages", price: { usd: 400, inr: 15000 } },
-      { name: "Move from WordPress or Wix to a faster stack", price: { usd: 800, inr: 30000 } },
+      { name: "Another 5 pages", price: { usd: 250, inr: 8000 } },
+      { name: "Copy rewrite for the redesigned pages", price: { usd: 150, inr: 5000 } },
+      { name: "Move from WordPress or Wix to a faster stack", price: { usd: 300, inr: 10000 } },
     ],
     underTheHood: [
       "A baseline from Search Console, analytics and Chrome UX Report field data where traffic allows",
@@ -504,14 +511,14 @@ export const KITS = [
     promise: "a faster website, with the before and after numbers to prove it",
     summary:
       "The Speed Kit makes a slow website fast in one to two weeks, without a redesign. We find what is slowing your pages down, fix images, scripts, fonts and hosting, and aim to pass Google's Core Web Vitals on mobile. You get a before and after report showing the measured difference on real phones.",
-    price: { usd: 600, inr: 25000 },
+    price: { usd: 250, inr: 8000 },
     timeline: "1–2 weeks",
     keyword: "website speed optimization service",
     metaTitle: "Website Speed Optimisation: Core Web Vitals",
     metaDescription:
       "A slow website made fast in one to two weeks without a redesign, with a before and after report from real phones.",
     includes: [
-      "A speed audit of your 10 most visited pages",
+      "A speed audit of your 5 most visited pages",
       "Image compression and modern image formats",
       "Script, font and plugin clean-up",
       "Caching and CDN setup",
@@ -538,8 +545,8 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Another 10 pages audited", price: { usd: 200, inr: 8000 } },
-      { name: "Hosting move", price: { usd: 250, inr: 10000 } },
+      { name: "Another 10 pages audited", price: { usd: 100, inr: 3000 } },
+      { name: "Hosting move", price: { usd: 100, inr: 3000 } },
     ],
     underTheHood: [
       "Lab data from Lighthouse and WebPageTest, field data from the Chrome UX Report where traffic allows",
@@ -573,7 +580,7 @@ export const KITS = [
     promise: "the technical and on-page SEO setup every website should start with",
     summary:
       "The SEO Foundation Kit gives your website the setup it needs to rank, in two to three weeks. We fix technical problems, research the searches your customers use, write page titles and descriptions, add structured data, and set up Google Search Console and Bing Webmaster Tools in your name with a clear report.",
-    price: { usd: 800, inr: 35000 },
+    price: { usd: 400, inr: 12000 },
     timeline: "2–3 weeks",
     keyword: "SEO setup package",
     metaTitle: "SEO Setup Package: Technical and On-Page SEO",
@@ -581,7 +588,7 @@ export const KITS = [
       "Technical fixes, keyword research, titles, structured data, and Search Console and Bing setup, done in two to three weeks.",
     includes: [
       "A technical SEO audit and fixes: indexing, speed, broken links, redirects",
-      "Keyword research: the 30 to 50 searches that matter for your business",
+      "Keyword research: the 20 to 30 searches that matter most for your business",
       "Titles, descriptions and headings written for your key pages",
       "Structured data for your business, services and FAQs",
       "XML sitemap and robots rules checked",
@@ -608,8 +615,8 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Up to 4 new service or location pages written", price: { usd: 400, inr: 16000 } },
-      { name: "Competitor gap report", price: { usd: 250, inr: 10000 } },
+      { name: "Up to 4 new service or location pages written", price: { usd: 200, inr: 6000 } },
+      { name: "Competitor gap report", price: { usd: 100, inr: 3000 } },
     ],
     underTheHood: [
       "Full crawl with Screaming Frog or Sitebulb, checked against Search Console indexing data",
@@ -641,7 +648,7 @@ export const KITS = [
     promise: "help ChatGPT, Perplexity, Gemini and AI Overviews understand and mention your business",
     summary:
       "The AI Visibility Kit makes your business easier for ChatGPT, Perplexity, Gemini and Google AI Overviews to find, understand and mention. In two to three weeks we test what AI assistants say about you today, fix your entity information, structured data and key pages, and set up monthly tracking of the answers.",
-    price: { usd: 1000, inr: 45000 },
+    price: { usd: 500, inr: 15000 },
     timeline: "2–3 weeks",
     keyword: "AI search optimization services",
     metaTitle: "AI Search Optimisation (GEO): AI Visibility Kit",
@@ -652,7 +659,7 @@ export const KITS = [
       "A one-sentence description of your business, used the same way everywhere",
       "Structured data that ties your website, profiles and listings together",
       "An llms.txt file that summarises your business for AI systems",
-      "Rewrites of up to 5 key pages so they answer buyer questions directly",
+      "Rewrites of up to 3 key pages so they answer buyer questions directly",
       "Bing Webmaster Tools setup, since ChatGPT search draws on Bing's index",
       "A tracking sheet and method to rerun the audit every month",
     ],
@@ -676,9 +683,9 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Another 20 tracked questions", price: { usd: 200, inr: 8000 } },
-      { name: "Directory and listing clean-up, up to 15 listings", price: { usd: 300, inr: 12000 } },
-      { name: "Monthly AI answer tracking, done for you", price: { usd: 150, inr: 6000, per: "month" } },
+      { name: "Another 20 tracked questions", price: { usd: 100, inr: 3000 } },
+      { name: "Directory and listing clean-up, up to 15 listings", price: { usd: 150, inr: 5000 } },
+      { name: "Monthly AI answer tracking, done for you", price: { usd: 75, inr: 2500, per: "month" } },
     ],
     underTheHood: [
       "AI crawler access checked in robots.txt and at the CDN: GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended",
@@ -713,11 +720,11 @@ export const KITS = [
     promise: "an AI agent on WhatsApp that answers, books and sells around the clock",
     summary:
       "The WhatsApp AI Kit puts an AI agent on your WhatsApp Business number in two to three weeks. It answers customer questions from your own information, shares your catalogue, takes bookings and orders, and hands the chat to a person whenever it should. Everything runs through the official WhatsApp Business Platform in your name.",
-    price: { usd: 1200, inr: 50000 },
+    price: { usd: 600, inr: 20000 },
     priceNote: "Plus Meta's message charges, billed to you directly",
     timeline: "2–3 weeks",
     keyword: "WhatsApp chatbot for business",
-    metaTitle: "WhatsApp AI Agent and Chatbot for Business",
+    metaTitle: "WhatsApp Chatbot for Business: WhatsApp AI Kit",
     metaDescription:
       "An AI agent on your WhatsApp Business number that answers questions, shares your catalogue, books and sells, then hands over.",
     includes: [
@@ -749,9 +756,9 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Payments in chat: UPI or cards", price: { usd: 300, inr: 12000 } },
-      { name: "CRM or Google Sheets sync", price: { usd: 250, inr: 10000 } },
-      { name: "Another language", price: { usd: 200, inr: 8000 } },
+      { name: "Payments in chat: UPI or cards", price: { usd: 150, inr: 5000 } },
+      { name: "CRM or Google Sheets sync", price: { usd: 100, inr: 4000 } },
+      { name: "Another language", price: { usd: 100, inr: 3000 } },
     ],
     underTheHood: [
       "WhatsApp Cloud API through Meta, with verified webhooks and messages stored in your own database",
@@ -784,14 +791,14 @@ export const KITS = [
     promise: "an AI assistant on your website that answers from your own documents",
     summary:
       "The AI Assistant Kit adds an AI assistant to your website or app that answers questions from your own documents, help pages and policies, and says so when it does not know. Built and tested in three to four weeks, it captures leads, books calls and hands over to your team with the conversation attached.",
-    price: { usd: 1800, inr: 75000 },
+    price: { usd: 900, inr: 30000 },
     timeline: "3–4 weeks",
     keyword: "AI chatbot for website",
-    metaTitle: "AI Chatbot for Websites, Trained on Your Data",
+    metaTitle: "AI Chatbot for Website: AI Assistant Kit",
     metaDescription:
       "A website AI assistant that answers from your own documents, admits when it does not know, captures leads and hands over.",
     includes: [
-      "An assistant trained on up to 200 pages of your documents",
+      "An assistant trained on up to 100 pages of your documents",
       "A chat window styled to your brand, on desktop and mobile",
       "Answers that link to the page they came from",
       "Lead capture and calendar booking inside the chat",
@@ -819,9 +826,9 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Another 500 pages of documents", price: { usd: 300, inr: 12000 } },
-      { name: "Voice mode", price: { usd: 600, inr: 25000 } },
-      { name: "Connection to Zendesk, Freshdesk or Intercom", price: { usd: 400, inr: 16000 } },
+      { name: "Another 500 pages of documents", price: { usd: 150, inr: 5000 } },
+      { name: "Voice mode", price: { usd: 300, inr: 10000 } },
+      { name: "Connection to Zendesk, Freshdesk or Intercom", price: { usd: 200, inr: 6000 } },
     ],
     underTheHood: [
       "Retrieval-augmented generation with hybrid keyword and vector search",
@@ -853,16 +860,16 @@ export const KITS = [
     name: "Workflow Automation Kit",
     promise: "your repetitive admin, done automatically between the tools you already use",
     summary:
-      "The Workflow Automation Kit automates up to five repetitive processes between the tools you already use, in two to three weeks. Typical examples are sending leads into a CRM, creating invoices from orders, booking reminders and weekly reports. Each automation has alerts and a log, so nothing fails silently.",
-    price: { usd: 900, inr: 40000 },
+      "The Workflow Automation Kit automates up to three repetitive processes between the tools you already use, in two to three weeks. Typical examples are sending leads into a CRM, creating invoices from orders, booking reminders and weekly reports. Each automation has alerts and a log, so nothing fails silently.",
+    price: { usd: 300, inr: 10000 },
     timeline: "2–3 weeks",
     keyword: "business workflow automation services",
     metaTitle: "Business Workflow Automation Services",
     metaDescription:
-      "Up to five repetitive processes automated between the tools you already use, with alerts and logs so nothing fails silently.",
+      "Up to three repetitive processes automated between the tools you already use, with alerts and logs so nothing fails silently.",
     includes: [
       "A process review to find the automations worth building",
-      "Up to 5 automations between your existing tools",
+      "Up to 3 automations between your existing tools",
       "Error alerts to email, Slack or WhatsApp",
       "A log of every run, so you can see what happened and when",
       "Plain-language documentation for each automation",
@@ -879,7 +886,7 @@ export const KITS = [
     ],
     steps: [
       { title: "Walk through the work", desc: "We watch how each task is done today, step by step, and time how long it takes." },
-      { title: "Pick the wins", desc: "We rank possible automations by time saved and risk, and agree the five to build." },
+      { title: "Pick the wins", desc: "We rank possible automations by time saved and risk, and agree the three to build." },
       { title: "Build and test", desc: "Each automation is built, tested with real data, and given alerts and a log." },
       { title: "Switch on", desc: "Automations go live one at a time, with your team checking the first runs." },
       {
@@ -888,8 +895,8 @@ export const KITS = [
       },
     ],
     addOns: [
-      { name: "Another automation", price: { usd: 200, inr: 8000 } },
-      { name: "An AI step that reads emails, documents or invoices", price: { usd: 400, inr: 16000 } },
+      { name: "Another automation", price: { usd: 100, inr: 3000 } },
+      { name: "An AI step that reads emails, documents or invoices", price: { usd: 150, inr: 5000 } },
     ],
     underTheHood: [
       "n8n self-hosted or cloud, Make or Zapier, chosen by volume, cost and how sensitive the data is",

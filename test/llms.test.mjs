@@ -4,9 +4,9 @@ import { buildLlmsTxt } from "@/lib/llms";
 import { BRAND } from "@/lib/constants";
 import { LINES } from "@/data/lines";
 import { KITS } from "@/data/kits";
-import { formatPrice } from "@/lib/pricing";
+import { CURRENCY_NOTE, formatPrice } from "@/lib/pricing";
 import { voiceProblems } from "./helpers/voice.mjs";
-import { RETIRED } from "./redirects.test.mjs";
+import { RETIRED } from "./helpers/retired.mjs";
 
 const text = buildLlmsTxt();
 
@@ -21,6 +21,13 @@ test("llms.txt links every line, and every kit with its live price", () => {
     assert.ok(text.includes(`https://logixloops.in/kits/${kit.slug}`), kit.slug);
     assert.ok(text.includes(formatPrice(kit.price)), `${kit.slug} price`);
   }
+});
+
+test("llms.txt carries each kit's price note and says which currency applies where", () => {
+  for (const kit of KITS.filter((k) => k.priceNote)) {
+    assert.ok(text.toLowerCase().includes(kit.priceNote.toLowerCase()), `${kit.slug} price note`);
+  }
+  assert.ok(text.includes(CURRENCY_NOTE));
 });
 
 test("llms.txt carries no retired URL", () => {

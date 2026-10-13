@@ -19,7 +19,7 @@ const KITS_DESCRIPTION =
 
 /* Answer-first: what a kit is, what it covers, and why the price is here. */
 const LEAD =
-  "Advantage Kits are fixed-scope packages from LogixLoops for websites, online stores, apps, branding, SEO and AI visibility, and AI automation. Each kit lists what you get, how long it takes and a starting price in dollars and rupees, so you know the cost before the first call.";
+  "Advantage Kits are fixed-scope packages from LogixLoops for websites, online stores, apps, branding, SEO and AI visibility, and AI automation. Each kit lists what you get, how long it takes and a starting price, in rupees for India and US dollars everywhere else, so you know the cost before the first call.";
 
 export const metadata = buildMetadata({
   title: "Advantage Kits: Web, App, Brand and AI Packages",
@@ -134,6 +134,7 @@ export default function KitsPage() {
           heading="Not sure which kit fits?"
           body="Tell us what you are trying to do. We will point you at the right kit, or tell you plainly if none of them fit."
           primary={{ href: "/contact", label: "Ask the people who build it" }}
+          secondary={{ href: "/pricing", label: "See the full price list" }}
         />
       </PageSurface>
     </>

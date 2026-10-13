@@ -27,6 +27,10 @@ export default function KitCard({ kit, color }) {
           {kit.timeline}
         </span>
       </div>
+      {/* A third-party cost that is not in the price travels with it. */}
+      {kit.priceNote && (
+        <p className="mt-2 font-body text-body-sm text-on-surface-variant">{kit.priceNote}.</p>
+      )}
     </Link>
   );
 }
