@@ -296,10 +296,10 @@ export default function Navbar() {
           {/* ── Desktop CTA ── */}
           <div className="hidden lg:flex items-center gap-4">
             <Link
-              href="/contact"
+              href="/kits"
               className="btn-primary font-label text-label-caps px-6 py-2.5 rounded-full flex items-center justify-center uppercase tracking-widest whitespace-nowrap"
             >
-              Get Started
+              Browse the kits
             </Link>
           </div>
 
@@ -429,7 +429,7 @@ export default function Navbar() {
                 /* `dvh`, not `vh`. On mobile Safari and Chrome `100vh` is the
                    viewport with the browser chrome retracted, a height the
                    page does not actually have until you scroll. The panel was
-                   therefore taller than the visible area and its "Get Started"
+                   therefore taller than the visible area and its "Browse the kits"
                    button, the last thing in it, sat underneath the URL bar. */
                 condensed ? "top-[76px] h-[calc(100dvh-76px)]" : "top-20 h-[calc(100dvh-5rem)]"
               )}
@@ -526,11 +526,11 @@ export default function Navbar() {
                 {/* Mobile CTA */}
                 <div className="mt-10">
                   <Link
-                    href="/contact"
+                    href="/kits"
                     className="btn-primary w-full text-center font-label text-label-caps py-4 rounded-full uppercase tracking-widest flex items-center justify-center"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Get Started
+                    Browse the kits
                   </Link>
                 </div>
               </nav>

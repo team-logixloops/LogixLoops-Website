@@ -6,6 +6,7 @@
  */
 
 import { CASE_STUDIES } from "@/data/caseStudies";
+import { LINES } from "@/data/lines";
 
 /* ─── Brand ───
  * See `docs/brand-voice-and-search.md` for the rules these values answer to.
@@ -150,10 +151,10 @@ export const PROMISES = [
 ];
 
 /* ─── Navigation ───
- * Trimmed to 4 top-level items (Hick's law: fewer choices, faster decisions).
- * Case Studies now lives inside the Solutions mega-menu (it's proof-of-work
- * for the industries showcased there); Blog moved into Company. Nothing lost,
- * just one fewer top-level decision for a first-time visitor. */
+ * Five top-level items. Kits and Pricing sit at the top level because
+ * published prices are the studio's main difference, and a visitor should
+ * reach them in one click. Pricing therefore leaves the Company menu, so no
+ * destination appears twice. */
 
 /* Mega-menu previews render full-bleed (100vw x 440px). These are served from
  * our own origin rather than a remote CDN: cross-origin images cost a DNS
@@ -167,64 +168,19 @@ export const NAV_LINKS = [
     label: "Services",
     href: "/services",
     hasDropdown: true,
-    children: [
-      {
-        label: "Enterprise Software",
-        href: "/services/enterprise-software",
-        icon: "domain",
-        description: "Large systems that stay boring under load.",
-        image: navImage("enterprise-software"),
-      },
-      {
-        label: "AI & ML Solutions",
-        href: "/services/ai-ml-solutions",
-        icon: "psychology",
-        description: "Models that reach production, not just a notebook.",
-        image: navImage("ai-ml-solutions"),
-      },
-      {
-        label: "Web Development",
-        href: "/services/web-development",
-        icon: "code",
-        description: "Next.js platforms that load fast and convert.",
-        image: navImage("web-development"),
-      },
-      {
-        label: "Mobile Apps",
-        href: "/services/mobile-apps",
-        icon: "smartphone",
-        description: "iOS and Android that feel native, because they are.",
-        image: navImage("mobile-apps"),
-      },
-      {
-        label: "Cloud & DevOps",
-        href: "/services/cloud-devops",
-        icon: "cloud",
-        description: "Deploys nobody has to stay up for.",
-        image: navImage("cloud-devops"),
-      },
-      {
-        label: "SaaS Platforms",
-        href: "/services/saas-platforms",
-        icon: "layers",
-        description: "Multi-tenant from the first commit, not bolted on later.",
-        image: navImage("saas-platforms"),
-      },
-      {
-        label: "Automation Systems",
-        href: "/services/automation-systems",
-        icon: "settings_motion_mode",
-        description: "The work nobody should still be doing by hand.",
-        image: navImage("automation-systems"),
-      },
-      {
-        label: "UI/UX Design",
-        href: "/services/ui-ux-design",
-        icon: "design_services",
-        description: "Design that survives contact with real data.",
-        image: navImage("ui-ux-design"),
-      },
-    ],
+    // The plain label is the link, because it is what people scan for. The
+    // memorable name leads the description, so the two still appear together.
+    children: LINES.map((line) => ({
+      label: line.label,
+      href: `/services/${line.slug}`,
+      icon: line.icon,
+      description: `${line.name}. ${line.pitch}`,
+      image: line.navImage,
+    })),
+  },
+  {
+    label: "Kits",
+    href: "/kits",
   },
   {
     // Labelled "Work", not "Solutions", the destination and every child link
@@ -253,6 +209,10 @@ export const NAV_LINKS = [
       // the menu band. `public/nav/<slug>.webp` holds a wide crop per study.
       image: navImage(study.slug),
     })),
+  },
+  {
+    label: "Pricing",
+    href: "/pricing",
   },
   {
     label: "Company",
@@ -288,13 +248,6 @@ export const NAV_LINKS = [
         image: navImage("security"),
       },
       {
-        label: "Pricing",
-        href: "/pricing",
-        icon: "payments",
-        description: "Two engagement models. No mystery invoices.",
-        image: navImage("pricing"),
-      },
-      {
         label: "FAQ",
         href: "/faq",
         icon: "help",
@@ -327,18 +280,15 @@ export const FOOTER_LINKS = {
     { label: "Contact", href: "/contact" },
   ],
   services: [
-    { label: "Enterprise Software", href: "/services/enterprise-software" },
-    { label: "AI & ML Solutions", href: "/services/ai-ml-solutions" },
-    { label: "Cloud & DevOps", href: "/services/cloud-devops" },
-    { label: "Web Development", href: "/services/web-development" },
-    { label: "All Services", href: "/services" },
+    ...LINES.map((line) => ({ label: line.label, href: `/services/${line.slug}` })),
+    { label: "All kits", href: "/kits" },
   ],
   resources: [
     { label: "Work", href: "/work" },
     { label: "Engineering Blog", href: "/blog" },
     { label: "Technology Stack", href: "/technology" },
     { label: "Trust & Security", href: "/security" },
-    { label: "Pricing & Tiers", href: "/pricing" },
+    { label: "Pricing", href: "/pricing" },
     { label: "FAQ & Support", href: "/faq" },
   ],
   legal: [

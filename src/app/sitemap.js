@@ -1,4 +1,5 @@
 import { LINES } from "@/data/lines";
+import { KITS } from "@/data/kits";
 import { getAllPosts } from "@/data/blog";
 import { getAllCaseStudies } from "@/data/caseStudies";
 
@@ -10,6 +11,7 @@ export default function sitemap() {
     "",
     "/about",
     "/services",
+    "/kits",
     "/work",
     "/blog",
     "/pricing",
@@ -35,6 +37,14 @@ export default function sitemap() {
     priority: 0.9,
   }));
 
+  // Kit pages
+  const kitRoutes = KITS.map((kit) => ({
+    url: `${baseUrl}/kits/${kit.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
   // Dynamic Blog routes
   const posts = getAllPosts();
   const blogRoutes = posts.map((post) => ({
@@ -53,5 +63,5 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...blogRoutes, ...workRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...kitRoutes, ...blogRoutes, ...workRoutes];
 }
