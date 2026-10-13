@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LINES } from "@/data/lines";
+import { KITS } from "@/data/kits";
 import { LogoPuzzle } from "@/components/ui";
 
 // Next's built-in 404 shipped a 167-char meta description and no internal
@@ -7,7 +8,7 @@ import { LogoPuzzle } from "@/components/ui";
 export const metadata = {
   title: "Page Not Found",
   description:
-    "That page does not exist. Browse LogixLoops engineering services, case studies, and insights instead.",
+    "That page does not exist. Browse LogixLoops services, kits with published prices, client work and insights instead.",
   // No `noindex` here on purpose: this route is served with a 404 status, which
   // already keeps it out of the index. A meta robots tag on top of that adds
   // nothing and makes the page look deliberately suppressed to auditing tools.
@@ -44,7 +45,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         <section aria-labelledby="nf-pages">
           <h2
             id="nf-pages"
@@ -55,11 +56,12 @@ export default function NotFound() {
           <ul className="flex flex-col gap-2">
             {[
               { href: "/", label: "Home" },
-              { href: "/services", label: "Engineering services" },
+              { href: "/services", label: "Services" },
+              { href: "/kits", label: "Advantage Kits" },
+              { href: "/pricing", label: "Pricing" },
               { href: "/work", label: "Selected work" },
-              { href: "/blog", label: "Engineering insights" },
+              { href: "/blog", label: "Insights" },
               { href: "/process", label: "Our process" },
-              { href: "/pricing", label: "Pricing and engagement models" },
               { href: "/faq", label: "Frequently asked questions" },
               { href: "/contact", label: "Contact us" },
             ].map((item) => (
@@ -90,6 +92,27 @@ export default function NotFound() {
                   className="font-body text-body-md text-on-surface-variant hover:text-primary transition-colors"
                 >
                   {line.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="nf-kits">
+          <h2
+            id="nf-kits"
+            className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-4"
+          >
+            Kits
+          </h2>
+          <ul className="flex flex-col gap-2">
+            {KITS.map((kit) => (
+              <li key={kit.slug}>
+                <Link
+                  href={`/kits/${kit.slug}`}
+                  className="font-body text-body-md text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  {kit.name}
                 </Link>
               </li>
             ))}

@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
 import { getAllCaseStudies, getCaseStudyBySlug } from "@/data/caseStudies";
+import { getKitBySlug } from "@/data/kits";
+import { getLineBySlug } from "@/data/lines";
+import KitCard from "@/components/sections/kits/KitCard";
 import { SectionHeader, Button, Badge } from "@/components/ui";
 import { FadeInUp, FadeInUpImmediate, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from "@/components/motion";
 import Link from "next/link";
@@ -47,6 +50,8 @@ export default async function WorkDetailPage({ params }) {
   }
 
   const { sections } = study;
+  // The kits closest to what this project was, so a reader can buy the same.
+  const closestKits = study.kits.map((kitSlug) => getKitBySlug(kitSlug)).filter(Boolean);
 
   return (
     <CaseStudyMotion className="flex flex-col min-h-screen">
@@ -316,6 +321,20 @@ export default async function WorkDetailPage({ params }) {
             </div>
           )}
 
+          {closestKits.length > 0 && (
+            <div className="mb-12">
+              <h3 className="font-display text-headline-md text-on-surface mb-2">The kit closest to this project</h3>
+              <p className="font-body text-body-md text-on-surface-variant mb-6 max-w-2xl">
+                What this build would start from today, with its price, timeline and everything it includes.
+              </p>
+              <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
+                {closestKits.map((kit) => (
+                  <KitCard key={kit.slug} kit={kit} color={getLineBySlug(kit.line).color} />
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="flex justify-between items-end mb-8">
             <h3 className="font-display text-headline-md text-on-surface">More Projects</h3>
             <Link href="/work" className="text-primary hover:text-secondary transition-colors font-label text-label-caps uppercase tracking-widest flex items-center gap-1">
@@ -327,13 +346,22 @@ export default async function WorkDetailPage({ params }) {
         <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto pb-stack-xl">
           <div className="bg-gradient-to-br from-surface-container-low to-surface border border-white/50 rounded-2xl p-12 text-center shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full transform scale-150 pointer-events-none"></div>
-            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Ready to engineer your digital platform?</h2>
+            <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Want something like this?</h2>
             <p className="font-body text-body-lg text-on-surface-variant mb-8 max-w-2xl mx-auto relative z-10">
-              Partner with LogixLoops to build robust, scalable architectures and bespoke software solutions tailored to your growth goals.
+              Start from the kit closest to this project, or tell us what you need and we will point you at the right one.
             </p>
-            <Button href="/contact" size="lg" className="relative z-10 shadow-lg">
-              Book a discovery call
-            </Button>
+            <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button
+                href={closestKits.length ? `/contact?kit=${closestKits[0].slug}` : "/contact"}
+                size="lg"
+                className="shadow-lg"
+              >
+                Start a project
+              </Button>
+              <Button href="/kits" variant="ghost" size="lg">
+                Browse the kits
+              </Button>
+            </div>
           </div>
         </div>
       </section>

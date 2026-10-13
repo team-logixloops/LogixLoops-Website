@@ -158,18 +158,16 @@ export default function HeroSection() {
                     making about how we work. */}
                 Book 45 minutes with an engineer
               </Button>
-              {/* Points at /process, not /case-studies. For a studio this
-                  young the method is the stronger evidence: the published
-                  builds are reference architectures, and sending a sceptical
-                  reader to them first invites the one question we would rather
-                  answer on our own terms. */}
+              {/* Points at /kits: for a reader still deciding, a fixed scope
+                  with a published price is the strongest evidence we have,
+                  and it answers "what will this cost?" before they ask. */}
               <Button
-                href="/process"
+                href="/kits"
                 variant="ghost"
                 size="lg"
                 className="px-8 rounded-full"
               >
-                See how we work
+                See kits and prices
               </Button>
             </div>
           </FadeInUpImmediate>

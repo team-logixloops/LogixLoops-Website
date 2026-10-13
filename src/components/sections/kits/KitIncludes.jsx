@@ -2,9 +2,10 @@ import { SectionHeader } from "@/components/ui";
 import { FadeInUp } from "@/components/motion";
 import { cn } from "@/lib/utils";
 import { SECTION, accent } from "@/components/sections/service-master/tokens";
+import KitLinkedText from "./KitLinkedText";
 
 /** The deliverables, as a checklist. Read, not handled, so no hover. */
-export default function KitIncludes({ items, color }) {
+export default function KitIncludes({ items, color, kitSlug }) {
   const a = accent(color);
 
   return (
@@ -18,7 +19,9 @@ export default function KitIncludes({ items, color }) {
             <span className={cn("material-symbols-outlined text-[20px] mt-0.5", a.text)} aria-hidden="true">
               check_circle
             </span>
-            <span className="font-body text-body-md text-on-surface">{item}</span>
+            <span className="font-body text-body-md text-on-surface">
+              <KitLinkedText text={item} except={kitSlug} />
+            </span>
           </li>
         ))}
       </ul>

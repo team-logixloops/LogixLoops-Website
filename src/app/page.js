@@ -2,6 +2,7 @@ import HeroSection from "@/components/sections/home/HeroSection";
 import ScrollMarquee from "@/components/ui/ScrollMarquee";
 import WaveBend from "@/components/WaveBend";
 import FeaturedWorkSection from "@/components/sections/home/FeaturedWorkSection";
+import HomeKitsSection from "@/components/sections/home/HomeKitsSection";
 
 // The tagline leads, then the four things we are actually hired for. Keeping
 // the tagline in rotation here is deliberate: it is the one phrase the site is
@@ -140,6 +141,7 @@ export default function HomePage() {
       />
       <WaveBend segments={WAVE_SEGMENTS} />
       <FeaturedWorkSection />
+      <HomeKitsSection />
       <FeaturedSolutionsSection />
       <StatsSection />
       <ProcessSection />

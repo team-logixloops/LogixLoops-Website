@@ -11,6 +11,9 @@ import KitAddOns from "@/components/sections/kits/KitAddOns";
 import UnderTheHood from "@/components/sections/kits/UnderTheHood";
 import PromiseStrip from "@/components/sections/kits/PromiseStrip";
 import StudioCta from "@/components/sections/kits/StudioCta";
+import RelatedKits from "@/components/sections/kits/RelatedKits";
+import { linkFaqs } from "@/components/sections/kits/KitLinkedText";
+import { relatedKits } from "@/lib/kit-links";
 import ServiceMasterRelatedWork from "@/components/sections/service-master/ServiceMasterRelatedWork";
 import ServiceMasterFAQ from "@/components/sections/service-master/ServiceMasterFAQ";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
@@ -70,15 +73,16 @@ export default async function KitPage({ params }) {
       />
 
       <KitHero kit={kit} line={line} />
-      <KitIncludes items={kit.includes} color={line.color} />
-      <KitFit fitFor={kit.fitFor} notFor={kit.notFor} color={line.color} />
+      <KitIncludes items={kit.includes} color={line.color} kitSlug={kit.slug} />
+      <KitFit fitFor={kit.fitFor} notFor={kit.notFor} color={line.color} kitSlug={kit.slug} />
       <KitSteps steps={kit.steps} color={line.color} />
       <KitAddOns addOns={kit.addOns} color={line.color} />
       <UnderTheHood points={kit.underTheHood} demo={kit.demo} color={line.color} />
       {studies.length > 0 && (
         <ServiceMasterRelatedWork studies={studies} color={line.color} title="Built with this kit" />
       )}
-      <ServiceMasterFAQ faqs={kit.faqs} color={line.color} />
+      <ServiceMasterFAQ faqs={linkFaqs(kit.faqs, kit.slug)} color={line.color} />
+      <RelatedKits kits={relatedKits(kit)} />
       <PromiseStrip />
       <StudioCta
         heading={`Start your ${kit.name}`}

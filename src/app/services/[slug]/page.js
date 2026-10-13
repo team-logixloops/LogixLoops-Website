@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllLines, getLineBySlug } from "@/data/lines";
 import { getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
-import { cheapest, formatPrice } from "@/lib/pricing";
+import { CURRENCY_NOTE, cheapest, formatPrice } from "@/lib/pricing";
 import { SectionHeader } from "@/components/ui";
 import LineHero from "@/components/sections/kits/LineHero";
 import KitCard from "@/components/sections/kits/KitCard";
@@ -11,6 +12,7 @@ import PlanCard from "@/components/sections/kits/PlanCard";
 import UnderTheHood from "@/components/sections/kits/UnderTheHood";
 import PromiseStrip from "@/components/sections/kits/PromiseStrip";
 import StudioCta from "@/components/sections/kits/StudioCta";
+import { linkFaqs } from "@/components/sections/kits/KitLinkedText";
 import ServiceMasterProblems from "@/components/sections/service-master/ServiceMasterProblems";
 import ServiceMasterRelatedWork from "@/components/sections/service-master/ServiceMasterRelatedWork";
 import ServiceMasterFAQ from "@/components/sections/service-master/ServiceMasterFAQ";
@@ -92,7 +94,7 @@ export default async function LinePage({ params }) {
 
       <section className={SECTION}>
         <SectionHeader
-          overline={isPlans ? `${line.name} plans` : `${line.name} kits`}
+          overline={`${line.name} · ${line.label}`}
           title={isPlans ? "Pick a plan" : "Pick a kit"}
           description={
             isPlans
@@ -105,16 +107,23 @@ export default async function LinePage({ params }) {
             ? offers.map((plan) => <PlanCard key={plan.slug} plan={plan} />)
             : offers.map((kit) => <KitCard key={kit.slug} kit={kit} color={line.color} />)}
         </div>
+        <p className="mt-6 font-body text-body-sm text-on-surface-variant">
+          {CURRENCY_NOTE}{" "}
+          <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
+            See every kit and plan with its price
+          </Link>
+          .
+        </p>
       </section>
 
       {studies.length > 0 && (
         <ServiceMasterRelatedWork studies={studies} color={line.color} title="Work built with these kits" />
       )}
       <UnderTheHood points={line.underTheHood} />
-      <ServiceMasterFAQ faqs={line.faqs} color={line.color} />
+      <ServiceMasterFAQ faqs={linkFaqs(line.faqs)} color={line.color} />
       <PromiseStrip />
       <StudioCta
-        heading={`Start with ${line.name}`}
+        heading={`Start with ${line.name}: ${line.label}`}
         body={line.pitch}
         primary={{ href: `/contact?line=${line.slug}`, label: "Start a project" }}
         secondary={{ href: "/kits", label: "See every kit" }}

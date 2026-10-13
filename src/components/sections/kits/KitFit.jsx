@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 import { SECTION, accent } from "@/components/sections/service-master/tokens";
+import KitLinkedText from "./KitLinkedText";
 
-function FitList({ title, items, icon, iconClass }) {
+function FitList({ title, items, icon, iconClass, kitSlug }) {
   return (
     <div>
       <h2 className="mb-6 font-display text-headline-md text-on-surface">{title}</h2>
@@ -11,7 +12,9 @@ function FitList({ title, items, icon, iconClass }) {
             <span className={cn("material-symbols-outlined text-[20px] mt-0.5", iconClass)} aria-hidden="true">
               {icon}
             </span>
-            <span className="font-body text-body-md text-on-surface">{item}</span>
+            <span className="font-body text-body-md text-on-surface">
+              <KitLinkedText text={item} except={kitSlug} />
+            </span>
           </li>
         ))}
       </ul>
@@ -21,16 +24,16 @@ function FitList({ title, items, icon, iconClass }) {
 
 /**
  * Who the kit is for, and who it is not for. The second list is the honest
- * one, and it points the reader at the kit that does fit.
+ * one, and it points the reader at the kit that does fit, as a link.
  */
-export default function KitFit({ fitFor, notFor, color }) {
+export default function KitFit({ fitFor, notFor, color, kitSlug }) {
   const a = accent(color);
 
   return (
     <section className={SECTION}>
       <div className="grid grid-cols-1 gap-gutter md:grid-cols-2">
-        <FitList title="Right for you if" items={fitFor} icon="check_circle" iconClass={a.text} />
-        <FitList title="Not the right kit if" items={notFor} icon="do_not_disturb_on" iconClass="text-on-surface-variant" />
+        <FitList title="Right for you if" items={fitFor} icon="check_circle" iconClass={a.text} kitSlug={kitSlug} />
+        <FitList title="Not the right kit if" items={notFor} icon="do_not_disturb_on" iconClass="text-on-surface-variant" kitSlug={kitSlug} />
       </div>
     </section>
   );
