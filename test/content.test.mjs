@@ -58,6 +58,38 @@ test("every price is a positive whole number in both currencies", () => {
   }
 });
 
+test("kits start at the entry level of each market", () => {
+  for (const kit of KITS) {
+    assert.ok(kit.price.usd <= 5000, `${kit.slug}: $${kit.price.usd} is above the international entry level`);
+    assert.ok(kit.price.inr <= 150000, `${kit.slug}: ₹${kit.price.inr} is above the India entry level`);
+  }
+});
+
+test("the Brand Launch Kit costs less than the two kits it bundles", () => {
+  const [launch, identity, website] = ["brand-launch", "brand-identity", "business-website"].map(getKitBySlug);
+  for (const currency of ["usd", "inr"]) {
+    assert.ok(launch.price[currency] < identity.price[currency] + website.price[currency], currency);
+  }
+});
+
+test("every add-on costs less than the kit it adds to", () => {
+  for (const kit of KITS) {
+    for (const addOn of kit.addOns) {
+      for (const currency of ["usd", "inr"]) {
+        assert.ok(addOn.price[currency] < kit.price[currency], `${kit.slug} / ${addOn.name} (${currency})`);
+      }
+    }
+  }
+});
+
+test("Pit Crew plans rise in price from Essentials to Squad", () => {
+  const [essentials, growth, squad] = ["essentials", "growth", "squad"].map(getPlanBySlug);
+  for (const currency of ["usd", "inr"]) {
+    assert.ok(essentials.price[currency] < growth.price[currency], currency);
+    assert.ok(growth.price[currency] < squad.price[currency], currency);
+  }
+});
+
 test("plans bill monthly and kits are one-off", () => {
   for (const plan of PLANS) assert.equal(plan.price.per, "month", plan.slug);
   for (const kit of KITS) assert.equal(kit.price.per, undefined, kit.slug);
@@ -158,4 +190,31 @@ test("the /services FAQs describe the lines and kits, not the retired practices"
   }
   assert.ok(/\bkits?\b/i.test(text), "never mentions kits");
   assert.deepEqual(voiceReport({ SERVICES_FAQS }), []);
+});
+
+test("pricing, home and FAQ answers match the kit model", () => {
+  const text = [FAQS, HOME_FAQS, PRICING_FAQS].flat().map((faq) => `${faq.question} ${faq.answer}`).join(" ");
+  for (const retired of [
+    /don't publish fixed prices/i,
+    /nobody honest/i,
+    /dedicated squad/i,
+    /scoped programme/i,
+    /enterprise builds/i,
+    /three months is the minimum/i,
+    /first paid phase/i,
+  ]) {
+    assert.ok(!retired.test(text), `still says ${retired.source}`);
+  }
+  assert.ok(PRICING_FAQS.some((faq) => /india/i.test(faq.answer)), "no pricing answer explains the two currencies");
+  assert.ok(HOME_FAQS.some((faq) => faq.answer.includes(formatPriceProse(getPlanBySlug("essentials").price))));
+});
+
+test("kit timelines match what the FAQ answers promise", () => {
+  const weeks = (kit) => kit.timeline.match(/\d+/g).map(Number);
+  for (const kit of KITS) {
+    const [low, high = low] = weeks(kit);
+    if (kit.slug === "mvp") assert.deepEqual([low, high], [6, 8]);
+    else if (kit.slug === "mobile-app") assert.deepEqual([low, high], [8, 12]);
+    else assert.ok(low >= 1 && high <= 6, `${kit.slug}: ${kit.timeline}`);
+  }
 });

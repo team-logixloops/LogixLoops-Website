@@ -12,7 +12,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Frequently Asked Questions",
   description:
-    "Engagement models, delivery timelines, technology stack, security posture, who owns the code, and what happens if you want to leave. Answered directly.",
+    "Kits and pricing, delivery timelines, technology stack, security posture, who owns the code, and what happens if you want to leave. Answered directly.",
   path: "/faq",
   keywords: [
     "software development agency FAQ",

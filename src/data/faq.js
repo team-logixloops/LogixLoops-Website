@@ -12,8 +12,16 @@
  * the justification, for the reader who wants it.
  *
  * No figure appears here that is not either countable from this site or a
- * commitment we will sign. Rate cards still come from the business.
+ * commitment we will sign. Plan prices are read from plans.js, never typed.
+ * Kit prices are not quoted here: this module is imported by client pages,
+ * and the kit catalogue must stay out of their bundles. Answers point at
+ * the kit pages and /pricing instead.
  */
+
+import { getPlanBySlug } from "@/data/plans";
+import { formatPriceProse } from "@/lib/pricing";
+
+const planPrice = (slug) => formatPriceProse(getPlanBySlug(slug).price);
 
 export const FAQ_CATEGORIES = [
   "All Categories",
@@ -29,39 +37,38 @@ export const FAQ_CATEGORIES = [
 export const PRICING_FAQS = [
   {
     id: "pricing-faq-1",
-    question: "Why don't you publish fixed prices?",
+    question: "Are the kit prices fixed?",
     answer:
-      "Because the same feature list costs wildly different amounts depending on what it has to plug into. Your existing architecture, your integration surface and your deadline move the number far more than anything on a rate card does, and quoting before we have seen those three would mean padding the figure to cover what we do not know. You get a written price after technical discovery, before any commitment.",
+      "Yes, for the scope listed on each kit page. The starting price buys exactly what the kit includes. If you need more, such as extra pages, products or an add-on, we quote the difference in writing before work starts, and nothing is added to the bill without your approval.",
   },
   {
     id: "pricing-faq-2",
-    question: "What is the minimum engagement?",
+    question: "Why are the rupee and dollar prices different?",
     answer:
-      "Three months. Most enterprise transformations run six to twelve. Anything shorter does not leave room to understand the system, ship something that matters, and hand it over responsibly, and we would rather decline than do a rushed version of all three.",
+      "Because each is set for its own market rather than converted. Rupee prices are for businesses based in India, and US dollar prices are for businesses everywhere else. The kit, the team and the work are the same in both.",
   },
   {
     id: "pricing-faq-3",
-    question: "How are dedicated squads billed?",
+    question: "How do payments work?",
     answer:
-      "A flat monthly retainer that buys a fixed team capacity. There are no hourly timesheets to argue about at the end of the month, and the cost does not move when a sprint runs hot. You are buying reserved capacity, not hours.",
+      "Kits are paid in two parts: half to start and half at launch, before handover. Pit Crew plans are billed monthly in advance. Prices exclude taxes such as GST, which are added to the invoice where they apply.",
   },
   {
     id: "pricing-faq-4",
-    question: "When do I get a firm number?",
+    question: "What is not included in a kit's price?",
     answer:
-      "After discovery and architectural mapping, which is the first paid phase. That phase produces a written brief covering the proposed stack, service boundaries, delivery phases and known risks. The quote attaches to that brief and is fixed for the scope it describes.",
+      "Costs charged by other companies: domain names, hosting, Shopify or app store fees, payment gateway charges, AI model usage and Meta's WhatsApp message charges. They are billed directly to accounts in your name, so you see every one of them and own every account.",
   },
   {
     id: "pricing-faq-5",
     question: "Do I own the code and infrastructure?",
     answer:
-      "Yes, all of it. We build only on open-source, industry-standard frameworks, so at the end of the engagement you keep 100% of the IP, the source and the infrastructure configuration. There is no proprietary LogixLoops runtime to keep paying for, and replacing us is a staffing decision rather than a rewrite.",
+      "Yes, from day one. Your domain, code, designs and accounts are set up in your name, on open-source frameworks and standard services. There is no proprietary LogixLoops runtime to keep paying for, so you can keep working with us, hire someone else or take it in-house without a rewrite.",
   },
   {
     id: "pricing-faq-6",
-    question: "What is included in every engagement?",
-    answer:
-      "Working software every two weeks from Sprint 1, architecture documentation, test coverage, CI/CD pipelines and a production handover with runbooks. Ongoing monitoring, security patching and performance work sit outside that, under a separate support agreement, because they are a different commitment with a different cost.",
+    question: "What if my project does not fit a kit?",
+    answer: `We quote it. Larger or unusual work, such as marketplaces, internal systems or integrations with older software, is scoped on a call and priced in writing against a short brief, and that price is fixed for the scope it describes. Ongoing product work runs on a Pit Crew Squad plan, from ${planPrice("squad")}.`,
   },
 ];
 
@@ -105,7 +112,7 @@ export const HOME_FAQS = [
     id: "home-faq-1",
     question: "What are your typical project timelines?",
     answer:
-      "Three to nine months for most enterprise builds, with a usable MVP inside eight to twelve weeks. You see running software at the end of every two-week sprint from the first one, so you are never waiting until the end to find out whether it is going well.",
+      "One to six weeks for most kits, and every kit page lists its own. Apps take longer: an MVP six to eight weeks and a mobile app eight to twelve. You see working progress every week or two, so you never wait until the end to find out how it is going.",
   },
   {
     id: "home-faq-2",
@@ -117,13 +124,13 @@ export const HOME_FAQS = [
     id: "home-faq-3",
     question: "Do you provide post-launch support and maintenance?",
     answer:
-      "Yes, under a separate support agreement with the response times written into it. That covers monitoring, security patching and performance work. We quote it separately from the build rather than folding it in, so you can see exactly what ongoing support costs before you commit to it.",
+      `Yes, in two ways. Every kit ends with The Loop: 30 days after launch of measuring, fixing and tuning with real data. After that, Pit Crew plans keep your site or app running from ${planPrice("essentials")}, with exactly what each plan covers written into it.`,
   },
   {
     id: "home-faq-4",
     question: "How do you handle scope changes?",
     answer:
-      "Openly, and the mechanism depends on your engagement model. On a Dedicated Squad the change is absorbed into the next sprint by reprioritising, since you control the backlog. On a Scoped Programme it is re-priced explicitly and you approve it before anyone starts. What we do not do is quietly absorb changes and bill for them later.",
+      "In writing, before any work. A kit's price covers its listed scope; anything beyond it is quoted as an add-on or a change, and you approve it before anyone starts. On a Pit Crew Squad plan, changes go into the next sprint, because you set the priorities. Nothing is quietly absorbed and billed later.",
   },
   {
     id: "home-faq-5",
@@ -139,14 +146,14 @@ export const FAQS = [
     category: "Engagement & Collaboration",
     question: "Do you integrate with our internal engineering teams?",
     answer:
-      "Yes, and on Dedicated Squad engagements it is how we work by default. We operate inside your Jira or Linear instance, attend your daily standups and communicate in shared Slack or Teams channels. Your engineers review our pull requests and ours review theirs.",
+      "Yes, and on a Pit Crew Squad plan it is how we work by default. We work in your Jira or Linear, join your standups and talk in shared Slack, Teams or WhatsApp channels. Your engineers review our pull requests and ours review theirs.",
   },
   {
     id: "faq-2",
     category: "Engagement & Collaboration",
     question: "What is your typical project timeline?",
     answer:
-      "Three months is the minimum, and most enterprise transformations run six to twelve. Working software is demonstrated every two weeks from Sprint 1, so the timeline is visible throughout rather than being a date you find out about at the end.",
+      "Most kits take between one and six weeks, from a speed fix to an online store, and every kit page lists its own timeline. Apps take longer: an MVP six to eight weeks and a mobile app eight to twelve. Work starts once your content and accounts are ready, and you see progress every week.",
   },
   {
     id: "faq-3",
@@ -193,9 +200,9 @@ export const FAQS = [
   {
     id: "faq-9",
     category: "Pricing & Contracts",
-    question: "How does billing work for dedicated squads?",
+    question: "How is the Pit Crew Squad plan billed?",
     answer:
-      "A flat monthly retainer, billed for reserved capacity rather than hours. There are no timesheets to reconcile, the cost is the same whether a sprint runs hot or quiet, and the minimum term is three months, rolling after that.",
+      `A flat monthly fee, from ${planPrice("squad")}, for reserved capacity rather than hours. There are no timesheets to reconcile, the fee stays the same whether a sprint runs hot or quiet, and the minimum term is three months, then month to month.`,
   },
   {
     id: "faq-10",

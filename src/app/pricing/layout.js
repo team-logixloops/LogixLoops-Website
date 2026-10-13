@@ -1,4 +1,5 @@
 import { PRICING_FAQS } from "@/data/faq";
+import { KITS } from "@/data/kits";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import {
   generateBreadcrumbSchema,
@@ -6,18 +7,28 @@ import {
   generateWebPageSchema,
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { cheapest, formatPriceProse } from "@/lib/pricing";
 
-const PRICING_DESCRIPTION =
-  "How LogixLoops scopes and prices work: dedicated squads on monthly retainer, scoped programmes on a fixed brief, and what drives the final number.";
+/* The lowest starting price is read from the catalogue, so the snippet in
+   search results can never quote a price the page no longer shows. */
+const PRICING_DESCRIPTION = `Starting prices for every LogixLoops kit and plan: websites, stores, apps, branding, SEO, AI visibility and automation. Kits from ${formatPriceProse(cheapest(KITS).price)}.`;
 
-// The page itself is a Client Component (motion wrappers), so metadata and the
-// FAQPage JSON-LD both live here, schema has to be server-rendered to be seen.
 export const metadata = buildMetadata({
-  title: "Pricing & Engagement Models",
+  title: "Pricing: Website, App, Branding and SEO Costs",
   description: PRICING_DESCRIPTION,
   path: "/pricing",
+  keywords: [
+    "website design price",
+    "website development cost India",
+    "app development cost",
+    "branding package price",
+    "SEO package price",
+    "AI chatbot price",
+    "website maintenance plan price",
+  ],
 });
 
+// The FAQPage and WebPage JSON-LD for /pricing live here, beside the metadata.
 export default function PricingLayout({ children }) {
   const schema = generateFaqSchema(
     PRICING_FAQS.map((faq) => ({ question: faq.question, answer: faq.answer }))
@@ -34,7 +45,7 @@ export default function PricingLayout({ children }) {
       />
       <SchemaMarkup
         schema={generateWebPageSchema({
-          name: "Pricing & Engagement Models",
+          name: "LogixLoops pricing",
           description: PRICING_DESCRIPTION,
           path: "/pricing",
           speakable: ["h1", "h2"],
