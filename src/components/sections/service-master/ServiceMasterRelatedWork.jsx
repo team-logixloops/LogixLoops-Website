@@ -4,14 +4,16 @@ import { getAllCaseStudies } from "@/data/caseStudies";
 import { SECTION, CARD, CARD_PAD, accent } from "./tokens";
 
 /**
- * Deliberately a Server Component with plain <Link>s. The case-study detail
- * pages were reachable only from the /case-studies index, the nav mega-menu
- * that lists them renders on hover, so those hrefs never appear in the HTML.
- * This section puts them in the server-rendered markup of all eight service
- * pages, which is the internal-linking the crawler actually follows.
+ * Client work as server-rendered links, so the crawler follows them from
+ * every line and kit page. Pass `studies` to show only the relevant ones.
  */
-export default function ServiceMasterRelatedWork({ color }) {
-  const studies = getAllCaseStudies();
+export default function ServiceMasterRelatedWork({
+  color,
+  studies = getAllCaseStudies(),
+  overline = "Proof",
+  title = "Client work",
+  description = "Live projects for real clients: what we built, and why.",
+}) {
   if (!studies.length) return null;
 
   const a = accent(color);
@@ -25,15 +27,12 @@ export default function ServiceMasterRelatedWork({ color }) {
             a.text
           )}
         >
-          Selected Work
+          {overline}
         </span>
         <h2 className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
-          Engagements behind this practice
+          {title}
         </h2>
-        <p className="font-body text-body-lg text-on-surface-variant">
-          Full technical write-ups, the constraint we inherited, the architecture
-          we chose, and what it measured after launch.
-        </p>
+        <p className="font-body text-body-lg text-on-surface-variant">{description}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">

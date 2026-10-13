@@ -5,18 +5,20 @@ import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { cn } from "@/lib/utils";
 import { SECTION, CARD, CARD_PAD, accent, pad } from "./tokens";
 
-export default function ServiceMasterProblems({ problems, color }) {
+export default function ServiceMasterProblems({
+  problems,
+  color,
+  overline = "The problem",
+  title = "What this fixes",
+  description = "The situations people usually bring to us.",
+}) {
   if (!problems?.length) return null;
   const a = accent(color);
 
   return (
     <section className={SECTION}>
       <FadeInUp>
-        <SectionHeader
-          overline="Challenges"
-          title="What We Solve"
-          description="The recurring engineering hurdles this practice is built to remove."
-        />
+        <SectionHeader overline={overline} title={title} description={description} />
       </FadeInUp>
 
       <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter mt-stack-lg">

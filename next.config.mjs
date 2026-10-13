@@ -17,6 +17,23 @@ const nextConfig = {
       { source: "/case-studies", destination: "/work", permanent: true },
       { source: "/case-studies/:slug", destination: "/work/:slug", permanent: true },
       { source: "/careers", destination: "/contact", permanent: true },
+      // The eight practice pages became six lines on 2026-10-13. Each old URL
+      // lands on the line that now owns its work, so rankings and inbound
+      // links carry over. See docs/superpowers/specs/ for the mapping.
+      ...Object.entries({
+        "web-development": "web-and-app-development",
+        "mobile-apps": "web-and-app-development",
+        "saas-platforms": "web-and-app-development",
+        "enterprise-software": "web-and-app-development",
+        "cloud-devops": "web-and-app-development",
+        "ui-ux-design": "website-redesign",
+        "ai-ml-solutions": "ai-automation",
+        "automation-systems": "ai-automation",
+      }).map(([from, to]) => ({
+        source: `/services/${from}`,
+        destination: `/services/${to}`,
+        permanent: true,
+      })),
     ];
   },
 

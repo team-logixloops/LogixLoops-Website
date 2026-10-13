@@ -1,33 +1,32 @@
 import { ogCard, clampSubtitle, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
-import { SERVICES } from "@/lib/constants";
+import { LINES } from "@/data/lines";
 
-// `alt` is a static export, so it cannot carry the service name. It stays
-// generic; the card itself carries the specifics.
-export const alt = "A LogixLoops engineering service.";
+// `alt` is a static export, so it cannot carry the line name. The card does.
+export const alt = "A LogixLoops service line.";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export function generateStaticParams() {
-  return SERVICES.map((service) => ({ slug: service.slug }));
+  return LINES.map((line) => ({ slug: line.slug }));
 }
 
 export default async function Image({ params }) {
   const { slug } = await params;
-  const service = SERVICES.find((entry) => entry.slug === slug);
+  const line = LINES.find((entry) => entry.slug === slug);
 
-  // The route itself 404s on an unknown slug before this runs, but the image
-  // handler is a separate entry point and has to stand on its own.
-  if (!service) {
+  // The route 404s on an unknown slug before this runs, but the image handler
+  // is a separate entry point and has to stand on its own.
+  if (!line) {
     return ogCard({
       eyebrow: "Services",
-      title: "Engineering services.",
-      subtitle: "Enterprise software, AI and ML, web, mobile, cloud, SaaS, automation, UI/UX.",
+      title: "Brand, build and growth.",
+      subtitle: "Web and app development, branding, redesign, SEO and AI visibility, AI automation and maintenance.",
     });
   }
 
   return ogCard({
-    eyebrow: "Service",
-    title: service.title,
-    subtitle: clampSubtitle(service.shortDescription),
+    eyebrow: `${line.name} · Services`,
+    title: line.label,
+    subtitle: clampSubtitle(line.pitch),
   });
 }
