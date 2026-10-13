@@ -10,6 +10,7 @@
  * records, so they cannot drift from what the kit pages show.
  */
 
+import { LINE_INDEX } from "./line-index";
 import { getKitBySlug } from "./kits";
 import { getPlanBySlug } from "./plans";
 import { formatPriceProse } from "@/lib/pricing";
@@ -18,16 +19,10 @@ const kitPrice = (slug) => formatPriceProse(getKitBySlug(slug).price);
 const kitTime = (slug) => getKitBySlug(slug).timeline;
 const planPrice = (slug) => formatPriceProse(getPlanBySlug(slug).price);
 
-export const LINES = [
+/* Everything a line page needs beyond the index: copy, problems, FAQs. */
+const DETAILS = [
   {
     slug: "web-and-app-development",
-    name: "Engine",
-    label: "Web & App Development",
-    icon: "rocket_launch",
-    color: "primary",
-    art: "/services/web-development.svg",
-    navImage: "/nav/web-development.webp",
-    pitch: "We build the thing your business runs on: websites, online stores, apps and custom software.",
     summary:
       "Engine is the LogixLoops web and app development line. We build business websites, online stores, startup MVPs and iOS and Android apps as fixed-scope kits with published starting prices. Every build is fast on an ordinary phone, ready for Google and AI search, and handed over in your name.",
     metaTitle: "Web & App Development: Websites, Stores, Apps",
@@ -84,13 +79,6 @@ export const LINES = [
   },
   {
     slug: "branding",
-    name: "Spark",
-    label: "Branding & Identity",
-    icon: "auto_awesome",
-    color: "secondary",
-    art: "/services/ui-ux-design.svg",
-    navImage: "/nav/ui-ux-design.webp",
-    pitch: "How people see you: your logo, your look and the way you sound.",
     summary:
       "Spark is the LogixLoops branding line. We design logos, colour palettes, type and brand guidelines for new and growing businesses, and package them with a website and social kit when you are launching. You get every source file, a clear rulebook for using it, and a brand that looks the same everywhere.",
     metaTitle: "Branding Agency: Logo, Identity, Brand Launch",
@@ -146,13 +134,6 @@ export const LINES = [
   },
   {
     slug: "website-redesign",
-    name: "Glow-Up",
-    label: "Website Redesign & Upgrades",
-    icon: "auto_fix_high",
-    color: "tertiary",
-    art: "/services/mobile-apps.svg",
-    navImage: "/nav/saas-platforms.webp",
-    pitch: "A makeover for what you already have: faster, better looking, and better at turning visitors into customers.",
     summary:
       "Glow-Up is the LogixLoops website redesign and upgrade line. We take a website or app you already have and make it look current, load fast and turn more visitors into enquiries or sales. Every change is measured before and after, so you can see what the upgrade actually changed.",
     metaTitle: "Website Redesign Services and Speed Upgrades",
@@ -208,13 +189,6 @@ export const LINES = [
   },
   {
     slug: "seo-and-ai-search",
-    name: "Spotlight",
-    label: "SEO & AI Search Visibility",
-    icon: "travel_explore",
-    color: "primary",
-    art: "/services/ai-ml-solutions.svg",
-    navImage: "/nav/ai-ml-solutions.webp",
-    pitch: "Get found on Google, and named in the answers ChatGPT and other AI assistants give.",
     summary:
       "Spotlight is the LogixLoops SEO and AI search visibility line. We make your business easy to find on Google and Bing, and easy for ChatGPT, Perplexity, Gemini and Google AI Overviews to understand, trust and mention. That means technical fixes, clear content, structured data and a report in plain numbers.",
     metaTitle: "SEO and AI Search Optimisation (GEO) Services",
@@ -270,13 +244,6 @@ export const LINES = [
   },
   {
     slug: "ai-automation",
-    name: "Autopilot",
-    label: "AI & Automation",
-    icon: "smart_toy",
-    color: "secondary",
-    art: "/services/automation-systems.svg",
-    navImage: "/nav/automation-systems.webp",
-    pitch: "Work that runs itself: WhatsApp AI agents, website chatbots and automations between your tools.",
     summary:
       "Autopilot is the LogixLoops AI and automation line. We build WhatsApp AI agents, website assistants trained on your own documents, and automations that move data between your tools, so routine questions and admin get handled without someone doing them by hand. Every AI system ships with limits, logs and a human handover.",
     metaTitle: "AI Automation Agency: WhatsApp AI and Chatbots",
@@ -333,13 +300,6 @@ export const LINES = [
   },
   {
     slug: "maintenance-and-support",
-    name: "Pit Crew",
-    label: "Maintenance & Support Plans",
-    icon: "build",
-    color: "tertiary",
-    art: "/services/cloud-devops.svg",
-    navImage: "/nav/cloud-devops.webp",
-    pitch: "We keep your website or app fast, safe and up to date, every month.",
     summary:
       "Pit Crew is the LogixLoops maintenance and support line. Monthly plans keep your website or app updated, backed up, secure and fast, with time each month for changes and improvements. Plans start small for a business website and scale up to a dedicated team for products that change every week.",
     metaTitle: "Website Maintenance Plans and Support",
@@ -394,6 +354,12 @@ export const LINES = [
     ],
   },
 ];
+
+/* Index fields first, details after, in index order. */
+export const LINES = LINE_INDEX.map((entry) => ({
+  ...entry,
+  ...DETAILS.find((detail) => detail.slug === entry.slug),
+}));
 
 export const getAllLines = () => LINES;
 export const getLineBySlug = (slug) => LINES.find((line) => line.slug === slug) || null;

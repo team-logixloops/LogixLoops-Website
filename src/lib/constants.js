@@ -6,7 +6,9 @@
  */
 
 import { CASE_STUDIES } from "@/data/caseStudies";
-import { LINES } from "@/data/lines";
+// The index, not @/data/lines: Navbar and Footer are client components, and
+// lines.js would pull the whole kit catalogue into every page's JavaScript.
+import { LINE_INDEX as LINES } from "@/data/line-index";
 
 /* ─── Brand ───
  * See `docs/brand-voice-and-search.md` for the rules these values answer to.

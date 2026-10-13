@@ -6,7 +6,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import InertiaPlugin from "gsap/InertiaPlugin";
-import { LINES } from "@/data/lines";
+// The index, not @/data/lines, which would ship the kit catalogue to the client.
+import { LINE_INDEX as LINES } from "@/data/line-index";
 
 /* 3x3: the six lines, then the kits, pricing and a closing call to action. */
 const TILES = [
