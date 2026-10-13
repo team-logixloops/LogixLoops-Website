@@ -6,7 +6,7 @@
 export const CASE_STUDIES = {
   "sire-media": {
     slug: "sire-media",
-    demo: false,
+    kits: ["business-website"],
     publishedAt: "2026-03-15",
     title: "Sire Media Digital Platform",
     navLabel: "Sire Media",
@@ -101,7 +101,7 @@ export const CASE_STUDIES = {
 
   "building-bites": {
     slug: "building-bites",
-    demo: false,
+    kits: ["online-store"],
     publishedAt: "2026-04-10",
     title: "Building Bites D2C Platform",
     navLabel: "Building Bites",
@@ -196,7 +196,7 @@ export const CASE_STUDIES = {
 
   "clubin-nightlife": {
     slug: "clubin-nightlife",
-    demo: false,
+    kits: ["mvp"],
     publishedAt: "2026-05-20",
     title: "ClubIn Nightlife & VIP Access Engine",
     navLabel: "ClubIn",
@@ -291,7 +291,7 @@ export const CASE_STUDIES = {
 
   "bouldspace-architecture": {
     slug: "bouldspace-architecture",
-    demo: false,
+    kits: ["business-website"],
     publishedAt: "2026-06-15",
     title: "Bouldspace Architectural Consulting Platform",
     navLabel: "Bouldspace",
@@ -386,7 +386,7 @@ export const CASE_STUDIES = {
 
   "adinath-finserv": {
     slug: "adinath-finserv",
-    demo: false,
+    kits: ["business-website"],
     publishedAt: "2026-07-01",
     title: "Adinath Finserv Wealth & Investment Platform",
     navLabel: "Adinath Finserv",

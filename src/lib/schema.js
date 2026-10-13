@@ -285,44 +285,24 @@ export const generateArticleSchema = (post) => {
 };
 
 /**
- * A case study record.
- *
- * Two kinds exist, and they must not be described the same way.
- *
- *   - A `demo` record is a reference build: an architecture we designed and
- *     can defend, written up against a representative brief rather than a
- *     paying client. It is emitted as `CreativeWork` with
- *     `creativeWorkStatus` and a `disambiguatingDescription` that says so in
- *     the markup, not only in the visible copy. Claiming Article for one would
- *     assert it is reportage about a real engagement, and answer engines quote
- *     that assertion verbatim.
- *   - A client record with a `publishedAt` date becomes `Article` and is
- *     eligible for article rich results.
- *
- * A fabricated date is worse than no date, so undated client records fall back
- * to CreativeWork too. Set `demo: false` and add `publishedAt` to promote a
- * record once the client has signed off on it.
+ * A client case study. A record with a `publishedAt` date becomes `Article`
+ * and is eligible for article rich results. An undated record falls back to
+ * `CreativeWork`, because a fabricated date is worse than no date.
  */
 export const generateCaseStudySchema = (study) => {
   const published = study.publishedAt
     ? new Date(study.publishedAt).toISOString()
     : null;
-  const isDemo = study.demo === true;
 
   return {
     "@context": "https://schema.org",
-    "@type": !isDemo && published ? "Article" : "CreativeWork",
-    ...(!isDemo && published && { datePublished: published, dateModified: published }),
-    ...(isDemo && {
-      creativeWorkStatus: "Reference build",
-      disambiguatingDescription:
-        "A reference build: an architecture designed and documented by LogixLoops against a representative brief, not a record of a paid client engagement. Figures describe the design target, not a measured client outcome.",
-    }),
+    "@type": published ? "Article" : "CreativeWork",
+    ...(published && { datePublished: published, dateModified: published }),
     headline: `Engineering the ${study.title}`,
     name: `Engineering the ${study.title}`,
     description: study.shortDescription,
     ...(study.industry && { about: study.industry }),
-    ...(!isDemo && study.industry && { articleSection: study.industry }),
+    ...(published && study.industry && { articleSection: study.industry }),
     image: study.heroImage ? [study.heroImage] : undefined,
     author: { "@id": `${BASE_URL}/#organization` },
     publisher: PUBLISHER,

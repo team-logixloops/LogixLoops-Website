@@ -6,7 +6,6 @@ import Link from "next/link";
 
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CaseStudyMotion from "@/components/sections/case-study/CaseStudyMotion";
-import ReferenceBuildNotice from "@/components/sections/case-study/ReferenceBuildNotice";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { generateBreadcrumbSchema, generateCaseStudySchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -30,7 +29,7 @@ export async function generateMetadata({ params }) {
     title: `${study.title} | Work`,
     description: study.shortDescription,
     path: `/work/${study.slug}`,
-    type: study.demo ? "website" : "article",
+    type: "article",
     keywords: [
       study.industry,
       study.transformationType,
@@ -80,12 +79,6 @@ export default async function WorkDetailPage({ params }) {
               <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mb-8">
                 {study.shortDescription}
               </p>
-              
-              {study.demo && (
-                <p className="font-label text-label-caps uppercase tracking-widest text-secondary mb-4">
-                  Design targets, not measured results
-                </p>
-              )}
 
               <div className="flex flex-wrap gap-8 pt-4">
                 {study.metrics.map((metric, idx) => (
@@ -122,13 +115,6 @@ export default async function WorkDetailPage({ params }) {
           </div>
         </div>
       </section>
-
-      {/* The disclosure, immediately under the hero */}
-      {study.demo && (
-        <section className="max-w-container-max mx-auto px-margin-x-mobile md:px-margin-x-desktop relative z-10">
-          <ReferenceBuildNotice />
-        </section>
-      )}
 
       {/* 2 & 3. The brief and the constraints */}
       {sections.challenge && (

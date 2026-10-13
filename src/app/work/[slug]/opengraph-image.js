@@ -22,7 +22,7 @@ export default async function Image({ params }) {
   }
 
   return ogCard({
-    eyebrow: study.demo ? `Reference Build · ${study.industry}` : `Client Work · ${study.industry}`,
+    eyebrow: `Client Work · ${study.industry}`,
     title: study.title,
     subtitle: clampSubtitle(study.shortDescription),
   });
