@@ -17,8 +17,8 @@ export default function ProcessSection() {
       <div className="container-site mb-4">
         <SectionHeader
           overline="How it works"
-          title="How A Kit Runs"
-          description="Five steps, the same for every kit. Each one ends with something you can see and approve, so nothing arrives as a surprise, and the last one is 30 days of making it better with real data."
+          title="How A Loop Runs"
+          description="Five steps, the same for every Loop. Each one ends with something you can see and approve, so nothing arrives as a surprise, and the last one is 30 days of making it better with real data."
           overlineClassName="text-brand-steel"
           titleClassName="text-on-surface"
           descriptionClassName="text-on-surface-variant"

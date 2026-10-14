@@ -434,7 +434,7 @@ export default function PhoneScrollDemo({ color }) {
             <DemoEmailForm
               color={color}
               template="mobile-preview"
-              payload={() => ({ path: "/services" })}
+              payload={() => ({ path: "/loops" })}
               cta="Email it"
               stacked
               hint="A real message over SMTP. One send, no list, nothing stored."

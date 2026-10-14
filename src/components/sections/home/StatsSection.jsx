@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
  * results they would have to take on trust.
  */
 const statsFor = (kitCount) => [
-  { value: kitCount, unit: "", label: "Kits with published prices", accent: "primary", prefix: "" },
-  { value: 30, unit: " days", label: "Of The Loop after launch", accent: "secondary", prefix: "" },
+  { value: kitCount, unit: "", label: "Loops with published prices", accent: "primary", prefix: "" },
+  { value: 30, unit: " days", label: "Of The Tune-Up after launch", accent: "secondary", prefix: "" },
   { value: 100, unit: "%", label: "Of the work is yours", accent: "tertiary", prefix: "" },
   { value: 1, unit: " day", label: "To reply, every enquiry", accent: "primary", prefix: "" },
 ];

@@ -19,7 +19,7 @@ export default function KitHero({ kit, line }) {
       <FadeInUpImmediate className="max-w-3xl">
         <Breadcrumbs current={kit.name} />
         <Link
-          href={`/services/${line.slug}`}
+          href={`/loops/${line.slug}`}
           className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-outline-variant/30 bg-surface-container-lowest/85 px-3 py-1.5 transition-colors hover:border-primary/30"
         >
           <span className={cn("material-symbols-outlined text-[16px]", a.text)} aria-hidden="true">
@@ -54,7 +54,7 @@ export default function KitHero({ kit, line }) {
         </p>
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button href={`/contact?kit=${kit.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
-            Start this kit
+            Start this Loop
           </Button>
           <Button href="/contact" variant="ghost" size="lg">
             Ask a question first

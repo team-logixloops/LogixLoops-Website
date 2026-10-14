@@ -106,10 +106,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services Column */}
+          {/* Loops Column */}
           <div className="col-span-1 lg:col-span-2">
             <h2 className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-5">
-              Services
+              Loops
             </h2>
             <ul className="flex flex-col gap-3">
               {FOOTER_LINKS.services.map((link) => (

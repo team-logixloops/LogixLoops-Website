@@ -12,7 +12,7 @@ import ProjectDetailModal from "@/components/sections/work/ProjectDetailModal";
 import { generateBreadcrumbSchema, generateCollectionPageSchema } from "@/lib/schema";
 
 const COLLECTION_DESCRIPTION =
-  "Websites, online stores and apps LogixLoops has built for real clients, each linked to the kit it would start from today, with its price.";
+  "Websites, online stores and apps LogixLoops has built for real clients, each linked to the Loop it would start from today, with its price.";
 
 export default function WorkPage() {
   const caseStudiesList = Object.values(CASE_STUDIES);
@@ -75,8 +75,8 @@ export default function WorkPage() {
         preset="caseStudies"
         eyebrow="Work"
         title="Real client builds,"
-        accent="and the kits behind them."
-        lead="Websites, stores and apps we have built for real businesses, from a creator agency and an architecture firm to a D2C snack brand and a nightlife app. Each project links to the kit it would start from today, with its price."
+        accent="and the Loops behind them."
+        lead="Websites, stores and apps we have built for real businesses, from a creator agency and an architecture firm to a D2C snack brand and a nightlife app. Each project links to the Loop it would start from today, with its price."
         cue="Selected Work"
       />
 
@@ -95,7 +95,7 @@ export default function WorkPage() {
               Client work
             </h2>
             <p className="font-body text-body-md text-on-surface-variant">
-              Every project here is live for a real business. Open one to see the problem, what we built and how, and the kit you would start from to get something similar.
+              Every project here is live for a real business. Open one to see the problem, what we built and how, and the Loop you would start from to get something similar.
             </p>
           </div>
 
@@ -169,7 +169,7 @@ export default function WorkPage() {
               What we build for ourselves
             </h2>
             <p className="font-body text-body-md text-on-surface-variant">
-              Alongside client work we build our own tools and prototypes, including AI voice agents and automation experiments. They are where new kits start. Open any card for the technical breakdown.
+              Alongside client work we build our own tools and prototypes, including AI voice agents and automation experiments. They are where new Loops start. Open any card for the technical breakdown.
             </p>
           </div>
 
@@ -208,11 +208,11 @@ export default function WorkPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
             <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Want something like this?</h2>
             <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">
-              Every project here started from a need a kit now covers. Pick the closest kit and see its price, or tell us what you need.
+              Every project here started from a need a Loop now covers. Pick the closest Loop and see its price, or tell us what you need.
             </p>
             <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button href="/kits" size="lg" className="shadow-lg">
-                Browse the kits
+              <Button href="/loops" size="lg" className="shadow-lg">
+                Browse the Loops
               </Button>
               <Button href="/contact" variant="ghost" size="lg">
                 Start a project

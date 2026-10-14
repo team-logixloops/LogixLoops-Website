@@ -5,12 +5,12 @@ import { getAllCaseStudies } from "@/data/caseStudies";
 
 /*
  * `lastModified` is only set where the content carries a real date: the kit
- * catalogue (lines, kits, /kits, /pricing, /services read their prices from
- * it) and each blog post. Everything else omits it. A build-time date on
+ * catalogue (/loops and every page under it, and /pricing, read their
+ * prices from it) and each blog post. Everything else omits it. A build-time date on
  * every URL tells Google that every page changed on every deploy, and it
  * learns to ignore the field for the whole site.
  */
-const CATALOGUE_ROUTES = new Set(["/services", "/kits", "/pricing"]);
+const CATALOGUE_ROUTES = new Set(["/loops", "/pricing"]);
 
 export default function sitemap() {
   const baseUrl = "https://logixloops.in";
@@ -19,8 +19,7 @@ export default function sitemap() {
   const staticRoutes = [
     "",
     "/about",
-    "/services",
-    "/kits",
+    "/loops",
     "/work",
     "/blog",
     "/pricing",
@@ -40,7 +39,7 @@ export default function sitemap() {
 
   // Line pages
   const serviceRoutes = LINES.map((line) => ({
-    url: `${baseUrl}/services/${line.slug}`,
+    url: `${baseUrl}/loops/${line.slug}`,
     lastModified: new Date(CATALOGUE_UPDATED),
     changeFrequency: "monthly",
     priority: 0.9,
@@ -48,7 +47,7 @@ export default function sitemap() {
 
   // Kit pages
   const kitRoutes = KITS.map((kit) => ({
-    url: `${baseUrl}/kits/${kit.slug}`,
+    url: `${baseUrl}/loops/${kit.slug}`,
     lastModified: new Date(CATALOGUE_UPDATED),
     changeFrequency: "monthly",
     priority: 0.9,

@@ -14,7 +14,7 @@ export default function KitSteps({ steps, color }) {
   return (
     <section className={SECTION}>
       <FadeInUp>
-        <SectionHeader overline="How it runs" title="From kick-off to The Loop" align="left" />
+        <SectionHeader overline="How it runs" title="From kick-off to The Tune-Up" align="left" />
       </FadeInUp>
       <ol className="flex max-w-3xl flex-col gap-4">
         {steps.map((step, i) => {

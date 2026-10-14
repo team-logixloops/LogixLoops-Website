@@ -6,22 +6,22 @@ import { SERVICES_FAQS } from "@/data/faq";
 import { kitMentions, relatedKits } from "@/lib/kit-links";
 
 test("a kit named in running text becomes a link to its page", () => {
-  assert.deepEqual(kitMentions("Selling online: see the Online Store Kit"), [
+  assert.deepEqual(kitMentions("Selling online: see the Online Store Loop"), [
     { text: "Selling online: see the " },
-    { text: "Online Store Kit", href: "/kits/online-store" },
+    { text: "Online Store Loop", href: "/loops/online-store" },
   ]);
 });
 
 test("a kit never links to itself, and plain text stays one part", () => {
-  assert.deepEqual(kitMentions("The MVP Kit uses the same stack", { except: "mvp" }), [
+  assert.deepEqual(kitMentions("The MVP Loop uses the same stack", { except: "mvp" }), [
     { text: "The " },
-    { text: "MVP Kit" },
+    { text: "MVP Loop" },
     { text: " uses the same stack" },
   ]);
-  assert.deepEqual(kitMentions("No kits here"), [{ text: "No kits here" }]);
+  assert.deepEqual(kitMentions("No Loops here"), [{ text: "No Loops here" }]);
 });
 
-test("every 'X Kit' named in kit, line and services copy is a real kit", () => {
+test("every 'X Loop' named in Loop, line and FAQ copy is a real Loop", () => {
   const names = new Set(KITS.map((kit) => kit.name));
   const copy = [
     ...KITS.flatMap((kit) => [...kit.notFor, ...kit.fitFor, ...kit.includes, ...kit.faqs.map((faq) => faq.a)]),
@@ -29,9 +29,11 @@ test("every 'X Kit' named in kit, line and services copy is a real kit", () => {
     ...SERVICES_FAQS.map((faq) => faq.answer),
   ];
   for (const text of copy) {
-    for (const [, name] of text.matchAll(/((?:[A-Z][\w-]*\s)+Kit)\b/g)) {
-      const bare = name.replace(/^(The|Our|A|An)\s/, "");
-      assert.ok(names.has(bare), `"${bare}" is not a kit, in: ${text.slice(0, 60)}`);
+    for (const [, name] of text.matchAll(/((?:[A-Z][\w-]*\s)+Loop)\b/g)) {
+      // "Every Loop", "This Loop" and the like name the product, not one Loop.
+      const bare = name.replace(/^((The|Our|A|An|Every|Each|This|That|Any|One|Which|Your|Most|Start|Pick)\s)+/, "");
+      if (bare === "Loop") continue;
+      assert.ok(names.has(bare), `"${bare}" is not a Loop, in: ${text.slice(0, 60)}`);
     }
   }
 });

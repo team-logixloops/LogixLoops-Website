@@ -20,6 +20,7 @@ const nextConfig = {
       // The eight practice pages became six lines on 2026-10-13. Each old URL
       // lands on the line that now owns its work, so rankings and inbound
       // links carry over. See docs/superpowers/specs/ for the mapping.
+      // Listed before the general /services rule so each is one hop.
       ...Object.entries({
         "web-development": "web-and-app-development",
         "mobile-apps": "web-and-app-development",
@@ -31,9 +32,16 @@ const nextConfig = {
         "automation-systems": "ai-automation",
       }).map(([from, to]) => ({
         source: `/services/${from}`,
-        destination: `/services/${to}`,
+        destination: `/loops/${to}`,
         permanent: true,
       })),
+      // On 2026-10-14 /services (the six groups) and /kits (the catalogue)
+      // merged into /loops, and kits were renamed Loops. Line and Loop slugs
+      // did not change, so every old URL maps one to one.
+      { source: "/services", destination: "/loops", permanent: true },
+      { source: "/services/:slug", destination: "/loops/:slug", permanent: true },
+      { source: "/kits", destination: "/loops", permanent: true },
+      { source: "/kits/:slug", destination: "/loops/:slug", permanent: true },
     ];
   },
 

@@ -1,7 +1,10 @@
 /**
- * Advantage Kits: the wave 1 catalogue.
+ * Loops: the wave 1 catalogue.
  *
- * One record per kit, and one kit per URL (/kits/<slug>). Every price on the
+ * Visitors buy Loops ("Business Website Loop"); in code each record is still
+ * called a kit (KITS, getKitBySlug, KitCard). Only the visible name changed.
+ *
+ * One record per Loop, and one Loop per URL (/loops/<slug>). Every price on the
  * site is read from here, so a price change is a one-line edit and the page,
  * the card, the schema and the FAQ answers that quote it all move together.
  *
@@ -24,7 +27,7 @@ export const CATALOGUE_UPDATED = "2026-10-14";
 
 /** The 30-day after-launch period every kit ends with. Kits may reword it. */
 const LOOP = {
-  title: "The Loop",
+  title: "The Tune-Up",
   desc: "For 30 days after launch we watch real usage, fix what turns up and make one round of improvements based on the data. Then we hand everything over with a recorded walkthrough.",
 };
 
@@ -33,10 +36,10 @@ export const KITS = [
   {
     slug: "business-website",
     line: "web-and-app-development",
-    name: "Business Website Kit",
+    name: "Business Website Loop",
     promise: "a fast, search-ready website for a growing business",
     summary:
-      "The Business Website Kit is a custom website of up to five pages for a growing business, designed and built in three to four weeks. It loads fast on an ordinary phone, is ready for Google and AI search from launch, and you can edit the content yourself. Domain, hosting and code are in your name.",
+      "The Business Website Loop is a custom website of up to five pages for a growing business, designed and built in three to four weeks. It loads fast on an ordinary phone, is ready for Google and AI search from launch, and you can edit the content yourself. Domain, hosting and code are in your name.",
     price: { usd: 500, inr: 15000 },
     timeline: "3–4 weeks",
     keyword: "business website development package",
@@ -58,8 +61,8 @@ export const KITS = [
       "Companies whose current site no longer represents them",
     ],
     notFor: [
-      "Selling products online with a cart and payments: see the Online Store Kit",
-      "Web apps with user accounts and dashboards: see the MVP Kit",
+      "Selling products online with a cart and payments: see the Online Store Loop",
+      "Web apps with user accounts and dashboards: see the MVP Loop",
     ],
     steps: [
       { title: "Kick-off call", desc: "We agree the pages, the goal of the site and what success looks like, and collect your logo, photos and content." },
@@ -100,14 +103,14 @@ export const KITS = [
   {
     slug: "online-store",
     line: "web-and-app-development",
-    name: "Online Store Kit",
+    name: "Online Store Loop",
     promise: "an online store that is quick to browse and easy to buy from",
     summary:
-      "The Online Store Kit is an ecommerce website built on Shopify or a custom stack, ready to take payments in four to six weeks. It includes product pages, cart, checkout with UPI, cards and wallets, order emails and inventory, and it is set up for Google Shopping and search from day one.",
+      "The Online Store Loop is an ecommerce website built on Shopify or a custom stack, ready to take payments in four to six weeks. It includes product pages, cart, checkout with UPI, cards and wallets, order emails and inventory, and it is set up for Google Shopping and search from day one.",
     price: { usd: 1000, inr: 30000 },
     timeline: "4–6 weeks",
     keyword: "ecommerce website development cost",
-    metaTitle: "Ecommerce Website Development: Online Store Kit",
+    metaTitle: "Ecommerce Website Design: Online Store Loop",
     metaDescription:
       "A Shopify or custom online store with payments, inventory and order emails, live in four to six weeks and ready for Google Shopping.",
     includes: [
@@ -166,14 +169,14 @@ export const KITS = [
   {
     slug: "mvp",
     line: "web-and-app-development",
-    name: "MVP Kit",
+    name: "MVP Loop",
     promise: "the first working version of your product, in front of real users",
     summary:
-      "The MVP Kit turns a startup idea into a working web product that real users can sign up for and pay for, in six to eight weeks. You get user accounts, the core feature, payments, an admin panel and analytics, built on a stack that can grow with the business instead of being thrown away.",
+      "The MVP Loop turns a startup idea into a working web product that real users can sign up for and pay for, in six to eight weeks. You get user accounts, the core feature, payments, an admin panel and analytics, built on a stack that can grow with the business instead of being thrown away.",
     price: { usd: 3500, inr: 125000 },
     timeline: "6–8 weeks",
     keyword: "MVP development for startups",
-    metaTitle: "MVP Development for Startups: MVP Kit",
+    metaTitle: "MVP Development for Startups: MVP Loop",
     metaDescription:
       "A working web product with sign-up, payments, an admin panel and analytics in six to eight weeks, on a stack built to grow.",
     includes: [
@@ -192,7 +195,7 @@ export const KITS = [
     ],
     notFor: [
       "Ideas still at the napkin stage: book a call first and we will help shape it",
-      "Products that must be native mobile apps from day one: see the Mobile App Kit",
+      "Products that must be native mobile apps from day one: see the Mobile App Loop",
     ],
     steps: [
       { title: "Product workshop", desc: "One week to agree who the product is for, the one job it must do well, and what can wait for version two." },
@@ -222,7 +225,7 @@ export const KITS = [
       },
       {
         q: "Can the MVP grow into the full product?",
-        a: "Yes, and that is the point of how we build it. The MVP Kit uses the same stack and practices we would use for a mature product, so version two builds on it instead of starting again.",
+        a: "Yes, and that is the point of how we build it. The MVP Loop uses the same stack and practices we would use for a mature product, so version two builds on it instead of starting again.",
       },
       {
         q: "Will you sign an NDA before I share my idea?",
@@ -233,14 +236,14 @@ export const KITS = [
   {
     slug: "mobile-app",
     line: "web-and-app-development",
-    name: "Mobile App Kit",
+    name: "Mobile App Loop",
     promise: "one app for iPhone and Android, published in both stores",
     summary:
-      "The Mobile App Kit builds one app for iPhone and Android from a single codebase and publishes it in the App Store and Google Play in eight to twelve weeks. It covers design, sign-in, the core screens, push notifications, offline use and an admin panel, all published under your own developer accounts.",
+      "The Mobile App Loop builds one app for iPhone and Android from a single codebase and publishes it in the App Store and Google Play in eight to twelve weeks. It covers design, sign-in, the core screens, push notifications, offline use and an admin panel, all published under your own developer accounts.",
     price: { usd: 5000, inr: 150000 },
     timeline: "8–12 weeks",
     keyword: "mobile app development cost",
-    metaTitle: "iOS and Android App Development: Mobile App Kit",
+    metaTitle: "iOS & Android App Development: Mobile App Loop",
     metaDescription:
       "One app for iPhone and Android, designed, built and published in both stores in eight to twelve weeks, in your own accounts.",
     includes: [
@@ -293,7 +296,7 @@ export const KITS = [
       },
       {
         q: "What happens if Apple or Google rejects the app?",
-        a: "We handle it. Rejections are usually about a missing policy page or an unclear permission request, and fixing and resubmitting is part of the kit.",
+        a: "We handle it. Rejections are usually about a missing policy page or an unclear permission request, and fixing and resubmitting is part of the Loop.",
       },
     ],
   },
@@ -302,10 +305,10 @@ export const KITS = [
   {
     slug: "brand-identity",
     line: "branding",
-    name: "Brand Identity Kit",
+    name: "Brand Identity Loop",
     promise: "logo, colours, type and brand guidelines for a new business",
     summary:
-      "The Brand Identity Kit gives a new or growing business a complete visual identity in two to three weeks: logo, colour palette, typefaces and a brand guidelines document. You get every file in every format for print, web and social, plus editable sources, so anyone you work with can use the brand correctly.",
+      "The Brand Identity Loop gives a new or growing business a complete visual identity in two to three weeks: logo, colour palette, typefaces and a brand guidelines document. You get every file in every format for print, web and social, plus editable sources, so anyone you work with can use the brand correctly.",
     price: { usd: 400, inr: 10000 },
     timeline: "2–3 weeks",
     keyword: "brand identity design package",
@@ -336,12 +339,12 @@ export const KITS = [
       { title: "Refine", desc: "You pick one direction and we refine it over two rounds of changes until it is right." },
       { title: "Guidelines and files", desc: "We write the brand guidelines and export every file you will need, organised and named so they are easy to find." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days after handover we check how the brand is being used, review your first posts, print proofs or signage, and adjust any file that does not work in practice.",
       },
     ],
     addOns: [
-      { name: "Social media kit: templates and profile assets", price: { usd: 150, inr: 4000 } },
+      { name: "Social media Loop: templates and profile assets", price: { usd: 150, inr: 4000 } },
       { name: "Brand voice and messaging guide", price: { usd: 150, inr: 4000 } },
       { name: "A fourth logo direction", price: { usd: 100, inr: 3000 } },
     ],
@@ -372,20 +375,20 @@ export const KITS = [
   {
     slug: "brand-launch",
     line: "branding",
-    name: "Brand Launch Kit",
-    promise: "brand identity, website, social kit and Google profile, launched together",
+    name: "Brand Launch Loop",
+    promise: "brand identity, website, social Loop and Google profile, launched together",
     summary:
-      "The Brand Launch Kit takes a new business from name to open for business in five to six weeks. It combines the Brand Identity Kit with a business website, a social media kit and a Google Business Profile, all designed together by one team, so everything looks consistent from the first day.",
+      "The Brand Launch Loop takes a new business from name to open for business in five to six weeks. It combines the Brand Identity Loop with a business website, a social media Loop and a Google Business Profile, all designed together by one team, so everything looks consistent from the first day.",
     price: { usd: 800, inr: 22000 },
     timeline: "5–6 weeks",
     keyword: "branding and website package for new business",
     metaTitle: "Branding and Website Package for New Businesses",
     metaDescription:
-      "Identity, website, social kit and Google Business Profile, designed together by one team and launched in five to six weeks.",
+      "Identity, website, social Loop and Google Business Profile, designed together by one team and launched in five to six weeks.",
     includes: [
-      "Everything in the Brand Identity Kit",
-      "Everything in the Business Website Kit",
-      "A social media kit: profile images, covers and 10 post templates",
+      "Everything in the Brand Identity Loop",
+      "Everything in the Business Website Loop",
+      "A social media Loop: profile images, covers and 10 post templates",
       "A Google Business Profile created and filled in, with photos and categories",
       "A launch checklist for email, WhatsApp Business and directories",
     ],
@@ -395,13 +398,13 @@ export const KITS = [
       "Businesses relaunching under a new name",
     ],
     notFor: [
-      "Businesses happy with their current brand: start with the Business Website Kit",
-      "Online stores: pair the Brand Identity Kit with the Online Store Kit",
+      "Businesses happy with their current brand: start with the Business Website Loop",
+      "Online stores: pair the Brand Identity Loop with the Online Store Loop",
     ],
     steps: [
       { title: "Discovery", desc: "One workshop covers the brand, the website goals and your launch date, so every piece is planned together." },
-      { title: "Identity", desc: "Logo directions, refinement and guidelines, exactly as in the Brand Identity Kit." },
-      { title: "Website and social", desc: "The website and social kit are designed in the new identity and built while you review." },
+      { title: "Identity", desc: "Logo directions, refinement and guidelines, exactly as in the Brand Identity Loop." },
+      { title: "Website and social", desc: "The website and social Loop are designed in the new identity and built while you review." },
       { title: "Launch", desc: "Website live, Google Business Profile submitted for verification, social profiles updated and your launch checklist done." },
       LOOP,
     ],
@@ -420,7 +423,7 @@ export const KITS = [
     faqs: [
       {
         q: "Why buy the brand and the website together instead of separately?",
-        a: "Because they are designed as one system. The same team builds the identity and the website, so nothing gets lost between a designer and a developer, and the kit costs less than buying each part on its own.",
+        a: "Because they are designed as one system. The same team builds the identity and the website, so nothing gets lost between a designer and a developer, and the Loop costs less than buying each part on its own.",
       },
       {
         q: "How long does a Google Business Profile take to verify?",
@@ -437,14 +440,14 @@ export const KITS = [
   {
     slug: "website-glow-up",
     line: "website-redesign",
-    name: "Website Glow-Up Kit",
+    name: "Website Glow-Up Loop",
     promise: "a redesign that makes your current website look current and sell more",
     summary:
-      "The Website Glow-Up Kit redesigns your existing website in three to five weeks without losing the search rankings it has earned. We measure speed and enquiries first, redesign the pages that matter most, rebuild them to load fast, and measure again after launch, so you see exactly what the glow-up changed.",
+      "The Website Glow-Up Loop redesigns your existing website in three to five weeks without losing the search rankings it has earned. We measure speed and enquiries first, redesign the pages that matter most, rebuild them to load fast, and measure again after launch, so you see exactly what the glow-up changed.",
     price: { usd: 600, inr: 20000 },
     timeline: "3–5 weeks",
     keyword: "website redesign cost",
-    metaTitle: "Website Redesign Package: Website Glow-Up Kit",
+    metaTitle: "Website Redesign Package: Website Glow-Up Loop",
     metaDescription:
       "Redesign your website in three to five weeks, keep your rankings, and see before and after numbers for speed and enquiries.",
     includes: [
@@ -462,8 +465,8 @@ export const KITS = [
       "Businesses that have changed while their website has not",
     ],
     notFor: [
-      "Sites with almost no traffic yet: start with the SEO Foundation Kit",
-      "Brand-new businesses: see the Business Website Kit",
+      "Sites with almost no traffic yet: start with the SEO Foundation Loop",
+      "Brand-new businesses: see the Business Website Loop",
     ],
     steps: [
       { title: "Measure", desc: "We record current speed, search traffic, rankings and enquiry rate, so there is a baseline to compare against." },
@@ -471,7 +474,7 @@ export const KITS = [
       { title: "Rebuild", desc: "We build the new pages for speed, carry over the content and set up redirects for every changed URL." },
       { title: "Switch over", desc: "The new site goes live, redirects are tested, and Search Console is checked for errors in the first days." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days we watch rankings, speed and enquiries, fix anything that slipped, and send you the before and after report.",
       },
     ],
@@ -507,10 +510,10 @@ export const KITS = [
   {
     slug: "speed",
     line: "website-redesign",
-    name: "Speed Kit",
+    name: "Speed Loop",
     promise: "a faster website, with the before and after numbers to prove it",
     summary:
-      "The Speed Kit makes a slow website fast in one to two weeks, without a redesign. We find what is slowing your pages down, fix images, scripts, fonts and hosting, and aim to pass Google's Core Web Vitals on mobile. You get a before and after report showing the measured difference on real phones.",
+      "The Speed Loop makes a slow website fast in one to two weeks, without a redesign. We find what is slowing your pages down, fix images, scripts, fonts and hosting, and aim to pass Google's Core Web Vitals on mobile. You get a before and after report showing the measured difference on real phones.",
     price: { usd: 250, inr: 8000 },
     timeline: "1–2 weeks",
     keyword: "website speed optimization service",
@@ -532,7 +535,7 @@ export const KITS = [
       "Sites failing Core Web Vitals in Search Console",
     ],
     notFor: [
-      "Sites that also need a new design: the Website Glow-Up Kit includes speed work",
+      "Sites that also need a new design: the Website Glow-Up Loop includes speed work",
       "Web apps with slow databases or APIs, which need an engineering audit",
     ],
     steps: [
@@ -540,7 +543,7 @@ export const KITS = [
       { title: "Fix", desc: "Images, scripts, fonts, caching and hosting are fixed in order of impact, tested on a staging copy first." },
       { title: "Verify", desc: "We measure the same pages on the same devices and confirm nothing looks or works differently." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "Google's field data takes about 28 days to update, so we check it again 30 days after the fixes and send the final report.",
       },
     ],
@@ -566,7 +569,7 @@ export const KITS = [
         a: "No, and a perfect score is not the goal. We aim to pass Core Web Vitals on mobile, which is what Google measures from real visitors. Some sites carry scripts the business genuinely needs, and we show you the cost of each one.",
       },
       {
-        q: "Does the Speed Kit work for WordPress and Shopify sites?",
+        q: "Does the Speed Loop work for WordPress and Shopify sites?",
         a: "Yes. Most of the fixes apply to any platform: images, scripts, fonts, caching and hosting. Platform-specific work, like replacing a heavy WordPress plugin, is included where it is the cause.",
       },
     ],
@@ -576,10 +579,10 @@ export const KITS = [
   {
     slug: "seo-foundation",
     line: "seo-and-ai-search",
-    name: "SEO Foundation Kit",
+    name: "SEO Foundation Loop",
     promise: "the technical and on-page SEO setup every website should start with",
     summary:
-      "The SEO Foundation Kit gives your website the setup it needs to rank, in two to three weeks. We fix technical problems, research the searches your customers use, write page titles and descriptions, add structured data, and set up Google Search Console and Bing Webmaster Tools in your name with a clear report.",
+      "The SEO Foundation Loop gives your website the setup it needs to rank, in two to three weeks. We fix technical problems, research the searches your customers use, write page titles and descriptions, add structured data, and set up Google Search Console and Bing Webmaster Tools in your name with a clear report.",
     price: { usd: 400, inr: 12000 },
     timeline: "2–3 weeks",
     keyword: "SEO setup package",
@@ -601,8 +604,8 @@ export const KITS = [
       "Businesses about to spend on content or ads that want the basics right first",
     ],
     notFor: [
-      "Sites that need a redesign first: start with the Website Glow-Up Kit",
-      "Ongoing monthly content and reporting: pair this kit with a Pit Crew Growth plan",
+      "Sites that need a redesign first: start with the Website Glow-Up Loop",
+      "Ongoing monthly content and reporting: pair this Loop with a Pit Crew Growth plan",
     ],
     steps: [
       { title: "Audit", desc: "A crawl of the whole site plus your Search Console data, if you have it, to find what is holding rankings back." },
@@ -610,7 +613,7 @@ export const KITS = [
       { title: "Fix and write", desc: "Technical fixes, new titles and descriptions, headings and structured data, applied directly or handed to your developer." },
       { title: "Submit", desc: "Sitemaps submitted to Google and Bing, and key pages requested for indexing." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days we watch indexing and early ranking movement, fix anything Google reports, and send the report with what to do next.",
       },
     ],
@@ -629,7 +632,7 @@ export const KITS = [
     faqs: [
       {
         q: "What is the difference between technical SEO and content SEO?",
-        a: "Technical SEO makes sure search engines can find, load and understand your pages. Content SEO makes sure those pages answer what people search for. The SEO Foundation Kit covers the technical side and the on-page basics, so later content has something solid to build on.",
+        a: "Technical SEO makes sure search engines can find, load and understand your pages. Content SEO makes sure those pages answer what people search for. The SEO Foundation Loop covers the technical side and the on-page basics, so later content has something solid to build on.",
       },
       {
         q: "Do I need SEO if I already run Google Ads?",
@@ -644,14 +647,14 @@ export const KITS = [
   {
     slug: "ai-visibility",
     line: "seo-and-ai-search",
-    name: "AI Visibility Kit",
+    name: "AI Visibility Loop",
     promise: "help ChatGPT, Perplexity, Gemini and AI Overviews understand and mention your business",
     summary:
-      "The AI Visibility Kit makes your business easier for ChatGPT, Perplexity, Gemini and Google AI Overviews to find, understand and mention. In two to three weeks we test what AI assistants say about you today, fix your entity information, structured data and key pages, and set up monthly tracking of the answers.",
+      "The AI Visibility Loop makes your business easier for ChatGPT, Perplexity, Gemini and Google AI Overviews to find, understand and mention. In two to three weeks we test what AI assistants say about you today, fix your entity information, structured data and key pages, and set up monthly tracking of the answers.",
     price: { usd: 500, inr: 15000 },
     timeline: "2–3 weeks",
     keyword: "AI search optimization services",
-    metaTitle: "AI Search Optimisation (GEO): AI Visibility Kit",
+    metaTitle: "AI Search Optimisation: AI Visibility Loop",
     metaDescription:
       "See what ChatGPT, Perplexity and Gemini say about your business, then fix your site so AI assistants understand and mention it.",
     includes: [
@@ -669,7 +672,7 @@ export const KITS = [
       "Brands that AI tools confuse with a similarly named company",
     ],
     notFor: [
-      "Sites with basic technical SEO problems: start with the SEO Foundation Kit, or take both",
+      "Sites with basic technical SEO problems: start with the SEO Foundation Loop, or take both",
       "Anyone who wants a guaranteed mention: no one can promise what an AI model will say",
     ],
     steps: [
@@ -678,7 +681,7 @@ export const KITS = [
       { title: "Make pages quotable", desc: "Key pages get answer-first summaries, clear headings, tables where useful and structured data." },
       { title: "Open the doors", desc: "We check that AI crawlers can reach your site, add llms.txt, and submit your pages to Bing and Google." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "After 30 days we ask the same 20 questions again and show you, answer by answer, what changed.",
       },
     ],
@@ -707,7 +710,7 @@ export const KITS = [
       },
       {
         q: "How soon will AI assistants start mentioning my business?",
-        a: "Assistants that search the web live can reflect changes within a few weeks of your pages being indexed. Answers that rely on a model's training data change more slowly, often over several months. The Loop shows you what moved after the first 30 days.",
+        a: "Assistants that search the web live can reflect changes within a few weeks of your pages being indexed. Answers that rely on a model's training data change more slowly, often over several months. The Tune-Up shows you what moved after the first 30 days.",
       },
     ],
   },
@@ -716,15 +719,15 @@ export const KITS = [
   {
     slug: "whatsapp-ai",
     line: "ai-automation",
-    name: "WhatsApp AI Kit",
+    name: "WhatsApp AI Loop",
     promise: "an AI agent on WhatsApp that answers, books and sells around the clock",
     summary:
-      "The WhatsApp AI Kit puts an AI agent on your WhatsApp Business number in two to three weeks. It answers customer questions from your own information, shares your catalogue, takes bookings and orders, and hands the chat to a person whenever it should. Everything runs through the official WhatsApp Business Platform in your name.",
+      "The WhatsApp AI Loop puts an AI agent on your WhatsApp Business number in two to three weeks. It answers customer questions from your own information, shares your catalogue, takes bookings and orders, and hands the chat to a person whenever it should. Everything runs through the official WhatsApp Business Platform in your name.",
     price: { usd: 600, inr: 20000 },
     priceNote: "Plus Meta's message charges, billed to you directly",
     timeline: "2–3 weeks",
     keyword: "WhatsApp chatbot for business",
-    metaTitle: "WhatsApp Chatbot for Business: WhatsApp AI Kit",
+    metaTitle: "WhatsApp Chatbot for Business: WhatsApp AI Loop",
     metaDescription:
       "An AI agent on your WhatsApp Business number that answers questions, shares your catalogue, books and sells, then hands over.",
     includes: [
@@ -751,7 +754,7 @@ export const KITS = [
       { title: "Train and test", desc: "The agent learns from your information and is tested against real questions, including tricky ones, before any customer sees it." },
       { title: "Go live", desc: "The agent starts on your number, with your team watching the shared inbox for the first days." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days we review conversations, fix weak answers, add missing information and report what the agent handled.",
       },
     ],
@@ -787,14 +790,14 @@ export const KITS = [
   {
     slug: "ai-assistant",
     line: "ai-automation",
-    name: "AI Assistant Kit",
+    name: "AI Assistant Loop",
     promise: "an AI assistant on your website that answers from your own documents",
     summary:
-      "The AI Assistant Kit adds an AI assistant to your website or app that answers questions from your own documents, help pages and policies, and says so when it does not know. Built and tested in three to four weeks, it captures leads, books calls and hands over to your team with the conversation attached.",
+      "The AI Assistant Loop adds an AI assistant to your website or app that answers questions from your own documents, help pages and policies, and says so when it does not know. Built and tested in three to four weeks, it captures leads, books calls and hands over to your team with the conversation attached.",
     price: { usd: 900, inr: 30000 },
     timeline: "3–4 weeks",
     keyword: "AI chatbot for website",
-    metaTitle: "AI Chatbot for Website: AI Assistant Kit",
+    metaTitle: "AI Chatbot for Website: AI Assistant Loop",
     metaDescription:
       "A website AI assistant that answers from your own documents, admits when it does not know, captures leads and hands over.",
     includes: [
@@ -821,7 +824,7 @@ export const KITS = [
       { title: "Test", desc: "We run 50 real questions, check each answer against the one you expect, and fix the gaps before launch." },
       { title: "Launch", desc: "The assistant goes live on your site, with conversation logs your team can read." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days we review real conversations, fill gaps in the documents and tune the answers, then share what users asked most.",
       },
     ],
@@ -857,10 +860,10 @@ export const KITS = [
   {
     slug: "workflow-automation",
     line: "ai-automation",
-    name: "Workflow Automation Kit",
+    name: "Workflow Automation Loop",
     promise: "your repetitive admin, done automatically between the tools you already use",
     summary:
-      "The Workflow Automation Kit automates up to three repetitive processes between the tools you already use, in two to three weeks. Typical examples are sending leads into a CRM, creating invoices from orders, booking reminders and weekly reports. Each automation has alerts and a log, so nothing fails silently.",
+      "The Workflow Automation Loop automates up to three repetitive processes between the tools you already use, in two to three weeks. Typical examples are sending leads into a CRM, creating invoices from orders, booking reminders and weekly reports. Each automation has alerts and a log, so nothing fails silently.",
     price: { usd: 300, inr: 10000 },
     timeline: "2–3 weeks",
     keyword: "business workflow automation services",
@@ -890,7 +893,7 @@ export const KITS = [
       { title: "Build and test", desc: "Each automation is built, tested with real data, and given alerts and a log." },
       { title: "Switch on", desc: "Automations go live one at a time, with your team checking the first runs." },
       {
-        title: "The Loop",
+        title: "The Tune-Up",
         desc: "For 30 days we watch every run, fix edge cases as they appear, and report the hours saved.",
       },
     ],

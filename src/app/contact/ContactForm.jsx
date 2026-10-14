@@ -7,7 +7,7 @@ import { FadeInUpImmediate } from "@/components/motion";
 
 const FORM_STEPS = ["What you need", "Size & Timeline", "Details"];
 
-const SIZES = ["One kit", "A few kits together", "Something bigger", "Not sure yet"];
+const SIZES = ["One Loop", "A few Loops together", "Something bigger", "Not sure yet"];
 
 /**
  * Split out of page.js so the contact page can be a Server Component. The page
@@ -49,7 +49,7 @@ export default function ContactForm({ topics, pick = null }) {
     try {
       const payload = {
         "Project Type": formData.type,
-        "Kit or Plan": formData.kit || "None picked",
+        "Loop or Plan": formData.kit || "None picked",
         "Size": formData.budget,
         "Timeline": formData.timeline,
         name: formData.name,

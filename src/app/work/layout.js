@@ -10,7 +10,7 @@ export const metadata = {
   ...buildMetadata({
     title: "Work",
     description:
-      "Websites, online stores and apps LogixLoops has built for real clients in India, each linked to the kit it would start from today, with its price.",
+      "Websites, online stores and apps LogixLoops has built for real clients in India, each linked to the Loop it would start from today, with its price.",
     path: "/work",
     keywords: [
       "website design portfolio",

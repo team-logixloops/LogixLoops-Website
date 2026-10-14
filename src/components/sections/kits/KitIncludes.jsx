@@ -11,7 +11,7 @@ export default function KitIncludes({ items, color, kitSlug }) {
   return (
     <section className={SECTION}>
       <FadeInUp>
-        <SectionHeader overline="What's in the kit" title="Everything included in the price" align="left" />
+        <SectionHeader overline="What's in the Loop" title="Everything included in the price" align="left" />
       </FadeInUp>
       <ul className="grid max-w-4xl grid-cols-1 gap-x-gutter gap-y-4 md:grid-cols-2">
         {items.map((item) => (

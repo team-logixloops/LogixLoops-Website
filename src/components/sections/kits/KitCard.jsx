@@ -12,7 +12,7 @@ export default function KitCard({ kit, color }) {
 
   return (
     <Link
-      href={`/kits/${kit.slug}`}
+      href={`/loops/${kit.slug}`}
       className="level-gauge flex h-full flex-col rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 p-6 md:p-8 transition-colors duration-300 hover:border-primary/30"
     >
       <h3 className="font-display text-xl text-on-surface mb-2">{kit.name}</h3>

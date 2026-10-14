@@ -16,7 +16,7 @@ export default function FeaturedKitsSection() {
     <section className="relative z-10 px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl border-t border-outline-variant/30">
       <FadeInUp>
         <SectionHeader
-          overline="Featured kits"
+          overline="Featured Loops"
           title="Where most businesses start"
           description="A fixed scope, a timeline and a starting price on every one. Pick one now and add another when it pays off."
         />
@@ -27,8 +27,8 @@ export default function FeaturedKitsSection() {
         ))}
       </div>
       <div className="mt-stack-md">
-        <Button href="/kits" variant="ghost" icon="arrow_forward" iconPosition="right">
-          See all {KITS.length} kits
+        <Button href="/loops" variant="ghost" icon="arrow_forward" iconPosition="right">
+          See all {KITS.length} Loops
         </Button>
       </div>
     </section>

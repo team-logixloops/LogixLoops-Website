@@ -33,12 +33,12 @@ export const BRAND = {
   // artwork, where it has to say what the image says.
   logoTagline: "Your Unfair Advantage",
   description:
-    "A brand, tech and growth studio in Jaipur. Websites, apps, branding, SEO and AI visibility, and AI automation, sold as kits with published prices.",
+    "A brand, tech and growth studio in Jaipur. Websites, apps, branding, SEO and AI visibility, and AI automation, sold as fixed-scope packages called Loops, with published prices.",
   // One-sentence entity definition. Used in schema and in llms.txt, so it is
   // written to be quoted verbatim by an answer engine. Must match
   // docs/brand-voice-and-search.md word for word.
   definition:
-    "LogixLoops is a brand, technology and growth studio based in Jaipur, India. It sells fixed-scope Advantage Kits with published starting prices for websites, apps, branding, SEO and AI search visibility, and AI automation, for businesses in India, the US, the UK and the UAE.",
+    "LogixLoops is a brand, technology and growth studio based in Jaipur, India. It sells fixed-scope service packages called Loops, with published starting prices, for websites, apps, branding, SEO and AI search visibility, and AI automation, for businesses in India, the US, the UK and the UAE.",
   email: "logixloops@gmail.com",
   // E.164 for schema and tel: links. The display string is what humans read.
   phone: "+918764373589",
@@ -117,7 +117,7 @@ export const PROMISES = [
   {
     icon: "sell",
     title: "Price on the box",
-    detail: "Every kit has a published starting price, a fixed scope and a timeline.",
+    detail: "Every Loop has a published starting price, a fixed scope and a timeline.",
     usual: "Prices hidden behind a quote request",
   },
   {
@@ -127,8 +127,8 @@ export const PROMISES = [
     usual: "Three vendors who blame each other",
   },
   {
-    icon: "all_inclusive",
-    title: "The Loop",
+    icon: "tune",
+    title: "The Tune-Up",
     detail: "For 30 days after launch we measure, fix and tune with real data.",
     usual: "Ship the project and disappear",
   },
@@ -167,22 +167,18 @@ const navImage = (slug) => `/nav/${slug}.webp`;
 
 export const NAV_LINKS = [
   {
-    label: "Services",
-    href: "/services",
+    label: "Loops",
+    href: "/loops",
     hasDropdown: true,
     // The plain label is the link, because it is what people scan for. The
     // memorable name leads the description, so the two still appear together.
     children: LINES.map((line) => ({
       label: line.label,
-      href: `/services/${line.slug}`,
+      href: `/loops/${line.slug}`,
       icon: line.icon,
       description: `${line.name}. ${line.pitch}`,
       image: line.navImage,
     })),
-  },
-  {
-    label: "Kits",
-    href: "/kits",
   },
   {
     // Labelled "Work", not "Solutions", the destination and every child link
@@ -282,8 +278,8 @@ export const FOOTER_LINKS = {
     { label: "Contact", href: "/contact" },
   ],
   services: [
-    ...LINES.map((line) => ({ label: line.label, href: `/services/${line.slug}` })),
-    { label: "All kits", href: "/kits" },
+    ...LINES.map((line) => ({ label: line.label, href: `/loops/${line.slug}` })),
+    { label: "All Loops", href: "/loops" },
   ],
   resources: [
     { label: "Work", href: "/work" },

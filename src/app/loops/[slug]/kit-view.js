@@ -1,5 +1,3 @@
-import { notFound } from "next/navigation";
-import { getAllKits, getKitBySlug } from "@/data/kits";
 import { getLineBySlug } from "@/data/lines";
 import { getAllCaseStudies } from "@/data/caseStudies";
 import { formatPrice } from "@/lib/pricing";
@@ -25,31 +23,18 @@ import {
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
-// Every kit is known at build time. Anything else is a 404, not a render.
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return getAllKits().map((kit) => ({ slug: kit.slug }));
-}
-
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const kit = getKitBySlug(slug);
-  if (!kit) return {};
-
+/* A Loop (a kit in the data) at /loops/<slug>. Rendered by
+   ../[slug]/page.js, which serves lines and Loops from one URL tree. */
+export function kitMetadata(kit) {
   return buildMetadata({
     title: kit.metaTitle,
     description: `${kit.metaDescription} From ${formatPrice(kit.price)}.`,
-    path: `/kits/${kit.slug}`,
+    path: `/loops/${kit.slug}`,
     keywords: [kit.keyword, kit.name, `${kit.name} price`],
   });
 }
 
-export default async function KitPage({ params }) {
-  const { slug } = await params;
-  const kit = getKitBySlug(slug);
-  if (!kit) notFound();
-
+export default function KitView({ kit }) {
   const line = getLineBySlug(kit.line);
   const studies = getAllCaseStudies().filter((study) => kit.work.includes(study.slug));
 
@@ -67,8 +52,8 @@ export default async function KitPage({ params }) {
       <SchemaMarkup
         schema={generateBreadcrumbSchema([
           { label: "Home", path: "/" },
-          { label: "Kits", path: "/kits" },
-          { label: kit.name, path: `/kits/${kit.slug}` },
+          { label: "Loops", path: "/loops" },
+          { label: kit.name, path: `/loops/${kit.slug}` },
         ])}
       />
 
@@ -79,7 +64,7 @@ export default async function KitPage({ params }) {
       <KitAddOns addOns={kit.addOns} color={line.color} />
       <UnderTheHood points={kit.underTheHood} demo={kit.demo} color={line.color} />
       {studies.length > 0 && (
-        <ServiceMasterRelatedWork studies={studies} color={line.color} title="Built with this kit" />
+        <ServiceMasterRelatedWork studies={studies} color={line.color} title="Built with this Loop" />
       )}
       <ServiceMasterFAQ faqs={linkFaqs(kit.faqs, kit.slug)} color={line.color} />
       <RelatedKits kits={relatedKits(kit)} />
@@ -87,8 +72,8 @@ export default async function KitPage({ params }) {
       <StudioCta
         heading={`Start your ${kit.name}`}
         body="Tell us what you are building. The first call is with the people who would build it."
-        primary={{ href: `/contact?kit=${kit.slug}`, label: "Start this kit" }}
-        secondary={{ href: "/kits", label: "See every kit" }}
+        primary={{ href: `/contact?kit=${kit.slug}`, label: "Start this Loop" }}
+        secondary={{ href: "/loops", label: "See every Loop" }}
       />
     </main>
   );

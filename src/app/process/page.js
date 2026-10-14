@@ -31,9 +31,9 @@ export default function ProcessPage() {
       <PageHero
         preset="process"
         eyebrow="Process"
-        title="How a kit runs."
+        title="How a Loop runs."
         accent="Five steps, no surprises."
-        lead="Every LogixLoops kit runs the same five steps: pick a kit, kick-off, build, launch and The Loop. Each step ends with something you can see and approve. Below that is the engineering method we use for bigger builds, for the technical reader."
+        lead="Every LogixLoops Loop runs the same five steps: pick a Loop, kick-off, build, launch and The Tune-Up. Each step ends with something you can see and approve. Below that is the engineering method we use for bigger builds, for the technical reader."
         cue="The five steps"
       />
 
@@ -43,15 +43,15 @@ export default function ProcessPage() {
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl">
           <FadeInUp>
             <SectionHeader
-              overline="Every kit"
-              title="Five steps, from pick to The Loop"
-              description="The same for a logo or an app. Each kit page adds its own timeline and the details of each step."
+              overline="Every Loop"
+              title="Five steps, from pick to The Tune-Up"
+              description="The same for a logo or an app. Each Loop page adds its own timeline and the details of each step."
             />
           </FadeInUp>
-          <ScrollTimeline label="How a LogixLoops kit runs" items={KIT_RAIL} />
+          <ScrollTimeline label="How a LogixLoops Loop runs" items={KIT_RAIL} />
           <div className="mt-stack-lg flex flex-col gap-4 sm:flex-row">
-            <Button href="/kits" icon="arrow_forward" iconPosition="right">
-              Browse the kits
+            <Button href="/loops" icon="arrow_forward" iconPosition="right">
+              Browse the Loops
             </Button>
             <Button href="/pricing" variant="ghost">
               See the price list
@@ -219,11 +219,11 @@ export default function ProcessPage() {
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center">
           <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/85 shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
-            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Start with a kit.</h2>
-            <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Pick the kit closest to what you need, or bring us the goal and the deadline and we will tell you which kit fits, or how we would scope it if none does.</p>
+            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Start with a Loop.</h2>
+            <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Pick the Loop closest to what you need, or bring us the goal and the deadline and we will tell you which Loop fits, or how we would scope it if none does.</p>
             <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button href="/kits" size="lg" className="shadow-lg">
-                Browse the kits
+              <Button href="/loops" size="lg" className="shadow-lg">
+                Browse the Loops
               </Button>
               <Button href="/contact" variant="ghost" size="lg">
                 Start a project

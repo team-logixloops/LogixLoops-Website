@@ -11,7 +11,7 @@ import { cheapest, formatPriceProse } from "@/lib/pricing";
 
 /* The lowest starting price is read from the catalogue, so the snippet in
    search results can never quote a price the page no longer shows. */
-const PRICING_DESCRIPTION = `Starting prices for every LogixLoops kit and plan: websites, stores, apps, branding, SEO, AI visibility and automation. Kits from ${formatPriceProse(cheapest(KITS).price)}.`;
+const PRICING_DESCRIPTION = `Starting prices for every LogixLoops Loop and plan: websites, stores, apps, branding, SEO, AI visibility and automation. Loops from ${formatPriceProse(cheapest(KITS).price)}.`;
 
 export const metadata = buildMetadata({
   title: "Pricing: Website, App, Branding and SEO Costs",

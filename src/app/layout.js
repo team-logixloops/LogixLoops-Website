@@ -38,7 +38,7 @@ const oswald = Oswald({
  * and twitter:title drift away from the real one. */
 const SITE_TITLE = "LogixLoops | Brand, Web, App & AI Studio in Jaipur";
 const SITE_DESCRIPTION =
-  "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as kits with published prices, for India, the US, the UK and the UAE.";
+  "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as Loops with published prices, for India, the US, the UK and the UAE.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),

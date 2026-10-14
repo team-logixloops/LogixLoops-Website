@@ -50,7 +50,7 @@ const HOME_PUBLISHED = "2026-05-16";
 const HOME_MODIFIED = "2026-10-14";
 
 const HOME_DESCRIPTION =
-  "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as kits with published prices, for India, the US, the UK and the UAE.";
+  "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as Loops with published prices, for India, the US, the UK and the UAE.";
 
 export const metadata = buildMetadata({
   // `title.absolute`: the home page is the one route that must bypass the
@@ -107,9 +107,9 @@ export default function HomePage() {
           cannot see, which is the condition Google attaches to HowTo. */}
       <SchemaMarkup
         schema={generateHowToSchema({
-          name: "How a LogixLoops kit runs",
+          name: "How a LogixLoops Loop runs",
           description:
-            "The five steps every LogixLoops kit follows, from picking a kit to 30 days of improvements after launch.",
+            "The five steps every LogixLoops Loop follows, from picking a Loop to 30 days of improvements after launch.",
           steps: KIT_STEPS.map((step) => ({ name: step.title, text: step.description })),
         })}
       />
@@ -119,7 +119,7 @@ export default function HomePage() {
           items: LINES.map((line) => ({
             name: line.label,
             description: line.summary,
-            path: `/services/${line.slug}`,
+            path: `/loops/${line.slug}`,
           })),
         })}
       />

@@ -28,7 +28,7 @@ export function kitMentions(text, { except } = {}) {
     .filter(Boolean)
     .map((part) => {
       const kit = KITS.find((candidate) => candidate.name === part);
-      return kit && kit.slug !== except ? { text: part, href: `/kits/${kit.slug}` } : { text: part };
+      return kit && kit.slug !== except ? { text: part, href: `/loops/${kit.slug}` } : { text: part };
     });
 }
 

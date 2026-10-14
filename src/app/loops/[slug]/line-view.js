@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getAllLines, getLineBySlug } from "@/data/lines";
 import { getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
@@ -29,34 +27,21 @@ import { buildMetadata } from "@/lib/seo";
 /* Pit Crew sells monthly plans rather than kits. */
 const PLANS_LINE = "maintenance-and-support";
 
-// Every line is known at build time. Anything else is a 404, not a render.
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return getAllLines().map((line) => ({ slug: line.slug }));
-}
-
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const line = getLineBySlug(slug);
-  if (!line) return {};
-
+/* A line (one of the six groups) at /loops/<line>. Rendered by
+   ../[slug]/page.js, which serves lines and Loops from one URL tree. */
+export function lineMetadata(line) {
   return buildMetadata({
     title: line.metaTitle,
     description: line.metaDescription,
-    path: `/services/${line.slug}`,
+    path: `/loops/${line.slug}`,
     keywords: line.keywords,
   });
 }
 
-export default async function LinePage({ params }) {
-  const { slug } = await params;
-  const line = getLineBySlug(slug);
-  if (!line) notFound();
-
+export default function LineView({ line }) {
   const isPlans = line.slug === PLANS_LINE;
   const offers = isPlans ? getAllPlans() : getKitsByLine(line.slug);
-  const fromLabel = `${isPlans ? "Plans" : "Kits"} from ${formatPrice(cheapest(offers).price)}`;
+  const fromLabel = `${isPlans ? "Plans" : "Loops"} from ${formatPrice(cheapest(offers).price)}`;
   const offerSlugs = new Set(offers.map((offer) => offer.slug));
   const studies = isPlans
     ? []
@@ -75,8 +60,8 @@ export default async function LinePage({ params }) {
       {!isPlans && (
         <SchemaMarkup
           schema={generateItemListSchema({
-            name: `${line.name}: ${line.label} kits`,
-            items: offers.map((kit) => ({ name: kit.name, description: kit.summary, path: `/kits/${kit.slug}` })),
+            name: `${line.name}: ${line.label} Loops`,
+            items: offers.map((kit) => ({ name: kit.name, description: kit.summary, path: `/loops/${kit.slug}` })),
           })}
         />
       )}
@@ -84,8 +69,8 @@ export default async function LinePage({ params }) {
       <SchemaMarkup
         schema={generateBreadcrumbSchema([
           { label: "Home", path: "/" },
-          { label: "Services", path: "/services" },
-          { label: line.label, path: `/services/${line.slug}` },
+          { label: "Loops", path: "/loops" },
+          { label: line.label, path: `/loops/${line.slug}` },
         ])}
       />
 
@@ -95,7 +80,7 @@ export default async function LinePage({ params }) {
       <section className={SECTION}>
         <SectionHeader
           overline={`${line.name} · ${line.label}`}
-          title={isPlans ? "Pick a plan" : "Pick a kit"}
+          title={isPlans ? "Pick a plan" : "Pick a Loop"}
           description={
             isPlans
               ? "Every plan is monthly and priced up front."
@@ -110,14 +95,14 @@ export default async function LinePage({ params }) {
         <p className="mt-6 font-body text-body-sm text-on-surface-variant">
           {CURRENCY_NOTE}{" "}
           <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
-            See every kit and plan with its price
+            See every Loop and plan with its price
           </Link>
           .
         </p>
       </section>
 
       {studies.length > 0 && (
-        <ServiceMasterRelatedWork studies={studies} color={line.color} title="Work built with these kits" />
+        <ServiceMasterRelatedWork studies={studies} color={line.color} title="Work built with these Loops" />
       )}
       <UnderTheHood points={line.underTheHood} />
       <ServiceMasterFAQ faqs={linkFaqs(line.faqs)} color={line.color} />
@@ -126,7 +111,7 @@ export default async function LinePage({ params }) {
         heading={`Start with ${line.name}: ${line.label}`}
         body={line.pitch}
         primary={{ href: `/contact?line=${line.slug}`, label: "Start a project" }}
-        secondary={{ href: "/kits", label: "See every kit" }}
+        secondary={{ href: "/loops", label: "See every Loop" }}
       />
     </main>
   );

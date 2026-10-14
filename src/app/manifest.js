@@ -3,7 +3,7 @@ export default function manifest() {
     name: "LogixLoops: Brand, Web, App and AI Studio",
     short_name: "LogixLoops",
     description:
-      "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as kits with published prices, for India, the US, the UK and the UAE.",
+      "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as Loops with published prices, for India, the US, the UK and the UAE.",
     start_url: "/",
     display: "standalone",
     // Both light, and both `surface`. The installed app's toolbar and splash

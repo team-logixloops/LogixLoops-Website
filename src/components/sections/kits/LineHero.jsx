@@ -42,8 +42,8 @@ export default function LineHero({ line, fromLabel }) {
             <Button href={`/contact?line=${line.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
               Start a project
             </Button>
-            <Button href="/kits" variant="ghost" size="lg">
-              See every kit
+            <Button href="/loops" variant="ghost" size="lg">
+              See every Loop
             </Button>
           </div>
         </FadeInUpImmediate>

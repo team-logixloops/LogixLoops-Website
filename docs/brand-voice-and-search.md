@@ -2,7 +2,7 @@
 
 Source of truth for every word on logixloops.in. If a sentence on the site
 disagrees with this file, the file wins. Design record:
-`docs/superpowers/specs/2026-10-13-advantage-kits-repositioning-design.md`.
+`docs/superpowers/specs/2026-10-13-advantage-Loops-repositioning-design.md`.
 
 ---
 
@@ -13,12 +13,20 @@ disagrees with this file, the file wins. Design record:
 LogixLoops is a brand, tech and growth studio in Jaipur, selling to India and
 the world. The unfair advantage is the combination:
 
-> Brand, build and growth from one studio, sold as kits with public prices.
+> Brand, build and growth from one studio, sold as Loops with public prices.
 > Everything is yours, and it is built to be found.
 
-The name does work too. Agencies sell one-off projects; LogixLoops builds
-loops, systems that keep compounding after launch. Every kit ends with **The
-Loop**: 30 days of measuring, fixing and tuning with real data.
+The name does work too. Agencies sell one-off projects; LogixLoops sells
+**Loops**: fixed-scope packages that run build, launch, measure, improve. Every
+Loop ends with **The Tune-Up**: 30 days of measuring, fixing and tuning with
+real data.
+
+**Naming (2026-10-14).** The product noun is **Loop**, capitalised, never
+"Loop" or "package" in visible copy: "Business Website Loop", "every Loop",
+"Pick a Loop". "Package" is still used where search needs it: page titles,
+meta descriptions, keywords and the entity definition ("service packages
+called Loops"). In code and data the record is still a `kit` (`src/data/kits.js`,
+`KitCard`); that is an internal name only.
 
 ### Entity definition
 
@@ -26,9 +34,9 @@ Used verbatim in schema, `llms.txt`, About and anywhere an assistant might
 quote what LogixLoops is:
 
 > LogixLoops is a brand, technology and growth studio based in Jaipur, India.
-> It sells fixed-scope Advantage Kits with published starting prices for
-> websites, apps, branding, SEO and AI search visibility, and AI automation,
-> for businesses in India, the US, the UK and the UAE.
+> It sells fixed-scope service packages called Loops, with published starting
+> prices, for websites, apps, branding, SEO and AI search visibility, and AI
+> automation, for businesses in India, the US, the UK and the UAE.
 
 ### Six lines
 
@@ -38,25 +46,27 @@ plain label.
 
 | Name | Plain label | URL |
 |---|---|---|
-| Engine | Web & App Development | `/services/web-and-app-development` |
-| Spark | Branding & Identity | `/services/branding` |
-| Glow-Up | Website Redesign & Upgrades | `/services/website-redesign` |
-| Spotlight | SEO & AI Search Visibility | `/services/seo-and-ai-search` |
-| Autopilot | AI & Automation | `/services/ai-automation` |
-| Pit Crew | Maintenance & Support Plans | `/services/maintenance-and-support` |
+| Engine | Web & App Development | `/loops/web-and-app-development` |
+| Spark | Branding & Identity | `/loops/branding` |
+| Glow-Up | Website Redesign & Upgrades | `/loops/website-redesign` |
+| Spotlight | SEO & AI Search Visibility | `/loops/seo-and-ai-search` |
+| Autopilot | AI & Automation | `/loops/ai-automation` |
+| Pit Crew | Maintenance & Support Plans | `/loops/maintenance-and-support` |
 
-Kits are called **Advantage Kits** and live at `/kits/<slug>`. Their data is
-`src/data/kits.js`; plans are `src/data/plans.js`; lines are `src/data/lines.js`.
+Lines and Loops share one URL tree: `/loops` is the hub, `/loops/<line>` a
+line, `/loops/<loop>` a Loop (slugs never collide). The old `/services` and
+`/kits` URLs 308-redirect there. Data: Loops are `src/data/kits.js`, plans
+`src/data/plans.js`, lines `src/data/lines.js`.
 
 ### Six promises
 
-Each one is the opposite of a common agency habit. They appear on every kit
+Each one is the opposite of a common agency habit. They appear on every Loop
 page and as a comparison on the home page. Data: `PROMISES` in
 `src/lib/constants.js`.
 
 1. **Price on the box.** Published starting price, scope and timeline.
 2. **One studio.** Brand, tech and growth on one team, one thread.
-3. **The Loop.** 30 days after launch to measure, fix and tune.
+3. **The Tune-Up.** 30 days after launch to measure, fix and tune.
 4. **Built to be found.** Every build ships ready for Google and AI search.
 5. **Yours from day one.** Domain, code, designs and accounts in the client's name.
 6. **Talk to the builders.** The people on the call do the work.
@@ -87,7 +97,7 @@ find out what we sell.
    a named thing or a named standard. If it cannot be, cut it.
    - No: "Blazing-fast, world-class websites"
    - Yes: "Checked on a mid-range Android phone before launch"
-2. **Answer first.** The first sentence of a page, a kit summary or an FAQ
+2. **Answer first.** The first sentence of a page, a Loop summary or an FAQ
    answer answers the question. The rest earns it.
 3. **Short line, then one that pays for it.** Never three long sentences in a row.
 4. **Say the uncomfortable thing first.** "Nobody can guarantee the first
@@ -100,7 +110,7 @@ find out what we sell.
 
 No question-phrased section headings ("What is X?") under a hero. Questions
 belong in FAQ accordions. Section headings are short declarative labels
-("Everything included in the price", "Pick a kit").
+("Everything included in the price", "Pick a Loop").
 
 ### Punctuation
 
@@ -121,13 +131,13 @@ belong in FAQ accordions. Section headings are short declarative labels
 
 Every number on the site is one of:
 
-1. **Countable from the site itself.** Six lines, 13 kits, 30-day Loop.
+1. **Countable from the site itself.** Six lines, 13 Loops, 30-day Tune-Up.
 2. **A commitment we sign.** Written as a standard: "we target", "included".
 3. **A client-verified outcome.** Only with written permission, and always
    attributed to the client, never presented as our own figure.
 
 **Every price comes from the data files.** No price is typed into a page or
-a component. FAQ answers that quote prices build them from the kit and plan
+a component. FAQ answers that quote prices build them from the Loop and plan
 records. All prices are "from" prices, shown in USD and INR together.
 
 ---
@@ -143,21 +153,21 @@ records. All prices are "from" prices, shown in USD and INR together.
 
 ### Keyword ownership
 
-One primary keyword per URL. **Line pages own the category head term, kit
+One primary keyword per URL. **Line pages own the category head term, Loop
 pages own the "package / price / cost" variant, blog posts own the
-informational question.** A line page and a kit page never compete for the
-same query. Each kit's owned keyword is its `keyword` field.
+informational question.** A line page and a Loop page never compete for the
+same query. Each Loop's owned keyword is its `keyword` field.
 
 Clusters:
 
-- **Brand:** LogixLoops, LogixLoops Jaipur, LogixLoops kits, Advantage Kits.
+- **Brand:** LogixLoops, LogixLoops Jaipur, LogixLoops Loops.
 - **Global head terms (line pages):** branding agency, web development
   company, app development company, website redesign services, SEO agency,
   AI automation agency, GEO agency.
 - **Local (location page and home):** website development company in
   Jaipur, branding agency in Jaipur, app development company in Jaipur, SEO
   company in Jaipur, digital agency in Jaipur.
-- **Kit long-tail (kit pages):** the `keyword` field of each kit.
+- **Loop long-tail (Loop pages):** the `keyword` field of each Loop.
 - **Global outsourcing (market pages):** hire web developers from India,
   outsource app development to India, branding agency for UAE startups.
 - **Cost and how-to questions (FAQ answers and blog):** how much does a
@@ -171,12 +181,12 @@ Clusters:
   contact page and every external directory. In the site these live only on
   `BRAND` in `src/lib/constants.js`.
 - **One `ProfessionalService` entity** in the root layout, with the entity
-  definition above and an `OfferCatalog` of every kit and plan with prices.
+  definition above and an `OfferCatalog` of every Loop and plan with prices.
 - **Every FAQ answer starts with the answer.**
 - **No FAQ question appears on two URLs.** `test/content.test.mjs` checks it.
 - **`sameAs` lists only profiles that resolve.**
 - **`llms.txt` stays in sync with the sitemap.** `test/llms.test.mjs` checks
-  the lines and kits.
+  the lines and Loops.
 - **No fake data in the DOM.**
 
 ---

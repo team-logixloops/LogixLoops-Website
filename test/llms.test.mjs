@@ -16,9 +16,9 @@ test("llms.txt opens with the entity definition", () => {
 });
 
 test("llms.txt links every line, and every kit with its live price", () => {
-  for (const line of LINES) assert.ok(text.includes(`https://logixloops.in/services/${line.slug}`), line.slug);
+  for (const line of LINES) assert.ok(text.includes(`https://logixloops.in/loops/${line.slug}`), line.slug);
   for (const kit of KITS) {
-    assert.ok(text.includes(`https://logixloops.in/kits/${kit.slug}`), kit.slug);
+    assert.ok(text.includes(`https://logixloops.in/loops/${kit.slug}`), kit.slug);
     assert.ok(text.includes(formatPrice(kit.price)), `${kit.slug} price`);
   }
 });

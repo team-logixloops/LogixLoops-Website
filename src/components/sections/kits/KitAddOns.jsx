@@ -15,7 +15,7 @@ export default function KitAddOns({ addOns, color }) {
         <SectionHeader
           overline="Add-ons"
           title="Add only what you need"
-          description="Priced up front, like the kit itself."
+          description="Priced up front, like the Loop itself."
           align="left"
         />
       </FadeInUp>

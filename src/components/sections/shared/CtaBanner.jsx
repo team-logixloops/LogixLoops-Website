@@ -23,9 +23,9 @@ if (typeof window !== "undefined") {
  *   - the fox watermark and the two colour washes travel at their own rates,
  *     which is what gives the panel depth instead of a flat gradient.
  *
- * All of it is scrubbed to scroll position rather than fired on entry, so
- * scrolling back up runs it backwards and the section is never caught in a
- * half-finished state.
+ * The unmask and the parallax are scrubbed to scroll position. The contents
+ * are played once as the panel enters, so the heading is settled before
+ * anyone starts reading it.
  */
 export default function CtaBanner() {
   const root = useRef(null);
@@ -103,19 +103,18 @@ export default function CtaBanner() {
         }
       );
 
-      gsap.from(items, {
-        y: 44,
+      // Played, not scrubbed: a scrubbed heading only settled once it was
+      // near the top of the screen, so it was still moving while being read.
+      const itemsIn = gsap.from(items, {
+        y: 24,
         opacity: 0,
-        stagger: 0.12,
+        duration: 0.6,
+        stagger: 0.08,
         ease: "power2.out",
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top 75%",
-          end: "top 30%",
-          scrub: 0.6,
-          fastScrollEnd: true,
-          onRefresh: settleIfUnscrollable(items, "transform,opacity,willChange"),
-          onScrubComplete: retire(items, "transform,opacity,willChange"),
+        scrollTrigger: { trigger: root.current, start: "clamp(top 85%)", once: true },
+        onComplete: () => {
+          itemsIn.scrollTrigger?.kill();
+          gsap.set(items, { clearProps: "transform,opacity,willChange" });
         },
       });
 
@@ -221,8 +220,8 @@ export default function CtaBanner() {
             className="font-body text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto"
           >
             Tell us what you need. You talk to the people who would build it,
-            and you leave the first call with the right kit and a written
-            price. If no kit fits, we say so on the call.
+            and you leave the first call with the right Loop and a written
+            price. If no Loop fits, we say so on the call.
           </p>
 
           <div
@@ -235,8 +234,8 @@ export default function CtaBanner() {
             <Button href="/contact" size="lg" className="w-full sm:w-auto px-10 shadow-btn-primary-lg text-[16px] h-14">
               Start a project
             </Button>
-            <Button href="/kits" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/70 hover:bg-surface-container-lowest/95 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
-              Browse the kits
+            <Button href="/loops" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/70 hover:bg-surface-container-lowest/95 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
+              Browse the Loops
             </Button>
           </div>
         </div>

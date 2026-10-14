@@ -33,7 +33,7 @@ export default function KitFit({ fitFor, notFor, color, kitSlug }) {
     <section className={SECTION}>
       <div className="grid grid-cols-1 gap-gutter md:grid-cols-2">
         <FitList title="Right for you if" items={fitFor} icon="check_circle" iconClass={a.text} kitSlug={kitSlug} />
-        <FitList title="Not the right kit if" items={notFor} icon="do_not_disturb_on" iconClass="text-on-surface-variant" kitSlug={kitSlug} />
+        <FitList title="Not the right Loop if" items={notFor} icon="do_not_disturb_on" iconClass="text-on-surface-variant" kitSlug={kitSlug} />
       </div>
     </section>
   );

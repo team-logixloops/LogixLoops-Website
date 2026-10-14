@@ -25,7 +25,7 @@ export default function LineDirectory() {
               glass. It masks itself out on coarse pointers, so the tap
               state on mobile stays clean. */}
           <Link
-            href={`/services/${line.slug}`}
+            href={`/loops/${line.slug}`}
             /* No `backdrop-blur` here, deliberately, and this is why the
                grid used to drag while you scrolled it. Each card carrying a
                24px backdrop filter means one sample-and-blur pass per card,

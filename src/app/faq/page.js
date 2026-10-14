@@ -72,7 +72,7 @@ export default function FAQPage() {
         eyebrow="Knowledge base"
         title="Straight answers."
         accent="First sentence."
-        lead="Kits and pricing, timelines, stack, security posture, IP ownership, and what happens if you want to leave. Every answer here leads with the answer, because nobody reads a FAQ for the build-up."
+        lead="Loops and pricing, timelines, stack, security posture, IP ownership, and what happens if you want to leave. Every answer here leads with the answer, because nobody reads a FAQ for the build-up."
         cue="Browse"
       >
         {/* Search */}

@@ -235,9 +235,9 @@ export const DELIVERY_PIPELINE = [
  */
 export const KIT_STEPS = [
   {
-    title: "Pick a kit",
+    title: "Pick a Loop",
     description:
-      "Choose the kit closest to what you need, or tell us the goal and we point you at one. Every kit page shows the starting price, the timeline and exactly what is included.",
+      "Choose the Loop closest to what you need, or tell us the goal and we point you at one. Every Loop page shows the starting price, the timeline and exactly what is included.",
     icon: "checklist",
     meta: "Price and scope published",
     colorTheme: "primary",
@@ -261,13 +261,13 @@ export const KIT_STEPS = [
   {
     title: "Launch",
     description:
-      "We go live on your domain, in accounts created in your name, then run speed and search checks and submit the site to Google and Bing where the kit includes it.",
+      "We go live on your domain, in accounts created in your name, then run speed and search checks and submit the site to Google and Bing where the Loop includes it.",
     icon: "rocket_launch",
     meta: "Yours from day one",
     colorTheme: "primary",
   },
   {
-    title: "The Loop",
+    title: "The Tune-Up",
     description:
       "For 30 days after launch we watch real usage, fix what turns up and make one round of improvements based on the data. Then we hand everything over with a recorded walkthrough.",
     icon: "all_inclusive",

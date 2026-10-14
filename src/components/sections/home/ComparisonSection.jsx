@@ -14,7 +14,7 @@ export default function ComparisonSection() {
         <SectionHeader
           overline="Your unfair advantage"
           title="The usual agency vs LogixLoops"
-          description="Six habits that make agency projects slow, expensive and hard to leave, and what every LogixLoops kit does instead."
+          description="Six habits that make agency projects slow, expensive and hard to leave, and what every LogixLoops Loop does instead."
         />
       </FadeInUp>
       {/* Phones get one card per promise: three columns at 360px meant

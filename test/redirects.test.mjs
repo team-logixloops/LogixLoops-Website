@@ -10,14 +10,32 @@ test("every retired practice URL redirects permanently to its line", async () =>
   for (const [old, line] of Object.entries(RETIRED)) {
     const rule = redirects.find((r) => r.source === `/services/${old}`);
     assert.ok(rule, `no redirect for ${old}`);
-    assert.equal(rule.destination, `/services/${line}`);
+    assert.equal(rule.destination, `/loops/${line}`);
     assert.equal(rule.permanent, true);
     assert.ok(LINES.some((l) => l.slug === line), `${line} is not a live line`);
   }
 });
 
-test("no redirect shadows a live line or kit page", async () => {
-  const sources = new Set((await nextConfig.redirects()).map((r) => r.source));
-  for (const line of LINES) assert.ok(!sources.has(`/services/${line.slug}`), line.slug);
-  for (const kit of KITS) assert.ok(!sources.has(`/kits/${kit.slug}`), kit.slug);
+test("no redirect shadows a live line or Loop page", async () => {
+  const sources = (await nextConfig.redirects()).map((r) => r.source);
+  assert.ok(!sources.some((source) => source === "/loops" || source.startsWith("/loops/")));
+});
+
+test("every old /services and /kits URL redirects to /loops in one hop", async () => {
+  const redirects = await nextConfig.redirects();
+  const find = (source) => redirects.find((r) => r.source === source);
+  assert.equal(find("/services").destination, "/loops");
+  assert.equal(find("/services/:slug").destination, "/loops/:slug");
+  assert.equal(find("/kits").destination, "/loops");
+  assert.equal(find("/kits/:slug").destination, "/loops/:slug");
+  for (const rule of redirects) {
+    assert.ok(rule.permanent, rule.source);
+    // One hop: no destination is itself a redirect source.
+    assert.ok(!redirects.some((other) => other.source === rule.destination), `${rule.source} chains`);
+  }
+  // The specific practice rules must win over the general /services/:slug one.
+  const firstGeneral = redirects.findIndex((r) => r.source === "/services/:slug");
+  for (const old of Object.keys(RETIRED)) {
+    assert.ok(redirects.findIndex((r) => r.source === `/services/${old}`) < firstGeneral, old);
+  }
 });

@@ -296,10 +296,10 @@ export default function Navbar() {
           {/* ── Desktop CTA ── */}
           <div className="hidden lg:flex items-center gap-4">
             <Link
-              href="/kits"
+              href="/loops"
               className="btn-primary font-label text-label-caps px-6 py-2.5 rounded-full flex items-center justify-center uppercase tracking-widest whitespace-nowrap"
             >
-              Browse the kits
+              Browse the Loops
             </Link>
           </div>
 
@@ -526,11 +526,11 @@ export default function Navbar() {
                 {/* Mobile CTA */}
                 <div className="mt-10">
                   <Link
-                    href="/kits"
+                    href="/loops"
                     className="btn-primary w-full text-center font-label text-label-caps py-4 rounded-full uppercase tracking-widest flex items-center justify-center"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Browse the kits
+                    Browse the Loops
                   </Link>
                 </div>
               </nav>

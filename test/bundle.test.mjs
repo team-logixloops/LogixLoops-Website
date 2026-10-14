@@ -4,12 +4,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { LINES } from "@/data/lines";
 
 /*
- * Navbar, Footer and the services grid are client components. Anything they
+ * Navbar and Footer are client components. Anything they
  * import ships to every page's JavaScript, so they must reach the lines
  * through the small index, never through lines.js, which pulls in the whole
  * kit catalogue to build its FAQ answers.
  */
-const CLIENT_REACHABLE = ["src/lib/constants.js", "src/components/sections/services/ServicesInertiaGrid.jsx"];
+const CLIENT_REACHABLE = ["src/lib/constants.js"];
 
 test("client-reachable modules use the line index, not the full lines module", () => {
   for (const file of CLIENT_REACHABLE) {

@@ -34,6 +34,17 @@ const wholePositive = (n) => Number.isInteger(n) && n > 0;
 const voiceReport = (value) =>
   copyStrings(value).flatMap(([path, text]) => voiceProblems(text).map((p) => `${path}: ${p}`));
 
+test("line and Loop slugs never collide, because both live under /loops/<slug>", () => {
+  const lineSlugs = new Set(LINE_SLUGS);
+  for (const kit of KITS) assert.ok(!lineSlugs.has(kit.slug), kit.slug);
+});
+
+test("every Loop name ends in Loop, and no copy says kit", () => {
+  for (const kit of KITS) assert.match(kit.name, / Loop$/, kit.slug);
+  const copy = JSON.stringify([KITS, LINES, PLANS, FAQS, HOME_FAQS, PRICING_FAQS, SERVICES_FAQS]);
+  assert.ok(!/\bkits?\b/i.test(copy), "copy still says kit");
+});
+
 test("kit slugs are unique and every kit names a known line", () => {
   const slugs = KITS.map((kit) => kit.slug);
   assert.equal(new Set(slugs).size, slugs.length);
@@ -41,7 +52,7 @@ test("kit slugs are unique and every kit names a known line", () => {
 });
 
 test("lookups find kits and plans, and return null for unknown slugs", () => {
-  assert.equal(getKitBySlug("mvp").name, "MVP Kit");
+  assert.equal(getKitBySlug("mvp").name, "MVP Loop");
   assert.equal(getKitBySlug("not-a-kit"), null);
   assert.equal(getKitsByLine("branding").length, 2);
   assert.equal(getPlanBySlug("squad").name, "Squad");
@@ -114,8 +125,8 @@ test("kit meta descriptions stay within 70-160 characters with the price appende
   }
 });
 
-test("every kit ends with The Loop", () => {
-  for (const kit of KITS) assert.equal(kit.steps.at(-1).title, "The Loop", kit.slug);
+test("every Loop ends with The Tune-Up", () => {
+  for (const kit of KITS) assert.equal(kit.steps.at(-1).title, "The Tune-Up", kit.slug);
 });
 
 test("demo keys name a real signature demo", () => {
@@ -184,12 +195,12 @@ test("line copy follows the voice rules", () => {
   assert.deepEqual(voiceReport({ LINES }), []);
 });
 
-test("the /services FAQs describe the lines and kits, not the retired practices", () => {
+test("the /loops FAQs describe the lines and Loops, not the retired practices", () => {
   const text = SERVICES_FAQS.map((faq) => `${faq.question} ${faq.answer}`).join(" ");
   for (const retired of [/\bpractices?\b/i, /strangler fig/i, /dedicated squad/i, /greenfield/i]) {
     assert.ok(!retired.test(text), `still mentions ${retired.source}`);
   }
-  assert.ok(/\bkits?\b/i.test(text), "never mentions kits");
+  assert.ok(/\bLoops?\b/.test(text), "never mentions Loops");
   assert.deepEqual(voiceReport({ SERVICES_FAQS }), []);
 });
 
@@ -220,8 +231,8 @@ test("kit timelines match what the FAQ answers promise", () => {
   }
 });
 
-test("how a kit runs: five steps, ending with The Loop", () => {
-  assert.deepEqual(KIT_STEPS.map((step) => step.title), ["Pick a kit", "Kick-off", "Build", "Launch", "The Loop"]);
+test("how a Loop runs: five steps, ending with The Tune-Up", () => {
+  assert.deepEqual(KIT_STEPS.map((step) => step.title), ["Pick a Loop", "Kick-off", "Build", "Launch", "The Tune-Up"]);
   for (const step of KIT_STEPS) assert.ok(step.icon && step.meta && step.colorTheme, step.title);
   assert.match(KIT_STEPS.at(-1).description, /30 days/);
   assert.deepEqual(voiceReport({ KIT_STEPS }), []);

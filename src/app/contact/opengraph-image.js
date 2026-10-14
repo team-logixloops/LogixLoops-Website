@@ -10,6 +10,6 @@ export default function Image() {
     eyebrow: "Contact",
     title: "Tell us what you need.",
     subtitle:
-      "Talk to the people who would build it. You leave the first call with the right kit and a written price.",
+      "Talk to the people who would build it. You leave the first call with the right Loop and a written price.",
   });
 }

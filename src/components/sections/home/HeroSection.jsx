@@ -6,7 +6,7 @@ import RotatingWord from "@/components/ui/RotatingWord";
 import { FadeInUpImmediate, HeroExit } from "@/components/motion";
 import { PROMISES } from "@/lib/constants";
 
-// Each has to read in "Your next ___ comes in a kit", and together they cover
+// Each has to read in "Your next ___ is one Loop away", and together they cover
 // the lines a first-time visitor is most likely to be shopping for: a brand, a
 // website, a store, an app and an AI agent.
 const HEADLINE_WORDS = ["Brand", "Website", "Store", "App", "AI Agent"];
@@ -71,7 +71,7 @@ export default function HeroSection() {
               <span className="block">
                 <RotatingWord words={HEADLINE_WORDS} />
               </span>
-              <span className="block">comes in a kit.</span>
+              <span className="block">is one Loop away.</span>
             </h1>
           </FadeInUpImmediate>
 
@@ -82,7 +82,7 @@ export default function HeroSection() {
             <p className="font-body text-body-md sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
               LogixLoops is a brand, tech and growth studio in Jaipur,
               building for businesses in India, the US, the UK and the UAE.
-              Pick a kit, see the price upfront, and own everything we make.
+              Pick a Loop, see the price upfront, and own everything we make.
             </p>
           </FadeInUpImmediate>
 
@@ -101,13 +101,13 @@ export default function HeroSection() {
               {/* The kits lead: a fixed scope with a published price answers
                   "what will this cost?" before the reader has to ask. */}
               <Button
-                href="/kits"
+                href="/loops"
                 size="lg"
                 className="px-8 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_16px_-4px_rgba(40,104,198,0.4)]"
                 icon="arrow_forward"
                 iconPosition="right"
               >
-                Browse the kits
+                Browse the Loops
               </Button>
               <Button
                 href="/contact"

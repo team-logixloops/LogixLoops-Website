@@ -20,7 +20,7 @@ import { CURRENCY_NOTE, formatInr, formatUsd } from "@/lib/pricing";
  */
 
 const LEAD =
-  "Every LogixLoops kit has a published starting price, a fixed scope and a timeline. Prices in rupees are for businesses in India, and prices in US dollars apply everywhere else. The price only moves if the scope does, and you approve that in writing first.";
+  "Every LogixLoops Loop has a published starting price, a fixed scope and a timeline. Prices in rupees are for businesses in India, and prices in US dollars apply everywhere else. The price only moves if the scope does, and you approve that in writing first.";
 
 /* What makes a project cost more than its kit's starting price. Each is a
    statement of policy, so the cards take `rule-draw`. */
@@ -29,19 +29,19 @@ const PRICE_MOVERS = [
     icon: "add_circle",
     title: "More of it",
     description:
-      "More pages, products, screens or automations than the kit includes. Each kit page prices its add-ons, so you can see the cost before you ask.",
+      "More pages, products, screens or automations than the Loop includes. Each Loop page prices its add-ons, so you can see the cost before you ask.",
   },
   {
     icon: "cable",
     title: "Things we connect to",
     description:
-      "Systems outside the kit, such as an ERP, a booking engine or older software. We price each connection in writing once we have seen it.",
+      "Systems outside the Loop, such as an ERP, a booking engine or older software. We price each connection in writing once we have seen it.",
   },
   {
     icon: "speed",
     title: "A tighter deadline",
     description:
-      "Launching faster than the kit's timeline means more people at once. It is possible, and the quote says exactly what it adds.",
+      "Launching faster than the Loop's timeline means more people at once. It is possible, and the quote says exactly what it adds.",
   },
 ];
 
@@ -54,7 +54,7 @@ function PriceTable({ line }) {
   return (
     <div className="mb-stack-lg">
       <h3 className="mb-4 font-display text-headline-md text-on-surface">
-        <Link href={`/services/${line.slug}`} className="hover:text-primary transition-colors">
+        <Link href={`/loops/${line.slug}`} className="hover:text-primary transition-colors">
           {line.label}
         </Link>
         <span className="ml-3 font-label text-label-caps uppercase tracking-widest text-on-surface-variant">
@@ -67,7 +67,7 @@ function PriceTable({ line }) {
         {kits.map((kit) => (
           <li key={kit.slug} className="p-4">
             <Link
-              href={`/kits/${kit.slug}`}
+              href={`/loops/${kit.slug}`}
               className="font-display text-lg text-on-surface hover:text-primary transition-colors"
             >
               {kit.name}
@@ -101,10 +101,10 @@ function PriceTable({ line }) {
         className="hidden md:block overflow-x-auto no-scrollbar rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85"
       >
         <table className="w-full min-w-[640px] border-collapse">
-          <caption className="sr-only">Starting prices for LogixLoops {line.label} kits</caption>
+          <caption className="sr-only">Starting prices for LogixLoops {line.label} Loops</caption>
           <thead>
             <tr className="border-b border-outline-variant/30">
-              <th scope="col" className={TH}>Kit</th>
+              <th scope="col" className={TH}>Loop</th>
               <th scope="col" className={TH}>Timeline</th>
               <th scope="col" className={TH}>From, international</th>
               <th scope="col" className={TH}>From, India</th>
@@ -115,7 +115,7 @@ function PriceTable({ line }) {
               <tr key={kit.slug} className="border-b border-outline-variant/20 last:border-0">
                 <th scope="row" className={`${TD} text-left font-normal`}>
                   <Link
-                    href={`/kits/${kit.slug}`}
+                    href={`/loops/${kit.slug}`}
                     className="font-display text-lg text-on-surface hover:text-primary transition-colors"
                   >
                     {kit.name}
@@ -164,10 +164,10 @@ export default function PricingPage() {
               id="price-list"
               className="mb-4 font-display text-headline-lg-mobile md:text-headline-lg text-on-surface"
             >
-              Every kit and its starting price
+              Every Loop and its starting price
             </h2>
             <p className="font-body text-body-lg text-on-surface-variant">
-              {CURRENCY_NOTE} Each kit page lists exactly what the price includes, the add-ons and their prices.
+              {CURRENCY_NOTE} Each Loop page lists exactly what the price includes, the add-ons and their prices.
             </p>
           </div>
           {lines.map((line) => (
@@ -182,7 +182,7 @@ export default function PricingPage() {
             </h2>
             <p className="font-body text-body-lg text-on-surface-variant">
               For after launch: updates, fixes, speed and search work, or a reserved team.{" "}
-              <Link href="/services/maintenance-and-support" className="text-primary underline-offset-4 hover:underline">
+              <Link href="/loops/maintenance-and-support" className="text-primary underline-offset-4 hover:underline">
                 More about Pit Crew
               </Link>
               .
@@ -199,7 +199,7 @@ export default function PricingPage() {
           <SectionHeader
             overline="Above the starting price"
             title="Three things move the number"
-            description="A kit's price covers its listed scope. Only these make it higher, and each one is quoted in writing before work starts."
+            description="A Loop's price covers its listed scope. Only these make it higher, and each one is quoted in writing before work starts."
           />
           <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
             {PRICE_MOVERS.map((mover) => (
@@ -240,8 +240,8 @@ export default function PricingPage() {
           </div>
           <p className="mt-stack-lg max-w-2xl font-body text-body-md text-on-surface-variant">
             More on{" "}
-            <Link href="/kits" className="text-primary hover:underline">
-              what each kit includes
+            <Link href="/loops" className="text-primary hover:underline">
+              what each Loop includes
             </Link>
             ,{" "}
             <Link href="/process" className="text-primary hover:underline">
@@ -256,10 +256,10 @@ export default function PricingPage() {
         </section>
 
         <StudioCta
-          heading="Not sure which kit you need?"
-          body="Tell us what you are trying to do. We will point you at the right kit, or tell you plainly if none of them fit."
+          heading="Not sure which Loop you need?"
+          body="Tell us what you are trying to do. We will point you at the right Loop, or tell you plainly if none of them fit."
           primary={{ href: "/contact", label: "Ask the people who build it" }}
-          secondary={{ href: "/kits", label: "Browse the kits" }}
+          secondary={{ href: "/loops", label: "Browse the Loops" }}
         />
       </PageSurface>
     </>

@@ -8,7 +8,7 @@ import { LogoPuzzle } from "@/components/ui";
 export const metadata = {
   title: "Page Not Found",
   description:
-    "That page does not exist. Browse LogixLoops services, kits with published prices, client work and insights instead.",
+    "That page does not exist. Browse LogixLoops services, Loops with published prices, client work and insights instead.",
   // No `noindex` here on purpose: this route is served with a 404 status, which
   // already keeps it out of the index. A meta robots tag on top of that adds
   // nothing and makes the page look deliberately suppressed to auditing tools.
@@ -56,8 +56,7 @@ export default function NotFound() {
           <ul className="flex flex-col gap-2">
             {[
               { href: "/", label: "Home" },
-              { href: "/services", label: "Services" },
-              { href: "/kits", label: "Advantage Kits" },
+              { href: "/loops", label: "Loops" },
               { href: "/pricing", label: "Pricing" },
               { href: "/work", label: "Selected work" },
               { href: "/blog", label: "Insights" },
@@ -82,13 +81,13 @@ export default function NotFound() {
             id="nf-services"
             className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-4"
           >
-            Services
+            What we do
           </h2>
           <ul className="flex flex-col gap-2">
             {LINES.map((line) => (
               <li key={line.slug}>
                 <Link
-                  href={`/services/${line.slug}`}
+                  href={`/loops/${line.slug}`}
                   className="font-body text-body-md text-on-surface-variant hover:text-primary transition-colors"
                 >
                   {line.label}
@@ -103,13 +102,13 @@ export default function NotFound() {
             id="nf-kits"
             className="font-label text-label-caps text-on-surface uppercase tracking-widest mb-4"
           >
-            Kits
+            Loops
           </h2>
           <ul className="flex flex-col gap-2">
             {KITS.map((kit) => (
               <li key={kit.slug}>
                 <Link
-                  href={`/kits/${kit.slug}`}
+                  href={`/loops/${kit.slug}`}
                   className="font-body text-body-md text-on-surface-variant hover:text-primary transition-colors"
                 >
                   {kit.name}

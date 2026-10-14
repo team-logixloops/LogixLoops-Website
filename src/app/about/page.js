@@ -24,7 +24,7 @@ const KIT_RAIL = KIT_STEPS.map((step, i) => ({
 }));
 
 const ABOUT_DESCRIPTION =
-  "LogixLoops is a brand, technology and growth studio in Jaipur. Who builds your kit, why the loop is in our name, and the six promises every kit carries.";
+  "LogixLoops is a brand, technology and growth studio in Jaipur. Who builds your Loop, why the loop is in our name, and the six promises every Loop carries.";
 
 export const metadata = buildMetadata({
   // Not "About LogixLoops": the root template already prefixes the brand, so
@@ -98,10 +98,11 @@ export default function AboutPage() {
                     Launch day is when real customers start telling you what
                     works, and it is exactly when most agencies send the final
                     invoice and move on. We built the studio around the loop
-                    instead: build, launch, measure, improve. Every kit ends
-                    with The Loop, 30 days of watching real usage, fixing what
-                    turns up and tuning with data, before we hand everything
-                    over.
+                    instead: build, launch, measure, improve. That is why
+                    everything we sell is called a Loop, and why every Loop
+                    ends with The Tune-Up: 30 days of watching real usage,
+                    fixing what turns up and tuning with data, before we hand
+                    everything over.
                   </p>
                   <p className="font-body text-body-lg text-on-surface-variant">
                     It is also why brand, technology and growth sit in one team.
@@ -129,7 +130,7 @@ export default function AboutPage() {
             <SectionHeader 
               overline="Six promises"
               title="Six things you can hold us to"
-              description="Every kit carries all six, whatever it costs. Each one is the opposite of a habit that makes agency projects slow, expensive or hard to leave. Turn a card to see the habit it replaces."
+              description="Every Loop carries all six, whatever it costs. Each one is the opposite of a habit that makes agency projects slow, expensive or hard to leave. Turn a card to see the habit it replaces."
               alignment="center"
             />
           
@@ -205,7 +206,7 @@ export default function AboutPage() {
               <FadeInLeft className="max-w-2xl mb-stack-lg">
                 <h2 className="font-display text-display-lg text-on-surface mb-6">No surprises after you pay.</h2>
                 <p className="font-body text-body-lg text-on-surface-variant">
-                  Every kit runs the same five steps on a published timeline. You see progress every week, and nothing outside the kit&apos;s scope starts without a written price you have approved.
+                  Every Loop runs the same five steps on a published timeline. You see progress every week, and nothing outside the Loop&apos;s scope starts without a written price you have approved.
                 </p>
               </FadeInLeft>
 
@@ -216,7 +217,7 @@ export default function AboutPage() {
               <FadeInUp>
                 <ScrollTimeline
                   orientation="horizontal"
-                  label="How a kit runs"
+                  label="How a Loop runs"
                   items={KIT_RAIL}
                 />
               </FadeInUp>
@@ -237,11 +238,11 @@ export default function AboutPage() {
                   this paragraph has been rendering at the browser default 16px
                   the whole time. `body-lg` is the largest size the scale has. */}
               <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
-                Tell us what you need. We will point you at the right kit, with its price, or say plainly if none of them fit. We are small on purpose, so we take on a handful of projects at a time and tell you when yours would have to wait.
+                Tell us what you need. We will point you at the right Loop, with its price, or say plainly if none of them fit. We are small on purpose, so we take on a handful of projects at a time and tell you when yours would have to wait.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button href="/contact" size="lg" icon="arrow_forward">Start a project</Button>
-                <Button href="/kits" variant="outline" size="lg">Browse the kits</Button>
+                <Button href="/loops" variant="outline" size="lg">Browse the Loops</Button>
               </div>
             </FadeInUp>
           </section>

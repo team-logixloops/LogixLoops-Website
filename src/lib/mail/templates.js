@@ -134,7 +134,7 @@ const WORKFLOW_STEPS = [
 /** Only real, indexable routes. A visitor cannot smuggle an off-site URL. */
 const PREVIEW_ROUTES = [
   "/",
-  "/services",
+  "/loops",
   "/work",
   "/process",
   "/technology",

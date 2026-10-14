@@ -42,7 +42,7 @@ const PRESETS = [
   { id: "wide", label: "Wide", width: 1440 },
 ];
 
-const ROUTES = ["/", "/services", "/pricing", "/contact"];
+const ROUTES = ["/", "/loops", "/pricing", "/contact"];
 
 const HOST = "logixloops.in";
 

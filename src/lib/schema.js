@@ -34,7 +34,7 @@ const offer = ({ id, name, description, url, price }) => ({
   itemOffered: { "@type": "Service", ...(id && { "@id": id }), name, description, url, provider: ORG_REF },
 });
 
-export const kitUrl = (kit) => `${BASE_URL}/kits/${kit.slug}`;
+export const kitUrl = (kit) => `${BASE_URL}/loops/${kit.slug}`;
 
 /* One node per kit across the site: the catalogue on every page and the
    Service on the kit's own page share this id, so a crawler merges them. */
@@ -167,7 +167,7 @@ export const generateOrganizationSchema = () => {
     // and it can answer without crawling a single kit page.
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Advantage Kits",
+      name: "Loops by LogixLoops",
       itemListElement: [
         ...KITS.map((kit) =>
           offer({ id: kitServiceId(kit), name: kit.name, description: kit.summary, url: kitUrl(kit), price: kit.price })
@@ -176,7 +176,7 @@ export const generateOrganizationSchema = () => {
           offer({
             name: `Pit Crew ${plan.name} plan`,
             description: plan.summary,
-            url: `${BASE_URL}/services/maintenance-and-support`,
+            url: `${BASE_URL}/loops/maintenance-and-support`,
             price: plan.price,
           })
         ),
@@ -410,7 +410,7 @@ export const generateServiceSchema = ({ title, shortDescription, slug, serviceTy
     name: title,
     description: shortDescription,
     ...(serviceType && { serviceType }),
-    ...(slug && { url: `${BASE_URL}/services/${slug}` }),
+    ...(slug && { url: `${BASE_URL}/loops/${slug}` }),
     provider: { "@id": `${BASE_URL}/#organization` },
     areaServed: BRAND.servesMarkets.map((name) => ({ "@type": "Country", name })),
   };

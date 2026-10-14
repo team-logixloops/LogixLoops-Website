@@ -323,7 +323,7 @@ export default async function WorkDetailPage({ params }) {
 
           {closestKits.length > 0 && (
             <div className="mb-12">
-              <h3 className="font-display text-headline-md text-on-surface mb-2">The kit closest to this project</h3>
+              <h3 className="font-display text-headline-md text-on-surface mb-2">The Loop closest to this project</h3>
               <p className="font-body text-body-md text-on-surface-variant mb-6 max-w-2xl">
                 What this build would start from today, with its price, timeline and everything it includes.
               </p>
@@ -348,7 +348,7 @@ export default async function WorkDetailPage({ params }) {
             <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full transform scale-150 pointer-events-none"></div>
             <h2 className="font-display text-display-xl text-on-surface mb-6 relative z-10">Want something like this?</h2>
             <p className="font-body text-body-lg text-on-surface-variant mb-8 max-w-2xl mx-auto relative z-10">
-              Start from the kit closest to this project, or tell us what you need and we will point you at the right one.
+              Start from the Loop closest to this project, or tell us what you need and we will point you at the right one.
             </p>
             <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
@@ -358,8 +358,8 @@ export default async function WorkDetailPage({ params }) {
               >
                 Start a project
               </Button>
-              <Button href="/kits" variant="ghost" size="lg">
-                Browse the kits
+              <Button href="/loops" variant="ghost" size="lg">
+                Browse the Loops
               </Button>
             </div>
           </div>

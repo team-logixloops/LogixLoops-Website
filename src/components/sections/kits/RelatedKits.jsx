@@ -16,8 +16,8 @@ export default function RelatedKits({ kits }) {
       <FadeInUp>
         <SectionHeader
           overline="Pairs well with"
-          title="Kits people take next"
-          description="Most businesses start with one kit and add another when it pays off. These are the usual next steps from this one."
+          title="Loops people take next"
+          description="Most businesses start with one Loop and add another when it pays off. These are the usual next steps from this one."
         />
       </FadeInUp>
       <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">

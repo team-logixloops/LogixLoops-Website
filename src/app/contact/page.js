@@ -16,7 +16,7 @@ const ENGAGEMENT_STEPS = [
     marker: "Step 01",
     icon: "forum",
     title: "First call",
-    body: "Forty-five minutes with the people who would build it, not a salesperson. We talk through what you need and which kit fits, or whether none does.",
+    body: "Forty-five minutes with the people who would build it, not a salesperson. We talk through what you need and which Loop fits, or whether none does.",
     meta: "Within one business day",
   },
   {
@@ -24,7 +24,7 @@ const ENGAGEMENT_STEPS = [
     marker: "Step 02",
     icon: "request_quote",
     title: "Written quote",
-    body: "You get the kit, any add-ons and the final price in writing, starting from the published price. Anything outside a kit is scoped against a short brief.",
+    body: "You get the Loop, any add-ons and the final price in writing, starting from the published price. Anything outside a Loop is scoped against a short brief.",
     meta: "Fixed for the scope it describes",
   },
   {
@@ -32,8 +32,8 @@ const ENGAGEMENT_STEPS = [
     marker: "Step 03",
     icon: "rocket_launch",
     title: "Kick-off",
-    body: "Work starts on the kit's published timeline, and you see real progress every week, not status reports. Every kit ends with 30 days of The Loop after launch.",
-    meta: "On the kit's timeline",
+    body: "Work starts on the Loop's published timeline, and you see real progress every week, not status reports. Every Loop ends with 30 days of The Tune-Up after launch.",
+    meta: "On the Loop's timeline",
   },
 ];
 
@@ -66,7 +66,7 @@ export default function ContactPage() {
                     Tell us what you <span className="text-primary">need.</span>
                   </h1>
                   <p className="font-body text-body-lg text-on-surface-variant max-w-md">
-                    A website, a brand, an app, more customers from search, or work that runs itself. You reach the people who would build it, and you leave the first call with the right kit and a written price, or a plain answer that none fits.
+                    A website, a brand, an app, more customers from search, or work that runs itself. You reach the people who would build it, and you leave the first call with the right Loop and a written price, or a plain answer that none fits.
                   </p>
                 </header>
               </FadeInUpImmediate>
@@ -199,12 +199,12 @@ export default function ContactPage() {
 
           <p className="font-body text-body-md text-on-surface-variant mt-stack-lg max-w-2xl">
             Not ready for a call? Browse{" "}
-            <Link href="/kits" className="text-primary hover:underline">
-              the kits and their prices
+            <Link href="/loops" className="text-primary hover:underline">
+              the Loops and their prices
             </Link>
             , read{" "}
             <Link href="/process" className="text-primary hover:underline">
-              how a kit runs
+              how a Loop runs
             </Link>
             , see{" "}
             <Link href="/work" className="text-primary hover:underline">

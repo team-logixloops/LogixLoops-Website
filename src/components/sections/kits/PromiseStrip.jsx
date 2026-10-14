@@ -13,9 +13,9 @@ export default function PromiseStrip() {
     <section className={SECTION}>
       <FadeInUp>
         <SectionHeader
-          overline="Every kit, every time"
+          overline="Every Loop, every time"
           title="Six things you can hold us to"
-          description="These come with every kit, whatever it costs."
+          description="These come with every Loop, whatever it costs."
         />
       </FadeInUp>
       <StaggerContainer className="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-3">

@@ -24,10 +24,10 @@ const DETAILS = [
   {
     slug: "web-and-app-development",
     summary:
-      "Engine is the LogixLoops web and app development line. We build business websites, online stores, startup MVPs and iOS and Android apps as fixed-scope kits with published starting prices. Every build is fast on an ordinary phone, ready for Google and AI search, and handed over in your name.",
+      "Engine is the LogixLoops web and app development line. We build business websites, online stores, startup MVPs and iOS and Android apps as fixed-scope Loops with published starting prices. Every build is fast on an ordinary phone, ready for Google and AI search, and handed over in your name.",
     metaTitle: "Web & App Development: Websites, Stores, Apps",
     metaDescription:
-      "Business websites, online stores, MVPs and mobile apps built as fixed-scope kits with public starting prices. Fast, search-ready and yours from day one.",
+      "Business websites, online stores, MVPs and mobile apps built as fixed-scope Loops with public starting prices. Fast, search-ready and yours from day one.",
     keywords: [
       "web development company",
       "app development company",
@@ -61,7 +61,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does a website or app cost with LogixLoops?",
-        a: `A business website starts from ${kitPrice("business-website")}, an online store from ${kitPrice("online-store")}, an MVP from ${kitPrice("mvp")} and a mobile app from ${kitPrice("mobile-app")}. Each kit page lists exactly what that price includes and which add-ons cost extra.`,
+        a: `A business website starts from ${kitPrice("business-website")}, an online store from ${kitPrice("online-store")}, an MVP from ${kitPrice("mvp")} and a mobile app from ${kitPrice("mobile-app")}. Each Loop page lists exactly what that price includes and which add-ons cost extra.`,
       },
       {
         q: "How long does it take to build a website or app?",
@@ -73,17 +73,17 @@ const DETAILS = [
       },
       {
         q: "Can you work on a website or app someone else built?",
-        a: "Yes. If it works but needs a makeover, that is a Glow-Up kit. If it is fragile or hard to change, we start with a short audit and tell you plainly whether to fix it or rebuild it.",
+        a: "Yes. If it works but needs a makeover, that is what the Website Glow-Up Loop is for. If it is fragile or hard to change, we start with a short audit and tell you plainly whether to fix it or rebuild it.",
       },
     ],
   },
   {
     slug: "branding",
     summary:
-      "Spark is the LogixLoops branding line. We design logos, colour palettes, type and brand guidelines for new and growing businesses, and package them with a website and social kit when you are launching. You get every source file, a clear rulebook for using it, and a brand that looks the same everywhere.",
+      "Spark is the LogixLoops branding line. We design logos, colour palettes, type and brand guidelines for new and growing businesses, and package them with a website and social Loop when you are launching. You get every source file, a clear rulebook for using it, and a brand that looks the same everywhere.",
     metaTitle: "Branding Agency: Logo, Identity, Brand Launch",
     metaDescription:
-      "Logo design, brand identity and brand guidelines as fixed-price kits, plus a Brand Launch Kit with website and socials. Every source file is yours.",
+      "Logo design, brand identity and brand guidelines as fixed-price Loops, plus a Brand Launch Loop with website and socials. Every source file is yours.",
     keywords: [
       "branding agency",
       "brand identity design",
@@ -116,7 +116,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does logo and brand identity design cost?",
-        a: `Our Brand Identity Kit starts from ${kitPrice("brand-identity")} and includes the logo, colours, type and a brand guidelines document. The Brand Launch Kit starts from ${kitPrice("brand-launch")} and adds a business website, a social media kit and a Google Business Profile.`,
+        a: `Our Brand Identity Loop starts from ${kitPrice("brand-identity")} and includes the logo, colours, type and a brand guidelines document. The Brand Launch Loop starts from ${kitPrice("brand-launch")} and adds a business website, a social media Loop and a Google Business Profile.`,
       },
       {
         q: "What is the difference between a logo and a brand identity?",
@@ -124,7 +124,7 @@ const DETAILS = [
       },
       {
         q: "Can you refresh our existing brand instead of starting over?",
-        a: "Yes. We keep what people already recognise, usually the name and some colour, and fix what is holding the brand back. A refresh follows the same Brand Identity Kit steps, starting from your current files.",
+        a: "Yes. We keep what people already recognise, usually the name and some colour, and fix what is holding the brand back. A refresh follows the same Brand Identity Loop steps, starting from your current files.",
       },
       {
         q: "Do we get the source files for our brand?",
@@ -138,7 +138,7 @@ const DETAILS = [
       "Glow-Up is the LogixLoops website redesign and upgrade line. We take a website or app you already have and make it look current, load fast and turn more visitors into enquiries or sales. Every change is measured before and after, so you can see what the upgrade actually changed.",
     metaTitle: "Website Redesign Services and Speed Upgrades",
     metaDescription:
-      "Website redesign, speed optimisation and conversion upgrades as fixed-price kits, measured before and after with results in plain numbers.",
+      "Website redesign, speed optimisation and conversion upgrades as fixed-price Loops, measured before and after with results in plain numbers.",
     keywords: [
       "website redesign services",
       "website redesign company",
@@ -171,7 +171,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does a website redesign cost?",
-        a: `A full redesign with our Website Glow-Up Kit starts from ${kitPrice("website-glow-up")}. If the design is fine and only speed is the problem, the Speed Kit starts from ${kitPrice("speed")}.`,
+        a: `A full redesign with our Website Glow-Up Loop starts from ${kitPrice("website-glow-up")}. If the design is fine and only speed is the problem, the Speed Loop starts from ${kitPrice("speed")}.`,
       },
       {
         q: "Will a redesign hurt my Google rankings?",
@@ -183,7 +183,7 @@ const DETAILS = [
       },
       {
         q: "How do I know the upgrade worked?",
-        a: "You get a before and after report. We measure loading speed, Core Web Vitals and the enquiry or sales rate before we touch anything, then measure the same numbers again during The Loop, 30 days after launch.",
+        a: "You get a before and after report. We measure loading speed, Core Web Vitals and the enquiry or sales rate before we touch anything, then measure the same numbers again during The Tune-Up, 30 days after launch.",
       },
     ],
   },
@@ -193,7 +193,7 @@ const DETAILS = [
       "Spotlight is the LogixLoops SEO and AI search visibility line. We make your business easy to find on Google and Bing, and easy for ChatGPT, Perplexity, Gemini and Google AI Overviews to understand, trust and mention. That means technical fixes, clear content, structured data and a report in plain numbers.",
     metaTitle: "SEO and AI Search Optimisation (GEO) Services",
     metaDescription:
-      "SEO setup and AI search visibility kits that get your business found on Google and mentioned by ChatGPT, Perplexity and AI Overviews.",
+      "SEO setup and AI search visibility Loops that get your business found on Google and mentioned by ChatGPT, Perplexity and AI Overviews.",
     keywords: [
       "SEO agency",
       "SEO company in Jaipur",
@@ -230,7 +230,7 @@ const DETAILS = [
       },
       {
         q: "How do I get my business mentioned by ChatGPT?",
-        a: `Make your business easy for it to identify and verify: a fast site Bing can index, a clear one-sentence description of what you do, structured data, the same name, address and phone everywhere, and pages that answer buyers' questions directly. Our AI Visibility Kit does all of this, from ${kitPrice("ai-visibility")}.`,
+        a: `Make your business easy for it to identify and verify: a fast site Bing can index, a clear one-sentence description of what you do, structured data, the same name, address and phone everywhere, and pages that answer buyers' questions directly. Our AI Visibility Loop does all of this, from ${kitPrice("ai-visibility")}.`,
       },
       {
         q: "How long does SEO take to show results?",
@@ -248,7 +248,7 @@ const DETAILS = [
       "Autopilot is the LogixLoops AI and automation line. We build WhatsApp AI agents, website assistants trained on your own documents, and automations that move data between your tools, so routine questions and admin get handled without someone doing them by hand. Every AI system ships with limits, logs and a human handover.",
     metaTitle: "AI Automation Agency: WhatsApp AI and Chatbots",
     metaDescription:
-      "WhatsApp AI agents, website AI chatbots trained on your data, and workflow automation, as fixed-scope kits with published starting prices.",
+      "WhatsApp AI agents, website AI chatbots trained on your data, and workflow automation, as fixed-scope Loops with published starting prices.",
     keywords: [
       "AI automation agency",
       "WhatsApp chatbot development",
@@ -282,7 +282,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does a WhatsApp AI agent cost?",
-        a: `Our WhatsApp AI Kit starts from ${kitPrice("whatsapp-ai")} to set up. Meta also charges for some business messages, billed to your own WhatsApp Business account, so you always see that cost directly.`,
+        a: `Our WhatsApp AI Loop starts from ${kitPrice("whatsapp-ai")} to set up. Meta also charges for some business messages, billed to your own WhatsApp Business account, so you always see that cost directly.`,
       },
       {
         q: "Will an AI chatbot give my customers wrong answers?",
