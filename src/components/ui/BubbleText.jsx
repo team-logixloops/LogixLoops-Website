@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -32,7 +32,24 @@ import { cn } from "@/lib/utils";
 export default function BubbleText({ text, className }) {
   const [hovered, setHovered] = useState(null);
 
-  const characters = [...String(text ?? "")];
+  // Characters are numbered across the whole label, spaces included, so the
+  // ramp runs on from one word into the next.
+  const words = String(text ?? "").split(" ").map((word) => [...word]);
+  const starts = words.map((_, i) => words.slice(0, i).reduce((sum, word) => sum + word.length + 1, 0));
+
+  const glyph = (character, index) => (
+    <span
+      key={index}
+      onMouseEnter={() => setHovered(index)}
+      // Distance is what the stylesheet ramps on. `-1` parks the whole
+      // word at rest, which is also what it renders as before hydration
+      // and with JS off.
+      data-distance={hovered === null ? -1 : Math.min(Math.abs(hovered - index), 3)}
+      className="bubble-text__ch"
+    >
+      {character}
+    </span>
+  );
 
   return (
     <span
@@ -41,21 +58,18 @@ export default function BubbleText({ text, className }) {
     >
       <span className="sr-only">{text}</span>
 
+      {/* Each word is one unbreakable run. Every letter is an inline-block,
+          and a line may break between any two of them, which split long
+          labels mid-word in the narrow footer columns ("Developm / ent").
+          The plain spaces between runs are the only break points. */}
       <span aria-hidden="true">
-        {characters.map((character, index) => (
-          <span
-            key={index}
-            onMouseEnter={() => setHovered(index)}
-            // Distance is what the stylesheet ramps on. `-1` parks the whole
-            // word at rest, which is also what it renders as before hydration
-            // and with JS off.
-            data-distance={
-              hovered === null ? -1 : Math.min(Math.abs(hovered - index), 3)
-            }
-            className="bubble-text__ch"
-          >
-            {character === " " ? " " : character}
-          </span>
+        {words.map((word, i) => (
+          <Fragment key={i}>
+            {i > 0 && " "}
+            <span className="whitespace-nowrap">
+              {word.map((character, j) => glyph(character, starts[i] + j))}
+            </span>
+          </Fragment>
         ))}
       </span>
     </span>

@@ -41,7 +41,8 @@ export default function SmoothScrollProvider({ children }) {
    * holds its own `animatedScroll` and writes it back on the very next frame,
    * so the new route immediately snapped to wherever the old one had been
    * left. It has to be told directly, and told to jump rather than animate,
-   * hence `immediate`.
+   * hence `immediate`. The one exception is a URL with a #section, which
+   * lands on that section (below).
    */
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -50,13 +51,30 @@ export default function SmoothScrollProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const lenis = window.lenis;
-    if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
-    else window.scrollTo(0, 0);
+    // Read on every call: on first mount Lenis has not been created yet.
+    const jump = (y) => {
+      const lenis = window.lenis;
+      if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+      else window.scrollTo(0, y);
+    };
+    jump(0);
 
     // Triggers were measured against the previous route's document. Nothing
     // on the new one is in the place they think it is.
     ScrollTrigger.refresh();
+
+    // A link to a section of a page (every price note links to
+    // /legal/terms#pricing) lands on that section, not the top. Measured a
+    // frame after the refresh, once pinned triggers have added their spacers
+    // above it, and short of the fixed navbar by the section's scroll-margin.
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const target = id && document.getElementById(id);
+    if (!target) return;
+    const frame = requestAnimationFrame(() => {
+      const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      jump(target.getBoundingClientRect().top + window.scrollY - margin);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   /*
