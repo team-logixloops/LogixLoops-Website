@@ -1,15 +1,15 @@
 import { ogCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
 export const alt =
-  "About LogixLoops: systems architects, product designers, and full-stack engineers.";
+  "About LogixLoops: a brand, technology and growth studio in Jaipur that sells fixed-scope kits with published prices.";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default function Image() {
   return ogCard({
     eyebrow: "About",
-    title: "We engineer the digital future.",
+    title: "One studio. Brand, tech and growth.",
     subtitle:
-      "Systems architects, product designers, and full-stack engineers turning technical debt into advantage.",
+      "Kits with published prices, built by the people you talk to, and 30 days of The Loop after every launch.",
   });
 }

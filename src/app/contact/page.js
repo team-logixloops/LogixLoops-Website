@@ -12,10 +12,10 @@ import { CONTACT_TOPICS, contactPicks } from "@/lib/contact-picks";
 // reached the crawler with ~59 words of content.
 const ENGAGEMENT_STEPS = [
   {
-    id: "discovery-call",
+    id: "first-call",
     marker: "Step 01",
     icon: "forum",
-    title: "Discovery call",
+    title: "First call",
     body: "Forty-five minutes with the people who would build it, not a salesperson. We talk through what you need and which kit fits, or whether none does.",
     meta: "Within one business day",
   },
@@ -63,10 +63,10 @@ export default function ContactPage() {
               <FadeInUpImmediate>
                 <header className="mb-8">
                   <h1 className="font-display text-display-xl text-on-surface mb-4 tracking-tight">
-                    Tell us what&apos;s <span className="text-primary">breaking.</span>
+                    Tell us what you <span className="text-primary">need.</span>
                   </h1>
                   <p className="font-body text-body-lg text-on-surface-variant max-w-md">
-                    Or what you want to build. Either way you reach an engineer, the first conversation is technical rather than commercial, and you leave with a written brief you keep.
+                    A website, a brand, an app, more customers from search, or work that runs itself. You reach the people who would build it, and you leave the first call with the right kit and a written price, or a plain answer that none fits.
                   </p>
                 </header>
               </FadeInUpImmediate>
@@ -174,13 +174,14 @@ export default function ContactPage() {
               What happens next
             </h2>
             <p className="font-body text-body-lg text-on-surface-variant">
-              Every enquiry is read by an engineer. We reply within one business day,
-              and the first conversation is technical, not commercial.
+              Every enquiry is read by the people who would build it. We reply
+              within one business day, and the first call is about what you need,
+              not a sales pitch.
             </p>
           </div>
 
           {/* Three columns became a vertical rail. These steps are separated
-              by *time*, a call, then a brief, then a sprint, and reading
+              by *time*, a call, then a quote, then a kick-off, and reading
               down a rail is how time is read. Side by side they were three
               equal cards with no order implied beyond a small number in the
               corner, and on anything narrower than `lg` they stacked into
@@ -197,11 +198,15 @@ export default function ContactPage() {
           />
 
           <p className="font-body text-body-md text-on-surface-variant mt-stack-lg max-w-2xl">
-            Not ready for a call? Read{" "}
-            <Link href="/process" className="text-primary hover:underline">
-              how we run an engagement
+            Not ready for a call? Browse{" "}
+            <Link href="/kits" className="text-primary hover:underline">
+              the kits and their prices
             </Link>
-            , browse{" "}
+            , read{" "}
+            <Link href="/process" className="text-primary hover:underline">
+              how a kit runs
+            </Link>
+            , see{" "}
             <Link href="/work" className="text-primary hover:underline">
               our selected work
             </Link>

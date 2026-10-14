@@ -54,7 +54,7 @@ export default async function WorkDetailPage({ params }) {
   const closestKits = study.kits.map((kitSlug) => getKitBySlug(kitSlug)).filter(Boolean);
 
   return (
-    <CaseStudyMotion className="flex flex-col min-h-screen">
+    <CaseStudyMotion className="flex flex-col min-h-screen overflow-x-clip">
       <SchemaMarkup schema={generateCaseStudySchema(study)} />
       <SchemaMarkup
         schema={generateBreadcrumbSchema([
@@ -76,10 +76,10 @@ export default async function WorkDetailPage({ params }) {
             </div>
             <FadeInUpImmediate>
               <span className="font-label text-label-caps text-secondary tracking-widest uppercase mb-4 block">
-                {study.industry} Sector
+                {study.industry}
               </span>
               <h1 className="font-display text-display-xl text-on-surface mb-6 leading-tight">
-                Engineering the {study.title}
+                Building the {study.title}
               </h1>
               <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mb-8">
                 {study.shortDescription}

@@ -8,14 +8,15 @@ import { gsap } from "gsap";
    top and the blank at the bottom are what give it somewhere to go.
 
    Same shape as the reference's INFINITE → PROGRESS → INNOVATION ladder, with
-   the six words this studio actually uses. */
+   what the studio sells: brands, websites, stores and apps, then the growth
+   that follows, then the name. */
 const DEFAULT_LINES = [
-  { top: " ", bottom: "PLATFORMS" },
-  { top: "PLATFORMS", bottom: "PRODUCTS" },
-  { top: "PRODUCTS", bottom: "PIPELINES" },
-  { top: "PIPELINES", bottom: "SYSTEMS" },
-  { top: "SYSTEMS", bottom: "OWNERSHIP" },
-  { top: "OWNERSHIP", bottom: "LOGIXLOOPS" },
+  { top: " ", bottom: "BRANDS" },
+  { top: "BRANDS", bottom: "WEBSITES" },
+  { top: "WEBSITES", bottom: "STORES" },
+  { top: "STORES", bottom: "APPS" },
+  { top: "APPS", bottom: "GROWTH" },
+  { top: "GROWTH", bottom: "LOGIXLOOPS" },
   { top: "LOGIXLOOPS", bottom: " " },
 ];
 

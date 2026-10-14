@@ -4,38 +4,19 @@ import { Button } from "@/components/ui";
 import ConstellationGrid from "@/components/ui/ConstellationGrid";
 import RotatingWord from "@/components/ui/RotatingWord";
 import { FadeInUpImmediate, HeroExit } from "@/components/motion";
+import { PROMISES } from "@/lib/constants";
 
-// Each has to read grammatically in "We fix the ___ you're scared to touch",
-// and each should name a different scar rather than being four synonyms for
-// "system". A CTO recognises all four immediately, which is the job: the
-// heading has to describe their week, not our capability.
-const HEADLINE_WORDS = ["Systems", "Deploys", "Migrations", "Integrations"];
+// Each has to read in "Your next ___ comes in a kit", and together they cover
+// the lines a first-time visitor is most likely to be shopping for: a brand, a
+// website, a store, an app and an AI agent.
+const HEADLINE_WORDS = ["Brand", "Website", "Store", "App", "AI Agent"];
 
-// Three commitments, not three adjectives. The third used to be "High
-// Performance / Measured, not asserted". True, but every agency claims speed.
-// Ownership is the one a prospect can check against the contract, and the only
-// one of the three a competitor is unlikely to match.
-//
-// The second line of each is the outcome, not the mechanism. "Nothing trusted
-// by default" describes how we work; "your security answers ready before the
-// questionnaire" describes the morning the founder stops dreading.
-const pillars = [
-  {
-    icon: "architecture",
-    label: "Scalable Architecture",
-    detail: "Load-tested to its ceiling before your traffic finds it",
-  },
-  {
-    icon: "security",
-    label: "Zero-Trust Security",
-    detail: "Your security answers ready before the questionnaire is",
-  },
-  {
-    icon: "lock_open_right",
-    label: "Total Ownership",
-    detail: "Source, infra and IP, yours at handover",
-  },
-];
+// Three of the six promises, the three a buyer can check before paying: the
+// price is on the page, the accounts are in their name, and the site is set up
+// to be found. Read from PROMISES so the wording matches every kit page.
+const PILLARS = ["Price on the box", "Yours from day one", "Built to be found"].map((title) =>
+  PROMISES.find((promise) => promise.title === title)
+);
 
 export default function HeroSection() {
   return (
@@ -82,7 +63,7 @@ export default function HeroSection() {
               it isn't competing with words shuffling around it.
             */}
             <h1 className="font-display text-[clamp(2.25rem,4.6vw,3.75rem)] text-on-surface leading-[1.08] tracking-tight">
-              <span className="block">We fix the</span>
+              <span className="block">Your next</span>
               {/* Wrapped rather than passed `block`: RotatingWord's own box is
                   `inline-flex` so it hugs the word, and two display utilities
                   on one element resolve by stylesheet order, not by the order
@@ -90,45 +71,18 @@ export default function HeroSection() {
               <span className="block">
                 <RotatingWord words={HEADLINE_WORDS} />
               </span>
-              {/* The tagline used to close the h1, and the reasoning for that
-                  still holds: it is the only three words on this site anyone
-                  repeats. What changed is what the first line is worth. A
-                  founder whose deploys are frightening does not scan for a
-                  studio that builds platforms; every studio builds platforms.
-                  They scan for someone who names the thing they are avoiding.
-                  So the h1 buys recognition and the tagline moves four lines
-                  down, where it is still in the hero, still above the fold,
-                  and now lands as the payoff rather than the pitch. */}
-              <span className="block">you&apos;re scared to touch.</span>
+              <span className="block">comes in a kit.</span>
             </h1>
           </FadeInUpImmediate>
 
           <FadeInUpImmediate delay={0.2}>
-            {/*
-              Two sentences, and it stays two.
-
-              This used to carry the entire search snippet: category, base,
-              the four markets, the four service lines. All of that is true
-              and none of it belongs to a reader who has been on the page for
-              four seconds. It rendered as a six-line slab under the heading,
-              which is the shape a reader skips.
-
-              Every fact that was cut is still crawlable, in the places built
-              to hold it: the meta description, `areaServed` and the service
-              catalogue on the Organization node, and llms.txt. A paragraph is
-              not the only surface an answer engine reads, and it is the only
-              one a human has to get past.
-
-              What stays is the entity anchor in the first four words and the
-              qualifying clause in the second sentence. The tagline is not
-              glossed here: if the hero has to explain what an unfair
-              advantage is, the hero has not shown one.
-            */}
+            {/* Two sentences. The first is the entity definition in plain
+                words, base and markets included, because it is what an
+                answer engine quotes; the second is the offer. */}
             <p className="font-body text-body-md sm:text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
-              LogixLoops is a senior software engineering studio in Jaipur.
-              Founders bring us live products that have outgrown the way they
-              were built, and leave owning something stable and safe to
-              change.
+              LogixLoops is a brand, tech and growth studio in Jaipur,
+              building for businesses in India, the US, the UK and the UAE.
+              Pick a kit, see the price upfront, and own everything we make.
             </p>
           </FadeInUpImmediate>
 
@@ -144,30 +98,24 @@ export default function HeroSection() {
               would make the pull effect drag a full-width slab around.
             */}
             <div className="flex flex-wrap items-start gap-3 sm:gap-4">
+              {/* The kits lead: a fixed scope with a published price answers
+                  "what will this cost?" before the reader has to ask. */}
               <Button
-                href="/contact"
+                href="/kits"
                 size="lg"
                 className="px-8 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_16px_-4px_rgba(40,104,198,0.4)]"
                 icon="arrow_forward"
                 iconPosition="right"
               >
-                {/* Names the length and who is on the call. "Discovery call"
-                    is what every agency's button says and commits to nothing;
-                    this one tells the reader what they are agreeing to before
-                    they click, which is the same argument the button is
-                    making about how we work. */}
-                Book 45 minutes with an engineer
+                Browse the kits
               </Button>
-              {/* Points at /kits: for a reader still deciding, a fixed scope
-                  with a published price is the strongest evidence we have,
-                  and it answers "what will this cost?" before they ask. */}
               <Button
-                href="/kits"
+                href="/contact"
                 variant="ghost"
                 size="lg"
                 className="px-8 rounded-full"
               >
-                See kits and prices
+                Talk to the people who build it
               </Button>
             </div>
           </FadeInUpImmediate>
@@ -185,7 +133,7 @@ export default function HeroSection() {
                 a bare "Zero-Trust Security" is a noun, not a promise.
               */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {pillars.map(({ icon, label, detail }) => (
+                {PILLARS.map(({ icon, title: label, detail }) => (
                   <div
                     key={label}
                     className="group relative overflow-hidden rounded-xl border border-outline-variant/60 bg-surface-container-lowest/70 backdrop-blur-md p-3.5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-glass-hover"

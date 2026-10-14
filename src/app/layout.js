@@ -36,9 +36,9 @@ const oswald = Oswald({
 /* One title and one description, written once and reused across the three
  * blocks below. They used to be typed out three times, which is how og:title
  * and twitter:title drift away from the real one. */
-const SITE_TITLE = "LogixLoops | Custom Software Development Studio in Jaipur";
+const SITE_TITLE = "LogixLoops | Brand, Web, App & AI Studio in Jaipur";
 const SITE_DESCRIPTION =
-  "Senior software engineering studio in Jaipur. Custom web platforms, mobile apps, SaaS products and AI systems, built fast and yours outright at handover.";
+  "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as kits with published prices, for India, the US, the UK and the UAE.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,20 +57,19 @@ export const metadata = {
    * lines it occupies and not one more. Per-route keywords go through
    * `buildMetadata`. */
   keywords: [
-    "custom software development company",
-    "software development company in Jaipur",
-    "web development agency",
-    "Next.js development agency",
-    "SaaS development company",
-    "AI development company",
-    "mobile app development company India",
-    "hire dedicated developers India",
+    "website design company in Jaipur",
+    "web development company in Jaipur",
+    "branding agency India",
+    "website packages with prices",
+    "app development company India",
+    "SEO and AI search optimization",
+    "AI automation agency",
     "LogixLoops",
   ],
   authors: [{ name: "LogixLoops" }],
   creator: "LogixLoops",
   publisher: "LogixLoops",
-  category: "Software Development",
+  category: "Web Design and Development",
   alternates: {
     canonical: "/",
   },

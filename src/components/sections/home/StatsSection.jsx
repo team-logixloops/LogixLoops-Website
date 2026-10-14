@@ -5,23 +5,16 @@ import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { cn } from "@/lib/utils";
 
 /**
- * Four numbers, and every one of them is checkable.
- *
- * This band used to read "100% Client Delivery Success, 0 Technical Debt
- * Tolerated, 60fps Guaranteed UI Performance, 99.9% SLA Uptime". Not one of
- * those could be verified by a visitor, and for a studio this young an
- * unverifiable 100% costs more trust than it buys. It is also exactly the kind
- * of claim an answer engine repeats back at us with a citation.
- *
- * What replaced them: two counts anyone can confirm from this site (eight
- * practices, two-week sprints), and two commitments we are signing rather than
- * results we are reporting (ownership at handover, reply time). A commitment
- * is a promise a prospect can hold us to. A statistic is a claim they cannot.
+ * Four numbers, and every one of them is checkable on this site: the kit
+ * count (passed in from the catalogue, so it cannot go stale), the 30 days of
+ * The Loop every kit ends with, the share of the work that is yours, and the
+ * reply time on every enquiry. Commitments a buyer can hold us to, not
+ * results they would have to take on trust.
  */
-const STATS = [
-  { value: 2, unit: " wks", label: "To working software", accent: "primary", prefix: "" },
-  { value: 8, unit: "", label: "Engineering practices", accent: "secondary", prefix: "" },
-  { value: 100, unit: "%", label: "Of the code is yours", accent: "tertiary", prefix: "" },
+const statsFor = (kitCount) => [
+  { value: kitCount, unit: "", label: "Kits with published prices", accent: "primary", prefix: "" },
+  { value: 30, unit: " days", label: "Of The Loop after launch", accent: "secondary", prefix: "" },
+  { value: 100, unit: "%", label: "Of the work is yours", accent: "tertiary", prefix: "" },
   { value: 1, unit: " day", label: "To reply, every enquiry", accent: "primary", prefix: "" },
 ];
 
@@ -41,11 +34,11 @@ const STATS = [
  * reveal ~200px low, a third of the way into the next section. One reveal is
  * the whole effect; the second only ever added travel.
  */
-export default function StatsSection() {
+export default function StatsSection({ kitCount }) {
   return (
     <section className="container-site py-stack-lg border-y border-outline-variant/20 relative z-10 bg-surface-container-lowest/40 backdrop-blur-md">
       <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-2 md:gap-x-8 lg:gap-gutter lg:divide-x divide-outline-variant/20">
-          {STATS.map((stat, i) => (
+          {statsFor(kitCount).map((stat, i) => (
             <StaggerItem key={i} className="flex flex-col items-center text-center px-4 pt-6 sm:pt-0 first:pt-0">
               <div className="font-display text-headline-md sm:text-display-lg md:text-[56px] text-on-surface leading-none font-bold mb-2 flex items-baseline">
                 {stat.prefix && <span className="text-headline-md font-heading text-primary mr-1">{stat.prefix}</span>}

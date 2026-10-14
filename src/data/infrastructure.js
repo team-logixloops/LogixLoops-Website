@@ -222,57 +222,56 @@ export const DELIVERY_PIPELINE = [
 ];
 
 /**
- * The home page's short version of the eight phases above.
+ * How a kit runs: the five steps every kit follows, in plain words.
  *
- * Six groupings, described as groupings. The section once said "a meticulous
- * 6-stage lifecycle" while /process said eight, which is the kind of small
- * contradiction a careful buyer finds in about ninety seconds and never quite
- * stops noticing.
+ * Read by the home page (cards plus HowTo schema), /about (the rail) and the
+ * top of /process (the rail plus HowTo schema). One array, so the three pages
+ * and their markup cannot describe different processes. Each step says what
+ * happens and, in `meta`, what you can hold us to at the end of it.
  *
- * Each entry names the work and then the thing the client keeps. Describing
- * activity alone reads as competence and commits to nothing: a reader finishes
- * "we read the system first" knowing what we do on a Tuesday, not what they
- * end up holding. A phase whose output you cannot verify is indistinguishable
- * from a phase that was skipped.
- *
- * It lives in the data layer rather than beside the cards that render it
- * because the home page also emits a HowTo built from this array, and Google
- * requires HowTo to describe content the visitor can see. One array, read by
- * both, cannot drift. Two copies could. It also has to live outside the client
- * component for a harder reason: a `"use client"` module's exports reach the
- * server as client references, not as the values themselves, so importing the
- * array from there gave the server a proxy and the build died on
- * `PROCESS_STEPS.map is not a function`.
+ * It lives in the data layer rather than beside the cards that render it: a
+ * `"use client"` module's exports reach the server as client references, not
+ * values, so a server page building HowTo from it would get a proxy.
  */
-export const HOME_PROCESS_STEPS = [
+export const KIT_STEPS = [
   {
-    title: "Discovery",
-    description: "We read the code and the infrastructure before anyone describes them to us, then compare that against how you believe the system works. You keep the map, the constraints written down as constraints, and success reduced to a number somebody will be measured on.",
+    title: "Pick a kit",
+    description:
+      "Choose the kit closest to what you need, or tell us the goal and we point you at one. Every kit page shows the starting price, the timeline and exactly what is included.",
+    icon: "checklist",
+    meta: "Price and scope published",
     colorTheme: "primary",
   },
   {
-    title: "Architecture",
-    description: "Service boundaries drawn along the seams of the data, not the org chart. Every consequential choice becomes a decision record, with the option that lost and the reason it lost, so the thinking survives the people who did it.",
+    title: "Kick-off",
+    description:
+      "One call with the people who will build it to agree goals, content and dates. You get the final price in writing, including any add-ons, before any work starts.",
+    icon: "forum",
+    meta: "Written price before work starts",
     colorTheme: "secondary",
   },
   {
-    title: "Design",
-    description: "Complex workflows prototyped and walked by somebody who will actually run them daily, before they are built. You keep tokens and components, not a folder of screens.",
+    title: "Build",
+    description:
+      "We design first and build second, on a private preview link you can open any time. You see progress every week and approve the design before it is built.",
+    icon: "construction",
+    meta: "Progress every week",
     colorTheme: "tertiary",
   },
   {
-    title: "Engineering",
-    description: "Two-week sprints against a backlog you rank. Trunk-based, feature-flagged, no merge without review, and every sprint ends in software you can open and use rather than a status deck.",
+    title: "Launch",
+    description:
+      "We go live on your domain, in accounts created in your name, then run speed and search checks and submit the site to Google and Bing where the kit includes it.",
+    icon: "rocket_launch",
+    meta: "Yours from day one",
     colorTheme: "primary",
   },
   {
-    title: "Hardening",
-    description: "Load tested against modelled peak and broken on purpose. You keep the known limits, alerts that fire on what a user would feel, and runbooks for the failures we caused deliberately.",
+    title: "The Loop",
+    description:
+      "For 30 days after launch we watch real usage, fix what turns up and make one round of improvements based on the data. Then we hand everything over with a recorded walkthrough.",
+    icon: "all_inclusive",
+    meta: "30 days after launch",
     colorTheme: "secondary",
-  },
-  {
-    title: "Handover",
-    description: "Progressive rollout, one-run rollback, telemetry from release one. Then the repository, the runbooks, the infrastructure and the keys, all of it yours, with nothing kept back that you would have to come to us for.",
-    colorTheme: "tertiary",
   },
 ];

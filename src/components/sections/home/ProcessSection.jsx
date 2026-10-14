@@ -2,7 +2,7 @@
 
 import { SectionHeader } from "@/components/ui";
 import HowItWorks from "@/components/ui/HowItWorks";
-import { HOME_PROCESS_STEPS } from "@/data/infrastructure";
+import { KIT_STEPS } from "@/data/infrastructure";
 
 export default function ProcessSection() {
   return (
@@ -16,16 +16,16 @@ export default function ProcessSection() {
     >
       <div className="container-site mb-4">
         <SectionHeader
-          overline="Methodology"
-          title="How An Engagement Runs"
-          description="The short version of our eight-phase delivery process. Each phase has a condition that has to be true before the next one is allowed to start, which is the whole trick, and the reason nothing arrives as a surprise in month four."
+          overline="How it works"
+          title="How A Kit Runs"
+          description="Five steps, the same for every kit. Each one ends with something you can see and approve, so nothing arrives as a surprise, and the last one is 30 days of making it better with real data."
           overlineClassName="text-brand-steel"
           titleClassName="text-on-surface"
           descriptionClassName="text-on-surface-variant"
         />
       </div>
 
-      <HowItWorks features={HOME_PROCESS_STEPS} />
+      <HowItWorks features={KIT_STEPS} />
     </section>
   );
 }

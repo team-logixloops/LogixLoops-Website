@@ -1,4 +1,4 @@
-import { ENGINEERING_WORKFLOW } from "@/data/infrastructure";
+import { KIT_STEPS } from "@/data/infrastructure";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import {
   generateBreadcrumbSchema,
@@ -10,27 +10,27 @@ import { buildMetadata } from "@/lib/seo";
 // The page itself is a Client Component (motion wrappers), so metadata and the
 // JSON-LD both live here, schema has to be server-rendered to be seen.
 export const metadata = buildMetadata({
-  title: "Our Software Development Process",
+  title: "How We Work: Kits, Process and Delivery",
   description:
-    "The eight-phase LogixLoops delivery lifecycle: discovery, architecture, UX, sprint engineering, QA, CI/CD, observability and scale, each with a stated exit condition.",
+    "How a LogixLoops kit runs in five steps, from picking a kit to 30 days of The Loop after launch, plus the eight-phase engineering method behind bigger builds.",
   path: "/process",
   keywords: [
+    "website design process",
+    "how a website project works",
+    "web development process",
     "software development process",
-    "software development lifecycle models",
     "agile delivery process",
-    "scrum kanban spiral v-model",
-    "architecture decision records",
   ],
 });
 
 export default function ProcessLayout({ children }) {
-  // The workflow is genuinely ordered and procedural, which is exactly what
-  // HowTo describes, and what makes it eligible for step-based rich results.
+  // The kit steps are ordered and procedural, which is exactly what HowTo
+  // describes. Built from the array the top of the page renders.
   const howTo = generateHowToSchema({
-    name: "The LogixLoops engineering delivery process",
+    name: "How a LogixLoops kit runs",
     description:
-      "How LogixLoops takes an enterprise software engagement from discovery through to production scale.",
-    steps: ENGINEERING_WORKFLOW.map((step) => ({
+      "The five steps every LogixLoops kit follows, from picking a kit to 30 days of improvements after launch.",
+    steps: KIT_STEPS.map((step) => ({
       name: step.title,
       text: step.description,
     })),
@@ -47,7 +47,7 @@ export default function ProcessLayout({ children }) {
       />
       <SchemaMarkup
         schema={generateSpeakableSchema(
-          "Our Engineering Process",
+          "How a LogixLoops kit runs",
           "/process",
           ["h1", "h2", "h3"]
         )}

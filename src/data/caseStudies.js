@@ -31,7 +31,7 @@ export const CASE_STUDIES = {
       challenge: {
         title: "High-Velocity Media vs. Web Performance",
         content:
-          "Operating at the forefront of India's creator economy with 5,000+ campaigns and 50 billion impressions, Sire Media required a digital ecosystem that reflected their status as an elite, strategy-first partner. Their previous presence needed a total overhaul: video assets caused bandwidth bottlenecks, mobile navigation lagged, and the site failed to communicate their massive 300,000+ creator database and 96% client retention rate.",
+          "Operating at the forefront of India's creator economy with 5,000+ campaigns and 50 billion impressions, Sire Media required a digital ecosystem that reflected their standing as a strategy-first partner. Their previous presence needed a total overhaul: video assets caused bandwidth bottlenecks, mobile navigation lagged, and the site failed to communicate their massive 300,000+ creator database and 96% client retention rate.",
         points: [
           "Heavy background video streaming causing initial render latency and mobile stutter.",
           "The need for high-impact kinetic typography without dropping below 60fps on mobile viewports.",
@@ -41,7 +41,7 @@ export const CASE_STUDIES = {
           "Sire Media global live streaming and influencer campaign performance analytics dashboard.",
       },
       discovery: {
-        title: "Architecting High-Conversion Digital Luxury",
+        title: "A Premium Agency Site Built to Convert",
         description:
           "Translating Sire Media's commercial positioning into a brutalist-editorial digital flagship built for CMOs and enterprise growth leads.",
         insights: [
@@ -63,7 +63,7 @@ export const CASE_STUDIES = {
             icon: "touch_app",
             title: "Kinetic Micro-Interactions",
             description:
-              "Built custom magnetic cursor trails, marquee tickers, and spring physics transitions for an immersive luxury agency feel.",
+              "Built custom magnetic cursor trails, marquee tickers, and spring physics transitions that give the site a premium agency feel.",
             color: "tertiary",
           },
         ],
@@ -74,7 +74,7 @@ export const CASE_STUDIES = {
           {
             title: "Phase 1: Design System & Editorial Typography",
             description:
-              "Engineered a dual-font architecture pairing classical Prata display typography with hyper-legible Manrope grotesque across extreme contrast dark/light canvases.",
+              "Engineered a dual-font architecture pairing classical Prata display typography with highly legible Manrope grotesque across extreme contrast dark/light canvases.",
             color: "secondary",
           },
           {
@@ -126,7 +126,7 @@ export const CASE_STUDIES = {
       challenge: {
         title: "From Functional Nutrition to Interactive Commerce",
         content:
-          "Building Bites was founded in Jaipur with a mission to bridge India's widespread protein gap through all-natural, clean-label snacking. Converting health-conscious Indian consumers requires more than a static storefront: it demands transparent nutritional education, seamless mobile storytelling, and an engaging interactive experience that proves personal daily protein targets before directing users to Amazon checkout.",
+          "Building Bites was founded in Jaipur with a mission to bridge India's widespread protein gap through all-natural, clean-label snacking. Converting health-conscious Indian consumers requires more than a static storefront: it demands transparent nutritional education, smooth mobile storytelling, and an engaging interactive experience that proves personal daily protein targets before directing users to Amazon checkout.",
         points: [
           "Need for transparent nutritional calculation tools to overcome consumer skepticism and educate buyers.",
           "Minimizing drop-off in the transition from brand discovery to Amazon 1-click purchase.",
@@ -151,14 +151,14 @@ export const CASE_STUDIES = {
             icon: "nutrition",
             title: "Multi-Angle Product Showcase",
             description:
-              "Designed seamless product carousels with dynamic stock status indicators and direct Amazon marketplace purchase triggers.",
+              "Designed smooth product carousels with dynamic stock status indicators and direct Amazon marketplace purchase triggers.",
             color: "secondary",
           },
           {
             icon: "smartphone",
             title: "Social Proof Stream",
             description:
-              "Integrated live Instagram video reel feeds and community verification directly into the mobile purchase journey.",
+              "Integrated live Instagram video reel feeds and community verification directly into the mobile purchase flow.",
             color: "tertiary",
           },
         ],
@@ -209,7 +209,7 @@ export const CASE_STUDIES = {
     cardImage: "/work/clubin.png",
     heroImage: "/work/clubin-hero.jpg",
     heroImageAlt:
-      "ClubIn luxury neon-lit nightclub VIP lounge and nightlife atmosphere.",
+      "ClubIn neon-lit nightclub VIP lounge at night.",
     technologies: ["Next.js", "React", "WebGL", "Tailwind CSS", "Razorpay", "AWS", "Framer Motion"],
     featured: true,
     metrics: [
@@ -233,7 +233,7 @@ export const CASE_STUDIES = {
       discovery: {
         title: "Designing Frictionless Nightlife Architecture",
         description:
-          "Engineering a dark-luxury visual aesthetic paired with high-concurrency transactional pipelines to solve both consumer discovery and venue gate operations.",
+          "Engineering a dark, premium visual style paired with high-concurrency transactional pipelines to solve both consumer discovery and venue gate operations.",
         insights: [
           {
             icon: "qr_code_scanner",
@@ -262,9 +262,9 @@ export const CASE_STUDIES = {
         title: "Build Sequence",
         phases: [
           {
-            title: "Phase 1: Dark-Luxury Design Language",
+            title: "Phase 1: Dark Premium Design Language",
             description:
-              "Crafted a bespoke visual design system featuring metallic gold accents, deep dark canvases, and Unbounded display typography.",
+              "Crafted a custom visual design system featuring metallic gold accents, deep dark canvases, and Unbounded display typography.",
             color: "secondary",
           },
           {
@@ -300,11 +300,11 @@ export const CASE_STUDIES = {
     industry: "Architecture & Design",
     transformationType: "Interactive CAD Blueprint Engine & Studio Flagship",
     shortDescription:
-      "An interactive architectural flagship and vector blueprint engineering showcase built for luxury construction consultants, featuring real-time CAD coordinate animations, multi-floor stratification models, and quote engines.",
+      "An interactive architectural flagship and vector blueprint engineering showcase built for high-end construction consultants, featuring real-time CAD coordinate animations, multi-floor stratification models, and quote engines.",
     cardImage: "/work/bouldspace.png",
     heroImage: "/work/bouldspace-hero.jpg",
     heroImageAlt:
-      "Bouldspace contemporary luxury architectural villa with cantilevered slabs and ambient lighting.",
+      "Bouldspace contemporary architectural villa with cantilevered slabs and ambient lighting.",
     technologies: ["Next.js", "React", "SVG CAD Engine", "Tailwind CSS", "Framer Motion", "Vercel"],
     featured: true,
     metrics: [
@@ -316,10 +316,10 @@ export const CASE_STUDIES = {
       challenge: {
         title: "From Static Portfolios to Technical Precision",
         content:
-          "High-end architectural and construction management firms often struggle with digital portfolios that feel either too artistic or purely static, failing to demonstrate the rigorous engineering, structural zoning, and multi-floor precision required for complex luxury builds. Bouldspace needed a digital flagship that could visually narrate their 9-stage architectural process—from raw spatial grid axes to 3D isometric structural realization—while driving high-intent client inquiries and site-visit bookings.",
+          "High-end architectural and construction management firms often struggle with digital portfolios that feel either too artistic or purely static, failing to demonstrate the rigorous engineering, structural zoning, and multi-floor precision required for complex high-end builds. Bouldspace needed a digital flagship that could visually narrate their 9-stage architectural process, from raw spatial grid axes to 3D isometric structural realization, while driving high-intent client inquiries and site-visit bookings.",
         points: [
           "Inability of conventional static portfolios to demonstrate structural engineering rigor and spatial zoning.",
-          "High friction in converting luxury homeowners and commercial developers into qualified site visit bookings.",
+          "High friction in converting high-end homeowners and commercial developers into qualified site visit bookings.",
         ],
         image: "/work/bouldspace-challenge.jpg",
         imageAlt:
@@ -328,7 +328,7 @@ export const CASE_STUDIES = {
       discovery: {
         title: "Engineering the Interactive CAD Storyboard",
         description:
-          "Bridging visual luxury with structural drafting by engineering an interactive SVG vector CAD canvas driven by scroll orchestration.",
+          "Bridging premium visuals with structural drafting by engineering an interactive SVG vector CAD canvas driven by scroll orchestration.",
         insights: [
           {
             icon: "architecture",
@@ -348,7 +348,7 @@ export const CASE_STUDIES = {
             icon: "request_quote",
             title: "Integrated Estimation Funnel",
             description:
-              "Built automated site-visit consultation flows and tier-based architectural pricing calculators directly into the user journey.",
+              "Built automated site-visit consultation flows and tier-based architectural pricing calculators directly into the enquiry flow.",
             color: "tertiary",
           },
         ],
@@ -357,7 +357,7 @@ export const CASE_STUDIES = {
         title: "Build Sequence",
         phases: [
           {
-            title: "Phase 1: Minimalist Luxury Editorial System",
+            title: "Phase 1: Minimalist Premium Editorial System",
             description:
               "Created an architectural design system pairing classical Libre Caslon serif typography with crisp Hanken Grotesk technical notations.",
             color: "secondary",
@@ -365,7 +365,7 @@ export const CASE_STUDIES = {
           {
             title: "Phase 2: Mathematical SVG Drafting Pipeline",
             description:
-              "Developed a lightweight, hardware-accelerated 9-stage blueprint engine that animates coordinate maps and volumetric cavities seamlessly.",
+              "Developed a lightweight, hardware-accelerated 9-stage blueprint engine that animates coordinate maps and volumetric cavities smoothly.",
             color: "primary",
           },
           {

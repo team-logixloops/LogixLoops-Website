@@ -1,15 +1,15 @@
 import { ogCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
 export const alt =
-  "Contact LogixLoops: every enquiry is read by an engineer and answered within one business day.";
+  "Contact LogixLoops: every enquiry is read by the people who would build it and answered within one business day.";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default function Image() {
   return ogCard({
     eyebrow: "Contact",
-    title: "Talk to an architect.",
+    title: "Tell us what you need.",
     subtitle:
-      "Not a salesperson. Every enquiry is read by an engineer and answered within one business day.",
+      "Talk to the people who would build it. You leave the first call with the right kit and a written price.",
   });
 }

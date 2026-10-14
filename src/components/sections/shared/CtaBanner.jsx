@@ -204,7 +204,7 @@ export default function CtaBanner() {
                 a claim with nothing behind it. These are two things a prospect
                 can hold us to on the first call. */}
             <span className="font-label text-label-sm text-on-surface tracking-widest uppercase font-semibold">
-              Senior engineers only · You own the code
+              Price on the box · Yours from day one
             </span>
           </div>
 
@@ -220,11 +220,9 @@ export default function CtaBanner() {
             data-cta-item
             className="font-body text-body-lg text-on-surface-variant mb-10 max-w-2xl mx-auto"
           >
-            Forty-five minutes with an engineer, not a salesperson. You leave
-            with a written architecture brief covering the stack, the
-            boundaries, the phases and the risks we can already see. It is
-            yours whether or not you hire us, and if we are not the right fit
-            we will say so on the call.
+            Tell us what you need. You talk to the people who would build it,
+            and you leave the first call with the right kit and a written
+            price. If no kit fits, we say so on the call.
           </p>
 
           <div
@@ -235,10 +233,10 @@ export default function CtaBanner() {
                 bottom of every page on the site, which reads as urgency the
                 page has not earned. */}
             <Button href="/contact" size="lg" className="w-full sm:w-auto px-10 shadow-btn-primary-lg text-[16px] h-14">
-              Book a discovery call
+              Start a project
             </Button>
-            <Button href="/services" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/70 hover:bg-surface-container-lowest/95 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
-              See what we do
+            <Button href="/kits" variant="ghost" size="lg" className="w-full sm:w-auto px-10 bg-surface-container-lowest/70 hover:bg-surface-container-lowest/95 text-[16px] h-14" icon="arrow_forward" iconPosition="right">
+              Browse the kits
             </Button>
           </div>
         </div>

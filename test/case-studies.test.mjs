@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { getAllCaseStudies } from "@/data/caseStudies";
 import { KITS, getKitBySlug } from "@/data/kits";
 import { generateCaseStudySchema } from "@/lib/schema";
+import { copyStrings, voiceProblems } from "./helpers/voice.mjs";
 
 test("every case study is client work tagged with the kits it used", () => {
   for (const study of getAllCaseStudies()) {
@@ -29,4 +30,11 @@ test("case study schema never describes client work as a reference build", () =>
     assert.equal(node.creativeWorkStatus, undefined, study.slug);
     assert.equal(node["@type"], study.publishedAt ? "Article" : "CreativeWork", study.slug);
   }
+});
+
+test("case study copy follows the voice rules", () => {
+  const problems = getAllCaseStudies().flatMap((study) =>
+    copyStrings(study).flatMap(([path, text]) => voiceProblems(text).map((p) => `${study.slug} ${path}: ${p}`))
+  );
+  assert.deepEqual(problems, []);
 });

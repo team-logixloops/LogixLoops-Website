@@ -10,13 +10,13 @@ export const metadata = {
   ...buildMetadata({
     title: "Work",
     description:
-      "Explore verified software engineering case studies, digital platforms, and architectural transformations delivered by LogixLoops.",
+      "Websites, online stores and apps LogixLoops has built for real clients in India, each linked to the kit it would start from today, with its price.",
     path: "/work",
     keywords: [
-      "software engineering portfolio",
-      "digital platform engineering",
-      "Next.js production platforms",
-      "high performance web applications",
+      "website design portfolio",
+      "web design agency portfolio India",
+      "ecommerce website examples",
+      "Next.js websites",
       "client work",
     ],
   }),

@@ -8,6 +8,7 @@ import { copyStrings, voiceProblems, wordCount } from "./helpers/voice.mjs";
 import { existsSync } from "node:fs";
 import { LINES, getLineBySlug } from "@/data/lines";
 import { FAQS, HOME_FAQS, PRICING_FAQS, SERVICES_FAQS } from "@/data/faq";
+import { KIT_STEPS } from "@/data/infrastructure";
 
 export const LINE_SLUGS = [
   "web-and-app-development",
@@ -217,4 +218,11 @@ test("kit timelines match what the FAQ answers promise", () => {
     else if (kit.slug === "mobile-app") assert.deepEqual([low, high], [8, 12]);
     else assert.ok(low >= 1 && high <= 6, `${kit.slug}: ${kit.timeline}`);
   }
+});
+
+test("how a kit runs: five steps, ending with The Loop", () => {
+  assert.deepEqual(KIT_STEPS.map((step) => step.title), ["Pick a kit", "Kick-off", "Build", "Launch", "The Loop"]);
+  for (const step of KIT_STEPS) assert.ok(step.icon && step.meta && step.colorTheme, step.title);
+  assert.match(KIT_STEPS.at(-1).description, /30 days/);
+  assert.deepEqual(voiceReport({ KIT_STEPS }), []);
 });

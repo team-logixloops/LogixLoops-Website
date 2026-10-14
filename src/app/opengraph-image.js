@@ -7,7 +7,7 @@ import { ImageResponse } from "next/og";
  * Route segments below inherit this unless they define their own.
  */
 export const alt =
-  "LogixLoops: Your Unfair Advantage. Custom software engineering across web, mobile, SaaS, AI and cloud.";
+  "LogixLoops: Your Unfair Advantage. Brand, web, app and AI studio in Jaipur, selling kits with published prices.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -68,7 +68,7 @@ export default function OpengraphImage() {
               lineHeight: 1.35,
             }}
           >
-            Custom software engineering · Web · Mobile · SaaS · AI · Cloud
+            Brand · Websites · Apps · SEO &amp; AI search · Automation
           </div>
         </div>
 

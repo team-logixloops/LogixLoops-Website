@@ -12,7 +12,7 @@ import ProjectDetailModal from "@/components/sections/work/ProjectDetailModal";
 import { generateBreadcrumbSchema, generateCollectionPageSchema } from "@/lib/schema";
 
 const COLLECTION_DESCRIPTION =
-  "Verified technical case studies and software engineering architectures delivered by LogixLoops: constraints, solutions, and measurable outcomes.";
+  "Websites, online stores and apps LogixLoops has built for real clients, each linked to the kit it would start from today, with its price.";
 
 export default function WorkPage() {
   const caseStudiesList = Object.values(CASE_STUDIES);
@@ -74,9 +74,9 @@ export default function WorkPage() {
       <PageHero
         preset="caseStudies"
         eyebrow="Work"
-        title="Engineering Impact,"
-        accent="proven in production."
-        lead="Explore our real client engagements: the legacy bottlenecks we dismantled, the resilient architectures we engineered, and the measurable performance outcomes delivered."
+        title="Real client builds,"
+        accent="and the kits behind them."
+        lead="Websites, stores and apps we have built for real businesses, from a creator agency and an architecture firm to a D2C snack brand and a nightlife app. Each project links to the kit it would start from today, with its price."
         cue="Selected Work"
       />
 
@@ -92,10 +92,10 @@ export default function WorkPage() {
               id="work-grid"
               className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-3"
             >
-              Architected for Performance & Scale
+              Client work
             </h2>
             <p className="font-body text-body-md text-on-surface-variant">
-              Every engagement starts with identifying core technical constraints, defining bespoke architecture, and executing with uncompromising precision. We build modern, robust digital platforms that drive measurable growth.
+              Every project here is live for a real business. Open one to see the problem, what we built and how, and the kit you would start from to get something similar.
             </p>
           </div>
 
@@ -160,16 +160,16 @@ export default function WorkPage() {
           {/* Header block */}
           <div className="max-w-3xl mb-8">
             <span className="font-label text-label-caps text-secondary tracking-widest uppercase mb-3 block">
-              Engineering Labs & Prototypes
+              Studio projects
             </span>
             <h2
               id="projects-grid"
               className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-3"
             >
-              Proprietary Systems & Technical Builds
+              What we build for ourselves
             </h2>
             <p className="font-body text-body-md text-on-surface-variant">
-              In addition to our client engagements, we architect specialized in-house systems, autonomous AI voice pipelines, and modern software prototypes. Click any project card below to inspect the full architecture breakdown, technical highlights, and operational use cases.
+              Alongside client work we build our own tools and prototypes, including AI voice agents and automation experiments. They are where new kits start. Open any card for the technical breakdown.
             </p>
           </div>
 
@@ -206,13 +206,18 @@ export default function WorkPage() {
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center border-t border-outline-variant/20">
           <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/60 backdrop-blur-2xl shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
-            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Ready to engineer your digital platform?</h2>
+            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Want something like this?</h2>
             <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">
-              Partner with LogixLoops to build robust, scalable architectures and bespoke software solutions tailored to your growth goals.
+              Every project here started from a need a kit now covers. Pick the closest kit and see its price, or tell us what you need.
             </p>
-            <Button href="/contact" size="lg" className="relative z-10 shadow-lg">
-              Book a discovery call
-            </Button>
+            <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button href="/kits" size="lg" className="shadow-lg">
+                Browse the kits
+              </Button>
+              <Button href="/contact" variant="ghost" size="lg">
+                Start a project
+              </Button>
+            </div>
           </div>
         </section>
       </PageSurface>

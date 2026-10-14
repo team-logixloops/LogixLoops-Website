@@ -61,14 +61,44 @@ function PriceTable({ line }) {
           {line.name}
         </span>
       </h3>
-      {/* The table has a 640px floor, so below that it scrolls inside this
-          box. `no-scrollbar` stops a swipe past its right edge from being
-          handed to the browser as a back-navigation. */}
+      {/* Phones get one row per kit, both prices on it, instead of a table
+          that has to be scrolled sideways to reach the India price. */}
+      <ul className="flex flex-col divide-y divide-outline-variant/20 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 md:hidden">
+        {kits.map((kit) => (
+          <li key={kit.slug} className="p-4">
+            <Link
+              href={`/kits/${kit.slug}`}
+              className="font-display text-lg text-on-surface hover:text-primary transition-colors"
+            >
+              {kit.name}
+            </Link>
+            <p className="mt-1 font-body text-body-sm text-on-surface-variant first-letter:uppercase">{kit.promise}</p>
+            <dl className="mt-3 grid grid-cols-3 gap-2 font-body text-body-sm">
+              <div>
+                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">International</dt>
+                <dd className="font-display font-semibold text-primary">{formatUsd(kit.price.usd)}</dd>
+              </div>
+              <div>
+                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">India</dt>
+                <dd className="font-display font-semibold text-primary">{formatInr(kit.price.inr)}</dd>
+              </div>
+              <div>
+                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Timeline</dt>
+                <dd className="text-on-surface-variant">{kit.timeline}</dd>
+              </div>
+            </dl>
+            {kit.priceNote && <p className="mt-2 font-body text-body-sm text-on-surface-variant">{kit.priceNote}.</p>}
+          </li>
+        ))}
+      </ul>
+      {/* From tablet up, a real table. It keeps a 640px floor, so a narrow
+          window scrolls inside this box; `no-scrollbar` stops a swipe past its
+          right edge being handed to the browser as a back-navigation. */}
       <div
         tabIndex={0}
         role="region"
         aria-label={`${line.label} prices, scrolls horizontally`}
-        className="overflow-x-auto no-scrollbar rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85"
+        className="hidden md:block overflow-x-auto no-scrollbar rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85"
       >
         <table className="w-full min-w-[640px] border-collapse">
           <caption className="sr-only">Starting prices for LogixLoops {line.label} kits</caption>

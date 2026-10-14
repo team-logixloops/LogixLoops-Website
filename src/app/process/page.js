@@ -1,6 +1,6 @@
 "use client";
 
-import { SectionHeader, GlassCard, Button } from "@/components/ui";
+import { SectionHeader, GlassCard, Button, ScrollTimeline } from "@/components/ui";
 import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import PageHero from "@/components/sections/shared/PageHero";
 import PageSurface from "@/components/sections/shared/PageSurface";
@@ -8,23 +8,75 @@ import ProcessTimeline from "@/components/sections/process/ProcessTimeline";
 import MethodologyExplorer from "@/components/sections/process/MethodologyExplorer";
 import SelectionSignals from "@/components/sections/process/SelectionSignals";
 import MethodologyBlend from "@/components/sections/process/MethodologyBlend";
+import { KIT_STEPS } from "@/data/infrastructure";
+
+/* The kit steps on the vertical rail, which is the variant this site uses
+   for a sequence whose steps carry prose. */
+const KIT_RAIL = KIT_STEPS.map((step, i) => ({
+  id: step.title.toLowerCase().replace(/[^a-z]+/g, "-"),
+  marker: `Step 0${i + 1}`,
+  icon: step.icon,
+  title: step.title,
+  body: step.description,
+  meta: step.meta,
+}));
 
 export default function ProcessPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. Process Hero, ruled contours, high band count, low warp. This
           page is a sequence, so its field reads as a measured drawing rather
-          than as weather. */}
+          than as weather. The plain version leads; the engineering method
+          follows for the technical reader. */}
       <PageHero
         preset="process"
-        eyebrow="Methodology"
-        title="Eight phases."
-        accent="Eight exit conditions."
-        lead="Most software development processes are a list of nouns on a slide. Ours names the lifecycle model governing each phase, what that phase hands to the next one, and the condition that has to be true before it is allowed to. That last part is the whole method."
-        cue="The lifecycle"
+        eyebrow="Process"
+        title="How a kit runs."
+        accent="Five steps, no surprises."
+        lead="Every LogixLoops kit runs the same five steps: pick a kit, kick-off, build, launch and The Loop. Each step ends with something you can see and approve. Below that is the engineering method we use for bigger builds, for the technical reader."
+        cue="The five steps"
       />
 
       <PageSurface>
+        {/* 2. How a kit runs, in plain words. The same array feeds the home
+            page cards and the HowTo schema in layout.js. */}
+        <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl">
+          <FadeInUp>
+            <SectionHeader
+              overline="Every kit"
+              title="Five steps, from pick to The Loop"
+              description="The same for a logo or an app. Each kit page adds its own timeline and the details of each step."
+            />
+          </FadeInUp>
+          <ScrollTimeline label="How a LogixLoops kit runs" items={KIT_RAIL} />
+          <div className="mt-stack-lg flex flex-col gap-4 sm:flex-row">
+            <Button href="/kits" icon="arrow_forward" iconPosition="right">
+              Browse the kits
+            </Button>
+            <Button href="/pricing" variant="ghost">
+              See the price list
+            </Button>
+          </div>
+        </section>
+
+        {/* 3. The engineering method under bigger builds: MVPs, apps and
+            Pit Crew Squad plans. */}
+        <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto pt-stack-lg pb-stack-md border-t border-outline-variant/30">
+          <FadeInUp>
+            <div className="max-w-2xl">
+              <span className="font-label text-label-caps uppercase tracking-widest text-primary mb-3 block">
+                For technical readers
+              </span>
+              <h2 className="font-display text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
+                The engineering method behind bigger builds
+              </h2>
+              <p className="font-body text-body-lg text-on-surface-variant">
+                MVPs, mobile apps and Pit Crew Squad plans run on the method below: eight phases, each with a condition that has to be true before the next one starts.
+              </p>
+            </div>
+          </FadeInUp>
+        </section>
+
         {/* 2. Engineering workflow, scrollytelling timeline. The rail follows
             the scrollbar, each phase lights as it takes the viewport, and the
             sticky index reports which one is being read. */}
@@ -33,7 +85,7 @@ export default function ProcessPage() {
             <SectionHeader
               overline="The Lifecycle"
               title="Discovery to scale, in eight phases"
-              description="From reading your existing system to profiling the one that replaced it. Each phase names the model that governs it, the artefacts it produces, and the gate at the end of it."
+              description="From reading your existing system to tuning the one that replaced it. Each phase names the model that governs it, what it produces, and the gate at the end of it."
               align="center"
             />
 
@@ -64,7 +116,7 @@ export default function ProcessPage() {
               <SectionHeader
                 overline="Selection Logic"
                 title="Why we choose what we choose"
-                description="Six signals we read in the first fortnight of an engagement, and what each one changes about how the work is run."
+                description="Six signals we read in the first two weeks of a bigger build, and what each one changes about how the work is run."
                 align="center"
               />
             </FadeInUp>
@@ -78,7 +130,7 @@ export default function ProcessPage() {
           <FadeInUp>
             <SectionHeader
               overline="Our Method"
-              title="One engagement, four governing models"
+              title="One build, four governing models"
               description="No single lifecycle is strongest everywhere. We run each stage under the model that is best at it, and keep the seams between them explicit."
               align="center"
             />
@@ -94,7 +146,7 @@ export default function ProcessPage() {
               <div className="text-center mb-stack-lg">
                 <h2 className="font-display text-display-lg text-on-surface mb-4">You watch it happen</h2>
                 <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                  We work inside your board, your channels and your standups. There is no weekly summary email standing between you and the actual state of the work.
+                  On bigger builds we work inside your board, your channels and your standups. There is no weekly summary email standing between you and the actual state of the work.
                 </p>
               </div>
             </FadeInUp>
@@ -167,11 +219,16 @@ export default function ProcessPage() {
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto py-stack-xl text-center">
           <div className="dispatch py-20 px-8 border border-outline-variant/30 rounded-2xl bg-surface-container-lowest/85 shadow-glass-elevated relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
-            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Run your next build this way.</h2>
-            <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Bring us the system and the deadline. We will tell you which of these models fits it, and where the risk actually is.</p>
-            <Button href="/contact" size="lg" className="relative z-10 shadow-lg">
-              Book a discovery call
-            </Button>
+            <h2 className="font-display text-display-lg text-on-surface mb-6 relative z-10">Start with a kit.</h2>
+            <p className="font-body text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8 relative z-10">Pick the kit closest to what you need, or bring us the goal and the deadline and we will tell you which kit fits, or how we would scope it if none does.</p>
+            <div className="relative z-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button href="/kits" size="lg" className="shadow-lg">
+                Browse the kits
+              </Button>
+              <Button href="/contact" variant="ghost" size="lg">
+                Start a project
+              </Button>
+            </div>
           </div>
         </section>
       </PageSurface>

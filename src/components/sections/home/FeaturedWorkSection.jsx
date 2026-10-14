@@ -8,64 +8,33 @@ import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/motion";
 
 const TITLE_SIZE = "clamp(1.25rem,3vw,2.5rem)";
 
-const WORK_ITEMS = [
-  {
-    id: "engine",
-    title: "Web & App Development",
-    href: "/services/web-and-app-development",
-    image:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1583&q=80",
-    objectPosition: "object-center",
-  },
-  {
-    id: "autopilot",
-    title: "AI & Automation",
-    href: "/services/ai-automation",
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1583&q=80",
-    objectPosition: "object-center",
-  },
-  {
-    id: "spotlight",
-    title: "SEO & AI Search",
-    href: "/services/seo-and-ai-search",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1583&q=80",
-    objectPosition: "object-center",
-  },
-  {
-    id: "spark",
-    title: "Branding & Identity",
-    href: "/services/branding",
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1583&q=80",
-    objectPosition: "object-center",
-  },
-];
-
 /**
- * Engineering Disciplines, in the hover-reveal poster theme: image
+ * Real client builds, each with the kit it would start from today, in the
+ * hover-reveal poster theme: image
  * widens + zooms on hover while the stacked title/"Explore" label shrinks
  * and slides up to swap lines. Sized in %/clamp() (not fixed px) so it
  * scales down cleanly on mobile, the hover choreography is a desktop
  * affordance (matches the group-hover pattern used elsewhere on the site),
  * while the fluid sizing keeps the layout correct at every width.
+ *
+ * `items` comes from the server page ({ id, title, href, image, kit }), so the
+ * kit names reach this client component without the kit catalogue.
  */
-export default function FeaturedWorkSection() {
+export default function FeaturedWorkSection({ items }) {
   return (
     <section className="relative w-full bg-surface-container-low py-20 sm:py-28 overflow-hidden">
       <div className="container-site relative z-10">
         <FadeInUp>
           <SectionHeader
-            overline="Capabilities"
-            title="What We Build"
+            overline="Client work"
+            title="Built For Real Businesses"
             overlineClassName="text-brand-steel"
             titleClassName="text-on-surface"
           />
         </FadeInUp>
 
         <StaggerContainer className="mt-stack-xl grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
-          {WORK_ITEMS.map((item) => (
+          {items.map((item) => (
             <StaggerItem key={item.id}>
               <Link
                 href={item.href}
@@ -86,8 +55,8 @@ export default function FeaturedWorkSection() {
                   <Image
                     src={item.image}
                     alt={item.title}
-                    width={1583}
-                    height={1055}
+                    width={2400}
+                    height={880}
                     sizes="(max-width: 640px) 90vw, 45vw"
                     className={cn(
                       "h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-110",
@@ -106,12 +75,15 @@ export default function FeaturedWorkSection() {
                     over a photograph. */}
                 <div className="absolute inset-y-0 left-[52%] w-[48%] overflow-hidden pointer-events-none">
                   <div className="flex flex-col h-[200%] transition-transform duration-300 ease-out group-hover:-translate-y-1/2 group-hover:scale-[0.45] origin-top-left">
-                    <div className="h-1/2 flex items-start pt-3">
+                    <div className="h-1/2 flex flex-col items-start pt-3">
                       <span
                         style={{ fontSize: TITLE_SIZE }}
                         className="font-poster uppercase leading-none text-on-surface"
                       >
                         {item.title}
+                      </span>
+                      <span className="mt-3 font-label text-label-caps uppercase tracking-widest text-primary">
+                        {item.kit}
                       </span>
                     </div>
                     <div className="h-1/2 flex items-start pt-3">

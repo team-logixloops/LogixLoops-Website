@@ -5,98 +5,41 @@ import PageSurface from "@/components/sections/shared/PageSurface";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
+import { BRAND, PROMISES } from "@/lib/constants";
+import { KIT_STEPS } from "@/data/infrastructure";
 
-/* The four standards, lifted out of the markup so the front and back of each
-   card are written next to each other rather than 40 lines apart. `summary` is
-   new, a one-line version that holds the card face, so the section still
-   scans without anyone touching it. `detail` is the paragraph that was
-   previously the whole card. */
-const STANDARDS = [
-  {
-    icon: "security",
-    tone: "text-primary",
-    title: "Zero-Trust Architecture",
-    summary: "Built on the assumption that something has already been breached.",
-    detail:
-      "No request is trusted because of where it came from. Calls between services are authenticated and encrypted even when they never leave your network, credentials are short-lived, and a compromised container reaches only what it was explicitly granted. Security is the first architectural decision, not the last review before launch.",
-  },
-  {
-    icon: "speed",
-    tone: "text-secondary",
-    title: "Performance as a Feature",
-    summary: "Milliseconds are a product decision, not an optimisation pass.",
-    detail:
-      "Performance budgets are set before the first component is written, and a change that breaks one does not merge. Edge caching, progressive rendering and query-level tuning are part of the build, not a rescue mission in month six. We measure on a mid-range Android on a slow network, because that is what most of your users are holding.",
-  },
-  {
-    icon: "design_services",
-    tone: "text-tertiary",
-    title: "Interfaces That Survive Real Data",
-    summary: "Consumer-grade standards, applied to dense B2B systems.",
-    detail:
-      "Enterprise software does not have to be ugly, but pretty is not the test. The test is a table with forty thousand rows and a column that someone else's export tool filled with nulls. We prototype against realistic data volumes and put the critical path in front of somebody who will run it daily before we commit to it.",
-  },
-  {
-    icon: "all_inclusive",
-    tone: "text-primary",
-    title: "Architecture You Can Grow Into",
-    summary: "Designed for the next order of magnitude, not the last one.",
-    detail:
-      "Over-engineering for scale you do not have is as expensive as ignoring it. We design for the load you can credibly forecast, make the seams explicit so the parts under pressure can be replaced independently, and write down where the ceiling is, so the day you approach it, it is a planned piece of work rather than an outage.",
-  },
-];
+/* The six promises as flip cards: the promise on the face, the habit it
+   replaces on the back. Both read from PROMISES, so they match the home page
+   table and every kit page word for word. */
+const TONES = ["text-primary", "text-secondary", "text-tertiary"];
 
-/* The four phases of a LogixLoops delivery. `marker` reads as a stage label
-   rather than a bare number so the rail still makes sense read aloud, where
-   "01" on its own says nothing. */
-const DELIVERY_PHASES = [
-  {
-    id: "discovery",
-    marker: "Phase 01",
-    title: "Discovery & Topology",
-    icon: "radar",
-    body: "Mapping the architectural boundaries and business imperatives.",
-  },
-  {
-    id: "prototype",
-    marker: "Phase 02",
-    title: "Prototype & Validation",
-    icon: "draw",
-    body: "Validating user flows and API contracts before heavy engineering.",
-  },
-  {
-    id: "engineering",
-    marker: "Phase 03",
-    title: "Iterative Engineering",
-    icon: "code_blocks",
-    body: "Test-driven development loops with continuous stakeholder visibility.",
-  },
-  {
-    id: "hardening",
-    marker: "Phase 04",
-    title: "Hardening & Scale",
-    icon: "shield_lock",
-    body: "Pen-testing, load balancing, and production readiness certification.",
-  },
-];
+/* How a kit runs, on the horizontal rail. `marker` reads as a stage label
+   rather than a bare number so the rail still makes sense read aloud. */
+const KIT_RAIL = KIT_STEPS.map((step, i) => ({
+  id: step.title.toLowerCase().replace(/[^a-z]+/g, "-"),
+  marker: `Step 0${i + 1}`,
+  title: step.title,
+  icon: step.icon,
+  body: step.meta,
+}));
 
 const ABOUT_DESCRIPTION =
-  "LogixLoops is a senior software studio in Jaipur working with clients in India, the US, the UK and the UAE. How we are structured, and what every build is held to.";
+  "LogixLoops is a brand, technology and growth studio in Jaipur. Who builds your kit, why the loop is in our name, and the six promises every kit carries.";
 
 export const metadata = buildMetadata({
   // Not "About LogixLoops": the root template already prefixes the brand, so
   // that rendered as "LogixLoops | About LogixLoops". Not a bare "About"
   // either, which rendered as an 18-character title and gave the SERP nothing
   // past the brand to match on.
-  title: "About the Studio",
+  title: "About: Brand, Tech and Growth Studio, Jaipur",
   description: ABOUT_DESCRIPTION,
   path: "/about",
   keywords: [
     "LogixLoops",
-    "software development studio Jaipur",
-    "senior software engineers India",
-    "boutique software agency",
-    "offshore development team India",
+    "digital agency in Jaipur",
+    "website design company Jaipur",
+    "branding and web studio India",
+    "brand, tech and growth studio",
   ],
 });
 
@@ -130,42 +73,42 @@ export default function AboutPage() {
         {/* 1. Narrative Hero, the calmest field on the site: wide bands, the
             slowest drift. This page is people and history, so the ground under
             it should read as settled rather than as something in motion. */}
-        {/* "An elite collective of systems architects" was the old lead. It
-            described a company three times our size and said nothing a
-            competitor could not say. Small, senior and in Jaipur is the actual
-            position, and it is the one that wins, because it is also the
-            answer to "who will really be writing my code". */}
+        {/* The lead is the entity definition, word for word, then the one
+            claim a buyer most wants answered: who actually does the work. */}
         <PageHero
           preset="about"
           eyebrow="Who we are"
-          title="Senior team."
-          accent="Deliberately."
-          lead="LogixLoops is a senior software engineering studio in Jaipur, working with clients in India, the US, the UK and the UAE. No junior bench, no account manager relaying messages. The people you meet on the first call are the people who write the code."
-          cue="The axiom"
+          title="One studio."
+          accent="Brand, tech and growth."
+          lead={`${BRAND.definition} No junior bench, no account manager relaying messages: the people you meet on the first call are the people who design, build and grow what you buy.`}
+          cue="Why the loop"
         />
 
         <PageSurface>
-          {/* 2 & 3. Philosophy & Vision / Why LogixLoops Exists */}
+          {/* 2. Why the loop is in the name */}
           <section className="py-stack-xl border-t border-outline-variant/30 bg-surface-container-lowest relative">
             <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
                 <FadeInLeft>
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-4 block">The Axiom</span>
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary mb-4 block">Why the loop</span>
                   <h2 className="font-display text-display-lg text-on-surface mb-6 leading-tight">
-                    Software rarely fails because someone wrote a bad function.
+                    Most projects end at launch. That is when the real work starts.
                   </h2>
                   <p className="font-body text-body-lg text-on-surface-variant mb-6">
-                    It fails because a boundary was drawn in the wrong place in
-                    month one and nobody could afford to move it by month nine.
-                    By then the fix is not a refactor, it is a rewrite, and the
-                    rewrite is why you are reading an agency&apos;s about page.
+                    Launch day is when real customers start telling you what
+                    works, and it is exactly when most agencies send the final
+                    invoice and move on. We built the studio around the loop
+                    instead: build, launch, measure, improve. Every kit ends
+                    with The Loop, 30 days of watching real usage, fixing what
+                    turns up and tuning with data, before we hand everything
+                    over.
                   </p>
                   <p className="font-body text-body-lg text-on-surface-variant">
-                    That is the work we set up to do. Get the architecture right
-                    early, write down why, and ship in increments small enough
-                    that being wrong is survivable. &ldquo;Ship it fast and fix
-                    it later&rdquo; is not a philosophy, it is a loan, and the
-                    interest is paid by whoever inherits the codebase.
+                    It is also why brand, technology and growth sit in one team.
+                    A logo, a website and a search plan made by three vendors
+                    rarely add up. Made together, each one makes the others
+                    work harder, and you have one thread to follow instead of
+                    three people to chase.
                   </p>
                 </FadeInLeft>
                 <FadeInRight className="relative flex justify-center">
@@ -173,7 +116,7 @@ export default function AboutPage() {
                     <div className="absolute inset-4 rounded-full border border-secondary/20 flex items-center justify-center animate-[spin_60s_linear_infinite]"></div>
                     <div className="absolute inset-12 rounded-full border border-tertiary/20 flex items-center justify-center animate-[spin_40s_linear_infinite_reverse]"></div>
                     <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary shadow-glass-elevated flex items-center justify-center">
-                      <span className="material-symbols-outlined icon-xl text-white">architecture</span>
+                      <span className="material-symbols-outlined icon-xl text-white">all_inclusive</span>
                     </div>
                   </div>
                 </FadeInRight>
@@ -181,29 +124,28 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* 4 & 5. Engineering Mindset & Product Philosophy */}
+          {/* 3. The six promises */}
           <section className="py-stack-xl px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto">
             <SectionHeader 
-              overline="Standards"
-              title="Four things we will not trade away"
-              description="Architected before it is coded. Tested as it is written. Documented as it ships. Handed over as open-source code you own outright. Everything else on a project is negotiable; these four are what you are actually buying."
+              overline="Six promises"
+              title="Six things you can hold us to"
+              description="Every kit carries all six, whatever it costs. Each one is the opposite of a habit that makes agency projects slow, expensive or hard to leave. Turn a card to see the habit it replaces."
               alignment="center"
             />
           
-            {/* Four standards, four cards that turn. The name of a standard is
-                what a reader scans for and it stays on the face at all times;
-                the paragraph arguing it is on the back, which is where the
-                detail belongs on a page that is already four screens of prose.
+            {/* Six promises, six cards that turn. The promise is what a reader
+                scans for and it stays on the face at all times; the habit it
+                replaces is on the back.
 
                 Both faces render, see `ui/FlipCard.jsx`, so the paragraphs
                 are still in the markup, still in the reading order, and still
                 reachable by tap and by keyboard. The flip changes which one is
                 facing you, not which one exists. */}
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-16">
-              {STANDARDS.map((standard) => (
-                <StaggerItem key={standard.title} className="h-full">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter mt-16">
+              {PROMISES.map((promise, i) => (
+                <StaggerItem key={promise.title} className="h-full">
                   <FlipCard
-                    label={`${standard.title}, read the detail`}
+                    label={`${promise.title}, see the habit it replaces`}
                     className="h-full min-h-[380px] md:min-h-[330px] rounded-xl"
                     front={
                       /* Opaque rather than `glass-panel`. `backdrop-filter`
@@ -214,33 +156,36 @@ export default function AboutPage() {
                          section ground with nothing behind them to refract. */
                       <div className="h-full rounded-xl border border-outline-variant/50 bg-surface-container-lowest/90 shadow-glass p-8 md:p-10 flex flex-col justify-between gap-6">
                         <span
-                          className={`material-symbols-outlined icon-lg ${standard.tone}`}
+                          className={`material-symbols-outlined icon-lg ${TONES[i % TONES.length]}`}
                         >
-                          {standard.icon}
+                          {promise.icon}
                         </span>
                         <div>
                           <h3 className="font-display text-headline-md text-on-surface mb-3">
-                            {standard.title}
+                            {promise.title}
                           </h3>
                           <p className="font-body text-body-sm text-on-surface-variant">
-                            {standard.summary}
+                            {promise.detail}
                           </p>
                         </div>
                         <span
                           aria-hidden="true"
                           className="font-label text-label-caps uppercase tracking-widest text-primary/70"
                         >
-                          Turn for the detail
+                          Turn for the usual way
                         </span>
                       </div>
                     }
                     back={
                       <div className="h-full rounded-xl border border-primary/20 bg-[linear-gradient(150deg,#0b2352,#081d4a_60%,#0a3f57)] p-8 md:p-10 flex flex-col justify-center">
                         <span className="font-label text-label-caps uppercase tracking-widest text-secondary-fixed-dim mb-4 block">
-                          {standard.title}
+                          The usual agency
                         </span>
+                        <p className="font-display text-headline-md text-white mb-4">
+                          {promise.usual}.
+                        </p>
                         <p className="font-body text-body-md text-white/85 leading-relaxed">
-                          {standard.detail}
+                          With LogixLoops: {promise.detail[0].toLowerCase() + promise.detail.slice(1)}
                         </p>
                       </div>
                     }
@@ -250,23 +195,17 @@ export default function AboutPage() {
             </StaggerContainer>
           </section>
 
-          {/* 6. Operational Standards */}
+          {/* 4. How a kit runs */}
           <section className="py-stack-xl border-y border-outline-variant/30 bg-surface-container-low">
             <div className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto">
-              {/* The four phases were a dotted list squeezed into the right
-                  half of a two-column block, four short steps sharing a
-                  column with nothing to do with them. They are a delivery
-                  route, so they run left to right across the full width now,
-                  on the same rail the pipeline on /security uses.
-
-                  Horizontal rather than vertical because these four are terse
-                  markers of a route rather than an argument to read; the
-                  vertical variant is kept for sequences whose steps carry
-                  prose. See `ui/ScrollTimeline.jsx`. */}
+              {/* A route, so it runs left to right across the full width, on
+                  the same rail the pipeline on /security uses. Horizontal
+                  because these are terse markers; the full step text is on
+                  /process. See `ui/ScrollTimeline.jsx`. */}
               <FadeInLeft className="max-w-2xl mb-stack-lg">
-                <h2 className="font-display text-display-lg text-on-surface mb-6">No surprises in month four.</h2>
+                <h2 className="font-display text-display-lg text-on-surface mb-6">No surprises after you pay.</h2>
                 <p className="font-body text-body-lg text-on-surface-variant">
-                  Four phases, and each one ends on a condition rather than on a date in a plan. You see running software every two weeks from the first sprint, so if we are heading somewhere wrong you find out in a fortnight, not in a status report six months in.
+                  Every kit runs the same five steps on a published timeline. You see progress every week, and nothing outside the kit&apos;s scope starts without a written price you have approved.
                 </p>
               </FadeInLeft>
 
@@ -277,14 +216,14 @@ export default function AboutPage() {
               <FadeInUp>
                 <ScrollTimeline
                   orientation="horizontal"
-                  label="Delivery phases"
-                  items={DELIVERY_PHASES}
+                  label="How a kit runs"
+                  items={KIT_RAIL}
                 />
               </FadeInUp>
             </div>
           </section>
 
-          {/* 9 & 10. Long-Term Vision & CTA */}
+          {/* 5. CTA */}
           <section className="py-[160px] px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 rounded-[40px] pointer-events-none"></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/10 blur-[100px] rounded-full pointer-events-none -z-10"></div>
@@ -298,11 +237,11 @@ export default function AboutPage() {
                   this paragraph has been rendering at the browser default 16px
                   the whole time. `body-lg` is the largest size the scale has. */}
               <p className="font-body text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 leading-relaxed">
-                We are small, which means we take on a handful of engagements at a time and are honest when yours is not one we are the right studio for. Either way you get a straight answer, and a written brief you keep.
+                Tell us what you need. We will point you at the right kit, with its price, or say plainly if none of them fit. We are small on purpose, so we take on a handful of projects at a time and tell you when yours would have to wait.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button href="/contact" size="lg" icon="arrow_forward">Book a discovery call</Button>
-                <Button href="/process" variant="outline" size="lg">See how we work</Button>
+                <Button href="/contact" size="lg" icon="arrow_forward">Start a project</Button>
+                <Button href="/kits" variant="outline" size="lg">Browse the kits</Button>
               </div>
             </FadeInUp>
           </section>
