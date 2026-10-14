@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readdirSync } from "node:fs";
 import nextConfig from "../next.config.mjs";
 import { LINES } from "@/data/lines";
 import { KITS } from "@/data/kits";
@@ -19,6 +20,30 @@ test("every retired practice URL redirects permanently to its line", async () =>
 test("no redirect shadows a live line or Loop page", async () => {
   const sources = (await nextConfig.redirects()).map((r) => r.source);
   assert.ok(!sources.some((source) => source === "/loops" || source.startsWith("/loops/")));
+});
+
+/* A Next.js redirect source as a regex: `:param` is one segment, `:param*` any. */
+const sourcePattern = (source) =>
+  new RegExp(
+    `^${source
+      .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+      .replace(/:\w+\*/g, ".*")
+      .replace(/:\w+/g, "[^/]+")}$`
+  );
+
+const publicFiles = (dir = "public") =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory() ? publicFiles(`${dir}/${entry.name}`) : [`${dir}/${entry.name}`.slice("public".length)]
+  );
+
+// Redirects run before public/ is served, so a broad rule such as
+// /services/:slug silently 404s any file that sits under /services/.
+test("no redirect shadows a file in public/", async () => {
+  const patterns = (await nextConfig.redirects()).map((r) => [r.source, sourcePattern(r.source)]);
+  for (const file of publicFiles()) {
+    const hit = patterns.find(([, pattern]) => pattern.test(file));
+    assert.ok(!hit, `${file} is redirected by ${hit?.[0]}`);
+  }
 });
 
 test("every old /services and /kits URL redirects to /loops in one hop", async () => {
