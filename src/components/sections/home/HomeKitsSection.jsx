@@ -1,7 +1,7 @@
 import { Button, SectionHeader } from "@/components/ui";
 import { FadeInUp } from "@/components/motion";
 import LineDirectory from "@/components/sections/kits/LineDirectory";
-import { CURRENCY_NOTE } from "@/lib/pricing";
+import PriceNote from "@/components/sections/kits/PriceNote";
 
 /**
  * The six lines with their starting prices, so the home page links every line
@@ -13,12 +13,12 @@ export default function HomeKitsSection() {
       <FadeInUp>
         <SectionHeader
           overline="Loops"
-          title="Six lines. Every Loop priced up front."
+          title="What we do. Every Loop priced up front."
           description="Websites, apps, branding, redesigns, SEO and AI visibility, and AI automation, each sold as a Loop with a fixed scope, a timeline and a published starting price."
         />
       </FadeInUp>
       <LineDirectory />
-      <p className="mt-6 font-body text-body-sm text-on-surface-variant">{CURRENCY_NOTE}</p>
+      <PriceNote className="mt-6" />
       <div className="mt-stack-md flex flex-col gap-4 sm:flex-row">
         <Button href="/loops" icon="arrow_forward" iconPosition="right">
           Browse every Loop

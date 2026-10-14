@@ -18,8 +18,21 @@ test("every retired practice URL redirects permanently to its line", async () =>
 });
 
 test("no redirect shadows a live line or Loop page", async () => {
-  const sources = (await nextConfig.redirects()).map((r) => r.source);
-  assert.ok(!sources.some((source) => source === "/loops" || source.startsWith("/loops/")));
+  const live = new Set(["/loops", ...[...LINES, ...KITS].map(({ slug }) => `/loops/${slug}`)]);
+  for (const { source } of await nextConfig.redirects()) {
+    assert.ok(!live.has(source) && !source.startsWith("/loops/:"), source);
+  }
+});
+
+test("the renamed redesign Loop keeps its old addresses, in one hop", async () => {
+  const redirects = await nextConfig.redirects();
+  const find = (source) => redirects.find((r) => r.source === source);
+  for (const old of ["/loops/website-glow-up", "/kits/website-glow-up"]) {
+    assert.equal(find(old)?.destination, "/loops/redesign", old);
+  }
+  // The specific /kits rule has to win over the general /kits/:slug one.
+  const index = (source) => redirects.findIndex((r) => r.source === source);
+  assert.ok(index("/kits/website-glow-up") < index("/kits/:slug"));
 });
 
 /* A Next.js redirect source as a regex: `:param` is one segment, `:param*` any. */

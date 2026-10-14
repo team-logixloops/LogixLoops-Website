@@ -25,13 +25,13 @@ function lineSection(line) {
   const items = kits.length
     ? kits.map(
         (kit) =>
-          `- [${kit.name}](${SITE}/loops/${kit.slug}): from ${formatPrice(kit.price)}${note(kit)}, ${kit.timeline}. ${kit.summary}`
+          `- [${kit.name}](${SITE}/loops/${kit.slug}): starting from ${formatPrice(kit.price)}${note(kit)}, ${kit.timeline}. ${kit.summary}`
       )
     : getAllPlans().map(
-        (plan) => `- **${plan.name} plan:** from ${formatPrice(plan.price)}. ${plan.summary} ${plan.terms}`
+        (plan) => `- **${plan.name} plan:** starting from ${formatPrice(plan.price)}. ${plan.summary} ${plan.terms}`
       );
 
-  return [`## ${line.name}: ${line.label}`, "", `${line.summary} [More](${SITE}/loops/${line.slug})`, "", ...items, ""];
+  return [`## ${line.label}`, "", `${line.summary} [More](${SITE}/loops/${line.slug})`, "", ...items, ""];
 }
 
 export function buildLlmsTxt() {
@@ -47,7 +47,7 @@ export function buildLlmsTxt() {
     "- **Type:** Independent brand, technology and growth studio (ProfessionalService).",
     `- **Base:** ${BRAND.addressDisplay}. Works remotely with clients in ${BRAND.servesMarkets.join(", ")}.`,
     `- **Contact:** ${BRAND.email}, ${BRAND.phoneDisplay}, ${SITE}/contact`,
-    "- **How it sells:** Loops, fixed-scope packages with a published starting price in USD and INR, a timeline and a list of what is included. Monthly Pit Crew plans cover maintenance and support.",
+    "- **How it sells:** Loops, fixed-scope packages with a published starting price in USD and INR, a timeline and a list of what is included. Monthly maintenance plans cover support after launch.",
     `- **Currencies:** ${CURRENCY_NOTE} Each is the entry price of its own market, set separately rather than converted.`,
     "- **Ownership:** Domain, code, designs and accounts are created in the client's name from day one.",
     "",

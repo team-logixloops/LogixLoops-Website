@@ -7,13 +7,13 @@ import PlanCard from "@/components/sections/kits/PlanCard";
 import PromiseStrip from "@/components/sections/kits/PromiseStrip";
 import StudioCta from "@/components/sections/kits/StudioCta";
 import KitLinkedText from "@/components/sections/kits/KitLinkedText";
+import PriceNote from "@/components/sections/kits/PriceNote";
 import { SECTION } from "@/components/sections/service-master/tokens";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { getAllLines, getLineBySlug } from "@/data/lines";
 import { getAllKits, getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { SERVICES_FAQS } from "@/data/faq";
-import { CURRENCY_NOTE } from "@/lib/pricing";
 import { generateBreadcrumbSchema, generateCollectionPageSchema, generateFaqSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
@@ -68,7 +68,8 @@ function LineHeading({ id, eyebrow, title, pitch, href, linkLabel }) {
 
 export default function LoopsPage() {
   const lines = getAllLines().filter((line) => getKitsByLine(line.slug).length > 0);
-  const pitCrew = getLineBySlug("maintenance-and-support");
+  const maintenance = getLineBySlug("maintenance-and-support");
+  const plans = getAllPlans();
 
   return (
     <>
@@ -112,11 +113,11 @@ export default function LoopsPage() {
           <section key={line.slug} aria-labelledby={`line-${line.slug}`} className={SECTION}>
             <LineHeading
               id={`line-${line.slug}`}
-              eyebrow={line.name}
+              eyebrow={`${getKitsByLine(line.slug).length} Loops`}
               title={line.label}
               pitch={line.pitch}
               href={`/loops/${line.slug}`}
-              linkLabel={`More about ${line.name}`}
+              linkLabel="Details and FAQs"
             />
             <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
               {getKitsByLine(line.slug).map((kit) => (
@@ -129,24 +130,23 @@ export default function LoopsPage() {
         <section aria-labelledby="line-maintenance-and-support" className={SECTION}>
           <LineHeading
             id="line-maintenance-and-support"
-            eyebrow={pitCrew.name}
-            title={pitCrew.label}
-            pitch={pitCrew.pitch}
-            href={`/loops/${pitCrew.slug}`}
-            linkLabel={`More about ${pitCrew.name}`}
+            eyebrow={`${plans.length} monthly plans`}
+            title={maintenance.label}
+            pitch={maintenance.pitch}
+            href={`/loops/${maintenance.slug}`}
+            linkLabel="Details and FAQs"
           />
           <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
-            {getAllPlans().map((plan) => (
+            {plans.map((plan) => (
               <PlanCard key={plan.slug} plan={plan} />
             ))}
           </div>
-          <p className="mt-6 font-body text-body-sm text-on-surface-variant">
-            {CURRENCY_NOTE}{" "}
+          <PriceNote className="mt-6">
             <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
               See the full price list
             </Link>
             .
-          </p>
+          </PriceNote>
         </section>
 
         {/* The visible half of the FAQPage schema above; the two must match. */}

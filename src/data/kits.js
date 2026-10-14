@@ -11,7 +11,7 @@
  * Copy rules (docs/brand-voice-and-search.md, enforced by test/content.test.mjs):
  *   - `summary` is the answer-first lead: 40 to 60 words, plain English.
  *   - `metaTitle` fits after the "LogixLoops | " template (47 chars max).
- *   - `metaDescription` leaves room for " From <price>." to be appended.
+ *   - `metaDescription` leaves room for " Starting from <price>." to be appended.
  *   - The last step is always The Loop.
  *   - `underTheHood` is the only place technical vocabulary is expected.
  *
@@ -32,7 +32,7 @@ const LOOP = {
 };
 
 export const KITS = [
-  /* ─── Engine: Web & App Development ─── */
+  /* ─── Web & App Development ─── */
   {
     slug: "business-website",
     line: "web-and-app-development",
@@ -88,7 +88,7 @@ export const KITS = [
     faqs: [
       {
         q: "Can I update the website myself after launch?",
-        a: "Yes. You get a simple editor for text, images and blog posts, plus a short recorded walkthrough. Bigger changes, like new page layouts, can come through a Pit Crew plan or a one-off request.",
+        a: "Yes. You get a simple editor for text, images and blog posts, plus a short recorded walkthrough. Bigger changes, like new page layouts, can come through a maintenance plan or a one-off request.",
       },
       {
         q: "Do you write the content for the website?",
@@ -112,7 +112,7 @@ export const KITS = [
     keyword: "ecommerce website development cost",
     metaTitle: "Ecommerce Website Design: Online Store Loop",
     metaDescription:
-      "A Shopify or custom online store with payments, inventory and order emails, live in four to six weeks and ready for Google Shopping.",
+      "A Shopify or custom online store with payments, inventory and order emails, live in four to six weeks and ready for Google.",
     includes: [
       "Store design for home, collection, product, cart and checkout pages",
       "Up to 25 products loaded, with variants and stock tracking",
@@ -301,7 +301,7 @@ export const KITS = [
     ],
   },
 
-  /* ─── Spark: Branding & Identity ─── */
+  /* ─── Branding & Identity ─── */
   {
     slug: "brand-identity",
     line: "branding",
@@ -436,18 +436,18 @@ export const KITS = [
     ],
   },
 
-  /* ─── Glow-Up: Website Redesign & Upgrades ─── */
+  /* ─── Website Redesign & Upgrades ─── */
   {
-    slug: "website-glow-up",
+    slug: "redesign",
     line: "website-redesign",
-    name: "Website Glow-Up Loop",
+    name: "Website Redesign Loop",
     promise: "a redesign that makes your current website look current and sell more",
     summary:
-      "The Website Glow-Up Loop redesigns your existing website in three to five weeks without losing the search rankings it has earned. We measure speed and enquiries first, redesign the pages that matter most, rebuild them to load fast, and measure again after launch, so you see exactly what the glow-up changed.",
+      "The Website Redesign Loop redesigns your existing website in three to five weeks without losing the search rankings it has earned. We measure speed and enquiries first, redesign the pages that matter most, rebuild them to load fast, and measure again after launch, so you see exactly what the glow-up changed.",
     price: { usd: 600, inr: 20000 },
     timeline: "3–5 weeks",
     keyword: "website redesign cost",
-    metaTitle: "Website Redesign Package: Website Glow-Up Loop",
+    metaTitle: "Redesign Your Website: Website Redesign Loop",
     metaDescription:
       "Redesign your website in three to five weeks, keep your rankings, and see before and after numbers for speed and enquiries.",
     includes: [
@@ -535,7 +535,7 @@ export const KITS = [
       "Sites failing Core Web Vitals in Search Console",
     ],
     notFor: [
-      "Sites that also need a new design: the Website Glow-Up Loop includes speed work",
+      "Sites that also need a new design: the Website Redesign Loop includes speed work",
       "Web apps with slow databases or APIs, which need an engineering audit",
     ],
     steps: [
@@ -575,7 +575,7 @@ export const KITS = [
     ],
   },
 
-  /* ─── Spotlight: SEO & AI Search Visibility ─── */
+  /* ─── SEO & AI Search Visibility ─── */
   {
     slug: "seo-foundation",
     line: "seo-and-ai-search",
@@ -604,8 +604,8 @@ export const KITS = [
       "Businesses about to spend on content or ads that want the basics right first",
     ],
     notFor: [
-      "Sites that need a redesign first: start with the Website Glow-Up Loop",
-      "Ongoing monthly content and reporting: pair this Loop with a Pit Crew Growth plan",
+      "Sites that need a redesign first: start with the Website Redesign Loop",
+      "Ongoing monthly content and reporting: pair this Loop with a Growth maintenance plan",
     ],
     steps: [
       { title: "Audit", desc: "A crawl of the whole site plus your Search Console data, if you have it, to find what is holding rankings back." },
@@ -715,7 +715,7 @@ export const KITS = [
     ],
   },
 
-  /* ─── Autopilot: AI & Automation ─── */
+  /* ─── AI & Automation ─── */
   {
     slug: "whatsapp-ai",
     line: "ai-automation",

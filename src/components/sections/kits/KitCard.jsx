@@ -20,8 +20,9 @@ export default function KitCard({ kit, color }) {
         {kit.promise}
       </p>
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-t border-outline-variant/30 pt-4">
-        <span className={cn("font-display text-lg font-semibold", a.text)}>
-          From {formatPrice(kit.price)}
+        <span className="flex flex-col">
+          <span className="font-body text-body-sm text-on-surface-variant">Starting from</span>
+          <span className={cn("font-display text-lg font-semibold", a.text)}>{formatPrice(kit.price)}</span>
         </span>
         <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant">
           {kit.timeline}

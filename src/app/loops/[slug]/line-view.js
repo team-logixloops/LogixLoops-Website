@@ -2,13 +2,14 @@ import Link from "next/link";
 import { getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
-import { CURRENCY_NOTE, cheapest, formatPrice } from "@/lib/pricing";
+import { cheapest, formatPrice } from "@/lib/pricing";
 import { SectionHeader } from "@/components/ui";
 import LineHero from "@/components/sections/kits/LineHero";
 import KitCard from "@/components/sections/kits/KitCard";
 import PlanCard from "@/components/sections/kits/PlanCard";
 import UnderTheHood from "@/components/sections/kits/UnderTheHood";
 import PromiseStrip from "@/components/sections/kits/PromiseStrip";
+import PriceNote from "@/components/sections/kits/PriceNote";
 import StudioCta from "@/components/sections/kits/StudioCta";
 import { linkFaqs } from "@/components/sections/kits/KitLinkedText";
 import ServiceMasterProblems from "@/components/sections/service-master/ServiceMasterProblems";
@@ -24,7 +25,7 @@ import {
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
-/* Pit Crew sells monthly plans rather than kits. */
+/* Maintenance and support sells monthly plans rather than Loops. */
 const PLANS_LINE = "maintenance-and-support";
 
 /* A line (one of the six groups) at /loops/<line>. Rendered by
@@ -41,7 +42,7 @@ export function lineMetadata(line) {
 export default function LineView({ line }) {
   const isPlans = line.slug === PLANS_LINE;
   const offers = isPlans ? getAllPlans() : getKitsByLine(line.slug);
-  const fromLabel = `${isPlans ? "Plans" : "Loops"} from ${formatPrice(cheapest(offers).price)}`;
+  const fromLabel = `${isPlans ? "Plans" : "Loops"} starting from ${formatPrice(cheapest(offers).price)}`;
   const offerSlugs = new Set(offers.map((offer) => offer.slug));
   const studies = isPlans
     ? []
@@ -60,7 +61,7 @@ export default function LineView({ line }) {
       {!isPlans && (
         <SchemaMarkup
           schema={generateItemListSchema({
-            name: `${line.name}: ${line.label} Loops`,
+            name: `${line.label} Loops`,
             items: offers.map((kit) => ({ name: kit.name, description: kit.summary, path: `/loops/${kit.slug}` })),
           })}
         />
@@ -79,7 +80,7 @@ export default function LineView({ line }) {
 
       <section className={SECTION}>
         <SectionHeader
-          overline={`${line.name} · ${line.label}`}
+          overline={line.label}
           title={isPlans ? "Pick a plan" : "Pick a Loop"}
           description={
             isPlans
@@ -92,13 +93,12 @@ export default function LineView({ line }) {
             ? offers.map((plan) => <PlanCard key={plan.slug} plan={plan} />)
             : offers.map((kit) => <KitCard key={kit.slug} kit={kit} color={line.color} />)}
         </div>
-        <p className="mt-6 font-body text-body-sm text-on-surface-variant">
-          {CURRENCY_NOTE}{" "}
+        <PriceNote className="mt-6">
           <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
             See every Loop and plan with its price
           </Link>
           .
-        </p>
+        </PriceNote>
       </section>
 
       {studies.length > 0 && (
@@ -108,7 +108,7 @@ export default function LineView({ line }) {
       <ServiceMasterFAQ faqs={linkFaqs(line.faqs)} color={line.color} />
       <PromiseStrip />
       <StudioCta
-        heading={`Start with ${line.name}: ${line.label}`}
+        heading={`Talk to us about ${line.label}`}
         body={line.pitch}
         primary={{ href: `/contact?line=${line.slug}`, label: "Start a project" }}
         secondary={{ href: "/loops", label: "See every Loop" }}

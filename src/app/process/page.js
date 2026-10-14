@@ -60,7 +60,7 @@ export default function ProcessPage() {
         </section>
 
         {/* 3. The engineering method under bigger builds: MVPs, apps and
-            Pit Crew Squad plans. */}
+            Squad plans. */}
         <section className="px-margin-x-mobile md:px-margin-x-desktop max-w-container-max mx-auto pt-stack-lg pb-stack-md border-t border-outline-variant/30">
           <FadeInUp>
             <div className="max-w-2xl">
@@ -71,7 +71,7 @@ export default function ProcessPage() {
                 The engineering method behind bigger builds
               </h2>
               <p className="font-body text-body-lg text-on-surface-variant">
-                MVPs, mobile apps and Pit Crew Squad plans run on the method below: eight phases, each with a condition that has to be true before the next one starts.
+                MVPs, mobile apps and Squad plans run on the method below: eight phases, each with a condition that has to be true before the next one starts.
               </p>
             </div>
           </FadeInUp>

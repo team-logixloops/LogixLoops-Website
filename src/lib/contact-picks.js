@@ -19,7 +19,7 @@ export function contactPicks() {
   return {
     kit: Object.fromEntries(KITS.map((kit) => [kit.slug, { label: kit.name, topic: topicOf(kit.line) }])),
     plan: Object.fromEntries(
-      PLANS.map((plan) => [plan.slug, { label: `Pit Crew ${plan.name} plan`, topic: topicOf(PLANS_LINE) }])
+      PLANS.map((plan) => [plan.slug, { label: `${plan.name} plan`, topic: topicOf(PLANS_LINE) }])
     ),
     line: Object.fromEntries(LINES.map((line) => [line.slug, { label: line.label, topic: line.label }])),
   };

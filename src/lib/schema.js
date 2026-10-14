@@ -174,7 +174,7 @@ export const generateOrganizationSchema = () => {
         ),
         ...PLANS.map((plan) =>
           offer({
-            name: `Pit Crew ${plan.name} plan`,
+            name: `${plan.name} plan`,
             description: plan.summary,
             url: `${BASE_URL}/loops/maintenance-and-support`,
             price: plan.price,

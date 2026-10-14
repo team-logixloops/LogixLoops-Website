@@ -37,9 +37,9 @@ export const FAQ_CATEGORIES = [
 export const PRICING_FAQS = [
   {
     id: "pricing-faq-1",
-    question: "Are the Loop prices fixed?",
+    question: "Are the Loop prices final?",
     answer:
-      "Yes, for the scope listed on each Loop page. The starting price buys exactly what the Loop includes. If you need more, such as extra pages, products or an add-on, we quote the difference in writing before work starts, and nothing is added to the bill without your approval.",
+      "No. Every price on this site is a starting price: the minimum for the scope listed on that Loop's page. Your final price depends on your project, such as more pages or products, connections to other systems, content you need from us or a tighter deadline. We confirm it in a written quote before work starts, and nothing is added without your approval.",
   },
   {
     id: "pricing-faq-2",
@@ -51,7 +51,7 @@ export const PRICING_FAQS = [
     id: "pricing-faq-3",
     question: "How do payments work?",
     answer:
-      "Loops are paid in two parts: half to start and half at launch, before handover. Pit Crew plans are billed monthly in advance. Prices exclude taxes such as GST, which are added to the invoice where they apply.",
+      "Loops are paid in two parts: half to start and half at launch, before handover. Maintenance plans are billed monthly in advance. Prices exclude taxes such as GST, which are added to the invoice where they apply.",
   },
   {
     id: "pricing-faq-4",
@@ -68,7 +68,7 @@ export const PRICING_FAQS = [
   {
     id: "pricing-faq-6",
     question: "What if my project does not fit a Loop?",
-    answer: `We quote it. Larger or unusual work, such as marketplaces, internal systems or integrations with older software, is scoped on a call and priced in writing against a short brief, and that price is fixed for the scope it describes. Ongoing product work runs on a Pit Crew Squad plan, from ${planPrice("squad")}.`,
+    answer: `We quote it. Larger or unusual work, such as marketplaces, internal systems or integrations with older software, is scoped on a call and priced in writing against a short brief, and that price is fixed for the scope it describes. Ongoing product work runs on a Squad plan, from ${planPrice("squad")}.`,
   },
 ];
 
@@ -86,13 +86,13 @@ export const SERVICES_FAQS = [
     id: "services-faq-2",
     question: "Can I combine Loops from different lines?",
     answer:
-      "Yes, and most growing businesses do. A common pairing is the Brand Identity Loop with the Business Website Loop, or a Website Glow-Up Loop followed by the SEO Foundation Loop. One team handles every Loop, so nothing is lost between them, and the Brand Launch Loop bundles the most common combination for less than its parts.",
+      "Yes, and most growing businesses do. A common pairing is the Brand Identity Loop with the Business Website Loop, or a Website Redesign Loop followed by the SEO Foundation Loop. One team handles every Loop, so nothing is lost between them, and the Brand Launch Loop bundles the most common combination for less than its parts.",
   },
   {
     id: "services-faq-3",
     question: "Can you work alongside our in-house team?",
     answer:
-      "Yes. On a Pit Crew Squad plan that is the default: we work in your tracker, join your standups and talk in your Slack or WhatsApp. For one-off Loops we hand over the code, the accounts and a recorded walkthrough, so your team can carry on without us.",
+      "Yes. On a Squad plan that is the default: we work in your tracker, join your standups and talk in your Slack or WhatsApp. For one-off Loops we hand over the code, the accounts and a recorded walkthrough, so your team can carry on without us.",
   },
   {
     id: "services-faq-4",
@@ -124,13 +124,13 @@ export const HOME_FAQS = [
     id: "home-faq-3",
     question: "Do you provide post-launch support and maintenance?",
     answer:
-      `Yes, in two ways. Every Loop ends with The Tune-Up: 30 days after launch of measuring, fixing and tuning with real data. After that, Pit Crew plans keep your site or app running from ${planPrice("essentials")}, with exactly what each plan covers written into it.`,
+      `Yes, in two ways. Every Loop ends with The Tune-Up: 30 days after launch of measuring, fixing and tuning with real data. After that, Maintenance plans keep your site or app running from ${planPrice("essentials")}, with exactly what each plan covers written into it.`,
   },
   {
     id: "home-faq-4",
     question: "How do you handle scope changes?",
     answer:
-      "In writing, before any work. A Loop's price covers its listed scope; anything beyond it is quoted as an add-on or a change, and you approve it before anyone starts. On a Pit Crew Squad plan, changes go into the next sprint, because you set the priorities. Nothing is quietly absorbed and billed later.",
+      "In writing, before any work. A Loop's price covers its listed scope; anything beyond it is quoted as an add-on or a change, and you approve it before anyone starts. On a Squad plan, changes go into the next sprint, because you set the priorities. Nothing is quietly absorbed and billed later.",
   },
   {
     id: "home-faq-5",
@@ -146,7 +146,7 @@ export const FAQS = [
     category: "Engagement & Collaboration",
     question: "Do you integrate with our internal engineering teams?",
     answer:
-      "Yes, and on a Pit Crew Squad plan it is how we work by default. We work in your Jira or Linear, join your standups and talk in shared Slack, Teams or WhatsApp channels. Your engineers review our pull requests and ours review theirs.",
+      "Yes, and on a Squad plan it is how we work by default. We work in your Jira or Linear, join your standups and talk in shared Slack, Teams or WhatsApp channels. Your engineers review our pull requests and ours review theirs.",
   },
   {
     id: "faq-2",
@@ -200,7 +200,7 @@ export const FAQS = [
   {
     id: "faq-9",
     category: "Pricing & Contracts",
-    question: "How is the Pit Crew Squad plan billed?",
+    question: "How is the Squad plan billed?",
     answer:
       `A flat monthly fee, from ${planPrice("squad")}, for reserved capacity rather than hours. There are no timesheets to reconcile, the fee stays the same whether a sprint runs hot or quiet, and the minimum term is three months, then month to month.`,
   },

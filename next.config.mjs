@@ -41,6 +41,11 @@ const nextConfig = {
       { source: "/services", destination: "/loops", permanent: true },
       { source: "/services/:slug", destination: "/loops/:slug", permanent: true },
       { source: "/kits", destination: "/loops", permanent: true },
+      // The redesign Loop was the Website Glow-Up Loop until the groups lost
+      // their second names. Its old address, and the /kits one, go straight
+      // to the new one, ahead of the general /kits/:slug rule.
+      { source: "/loops/website-glow-up", destination: "/loops/redesign", permanent: true },
+      { source: "/kits/website-glow-up", destination: "/loops/redesign", permanent: true },
       { source: "/kits/:slug", destination: "/loops/:slug", permanent: true },
     ];
   },

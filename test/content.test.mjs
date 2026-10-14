@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { KITS, getKitBySlug, getKitsByLine } from "@/data/kits";
 import { PLANS, getPlanBySlug } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
-import { formatPrice, formatPriceProse } from "@/lib/pricing";
+import { PRICE_TERMS_NOTE, formatPriceProse, startingFrom } from "@/lib/pricing";
 import { copyStrings, voiceProblems, wordCount } from "./helpers/voice.mjs";
 import { existsSync } from "node:fs";
 import { LINES, getLineBySlug } from "@/data/lines";
@@ -37,6 +37,18 @@ const voiceReport = (value) =>
 test("line and Loop slugs never collide, because both live under /loops/<slug>", () => {
   const lineSlugs = new Set(LINE_SLUGS);
   for (const kit of KITS) assert.ok(!lineSlugs.has(kit.slug), kit.slug);
+});
+
+test("Loop is the only branded word: the groups have no second name", () => {
+  for (const line of LINES) assert.equal(line.name, undefined, line.slug);
+  const copy = JSON.stringify([KITS, LINES, PLANS, FAQS, HOME_FAQS, PRICING_FAQS, SERVICES_FAQS, KIT_STEPS]);
+  const hit = copy.match(/\b(Engine|Spark|Glow-Up|Spotlight|Autopilot|Pit Crew)\b/);
+  assert.equal(hit, null, `copy still says ${hit?.[0]}`);
+});
+
+test("the redesign offer is the Website Redesign Loop", () => {
+  assert.equal(getKitBySlug("redesign").name, "Website Redesign Loop");
+  assert.equal(getKitBySlug("website-glow-up"), null);
 });
 
 test("every Loop name ends in Loop, and no copy says kit", () => {
@@ -94,7 +106,7 @@ test("every add-on costs less than the kit it adds to", () => {
   }
 });
 
-test("Pit Crew plans rise in price from Essentials to Squad", () => {
+test("maintenance plans rise in price from Essentials to Squad", () => {
   const [essentials, growth, squad] = ["essentials", "growth", "squad"].map(getPlanBySlug);
   for (const currency of ["usd", "inr"]) {
     assert.ok(essentials.price[currency] < growth.price[currency], currency);
@@ -118,9 +130,9 @@ test("kit meta titles fit after the 'LogixLoops | ' template", () => {
   for (const kit of KITS) assert.ok(kit.metaTitle.length <= 47, `${kit.slug}: ${kit.metaTitle.length} chars`);
 });
 
-test("kit meta descriptions stay within 70-160 characters with the price appended", () => {
+test("kit meta descriptions stay within 70-160 characters with the starting price appended", () => {
   for (const kit of KITS) {
-    const description = `${kit.metaDescription} From ${formatPrice(kit.price)}.`;
+    const description = `${kit.metaDescription} ${startingFrom(kit.price)}.`;
     assert.ok(description.length >= 70 && description.length <= 160, `${kit.slug}: ${description.length} chars`);
   }
 });
@@ -146,11 +158,11 @@ test("kit and plan copy follows the voice rules", () => {
 
 test("lines.js defines exactly the six line slugs, in order", () => {
   assert.deepEqual(LINES.map((line) => line.slug), LINE_SLUGS);
-  assert.equal(getLineBySlug("branding").name, "Spark");
+  assert.equal(getLineBySlug("branding").label, "Branding & Identity");
   assert.equal(getLineBySlug("not-a-line"), null);
 });
 
-test("every line except Pit Crew sells at least one kit", () => {
+test("every line except maintenance sells at least one kit", () => {
   for (const line of LINES) {
     if (line.slug === "maintenance-and-support") continue;
     assert.ok(getKitsByLine(line.slug).length > 0, line.slug);
@@ -172,6 +184,16 @@ test("line summaries are 40 to 60 words and meta fits the limits", () => {
     const d = line.metaDescription.length;
     assert.ok(d >= 70 && d <= 160, `${line.slug}: description ${d}`);
   }
+});
+
+test("prices read as starting prices, and the terms say the final price can change", () => {
+  assert.equal(startingFrom({ usd: 500, inr: 15000 }), "Starting from $500 · ₹15,000");
+  assert.match(PRICE_TERMS_NOTE, /starting prices/i);
+  assert.match(PRICE_TERMS_NOTE, /written quote/i);
+  const [first] = PRICING_FAQS;
+  assert.equal(first.question, "Are the Loop prices final?");
+  assert.match(first.answer, /^No\. /);
+  assert.match(first.answer, /starting price/i);
 });
 
 test("line FAQ answers quote the live kit and plan prices", () => {

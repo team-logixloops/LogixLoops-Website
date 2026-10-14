@@ -1,6 +1,6 @@
 import { getLineBySlug } from "@/data/lines";
 import { getAllCaseStudies } from "@/data/caseStudies";
-import { formatPrice } from "@/lib/pricing";
+import { startingFrom } from "@/lib/pricing";
 import KitHero from "@/components/sections/kits/KitHero";
 import KitIncludes from "@/components/sections/kits/KitIncludes";
 import KitFit from "@/components/sections/kits/KitFit";
@@ -28,7 +28,7 @@ import { buildMetadata } from "@/lib/seo";
 export function kitMetadata(kit) {
   return buildMetadata({
     title: kit.metaTitle,
-    description: `${kit.metaDescription} From ${formatPrice(kit.price)}.`,
+    description: `${kit.metaDescription} ${startingFrom(kit.price)}.`,
     path: `/loops/${kit.slug}`,
     keywords: [kit.keyword, kit.name, `${kit.name} price`],
   });

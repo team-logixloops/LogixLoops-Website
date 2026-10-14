@@ -4,7 +4,7 @@ import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
 const TERMS_DESCRIPTION =
-  "The Terms and Conditions governing your use of LogixLoops services, platforms, deliverables, and intellectual property.";
+  "The Terms and Conditions for LogixLoops services: starting prices and written quotes, payments, deliverables and intellectual property.";
 
 export const metadata = buildMetadata({
   title: "Terms & Conditions",
@@ -16,7 +16,7 @@ export default function TermsAndConditionsPage() {
   const sections = [
     { id: "general-agreement", title: "1. General Agreement & Scope" },
     { id: "user-responsibilities", title: "2. User & Client Responsibilities" },
-    { id: "payments-commercials", title: "3. Payments & Commercial Terms" },
+    { id: "pricing", title: "3. Prices, Quotes & Payments" },
     { id: "intellectual-property", title: "4. Intellectual Property Rights" },
     { id: "prohibited-activities", title: "5. Prohibited Activities & Termination" },
     { id: "disclaimers-liability", title: "6. Disclaimers & Limitations of Liability" },
@@ -26,11 +26,12 @@ export default function TermsAndConditionsPage() {
   return (
     <LegalLayout
       title="Terms & Conditions"
-      effectiveDate="May 26, 2026"
+      effectiveDate="October 14, 2026"
       description="These Terms & Conditions outline the rules, obligations, and legal guidelines governing your use of LogixLoops platforms, services, and digital products. By accessing our ecosystem, you agree to these structured business practices."
       sections={sections}
       summary={[
         "Using this site or our services means you accept these terms.",
+        "Prices on this site are starting prices. Your final price depends on your project and is confirmed in a written quote before work starts.",
         "You own the work we build for you once the engagement is paid and handed over.",
         "We own our own tools, methods, and anything we built before working with you.",
         "Do not misuse the site: no scraping, no breaking in, no reselling our content as your own.",
@@ -102,21 +103,51 @@ export default function TermsAndConditionsPage() {
         </div>
       </div>
 
-      {/* 3. Payments & Commercials */}
-      <div id="payments-commercials" className="scroll-mt-32 mt-12">
+      {/* 3. Prices, Quotes & Payments. /pricing and every price note link here. */}
+      <div id="pricing" className="scroll-mt-32 mt-12">
         <h2 className="font-display text-2xl text-on-surface mb-6 flex items-center gap-3">
           <span className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-sm border border-primary/20">3</span>
-          Payments & Commercial Terms
+          Prices, Quotes & Payments
         </h2>
         <div className="space-y-4">
           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
-            <h3 className="font-label text-sm text-on-surface mb-2">3.1 Payment Obligations</h3>
+            <h3 className="font-label text-sm text-on-surface mb-2">3.1 Published Prices Are Starting Prices</h3>
+            <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
+              Every price published on the LogixLoops website, including the price of each Loop, add-on and monthly plan, is a starting price. It is the minimum price for the scope listed on that page. It is not a quote for your project.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
+            <h3 className="font-label text-sm text-on-surface mb-2">3.2 Final Price Depends on the Project</h3>
+            <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
+              The final price of a project may be higher than its starting price, depending on its requirements. These include the number of pages, products, screens or automations; connections to other systems; content, design or features beyond the listed scope; the requested timeline; and the condition of any existing website, app or code.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
+            <h3 className="font-label text-sm text-on-surface mb-2">3.3 Written Quotes</h3>
+            <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
+              Before any work starts, LogixLoops confirms the price, scope, timeline and payment schedule in a written quote or proposal. Once you accept it, that written quote governs the project in place of the prices published on the website.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
+            <h3 className="font-label text-sm text-on-surface mb-2">3.4 Changes to Published Prices</h3>
+            <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
+              LogixLoops may change its published prices at any time. A change does not affect a quote you have already accepted.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
+            <h3 className="font-label text-sm text-on-surface mb-2">3.5 Currencies, Taxes and Third-Party Costs</h3>
+            <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
+              Prices in Indian rupees (₹) apply to businesses based in India, and prices in US dollars ($) apply to businesses elsewhere. Prices exclude GST and other applicable taxes, which are added to the invoice where they apply. Costs charged by other companies, such as domains, hosting, app store fees, payment gateway charges, AI model usage and messaging charges, are not included and are billed to accounts in the client&apos;s name.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
+            <h3 className="font-label text-sm text-on-surface mb-2">3.6 Payment Obligations</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               Payments, retainers, subscriptions, consultation fees, milestone payments, setup fees, taxes, gateway charges, and applicable government levies must be paid as agreed and may be non-refundable unless explicitly stated otherwise in writing.
             </p>
           </div>
           <div className="p-6 rounded-xl border border-outline-variant/30 bg-surface-container-lowest/70 hover:border-primary/30 transition-colors">
-            <h3 className="font-label text-sm text-on-surface mb-2">3.2 Out-of-Scope Pricing</h3>
+            <h3 className="font-label text-sm text-on-surface mb-2">3.7 Out-of-Scope Work</h3>
             <p className="font-body text-body-md text-on-surface-variant leading-relaxed">
               Any work requested outside the originally agreed scope may require additional pricing, revised timelines, or updated agreements at the discretion of LogixLoops.
             </p>

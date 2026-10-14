@@ -6,7 +6,7 @@ import { getLineBySlug } from "@/data/lines";
 
 /* Six kits across five lines: the most common first purchases, from a new
    brand to a first product. Order is the order they appear. */
-export const FEATURED_KITS = ["brand-launch", "business-website", "ai-visibility", "whatsapp-ai", "website-glow-up", "mvp"];
+export const FEATURED_KITS = ["brand-launch", "business-website", "ai-visibility", "whatsapp-ai", "redesign", "mvp"];
 
 /** Featured kits on the home page, as the same cards /kits uses. */
 export default function FeaturedKitsSection() {

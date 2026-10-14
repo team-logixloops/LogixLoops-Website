@@ -31,7 +31,7 @@ test("kit offers carry their page URL and a from-price in both currencies", () =
 });
 
 test("plan offers are marked as monthly", () => {
-  const squad = catalog().itemListElement.find((offer) => offer.itemOffered.name === "Pit Crew Squad plan");
+  const squad = catalog().itemListElement.find((offer) => offer.itemOffered.name === "Squad plan");
   for (const spec of squad.priceSpecification) {
     assert.equal(spec["@type"], "UnitPriceSpecification");
     assert.equal(spec.unitText, "MONTH");

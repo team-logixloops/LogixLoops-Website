@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 import { accent } from "@/components/sections/service-master/tokens";
 
 /**
- * Compact detail-route hero for a line. The H1 is the plain label, because
- * that is what people search for; the memorable name sits in the chip above
- * it, so the two are never apart.
+ * Compact detail-route hero for a line. The H1 is the line's plain label,
+ * because that is what people search for, and the chip above it carries the
+ * cheapest way in, so the starting price is on the first screen.
  */
 export default function LineHero({ line, fromLabel }) {
   const a = accent(line.color);
@@ -21,9 +21,7 @@ export default function LineHero({ line, fromLabel }) {
             <span className={cn("material-symbols-outlined text-[16px]", a.text)} aria-hidden="true">
               {line.icon}
             </span>
-            <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant">
-              {line.name}
-            </span>
+            <span className="font-body text-body-sm text-on-surface">{fromLabel}</span>
           </span>
           <h1 className="mb-4 font-display text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight leading-[1.05] text-balance">
             {line.label}
@@ -36,8 +34,7 @@ export default function LineHero({ line, fromLabel }) {
           >
             {line.pitch}
           </p>
-          <p className="mb-6 max-w-2xl font-body text-body-lg text-on-surface-variant leading-relaxed">{line.summary}</p>
-          <p className="mb-8 font-label text-label-caps uppercase tracking-widest text-on-surface-variant">{fromLabel}</p>
+          <p className="mb-8 max-w-2xl font-body text-body-lg text-on-surface-variant leading-relaxed">{line.summary}</p>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button href={`/contact?line=${line.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
               Start a project

@@ -10,19 +10,20 @@ import { getAllLines } from "@/data/lines";
 import { getKitsByLine } from "@/data/kits";
 import { getAllPlans } from "@/data/plans";
 import { PRICING_FAQS } from "@/data/faq";
-import { CURRENCY_NOTE, formatInr, formatUsd } from "@/lib/pricing";
+import { formatInr, formatUsd } from "@/lib/pricing";
+import PriceNote from "@/components/sections/kits/PriceNote";
 
 /*
- * The price list. Server-rendered from the kit and plan records, so every
- * figure here is the one the kit page, the card, the schema and llms.txt
- * show. /kits sells the kits one card at a time; this page is the table a
- * buyer compares, and the terms that sit behind every price.
+ * The price list. Server-rendered from the Loop and plan records, so every
+ * figure here is the one the Loop page, the card, the schema and llms.txt
+ * show. /loops sells the Loops one card at a time; this page is the table a
+ * buyer compares, and what can move a starting price.
  */
 
 const LEAD =
-  "Every LogixLoops Loop has a published starting price, a fixed scope and a timeline. Prices in rupees are for businesses in India, and prices in US dollars apply everywhere else. The price only moves if the scope does, and you approve that in writing first.";
+  "Every LogixLoops price is a starting price: the minimum for a Loop's listed scope, in rupees for businesses in India and US dollars everywhere else. Your final price depends on your project, and we confirm it in a written quote before any work starts.";
 
-/* What makes a project cost more than its kit's starting price. Each is a
+/* What makes a project cost more than its Loop's starting price. Each is a
    statement of policy, so the cards take `rule-draw`. */
 const PRICE_MOVERS = [
   {
@@ -43,6 +44,12 @@ const PRICE_MOVERS = [
     description:
       "Launching faster than the Loop's timeline means more people at once. It is possible, and the quote says exactly what it adds.",
   },
+  {
+    icon: "edit_note",
+    title: "Content and extras",
+    description:
+      "Writing, photos, translations or features the Loop does not list. We price each one in the quote, so you can drop any you do not need.",
+  },
 ];
 
 const TH = "text-left font-label text-label-caps uppercase tracking-widest text-on-surface-variant p-4 md:p-6";
@@ -57,9 +64,6 @@ function PriceTable({ line }) {
         <Link href={`/loops/${line.slug}`} className="hover:text-primary transition-colors">
           {line.label}
         </Link>
-        <span className="ml-3 font-label text-label-caps uppercase tracking-widest text-on-surface-variant">
-          {line.name}
-        </span>
       </h3>
       {/* Phones get one row per kit, both prices on it, instead of a table
           that has to be scrolled sideways to reach the India price. */}
@@ -73,19 +77,15 @@ function PriceTable({ line }) {
               {kit.name}
             </Link>
             <p className="mt-1 font-body text-body-sm text-on-surface-variant first-letter:uppercase">{kit.promise}</p>
-            <dl className="mt-3 grid grid-cols-3 gap-2 font-body text-body-sm">
-              <div>
-                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">International</dt>
-                <dd className="font-display font-semibold text-primary">{formatUsd(kit.price.usd)}</dd>
-              </div>
-              <div>
-                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">India</dt>
-                <dd className="font-display font-semibold text-primary">{formatInr(kit.price.inr)}</dd>
-              </div>
-              <div>
-                <dt className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Timeline</dt>
-                <dd className="text-on-surface-variant">{kit.timeline}</dd>
-              </div>
+            <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 font-body text-body-sm">
+              <dt className="text-on-surface-variant">Starting from</dt>
+              <dd className="text-on-surface-variant">
+                <span className="font-display font-semibold text-primary">{formatUsd(kit.price.usd)}</span> international
+                {" · "}
+                <span className="font-display font-semibold text-primary">{formatInr(kit.price.inr)}</span> in India
+              </dd>
+              <dt className="text-on-surface-variant">Timeline</dt>
+              <dd className="text-on-surface">{kit.timeline}</dd>
             </dl>
             {kit.priceNote && <p className="mt-2 font-body text-body-sm text-on-surface-variant">{kit.priceNote}.</p>}
           </li>
@@ -106,8 +106,8 @@ function PriceTable({ line }) {
             <tr className="border-b border-outline-variant/30">
               <th scope="col" className={TH}>Loop</th>
               <th scope="col" className={TH}>Timeline</th>
-              <th scope="col" className={TH}>From, international</th>
-              <th scope="col" className={TH}>From, India</th>
+              <th scope="col" className={TH}>Starting from, international</th>
+              <th scope="col" className={TH}>Starting from, India</th>
             </tr>
           </thead>
           <tbody className="font-body text-body-md">
@@ -166,9 +166,10 @@ export default function PricingPage() {
             >
               Every Loop and its starting price
             </h2>
-            <p className="font-body text-body-lg text-on-surface-variant">
-              {CURRENCY_NOTE} Each Loop page lists exactly what the price includes, the add-ons and their prices.
+            <p className="mb-4 font-body text-body-lg text-on-surface-variant">
+              Each Loop page lists exactly what its starting price includes, the add-ons and their prices.
             </p>
+            <PriceNote className="text-body-md" />
           </div>
           {lines.map((line) => (
             <PriceTable key={line.slug} line={line} />
@@ -178,12 +179,12 @@ export default function PricingPage() {
         <section aria-labelledby="plans" className={SECTION}>
           <div className="max-w-2xl mb-stack-lg">
             <h2 id="plans" className="mb-4 font-display text-headline-lg-mobile md:text-headline-lg text-on-surface">
-              Monthly Pit Crew plans
+              Monthly maintenance plans
             </h2>
             <p className="font-body text-body-lg text-on-surface-variant">
               For after launch: updates, fixes, speed and search work, or a reserved team.{" "}
               <Link href="/loops/maintenance-and-support" className="text-primary underline-offset-4 hover:underline">
-                More about Pit Crew
+                More about maintenance plans
               </Link>
               .
             </p>
@@ -198,10 +199,10 @@ export default function PricingPage() {
         <section className={SECTION}>
           <SectionHeader
             overline="Above the starting price"
-            title="Three things move the number"
-            description="A Loop's price covers its listed scope. Only these make it higher, and each one is quoted in writing before work starts."
+            title="What can change your price"
+            description="A Loop's starting price covers its listed scope. Your final price depends on your project, and these are the usual reasons it goes up. Each one is quoted in writing before work starts."
           />
-          <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-4">
             {PRICE_MOVERS.map((mover) => (
               <div
                 key={mover.title}

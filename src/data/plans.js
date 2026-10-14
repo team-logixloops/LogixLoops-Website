@@ -1,9 +1,9 @@
 /**
- * Pit Crew: the monthly maintenance and support plans.
+ * The monthly maintenance and support plans.
  *
- * Plans are not kits. They have no fixed end, so they live on the Pit Crew
- * line page and on /pricing rather than at /kits/<slug>. Prices are "from"
- * figures at the entry level of each market, like every price on the site:
+ * Plans are not Loops. They have no fixed end, so they live on the
+ * maintenance line page and on /pricing rather than at /loops/<slug>. Prices
+ * are starting figures at the entry level of each market, like every price on the site:
  * `inr` for businesses in India, `usd` everywhere else.
  */
 export const PLANS = [

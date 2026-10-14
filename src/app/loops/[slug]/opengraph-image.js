@@ -1,7 +1,7 @@
 import { ogCard, clampSubtitle, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 import { KITS } from "@/data/kits";
 import { LINES, getLineBySlug } from "@/data/lines";
-import { formatPrice } from "@/lib/pricing";
+import { startingFrom } from "@/lib/pricing";
 
 // `alt` is a static export, so it cannot carry the Loop or line name. The card does.
 export const alt = "A LogixLoops Loop: a fixed-scope service package with a published price.";
@@ -18,7 +18,7 @@ export default async function Image({ params }) {
   const line = LINES.find((entry) => entry.slug === slug);
   if (line) {
     return ogCard({
-      eyebrow: `${line.name} · Loops`,
+      eyebrow: "LogixLoops · Loops",
       title: line.label,
       subtitle: clampSubtitle(line.pitch),
     });
@@ -28,9 +28,9 @@ export default async function Image({ params }) {
   if (kit) {
     const kitLine = getLineBySlug(kit.line);
     return ogCard({
-      eyebrow: `${kitLine.name} · ${kitLine.label}`,
+      eyebrow: `Loops · ${kitLine.label}`,
       title: kit.name,
-      subtitle: clampSubtitle(`From ${formatPrice(kit.price)}, ${kit.timeline}. ${kit.summary}`),
+      subtitle: clampSubtitle(`${startingFrom(kit.price)}, ${kit.timeline}. ${kit.summary}`),
     });
   }
 

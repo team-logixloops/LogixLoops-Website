@@ -12,8 +12,7 @@ const fromPrice = (line) => {
 
 /**
  * The six lines as plain cards, each with its pitch and the cheapest way in.
- * Shared by /services and the home page, so both link every line with the
- * same live starting price.
+ * Used on the home page, so every line is linked with its live starting price.
  */
 export default function LineDirectory() {
   return (
@@ -38,15 +37,12 @@ export default function LineDirectory() {
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-colors duration-300 group-hover:bg-primary group-hover:text-on-primary">
               <span className="material-symbols-outlined text-[22px]">{line.icon}</span>
             </span>
-            <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant mb-1">
-              {line.name}
-            </span>
             <h3 className="font-display text-headline-md text-on-surface mb-3 transition-colors duration-300 group-hover:text-primary">
               {line.label}
             </h3>
             <p className="font-body text-body-sm text-on-surface-variant mb-5 flex-1">{line.pitch}</p>
-            <span className="font-label text-[11px] uppercase tracking-widest text-primary">
-              From {fromPrice(line)}
+            <span className="font-body text-body-sm text-on-surface-variant">
+              Starting from <span className="font-semibold text-primary">{fromPrice(line)}</span>
             </span>
             <span
               aria-hidden="true"

@@ -24,10 +24,10 @@ import {
 } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 
-// The tagline leads, then the six line names. A marquee is the cheapest
-// repetition on the page, and these are the seven words the site is trying
-// to make stick.
-const MARQUEE_ITEMS = ["Your Unfair Advantage", ...LINES.map((line) => line.name)];
+// The tagline leads, then plain words for what the Loops cover. A marquee is
+// the cheapest repetition on the page; Loop is the only branded word, so the
+// rest say what we do in the words people search with.
+const MARQUEE_ITEMS = ["Your Unfair Advantage", "Websites", "Online Stores", "Apps", "Branding", "SEO", "AI Search", "Automation"];
 
 // Reads as one sentence as it travels the wave:
 // "We Build Brands [icon] That Get Found [icon] And Keep Growing"

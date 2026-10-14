@@ -1,10 +1,9 @@
 /**
  * The six lines LogixLoops sells in.
  *
- * Every line has a memorable name (Engine, Spark...) and a plain label. The
- * label is what search engines and AI assistants read: it leads the H1, the
- * page title and the schema. The name is what people remember. The two are
- * never shown apart.
+ * Every line goes by its plain label (Web & App Development...). It leads
+ * the H1, the page title and the schema. Loop is the only branded word: the
+ * groups are named for what they are, so there is one name to learn.
  *
  * FAQ answers that quote a price or a timeline read them from the kit and plan
  * records, so they cannot drift from what the kit pages show.
@@ -24,7 +23,7 @@ const DETAILS = [
   {
     slug: "web-and-app-development",
     summary:
-      "Engine is the LogixLoops web and app development line. We build business websites, online stores, startup MVPs and iOS and Android apps as fixed-scope Loops with published starting prices. Every build is fast on an ordinary phone, ready for Google and AI search, and handed over in your name.",
+      "For web and app development, LogixLoops builds business websites, online stores, startup MVPs and iOS and Android apps as fixed-scope Loops with published starting prices. Every build is fast on an ordinary phone, ready for Google and AI search, and handed over in your name.",
     metaTitle: "Web & App Development: Websites, Stores, Apps",
     metaDescription:
       "Business websites, online stores, MVPs and mobile apps built as fixed-scope Loops with public starting prices. Fast, search-ready and yours from day one.",
@@ -73,14 +72,14 @@ const DETAILS = [
       },
       {
         q: "Can you work on a website or app someone else built?",
-        a: "Yes. If it works but needs a makeover, that is what the Website Glow-Up Loop is for. If it is fragile or hard to change, we start with a short audit and tell you plainly whether to fix it or rebuild it.",
+        a: "Yes. If it works but needs a makeover, that is what the Website Redesign Loop is for. If it is fragile or hard to change, we start with a short audit and tell you plainly whether to fix it or rebuild it.",
       },
     ],
   },
   {
     slug: "branding",
     summary:
-      "Spark is the LogixLoops branding line. We design logos, colour palettes, type and brand guidelines for new and growing businesses, and package them with a website and social Loop when you are launching. You get every source file, a clear rulebook for using it, and a brand that looks the same everywhere.",
+      "For branding, LogixLoops designs logos, colour palettes, type and brand guidelines for new and growing businesses, and packages them with a website and social media templates when you are launching. You get every source file, a clear rulebook for using it, and a brand that looks the same everywhere.",
     metaTitle: "Branding Agency: Logo, Identity, Brand Launch",
     metaDescription:
       "Logo design, brand identity and brand guidelines as fixed-price Loops, plus a Brand Launch Loop with website and socials. Every source file is yours.",
@@ -135,7 +134,7 @@ const DETAILS = [
   {
     slug: "website-redesign",
     summary:
-      "Glow-Up is the LogixLoops website redesign and upgrade line. We take a website or app you already have and make it look current, load fast and turn more visitors into enquiries or sales. Every change is measured before and after, so you can see what the upgrade actually changed.",
+      "For website redesigns and upgrades, LogixLoops takes a website or app you already have and makes it look current, load fast and turn more visitors into enquiries or sales. Every change is measured before and after, so you can see what the upgrade actually changed.",
     metaTitle: "Website Redesign Services and Speed Upgrades",
     metaDescription:
       "Website redesign, speed optimisation and conversion upgrades as fixed-price Loops, measured before and after with results in plain numbers.",
@@ -171,7 +170,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does a website redesign cost?",
-        a: `A full redesign with our Website Glow-Up Loop starts from ${kitPrice("website-glow-up")}. If the design is fine and only speed is the problem, the Speed Loop starts from ${kitPrice("speed")}.`,
+        a: `A full redesign with our Website Redesign Loop starts from ${kitPrice("redesign")}. If the design is fine and only speed is the problem, the Speed Loop starts from ${kitPrice("speed")}.`,
       },
       {
         q: "Will a redesign hurt my Google rankings?",
@@ -190,7 +189,7 @@ const DETAILS = [
   {
     slug: "seo-and-ai-search",
     summary:
-      "Spotlight is the LogixLoops SEO and AI search visibility line. We make your business easy to find on Google and Bing, and easy for ChatGPT, Perplexity, Gemini and Google AI Overviews to understand, trust and mention. That means technical fixes, clear content, structured data and a report in plain numbers.",
+      "For SEO and AI search visibility, LogixLoops makes your business easy to find on Google and Bing, and easy for ChatGPT, Perplexity, Gemini and Google AI Overviews to understand, trust and mention. That means technical fixes, clear content, structured data and a report in plain numbers.",
     metaTitle: "SEO and AI Search Optimisation (GEO) Services",
     metaDescription:
       "SEO setup and AI search visibility Loops that get your business found on Google and mentioned by ChatGPT, Perplexity and AI Overviews.",
@@ -245,7 +244,7 @@ const DETAILS = [
   {
     slug: "ai-automation",
     summary:
-      "Autopilot is the LogixLoops AI and automation line. We build WhatsApp AI agents, website assistants trained on your own documents, and automations that move data between your tools, so routine questions and admin get handled without someone doing them by hand. Every AI system ships with limits, logs and a human handover.",
+      "For AI and automation, LogixLoops builds WhatsApp AI agents, website assistants trained on your own documents, and automations that move data between your tools, so routine questions and admin get handled without someone doing them by hand. Every AI system ships with limits, logs and a human handover.",
     metaTitle: "AI Automation Agency: WhatsApp AI and Chatbots",
     metaDescription:
       "WhatsApp AI agents, website AI chatbots trained on your data, and workflow automation, as fixed-scope Loops with published starting prices.",
@@ -301,7 +300,7 @@ const DETAILS = [
   {
     slug: "maintenance-and-support",
     summary:
-      "Pit Crew is the LogixLoops maintenance and support line. Monthly plans keep your website or app updated, backed up, secure and fast, with time each month for changes and improvements. Plans start small for a business website and scale up to a dedicated team for products that change every week.",
+      "LogixLoops maintenance and support plans are monthly. They keep your website or app updated, backed up, secure and fast, with time each month for changes and improvements. Plans start small for a business website and scale up to a dedicated team for products that change every week.",
     metaTitle: "Website Maintenance Plans and Support",
     metaDescription:
       "Monthly website and app maintenance plans: updates, backups, security, speed checks and changes each month, up to a dedicated team.",
@@ -337,7 +336,7 @@ const DETAILS = [
     faqs: [
       {
         q: "How much does website maintenance cost per month?",
-        a: `Pit Crew plans start from ${planPrice("essentials")} for Essentials, ${planPrice("growth")} for Growth and ${planPrice("squad")} for a dedicated Squad. Each plan lists exactly what is included.`,
+        a: `Maintenance plans start from ${planPrice("essentials")} for Essentials, ${planPrice("growth")} for Growth and ${planPrice("squad")} for a dedicated Squad. Each plan lists exactly what is included.`,
       },
       {
         q: "Can we cancel a maintenance plan?",

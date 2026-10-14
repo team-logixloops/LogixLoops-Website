@@ -21,7 +21,7 @@ test("every kit, plan and line link to /contact preselects a known topic", () =>
 
 test("a kit link names the kit and files it under its line", () => {
   assert.deepEqual(picks.kit["whatsapp-ai"], { label: "WhatsApp AI Loop", topic: "AI & Automation" });
-  assert.deepEqual(picks.plan.growth, { label: "Pit Crew Growth plan", topic: "Maintenance & Support Plans" });
+  assert.deepEqual(picks.plan.growth, { label: "Growth plan", topic: "Maintenance & Support Plans" });
 });
 
 test("the form offers every line plus a way out", () => {

@@ -2,7 +2,7 @@
 
 Source of truth for every word on logixloops.in. If a sentence on the site
 disagrees with this file, the file wins. Design record:
-`docs/superpowers/specs/2026-10-13-advantage-Loops-repositioning-design.md`.
+`docs/superpowers/specs/2026-10-13-advantage-kits-repositioning-design.md`.
 
 ---
 
@@ -22,7 +22,7 @@ Loop ends with **The Tune-Up**: 30 days of measuring, fixing and tuning with
 real data.
 
 **Naming (2026-10-14).** The product noun is **Loop**, capitalised, never
-"Loop" or "package" in visible copy: "Business Website Loop", "every Loop",
+"kit" or "package" in visible copy: "Business Website Loop", "every Loop",
 "Pick a Loop". "Package" is still used where search needs it: page titles,
 meta descriptions, keywords and the entity definition ("service packages
 called Loops"). In code and data the record is still a `kit` (`src/data/kits.js`,
@@ -40,18 +40,32 @@ quote what LogixLoops is:
 
 ### Six lines
 
-Every line has a name people remember and a plain label search engines read.
-**The two always appear together.** Titles, H1s and schema lead with the
-plain label.
+**Loop is the only branded word.** The six groups Loops are sold in go by
+their plain names, which are also what people search for. They had second
+names (Engine, Spark, Glow-Up, Spotlight, Autopilot, Pit Crew) until
+2026-10-14; those were dropped because two naming systems side by side read
+as noise. Do not bring them back, and do not coin new ones.
 
-| Name | Plain label | URL |
-|---|---|---|
-| Engine | Web & App Development | `/loops/web-and-app-development` |
-| Spark | Branding & Identity | `/loops/branding` |
-| Glow-Up | Website Redesign & Upgrades | `/loops/website-redesign` |
-| Spotlight | SEO & AI Search Visibility | `/loops/seo-and-ai-search` |
-| Autopilot | AI & Automation | `/loops/ai-automation` |
-| Pit Crew | Maintenance & Support Plans | `/loops/maintenance-and-support` |
+| Line | URL |
+|---|---|
+| Web & App Development | `/loops/web-and-app-development` |
+| Branding & Identity | `/loops/branding` |
+| Website Redesign & Upgrades | `/loops/website-redesign` |
+| SEO & AI Search Visibility | `/loops/seo-and-ai-search` |
+| AI & Automation | `/loops/ai-automation` |
+| Maintenance & Support Plans | `/loops/maintenance-and-support` |
+
+The monthly plans are "maintenance plans" (Essentials, Growth, Squad). The
+redesign offer is the Website Redesign Loop at `/loops/redesign`; its old
+`/loops/website-glow-up` address redirects there.
+
+### Prices
+
+Every price is a **starting price**, and the copy says so: "Starting from
+$500 · ₹15,000", never a bare figure. Wherever prices are listed, the
+`PriceNote` component adds that the final price depends on the project and
+is confirmed in a written quote, and links to the pricing section of the
+Terms (`/legal/terms#pricing`).
 
 Lines and Loops share one URL tree: `/loops` is the hub, `/loops/<line>` a
 line, `/loops/<loop>` a Loop (slugs never collide). The old `/services` and

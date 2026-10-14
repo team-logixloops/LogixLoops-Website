@@ -3,7 +3,8 @@ import { FadeInUpImmediate } from "@/components/motion";
 import { Button } from "@/components/ui";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { cn } from "@/lib/utils";
-import { CURRENCY_NOTE, formatPrice } from "@/lib/pricing";
+import { formatPrice } from "@/lib/pricing";
+import PriceNote from "./PriceNote";
 import { accent } from "@/components/sections/service-master/tokens";
 
 /**
@@ -26,7 +27,7 @@ export default function KitHero({ kit, line }) {
             {line.icon}
           </span>
           <span className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant">
-            {line.name} · {line.label}
+            {line.label}
           </span>
         </Link>
         <h1 className="mt-6 mb-6 font-display text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight leading-[1.05] text-balance">
@@ -36,7 +37,7 @@ export default function KitHero({ kit, line }) {
         <p className="mb-8 font-body text-body-lg text-on-surface-variant leading-relaxed">{kit.summary}</p>
         <dl className="mb-8 flex flex-wrap gap-3">
           <div className="rounded-xl border border-outline-variant/30 bg-surface-container-lowest/85 px-4 py-3">
-            <dt className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant">From</dt>
+            <dt className="font-label text-label-caps uppercase tracking-widest text-on-surface-variant">Starting from</dt>
             <dd className={cn("font-display text-xl font-semibold", a.text)}>{formatPrice(kit.price)}</dd>
           </div>
           <div className="rounded-xl border border-outline-variant/30 bg-surface-container-lowest/85 px-4 py-3">
@@ -44,14 +45,15 @@ export default function KitHero({ kit, line }) {
             <dd className="font-display text-xl font-semibold text-on-surface">{kit.timeline}</dd>
           </div>
         </dl>
-        <p className="-mt-4 mb-8 font-body text-body-sm text-on-surface-variant">
-          {kit.priceNote && `${kit.priceNote}. `}
-          {CURRENCY_NOTE}{" "}
+        {kit.priceNote && (
+          <p className="-mt-4 mb-2 font-body text-body-sm text-on-surface-variant">{kit.priceNote}.</p>
+        )}
+        <PriceNote className={kit.priceNote ? "mb-8" : "-mt-4 mb-8"}>
           <Link href="/pricing" className="text-primary underline-offset-4 hover:underline">
             See every price
           </Link>
           .
-        </p>
+        </PriceNote>
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button href={`/contact?kit=${kit.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
             Start this Loop

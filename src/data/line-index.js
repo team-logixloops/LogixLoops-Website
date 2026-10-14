@@ -1,6 +1,7 @@
 /**
- * The six lines, reduced to what navigation needs: slug, name, plain label,
- * icon, colour, art and pitch.
+ * The six lines, reduced to what navigation needs: slug, label, icon,
+ * colour, art and pitch. A line has one name, its plain label. Loop is the
+ * only branded word on the site.
  *
  * Kept apart from lines.js on purpose, and it must import nothing. Navbar,
  * Footer and the services grid are client components, so whatever they import
@@ -10,7 +11,6 @@
 export const LINE_INDEX = [
   {
     slug: "web-and-app-development",
-    name: "Engine",
     label: "Web & App Development",
     icon: "rocket_launch",
     color: "primary",
@@ -20,7 +20,6 @@ export const LINE_INDEX = [
   },
   {
     slug: "branding",
-    name: "Spark",
     label: "Branding & Identity",
     icon: "auto_awesome",
     color: "secondary",
@@ -30,7 +29,6 @@ export const LINE_INDEX = [
   },
   {
     slug: "website-redesign",
-    name: "Glow-Up",
     label: "Website Redesign & Upgrades",
     icon: "auto_fix_high",
     color: "tertiary",
@@ -40,7 +38,6 @@ export const LINE_INDEX = [
   },
   {
     slug: "seo-and-ai-search",
-    name: "Spotlight",
     label: "SEO & AI Search Visibility",
     icon: "travel_explore",
     color: "primary",
@@ -50,7 +47,6 @@ export const LINE_INDEX = [
   },
   {
     slug: "ai-automation",
-    name: "Autopilot",
     label: "AI & Automation",
     icon: "smart_toy",
     color: "secondary",
@@ -60,7 +56,6 @@ export const LINE_INDEX = [
   },
   {
     slug: "maintenance-and-support",
-    name: "Pit Crew",
     label: "Maintenance & Support Plans",
     icon: "build",
     color: "tertiary",

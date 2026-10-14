@@ -13,10 +13,10 @@ const base = process.argv[2] || "http://localhost:3000";
 
 const CHECKS = [
   // Line pages, now under /loops
-  { path: "/loops/web-and-app-development", status: 200, includes: ["Engine", "Business Website Loop", "$500 · ₹15,000", "Work built with these Loops", "Prices in ₹ are for businesses in India", '"@type":"Service"'] },
-  { path: "/loops/branding", status: 200, includes: ["Spark", "Brand Identity Loop"], excludes: ["Work built with these Loops"] },
-  { path: "/loops/maintenance-and-support", status: 200, includes: ["Pit Crew", "Essentials", "$75/mo · ₹2,500/mo"] },
-  { path: "/loops/ai-automation", status: 200, includes: ["Autopilot", "WhatsApp AI Loop", "Under the hood"] },
+  { path: "/loops/web-and-app-development", status: 200, includes: ["Web &amp; App Development", "Business Website Loop", "$500 · ₹15,000", "Work built with these Loops", "Prices in ₹ are for businesses in India", "confirmed in a written quote", 'href="/legal/terms#pricing"', '"@type":"Service"'], excludes: [">Engine<"] },
+  { path: "/loops/branding", status: 200, includes: ["Branding &amp; Identity", "Brand Identity Loop"], excludes: ["Work built with these Loops", "Spark"] },
+  { path: "/loops/maintenance-and-support", status: 200, includes: ["Maintenance &amp; Support Plans", "Essentials", "$75/mo · ₹2,500/mo", "Starting from"], excludes: ["Pit Crew"] },
+  { path: "/loops/ai-automation", status: 200, includes: ["AI &amp; Automation", "WhatsApp AI Loop", "Under the hood"], excludes: ["Autopilot"] },
   { path: "/loops/not-a-line", status: 404 },
   // Old URLs: one hop to /loops, query kept
   { path: "/services", status: 308, location: "/loops" },
@@ -32,15 +32,22 @@ const CHECKS = [
   { path: "/loops/business-website", status: 200, includes: ["Built with this Loop", "Sire Media"] },
   { path: "/loops/mobile-app", status: 200, includes: ["Take the Signal Away"], excludes: ["Built with this Loop"] },
   { path: "/loops/whatsapp-ai", status: 200, includes: ["Plus Meta&#x27;s message charges", "Prices in ₹ are for businesses in India"] },
-  { path: "/loops/website-glow-up", status: 200, includes: ['href="/loops/seo-foundation"', 'href="/loops/business-website"'] },
+  { path: "/loops/redesign", status: 200, includes: ["Website Redesign Loop", 'href="/loops/seo-foundation"', 'href="/loops/business-website"'], excludes: ["Glow-Up"] },
+  { path: "/loops/website-glow-up", status: 308, location: "/loops/redesign" },
+  { path: "/kits/website-glow-up", status: 308, location: "/loops/redesign" },
+  // Line art lives at /lines/, outside every redirect
+  { path: "/lines/branding.svg", status: 200 },
+  { path: "/lines/seo-and-ai-search.svg", status: 200 },
   { path: "/loops/not-a-loop", status: 404 },
   // The hub. Matches the lead, not the heading: PageHero animates its heading
   // word by word, so "Pick a Loop." is not one string in the HTML.
   { path: "/loops", status: 200, includes: ["Loops are fixed-scope service packages", "Business Website Loop", "Workflow Automation Loop", "Essentials", '"@type":"CollectionPage"', '"@type":"FAQPage"', "Not sure which one you need?", "Plus Meta&#x27;s message charges", 'href="/pricing"', 'href="/loops/business-website"'] },
   // Price list
-  { path: "/pricing", status: 200, includes: ["Every Loop and its starting price", 'href="/loops/mvp"', 'href="/loops/speed"', "Prices in ₹ are for businesses in India", "Are the Loop prices fixed?", '"@type":"FAQPage"'], excludes: ["No tiers", "Dedicated Squad", "Scoped Programme"] },
+  { path: "/pricing", status: 200, includes: ["Every Loop and its starting price", 'href="/loops/mvp"', 'href="/loops/speed"', "Prices in ₹ are for businesses in India", "Are the Loop prices final?", "What can change your price", "Starting from, India", 'href="/legal/terms#pricing"', '"@type":"FAQPage"'], excludes: ["No tiers", "Dedicated Squad", "Scoped Programme", "Pit Crew", ">Engine<", "Engine ·"] },
+  // The terms that back every "starting from"
+  { path: "/legal/terms", status: 200, includes: ['id="pricing"', "Published Prices Are Starting Prices", "Written Quotes"] },
   // Links into the catalogue from home, work, contact and the 404
-  { path: "/", status: 200, includes: ['href="/loops"', 'href="/loops/branding"', 'href="/pricing"', "Browse the Loops", "is one Loop away.", "The usual agency vs LogixLoops", 'href="/loops/brand-launch"', 'href="/work/sire-media"', '"name":"Pick a Loop"'], excludes: ["scared to touch", "Book 45 minutes", "Every Decision, Written Down", 'href="/kits', 'href="/services"', 'href="/services/branding"'] },
+  { path: "/", status: 200, includes: ['href="/loops"', 'href="/loops/branding"', 'href="/pricing"', "Browse the Loops", "is one Loop away.", "Starting from", "/lines/branding.svg", "The usual agency vs LogixLoops", 'href="/loops/brand-launch"', 'href="/work/sire-media"', '"name":"Pick a Loop"'], excludes: ["scared to touch", "Book 45 minutes", "Every Decision, Written Down", 'href="/kits', 'href="/services"', 'href="/services/branding"', "Pit Crew", "Autopilot", "Spotlight", "/services/ui-ux-design.svg"] },
   // Company pages
   { path: "/about", status: 200, includes: ["Why the loop", "everything we sell is called a Loop", "Six things you can hold us to", "Prices hidden behind a quote request", 'href="/loops"'], excludes: ["Zero-Trust Architecture", "The Axiom"] },
   { path: "/process", status: 200, includes: ["Five steps, from pick to The Tune-Up", "The engineering method behind bigger builds", '"name":"Pick a Loop"'], excludes: ["Book a discovery call"] },

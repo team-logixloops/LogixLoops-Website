@@ -176,7 +176,7 @@ export const NAV_LINKS = [
       label: line.label,
       href: `/loops/${line.slug}`,
       icon: line.icon,
-      description: `${line.name}. ${line.pitch}`,
+      description: line.pitch,
       image: line.navImage,
     })),
   },
