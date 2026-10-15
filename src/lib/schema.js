@@ -75,7 +75,7 @@ const VERIFIED_PROFILES = [
   // carries the most weight in that reconciliation.
   "https://www.linkedin.com/company/logixloops",
   "https://github.com/team-logixloops",
-  "https://www.instagram.com/logixloops.in",
+  "https://www.instagram.com/logixloops",
 ];
 
 /**

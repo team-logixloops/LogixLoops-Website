@@ -328,6 +328,6 @@ export const SOCIAL_LINKS = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/logixloops.in",
+    href: "https://www.instagram.com/logixloops",
   },
 ];
