@@ -58,8 +58,8 @@ export default function KitHero({ kit, line }) {
           <Button href={`/contact?kit=${kit.slug}`} size="lg" icon="arrow_forward" iconPosition="right">
             Start this Loop
           </Button>
-          <Button href="/contact" variant="ghost" size="lg">
-            Ask a question first
+          <Button href="#build" variant="ghost" size="lg">
+            Build your Loop
           </Button>
         </div>
       </FadeInUpImmediate>

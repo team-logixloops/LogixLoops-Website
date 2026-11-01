@@ -5,7 +5,7 @@ import KitHero from "@/components/sections/kits/KitHero";
 import KitIncludes from "@/components/sections/kits/KitIncludes";
 import KitFit from "@/components/sections/kits/KitFit";
 import KitSteps from "@/components/sections/kits/KitSteps";
-import KitAddOns from "@/components/sections/kits/KitAddOns";
+import LoopBuilder from "@/components/sections/kits/LoopBuilder";
 import UnderTheHood from "@/components/sections/kits/UnderTheHood";
 import PromiseStrip from "@/components/sections/kits/PromiseStrip";
 import StudioCta from "@/components/sections/kits/StudioCta";
@@ -34,6 +34,18 @@ export function kitMetadata(kit) {
   });
 }
 
+/* The slice of a Loop the builder needs. A client component receives only
+   this, not the whole record with its FAQs and copy. */
+const builderLoop = (kit) => ({
+  slug: kit.slug,
+  name: kit.name,
+  price: kit.price,
+  timeline: kit.timeline,
+  addOns: kit.addOns,
+  recommended: kit.recommended,
+  includesCount: kit.includes.length,
+});
+
 export default function KitView({ kit }) {
   const line = getLineBySlug(kit.line);
   const studies = getAllCaseStudies().filter((study) => kit.work.includes(study.slug));
@@ -61,7 +73,7 @@ export default function KitView({ kit }) {
       <KitIncludes items={kit.includes} color={line.color} kitSlug={kit.slug} />
       <KitFit fitFor={kit.fitFor} notFor={kit.notFor} color={line.color} kitSlug={kit.slug} />
       <KitSteps steps={kit.steps} color={line.color} />
-      <KitAddOns addOns={kit.addOns} color={line.color} />
+      <LoopBuilder loop={builderLoop(kit)} color={line.color} />
       <UnderTheHood points={kit.underTheHood} demo={kit.demo} color={line.color} />
       {studies.length > 0 && (
         <ServiceMasterRelatedWork studies={studies} color={line.color} title="Built with this Loop" />

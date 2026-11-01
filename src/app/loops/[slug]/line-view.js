@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getKitsByLine } from "@/data/kits";
-import { getAllPlans } from "@/data/plans";
+import { getPlansForDisplay } from "@/data/plans";
 import { getAllCaseStudies } from "@/data/caseStudies";
 import { cheapest, formatPrice } from "@/lib/pricing";
 import { SectionHeader } from "@/components/ui";
@@ -41,7 +41,7 @@ export function lineMetadata(line) {
 
 export default function LineView({ line }) {
   const isPlans = line.slug === PLANS_LINE;
-  const offers = isPlans ? getAllPlans() : getKitsByLine(line.slug);
+  const offers = isPlans ? getPlansForDisplay() : getKitsByLine(line.slug);
   const fromLabel = `${isPlans ? "Plans" : "Loops"} starting from ${formatPrice(cheapest(offers).price)}`;
   const offerSlugs = new Set(offers.map((offer) => offer.slug));
   const studies = isPlans

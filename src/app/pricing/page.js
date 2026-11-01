@@ -8,7 +8,7 @@ import StudioCta from "@/components/sections/kits/StudioCta";
 import { SECTION } from "@/components/sections/service-master/tokens";
 import { getAllLines } from "@/data/lines";
 import { getKitsByLine } from "@/data/kits";
-import { getAllPlans } from "@/data/plans";
+import { getPlansForDisplay } from "@/data/plans";
 import { PRICING_FAQS } from "@/data/faq";
 import { formatInr, formatUsd } from "@/lib/pricing";
 import PriceNote from "@/components/sections/kits/PriceNote";
@@ -52,6 +52,38 @@ const PRICE_MOVERS = [
   },
 ];
 
+/* Ways a buyer pays less or pays later. Each is a standing policy, so the
+   cards take `rule-draw`, like the price movers below. All three are true of
+   every Loop: the saving is the real gap between add-ons taken with the Loop
+   and ordered after launch, and the split is the payment terms in the FAQ. */
+const PAY_LESS = [
+  {
+    icon: "savings",
+    title: "Take add-ons with the Loop",
+    description:
+      "Add-ons planned and built in the same run cost about a fifth less than ordered after launch. Every Loop page shows the flat amount you save on the build you pick.",
+  },
+  {
+    icon: "splitscreen",
+    title: "Pay half to start",
+    description:
+      "Half when work starts, half at launch, before handover. Nothing is due before you have the written quote.",
+  },
+  {
+    icon: "layers",
+    title: "Start small, add later",
+    description:
+      "Every starting price buys a complete, working result, not a demo. Add-ons can follow after launch at their listed price.",
+  },
+];
+
+/** "Start with $250": the half paid at kick-off, under each price. */
+function StartWith({ amount }) {
+  return (
+    <span className="mt-1 block font-body text-body-sm font-normal text-on-surface-variant">Start with {amount}</span>
+  );
+}
+
 const TH = "text-left font-label text-label-caps uppercase tracking-widest text-on-surface-variant p-4 md:p-6";
 const TD = "align-top p-4 md:p-6";
 
@@ -83,6 +115,10 @@ function PriceTable({ line }) {
                 <span className="font-display font-semibold text-primary">{formatUsd(kit.price.usd)}</span> international
                 {" · "}
                 <span className="font-display font-semibold text-primary">{formatInr(kit.price.inr)}</span> in India
+              </dd>
+              <dt className="text-on-surface-variant">Start with</dt>
+              <dd className="text-on-surface">
+                {formatUsd(Math.round(kit.price.usd / 2))} · {formatInr(Math.round(kit.price.inr / 2))}
               </dd>
               <dt className="text-on-surface-variant">Timeline</dt>
               <dd className="text-on-surface">{kit.timeline}</dd>
@@ -130,9 +166,11 @@ function PriceTable({ line }) {
                 <td className={`${TD} whitespace-nowrap text-on-surface-variant`}>{kit.timeline}</td>
                 <td className={`${TD} whitespace-nowrap font-display text-lg font-semibold text-primary`}>
                   {formatUsd(kit.price.usd)}
+                  <StartWith amount={formatUsd(Math.round(kit.price.usd / 2))} />
                 </td>
                 <td className={`${TD} whitespace-nowrap font-display text-lg font-semibold text-primary`}>
                   {formatInr(kit.price.inr)}
+                  <StartWith amount={formatInr(Math.round(kit.price.inr / 2))} />
                 </td>
               </tr>
             ))}
@@ -176,6 +214,31 @@ export default function PricingPage() {
           ))}
         </section>
 
+        <section aria-labelledby="pay-less" className={SECTION}>
+          <div className="max-w-2xl mb-stack-lg">
+            <h2 id="pay-less" className="mb-4 font-display text-headline-lg-mobile md:text-headline-lg text-on-surface">
+              Three ways to pay less, or later
+            </h2>
+            <p className="font-body text-body-lg text-on-surface-variant">
+              No codes, no countdowns. These apply to every Loop, every day.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-gutter md:grid-cols-3">
+            {PAY_LESS.map((item) => (
+              <div
+                key={item.title}
+                className="rule-draw h-full overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-lowest/85 p-6 md:p-8"
+              >
+                <span className="material-symbols-outlined mb-4 block text-[28px] text-tertiary" aria-hidden="true">
+                  {item.icon}
+                </span>
+                <h3 className="mb-2 font-display text-xl text-on-surface">{item.title}</h3>
+                <p className="font-body text-body-md leading-relaxed text-on-surface-variant">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section aria-labelledby="plans" className={SECTION}>
           <div className="max-w-2xl mb-stack-lg">
             <h2 id="plans" className="mb-4 font-display text-headline-lg-mobile md:text-headline-lg text-on-surface">
@@ -190,7 +253,7 @@ export default function PricingPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-gutter md:grid-cols-2 lg:grid-cols-3">
-            {getAllPlans().map((plan) => (
+            {getPlansForDisplay().map((plan) => (
               <PlanCard key={plan.slug} plan={plan} />
             ))}
           </div>

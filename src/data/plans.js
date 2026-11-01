@@ -25,6 +25,8 @@ export const PLANS = [
   {
     slug: "growth",
     name: "Growth",
+    // Shown as our pick, in the middle of the three.
+    recommended: true,
     price: { usd: 250, inr: 8000, per: "month" },
     summary: "For a website that should get better every month, not just stay up.",
     includes: [
@@ -52,4 +54,11 @@ export const PLANS = [
 ];
 
 export const getAllPlans = () => PLANS;
+
+/**
+ * The plans as cards show them: most expensive first, so the reserved team
+ * sets the reference and Growth, in the middle, reads as the sensible pick
+ * (see `builds` in src/lib/loop-builder.js for the same reasoning on Loops).
+ */
+export const getPlansForDisplay = () => [...PLANS].sort((a, b) => b.price.usd - a.price.usd);
 export const getPlanBySlug = (slug) => PLANS.find((plan) => plan.slug === slug) || null;

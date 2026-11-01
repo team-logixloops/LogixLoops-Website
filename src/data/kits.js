@@ -76,6 +76,13 @@ export const KITS = [
       { name: "Copywriting for every page", price: { usd: 150, inr: 5000 } },
       { name: "Second language", price: { usd: 150, inr: 5000 } },
     ],
+    /* The middle of the three ready-made builds on the Loop page (see
+       src/lib/loop-builder.js): the add-ons we would pick for most buyers.
+       Always fewer than all of them, so it never equals the complete build. */
+    recommended: [
+      "Copywriting for every page",
+      "Extra page",
+    ],
     underTheHood: [
       "Next.js with server rendering, deployed on Vercel or your own cloud account",
       "A headless CMS such as Sanity, or MDX files if your team prefers Git",
@@ -143,6 +150,10 @@ export const KITS = [
       { name: "Product photography direction", price: { usd: 150, inr: 5000 } },
       { name: "Subscriptions or bundles", price: { usd: 250, inr: 8000 } },
     ],
+    recommended: [
+      "Another 50 products loaded",
+      "Product photography direction",
+    ],
     underTheHood: [
       "Shopify with a custom theme, or a headless Next.js storefront on Shopify, Medusa or a custom backend",
       "Payment webhooks verified, and orders reconciled against the gateway",
@@ -208,6 +219,10 @@ export const KITS = [
       { name: "Marketing website for the product", price: { usd: 500, inr: 15000 } },
       { name: "iOS and Android app wrapper", price: { usd: 1500, inr: 50000 } },
       { name: "An AI feature using your data", price: { usd: 800, inr: 30000 } },
+    ],
+    recommended: [
+      "Marketing website for the product",
+      "An AI feature using your data",
     ],
     underTheHood: [
       "Next.js and TypeScript front to back, with PostgreSQL and a typed ORM",
@@ -275,6 +290,10 @@ export const KITS = [
       { name: "Another 5 screens", price: { usd: 800, inr: 25000 } },
       { name: "Website for the app", price: { usd: 500, inr: 15000 } },
       { name: "Second language", price: { usd: 300, inr: 10000 } },
+    ],
+    recommended: [
+      "Website for the app",
+      "Another 5 screens",
     ],
     underTheHood: [
       "React Native with Expo and TypeScript, with Swift or Kotlin modules where the hardware needs them",
@@ -348,6 +367,10 @@ export const KITS = [
       { name: "Brand voice and messaging guide", price: { usd: 150, inr: 4000 } },
       { name: "A fourth logo direction", price: { usd: 100, inr: 3000 } },
     ],
+    recommended: [
+      "Social media Loop: templates and profile assets",
+      "Brand voice and messaging guide",
+    ],
     underTheHood: [
       "Logos drawn as clean vectors and checked at 16 pixels for favicons and app icons",
       "Colours specified in HEX, RGB and CMYK, and Pantone where print needs it",
@@ -412,6 +435,10 @@ export const KITS = [
       { name: "Launch photography direction", price: { usd: 150, inr: 5000 } },
       { name: "Brand voice and messaging guide", price: { usd: 150, inr: 4000 } },
       { name: "An online store instead of a website", price: { usd: 500, inr: 15000 } },
+    ],
+    recommended: [
+      "Launch photography direction",
+      "Brand voice and messaging guide",
     ],
     underTheHood: [
       "The website reads the brand's design tokens directly, so colours and type match exactly",
@@ -483,6 +510,10 @@ export const KITS = [
       { name: "Copy rewrite for the redesigned pages", price: { usd: 150, inr: 5000 } },
       { name: "Move from WordPress or Wix to a faster stack", price: { usd: 300, inr: 10000 } },
     ],
+    recommended: [
+      "Copy rewrite for the redesigned pages",
+      "Move from WordPress or Wix to a faster stack",
+    ],
     underTheHood: [
       "A baseline from Search Console, analytics and Chrome UX Report field data where traffic allows",
       "A redirect map for every changed URL, tested before and after switch-over",
@@ -550,6 +581,9 @@ export const KITS = [
     addOns: [
       { name: "Another 10 pages audited", price: { usd: 100, inr: 3000 } },
       { name: "Hosting move", price: { usd: 100, inr: 3000 } },
+    ],
+    recommended: [
+      "Hosting move",
     ],
     underTheHood: [
       "Lab data from Lighthouse and WebPageTest, field data from the Chrome UX Report where traffic allows",
@@ -621,6 +655,9 @@ export const KITS = [
       { name: "Up to 4 new service or location pages written", price: { usd: 200, inr: 6000 } },
       { name: "Competitor gap report", price: { usd: 100, inr: 3000 } },
     ],
+    recommended: [
+      "Up to 4 new service or location pages written",
+    ],
     underTheHood: [
       "Full crawl with Screaming Frog or Sitebulb, checked against Search Console indexing data",
       "Canonical tags, hreflang where you serve several countries, and pagination handled",
@@ -689,6 +726,10 @@ export const KITS = [
       { name: "Another 20 tracked questions", price: { usd: 100, inr: 3000 } },
       { name: "Directory and listing clean-up, up to 15 listings", price: { usd: 150, inr: 5000 } },
       { name: "Monthly AI answer tracking, done for you", price: { usd: 75, inr: 2500, per: "month" } },
+    ],
+    recommended: [
+      "Directory and listing clean-up, up to 15 listings",
+      "Monthly AI answer tracking, done for you",
     ],
     underTheHood: [
       "AI crawler access checked in robots.txt and at the CDN: GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended",
@@ -763,6 +804,10 @@ export const KITS = [
       { name: "CRM or Google Sheets sync", price: { usd: 100, inr: 4000 } },
       { name: "Another language", price: { usd: 100, inr: 3000 } },
     ],
+    recommended: [
+      "Payments in chat: UPI or cards",
+      "CRM or Google Sheets sync",
+    ],
     underTheHood: [
       "WhatsApp Cloud API through Meta, with verified webhooks and messages stored in your own database",
       "Retrieval over your documents, so answers come from your own information",
@@ -833,6 +878,10 @@ export const KITS = [
       { name: "Voice mode", price: { usd: 300, inr: 10000 } },
       { name: "Connection to Zendesk, Freshdesk or Intercom", price: { usd: 200, inr: 6000 } },
     ],
+    recommended: [
+      "Connection to Zendesk, Freshdesk or Intercom",
+      "Another 500 pages of documents",
+    ],
     underTheHood: [
       "Retrieval-augmented generation with hybrid keyword and vector search",
       "Answers grounded in retrieved passages, with citations and a refusal path when confidence is low",
@@ -900,6 +949,9 @@ export const KITS = [
     addOns: [
       { name: "Another automation", price: { usd: 100, inr: 3000 } },
       { name: "An AI step that reads emails, documents or invoices", price: { usd: 150, inr: 5000 } },
+    ],
+    recommended: [
+      "Another automation",
     ],
     underTheHood: [
       "n8n self-hosted or cloud, Make or Zapier, chosen by volume, cost and how sensitive the data is",

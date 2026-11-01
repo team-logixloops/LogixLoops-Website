@@ -12,7 +12,7 @@ import { SECTION } from "@/components/sections/service-master/tokens";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { getAllLines, getLineBySlug } from "@/data/lines";
 import { getAllKits, getKitsByLine } from "@/data/kits";
-import { getAllPlans } from "@/data/plans";
+import { getPlansForDisplay } from "@/data/plans";
 import { SERVICES_FAQS } from "@/data/faq";
 import { generateBreadcrumbSchema, generateCollectionPageSchema, generateFaqSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
@@ -69,7 +69,7 @@ function LineHeading({ id, eyebrow, title, pitch, href, linkLabel }) {
 export default function LoopsPage() {
   const lines = getAllLines().filter((line) => getKitsByLine(line.slug).length > 0);
   const maintenance = getLineBySlug("maintenance-and-support");
-  const plans = getAllPlans();
+  const plans = getPlansForDisplay();
 
   return (
     <>
