@@ -47,7 +47,7 @@ const WAVE_SEGMENTS = [
  * went live and does not change again.
  */
 const HOME_PUBLISHED = "2026-05-16";
-const HOME_MODIFIED = "2026-10-14";
+const HOME_MODIFIED = "2026-11-01";
 
 const HOME_DESCRIPTION =
   "Brand, web, app and AI studio in Jaipur. Websites, online stores, apps, branding, SEO and AI automation sold as Loops with published prices, for India, the US, the UK and the UAE.";
@@ -72,15 +72,17 @@ export const metadata = buildMetadata({
   ],
 });
 
-/* Client work for the poster grid, with the kit each build would start from
-   today. Built here so the client component never imports the catalogue. */
+/* Client work for the scroll row under the hero, with the Loop each build
+   would start from today and its lead result. Built here so the client
+   component never imports the catalogue or the case studies. */
 const workItems = () =>
   getAllCaseStudies().map((study) => ({
     id: study.slug,
     title: study.navLabel || study.title,
     href: `/work/${study.slug}`,
-    image: `/nav/${study.slug}.webp`,
-    objectPosition: "object-center",
+    image: study.cardImage,
+    industry: study.industry,
+    metric: study.metrics?.[0] ? { value: study.metrics[0].value, label: study.metrics[0].label } : null,
     kit: getKitBySlug(study.kits[0]).name,
   }));
 
@@ -138,10 +140,11 @@ export default function HomePage() {
         items={MARQUEE_ITEMS}
         className="relative z-10 overflow-hidden border-y border-outline-variant/40 bg-surface-container-low py-5 sm:py-7"
       />
+      {/* Proof first: the work sits straight under the promise. */}
+      <FeaturedWorkSection items={workItems()} />
       <WaveBend segments={WAVE_SEGMENTS} />
       <HomeKitsSection />
       <FeaturedKitsSection />
-      <FeaturedWorkSection items={workItems()} />
       <StatsSection kitCount={KITS.length} />
       <ComparisonSection />
       <ProcessSection />
