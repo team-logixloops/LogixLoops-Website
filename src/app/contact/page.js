@@ -5,7 +5,7 @@ import { FadeInUpImmediate } from "@/components/motion";
 import { Suspense } from "react";
 import ContactForm from "./ContactForm";
 import ContactFormFromLink from "./ContactFormFromLink";
-import { CONTACT_TOPICS, contactPicks } from "@/lib/contact-picks";
+import { contactCatalogue } from "@/lib/contact-picks";
 
 // Server Component. Everything below the form is server-rendered so the page
 // ships real crawlable copy, it used to be a single "use client" route and
@@ -36,6 +36,11 @@ const ENGAGEMENT_STEPS = [
     meta: "On the Loop's timeline",
   },
 ];
+
+const CATALOGUE = contactCatalogue();
+
+/* Offered by the form if sending fails, so a lost request still has a route. */
+const REACH = { email: "mailto:connect@logixloops.in", whatsapp: BRAND.whatsapp };
 
 export default function ContactPage() {
   return (
@@ -153,8 +158,8 @@ export default function ContactPage() {
           <div className="lg:col-span-7 flex flex-col">
             {/* The fallback is the same form without a preselection, so the
                 static HTML carries a working form before the query is read. */}
-            <Suspense fallback={<ContactForm topics={CONTACT_TOPICS} />}>
-              <ContactFormFromLink topics={CONTACT_TOPICS} picks={contactPicks()} />
+            <Suspense fallback={<ContactForm catalogue={CATALOGUE} reach={REACH} />}>
+              <ContactFormFromLink catalogue={CATALOGUE} reach={REACH} />
             </Suspense>
           </div>
         </div>

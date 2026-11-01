@@ -3,31 +3,36 @@ import assert from "node:assert/strict";
 import { KITS } from "@/data/kits";
 import { PLANS } from "@/data/plans";
 import { LINES } from "@/data/lines";
-import { CONTACT_TOPICS, contactPicks } from "@/lib/contact-picks";
+import { contactCatalogue } from "@/lib/contact-picks";
 
-const picks = contactPicks();
+const catalogue = contactCatalogue();
+const loops = catalogue.lines.flatMap((line) => line.loops);
 
-test("every kit, plan and line link to /contact preselects a known topic", () => {
-  const all = [
-    ...KITS.map((kit) => picks.kit[kit.slug]),
-    ...PLANS.map((plan) => picks.plan[plan.slug]),
-    ...LINES.map((line) => picks.line[line.slug]),
-  ];
-  for (const pick of all) {
-    assert.ok(pick, "missing pick");
-    assert.ok(CONTACT_TOPICS.includes(pick.topic), `${pick.label}: ${pick.topic}`);
+test("the form offers every Loop exactly once, under its own line", () => {
+  assert.deepEqual(loops.map((l) => l.slug).sort(), KITS.map((k) => k.slug).sort());
+  for (const kit of KITS) {
+    const line = LINES.find((l) => l.slug === kit.line);
+    const group = catalogue.lines.find((g) => g.slug === kit.line);
+    assert.ok(group.loops.some((l) => l.slug === kit.slug), kit.slug);
+    assert.equal(group.label, line.label);
   }
 });
 
-test("a kit link names the kit and files it under its line", () => {
-  assert.deepEqual(picks.kit["whatsapp-ai"], { label: "WhatsApp AI Loop", topic: "AI & Automation" });
-  assert.deepEqual(picks.plan.growth, { label: "Growth plan", topic: "Maintenance & Support Plans" });
+test("each Loop carries what the form needs to price a build", () => {
+  const whatsapp = loops.find((l) => l.slug === "whatsapp-ai");
+  assert.equal(whatsapp.name, "WhatsApp AI Loop");
+  assert.equal(whatsapp.line, "AI & Automation");
+  assert.ok(whatsapp.addOns.length > 0);
+  assert.ok(whatsapp.recommended.length > 0);
+  assert.ok(whatsapp.price.inr > 0 && whatsapp.price.usd > 0);
 });
 
-test("the form offers every line plus a way out", () => {
-  assert.deepEqual(CONTACT_TOPICS, [...LINES.map((line) => line.label), "Not sure yet"]);
+test("the plans are offered under the maintenance line, and no Loop is", () => {
+  assert.deepEqual(catalogue.plans.items.map((p) => p.slug), PLANS.map((p) => p.slug));
+  assert.equal(catalogue.plans.items.find((p) => p.slug === "growth").name, "Growth plan");
+  assert.ok(!catalogue.lines.some((g) => g.slug === catalogue.plans.slug));
 });
 
-test("picks are plain data that can cross to a client component", () => {
-  assert.deepEqual(JSON.parse(JSON.stringify(picks)), picks);
+test("the catalogue is plain data that can cross to a client component", () => {
+  assert.deepEqual(JSON.parse(JSON.stringify(catalogue)), catalogue);
 });
