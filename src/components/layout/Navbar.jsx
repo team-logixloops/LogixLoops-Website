@@ -78,10 +78,14 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const dropdownTimeout = useRef(null);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  // Close the mobile menu on a route change. Adjusted during render, the way
+  // React recommends for state derived from a changed value: an effect would
+  // paint the new page with the menu still open, then close it a frame later.
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   // Lock scroll when the mobile menu or the desktop mega-menu is open.
   // `document.body.style.overflow` alone doesn't stop Lenis (it drives
