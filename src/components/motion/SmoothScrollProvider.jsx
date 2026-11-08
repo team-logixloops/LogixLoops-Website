@@ -130,13 +130,14 @@ export default function SmoothScrollProvider({ children }) {
        * catch-up movement, the "heavy, still moving after I stopped" feel.
        * A per-frame lerp always chases one target and cannot stack.
        *
-       * 0.09 is the glide. Higher reads as stiff, the scroller arrives almost
-       * with the wheel and there is no ease to feel; much lower and it floats
+       * 0.07 is the glide, lowered from 0.09 when the owner asked for a
+       * smoother scroll. Higher reads as stiff, the scroller arrives almost
+       * with the wheel and there is no ease to feel; much below this it floats
        * away from the input. This is also the only knob that changes how
        * scrolling *feels* as opposed to how fast it runs, so if it ever needs
        * retuning, tune this and not the animations.
        */
-      lerp: 0.09,
+      lerp: 0.07,
       smoothWheel: true,
       wheelMultiplier: 1,
       // Native momentum on touch is already smooth and better than anything

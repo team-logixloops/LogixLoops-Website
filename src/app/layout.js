@@ -6,6 +6,10 @@ import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 import { PRELOADER_GATE_SCRIPT } from "@/components/layout/preloader-gate";
 import { generateOrganizationSchema } from "@/lib/schema";
 import { SITE_URL } from "@/lib/seo";
+// Lenis's own rules: auto height while it drives scroll, inner scrollers
+// marked `data-lenis-prevent` keep their overscroll, and a stopped Lenis
+// (menus, the preloader) clips instead of letting the page move underneath.
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 /* ─── Font Loading ─── */
